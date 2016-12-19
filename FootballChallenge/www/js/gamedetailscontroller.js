@@ -16,7 +16,7 @@ angular.module('football.controllers')
             showBackdrop: true,
             maxWidth: 200,
             showDelay: 0
-        });
+        }); aa
 
         //works
         $timeout(function () {
