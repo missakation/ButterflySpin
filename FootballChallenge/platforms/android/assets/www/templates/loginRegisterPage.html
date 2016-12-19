@@ -1,0 +1,84 @@
+<ion-view view-title="Register">
+	<style>
+		body {
+			background-color: lightgrey;
+		}
+		
+		h4.titles {
+			color: white;
+			background-color: mediumseagreen;
+			text-align: center;
+			height: 25px;
+			border-radius: 20px;
+		}
+	</style>
+
+	<ion-content style="background-image:url(img/LoginBack.jpg); background-size:120% 100%;" ng-controller="LoginController">
+
+
+		<div>
+			<br />
+			<br />
+
+		</div>
+
+		<!--  <div style="padding-left:20px">
+            <img src="img/Logo.png" style="height:30%; width:40%">
+        </div>
+      -->
+
+		<div align="center">
+
+			<img src="img/logo.jpg" style="width:80px;height:50px " ng-click="FacebookLogin()">
+		</div>
+		<br />
+		<br />
+		<div align="center">
+			<div class="list" style="width:80%; padding-left:20px">
+
+				<label class="item item-input" style="background-color:transparent;border-color:white;border-radius:5px">
+                <input type="text"  placeholder="Username" ng-model="registerdata.displayname" style="color:white">
+
+            </label>
+
+            				<label class="item item-input" style="background-color:transparent;border-color:white;border-radius:5px">
+                <input type="text"  placeholder="First Name" ng-model="registerdata.firstname" style="color:white">
+
+            </label>
+
+            				<label class="item item-input" style="background-color:transparent;border-color:white;border-radius:5px">
+                <input type="text"  placeholder="Last Name" ng-model="registerdata.lastname" style="color:white">
+
+            </label>
+
+
+				<label class="item item-input" style="background-color:transparent;border-color:white;border-radius:5px">
+                <input type="text"  placeholder="Email" ng-model="registerdata.email" style="color:white">
+
+            </label>
+
+				<label class="item item-input" style="background-color:transparent;border-color:white;border-radius:5px">
+
+                <input type="password"  placeholder="Password" ng-model="registerdata.password" style="color:white">
+
+            </label>
+
+            				<label class="item item-input" style="background-color:transparent;border-color:white;border-radius:5px">
+
+                <input type="password"  placeholder="Retype Password" ng-model="registerdata.confirmpassword" style="color:white">
+
+            </label>
+
+
+			</div>
+            
+            <div class="padding" style="width:100%; padding-left:20px" align=center>
+			<button  class="button button-balanced" ng-click="Register()">
+                Register
+            </button>
+            </div>
+		</div>
+
+
+	</ion-content>
+</ion-view>

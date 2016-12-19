@@ -1,0 +1,227 @@
+<ion-view view-title="Team Profile">
+
+	<style>
+		img {
+			height: 100px;
+			width: 100px;
+		}
+		
+		h3,
+		h2,
+		h1,
+		h4,
+		p {
+			color: white;
+		}
+		
+		.item-input {
+			padding: 0 0 0 0;
+		}
+		
+		.item {
+			background-color: rgb(46, 62, 75);
+		}
+		
+		hr {
+			display: block;
+			height: 2px;
+			border: 0;
+			border-top: 2px solid green;
+			margin: 1em 0;
+			padding: 0;
+		}
+	</style>
+
+	</style>
+
+	<ion-content style="background-color:rgb(40,80,120)">
+
+
+		<ion-item>
+
+			<div class="row ">
+				<div class="col" align="center">
+					<img src="img/Badges/{{currentprofile.badge}}.png" style="width:80px;height:80px;">
+					<h5 class="whitetext"> {{currentprofile.teamname}} </h5>
+					<h5 class="whitetext"> {{currentprofile.ranking}} </h5>
+				</div>
+
+				<div class="col" align="center">
+					<img src={{team.favstadiumphoto}} style="width:100%;height:80px;">
+					<h5 class="whitetext"> Fav. Stadium </h5>
+					<h5 class="whitetext"> {{currentprofile.favstadium}} </h5>
+				</div>
+
+			</div>
+
+
+			<div class="row row-top">
+				<div class="col" align="center" style="color:white">
+
+					Matches
+
+				</div>
+
+				<div class="col " style="color:white" align="center">
+
+					Difficulty
+
+				</div>
+
+				<div class="col " style="color:white" align="center">
+
+					Rating
+
+				</div>
+
+				<div class="col " align="right" style="color:white">
+
+					Av. Res
+
+				</div>
+
+			</div>
+
+			<div class="row ">
+				<div class="col" align="center" style="color:white">
+
+					{{item.playposition}}
+
+				</div>
+
+				<div class="col" style="color:white" align="center">
+
+					{{item.age}}
+
+				</div>
+
+				<div class="col" style="color:white">
+
+					{{item.nummatches}}
+
+				</div>
+
+				<div class="col" align="right" align="center">
+
+				</div>
+
+			</div>
+
+			<p class="whitetext">
+				I am the best
+			</p>
+
+		</ion-item>
+
+
+		<ion-item>
+			<div align="center">
+				<h2>
+					Availability
+
+				</h2>
+			</div>
+		</ion-item>
+
+
+		<ion-item style="background-color:rgb(46,62,75) ">
+			<div class="row row-center">
+				<div class="col col-20">
+					<h3>
+						Mon
+					</h3>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startmonday" rz-slider-high="currentprofile.startmondayend " rz-slider-options="slider1.options "
+						style="color:white "></rzslider>
+				</div>
+			</div>
+
+			<div class="row row-center">
+				<div class="col col-20">
+					<h3>
+						Tue
+					</h3>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.starttuesday " rz-slider-high="currentprofile.starttuesdayend " rz-slider-options="slider2.options "
+						style="color:white "></rzslider>
+				</div>
+			</div>
+
+			<div class="row row-center">
+				<div class="col col-20">
+					<h3>
+						Wed
+					</h3>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startwednesday " rz-slider-high="currentprofile.startwednesdayend " rz-slider-options="slider3.options "
+						style="color:white "></rzslider>
+				</div>
+			</div>
+
+			<div class="row row-center">
+				<div class="col col-20">
+					<h3>
+						Thu
+					</h3>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startthursday " rz-slider-high="currentprofile.startthursdayend " rz-slider-options="slider4.options "
+						style="color:white "></rzslider>
+				</div>
+			</div>
+
+			<div class="row row-center">
+				<div class="col col-20">
+					<h3>
+						Fri
+					</h3>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startfriday " rz-slider-high="currentprofile.startfridayend " rz-slider-options="slider5.options "
+						style="color:white "></rzslider>
+				</div>
+			</div>
+
+			<div class="row row-center">
+				<div class="col col-20">
+					<h3>
+						Sat
+					</h3>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startsaturday " rz-slider-high="currentprofile.startsaturdayend " rz-slider-options="slider6.options "
+						style="color:white "></rzslider>
+				</div>
+			</div>
+
+			<div class="row row-center">
+				<div class="col col-20">
+					<h3>
+						Sun
+					</h3>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startsunday " rz-slider-high="currentprofile.startsundayend " rz-slider-options="slider7.options "
+						style="color:white " ng-readonly="currentprofile.amiadmin"></rzslider>
+				</div>
+			</div>
+
+
+		</ion-item>
+
+<ion-item>
+			<button class="button button-block button-calm button-full" ng-click="UpdateTeam(currentprofile)" ng-show="currentprofile.amiadmin">
+                                Save
+           </button>
+
+			<button class="button button-block button-assertive button-full" ng-click="deleteteam(currentprofile)" ng-show="currentprofile.amiadmin">
+                                Delete
+           </button>
+</ion-item>
+
+	</ion-content>
+
+</ion-view>

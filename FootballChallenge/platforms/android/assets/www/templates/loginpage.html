@@ -1,0 +1,97 @@
+<ion-view view-title="Login Page">
+	<style>
+		body {
+			background-color: lightgrey;
+		}
+		
+		h4.titles {
+			color: white;
+			background-color: mediumseagreen;
+			text-align: center;
+			height: 25px;
+			border-radius: 20px;
+		}
+	</style>
+
+
+	<body>
+
+
+
+
+	</body>
+	<ion-content style="background-image:url(img/LoginBack.jpg); background-size:120% 100%;" ng-controller="LoginController">
+
+
+		<!--
+          Below we include the Login Button social plugin. This button uses
+          the JavaScript SDK to present a graphical Login button that triggers
+          the FB.login() function when clicked.
+        -->
+		<div>
+			<br />
+            <br />
+
+		</div>
+
+		<!--  <div style="padding-left:20px">
+            <img src="img/Logo.png" style="height:30%; width:40%">
+        </div>
+      -->
+
+      <div align="center">
+
+		<img src="img/logo.jpg" style="width:80px;height:50px " ng-click="FacebookLogin()">
+      </div>
+      <br />
+		<div align=center>
+			<div class="list" style="width:75%; padding-left:20px">
+				<label class="item item-input" style="background-color:transparent;border-color:white;color:white;border-radius:5px">
+                <input type="text" ng-model="registerusername" style="color:white;background-color:transparent;">
+
+            </label>
+				<label class="item item-input" style="background-color:transparent;border-color:white;border-radius:5px">
+                <input type="password" ng-model="registerpassword" style="color:white">
+
+            </label>
+			</div>
+		</div>
+
+		<div class="padding" style="width:100%; padding-left:20px" align="center">
+			<button style="width:75%" class="button button-balanced" ng-click="LogIn(user)">
+                Sign-In
+            </button>
+
+		</div>
+
+		<div style= "padding-left: 20px" align="center" >
+
+			<img src="img/facebook.jpg" style="width:250px; " ng-click="FacebookLogin()">
+		</div>
+
+		<div align="center">
+			<h5 style="color:white">
+				OR
+			</h5>
+		</div>
+
+		<div padding-left:"20px" align="center">
+			<button class="button button-balanced" style="width:75%;color:white;background-color:green" ng-click="GoToRegister()">
+                Register
+            </button>
+
+		</div>
+
+		<div align="center">
+			<h5 style="color:white" ng-click="GoToForgetPass()">
+				Forgot Password?
+			</h5>
+		</div>
+
+		</div>
+
+	</ion-content>
+
+	<!--<div class="bar bar-footer ">
+    </div>-->
+</ion-view>

@@ -1,0 +1,168 @@
+<style>
+	.h3.whitetext,
+	h2.whitetext,
+	h1.whitetext,
+	h4.whitetext,
+	h5.whitetext,
+	h6.whitetext,
+	p.whitetext {
+		color: white;
+		height: 8px
+	}
+
+</style>
+<ion-view view-title="Challenge a Team">
+
+	<ion-nav-buttons side="primary">
+		<button class="button button-icon ion-android-funnel" ng-click="popover.show($event)"></button>
+	</ion-nav-buttons>
+	<style>
+
+	</style>
+
+	<ion-content style="background-color:rgb(46,62,75)">
+
+
+		<script id="templates/my-popover.html" type="text/ng-template">
+          <ion-popover-view style="height:300px;width:200px">
+              <ion-content class="-dark">
+                  <ion-list >
+                      <div class="bar bar-header bar-light" style="background-color:darkorange;color:white">
+                          <h1 class="title">Filter</h1>
+                      </div>
+
+                      <br />
+                      <br />
+
+                              <ion-radio  style="background-color:darkorange"  ng-model="choice.sort" value="rating"><b>Rating</b></ion-radio>
+                              <ion-radio  ng-model="choice.sort" value="players"><b>Players</b></ion-radio>
+                              <ion-radio  ng-model="choice.sort" value="'rating"><b>Distance</b></ion-radio>
+
+                      <!--<button class="button button-full button-positive" ng-click="closePopover()">
+                        OK
+                    </button>-->
+                  </ion-list>
+              </ion-content>
+          </ion-popover-view>
+      </script>
+
+		<div class="item item-dark" ion-datetime-picker ng-model="selecteddate.date" minute-step="30">
+			{{search.date| date: "yyyy-MM-dd H:mm"}}
+		</div>
+
+		<!--<p style="background-color:lightgray">Date</p>-->
+		<!--<label class="item item-input item-select item-dark">
+          <div class="input-label">
+              Time
+          </div>
+
+
+
+          <input type="datetime-local" ng-model="search.date" style="color:white">
+      </label>-->
+
+		<div class="card" ng-repeat="stadiums in allfreestadiums | orderBy:choice.sort:reverse" style="background-color:rgb(100,120,140)">
+			<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
+
+			<div align="center">
+				<img src="{{stadiums.photo}}" style="width:100%;height:140px;">
+			</div>
+
+			<div class="row ">
+				<div class="col col-80">
+					<h5 class="whitetext">
+						{{stadiums.stadiumname}} / {{stadiums.description}}
+					</h5>
+				</div>
+
+				<div class="col" align="right">
+					<h6 class="whitetext">
+						Price
+					</h6>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col col-80" align="left">
+					<rating style="color:gold" ng-model=stadiums.rating max="rating.max" align="left"></rating>
+				</div>
+
+				<div class="col" align="right">
+					<h6 class="whitetext">
+						{{stadiums.price}}
+					</h6>
+				</div>
+			</div>
+
+			<div class="row ">
+				<div class="col">
+					<h5 class="whitetext">
+						{{stadiums.stadiumname}}
+					</h5>
+				</div>
+
+				<div class="col" align="right">
+					<h6 class="whitetext">
+						Type
+					</h6>
+				</div>
+
+				<div class="col" align="right">
+					<h6 class="whitetext">
+						Stadium Size
+					</h6>
+				</div>
+
+			</div>
+
+
+			<div class="row ">
+				<div class="col">
+					<h5 class="whitetext">
+						2.1km
+					</h5>
+				</div>
+
+				<div class="col" align="right">
+					<h6 class="whitetext">
+						{{stadiums.typefloor}}/{{stadiums.typefloor}}
+					</h6>
+				</div>
+
+				<div class="col" align="right">
+					<h6 class="whitetext">
+						5vs5
+					</h6>
+				</div>
+
+			</div>
+
+			<!--			<h3 class="whitetext"> Number: <b>{{stadiums.description}}</b></h3> -->
+
+				<div class="row" >
+					<div class="col">
+						<button class="button button-block button-small"  ng-click="updateselectedteams(stadiums)" style="border-radius:25px;background-color:{{stadiums.backcolor}}">
+                        <h5 style="color:{{stadiums.color}}">
+							{{stadiums.selected}}
+                        </h5>
+						
+                    </button>
+					</div>
+
+				</div>
+		</div>
+
+		</br>
+		</br>
+		</br>
+		</br>
+
+	</ion-content>
+	<div class="bar bar-footer " style="background-color:rgb(30,30,30)">
+
+		<button class="button button-calm button-small " style="width:100%" ng-click="sendchallenge()">
+          Send Challenge
+        </button>
+	</div>
+</ion-view>

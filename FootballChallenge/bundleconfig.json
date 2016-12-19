@@ -1,0 +1,8 @@
+[
+  {
+    "outputFileName": "www/js/teamservice.min.js",
+    "inputFiles": [
+      "www/js/teamservice.js"
+    ]
+  }
+]

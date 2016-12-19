@@ -1,0 +1,599 @@
+<style>
+    .col-50 {
+        border: thick;
+        border-color: black;
+    }
+    
+    .ion-item {
+        background-color: rgb(30, 30, 30);
+    }
+    
+    .div {
+        background-color: rgb(30, 30, 30);
+    }
+    
+    .h3.whitetext,
+    h2.whitetext,
+    h1.whitetext,
+    h4.whitetext,
+    h5.whitetext,
+    h6.whitetext,
+    p.whitetext {
+        color: white;
+    }
+    
+    .button {
+        color: black;
+    }
+</style>
+
+<ion-view title="Home">
+
+    <ion-content>
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+        </ion-refresher>
+        <ion-list>
+
+            <ion-item style="background-color:rgb(30,30,30)">
+<div class="row" style="height:140px ">
+
+
+<div class="col" align="center" style="border-radius: 10px;">
+<h2 class="whitetext">Hello {{profile.displayname}}</h2>
+<a href="#/app/selfprofile">
+                            <img src="https://bossip.files.wordpress.com/2015/03/nba-face-6.png?w=700" style="border-radius:50% ; height:100px ; width:100px" align="right" height="50" />
+</a>
+
+
+
+
+</div>
+
+<div class="col" align="center" style="border-radius: 10px;">
+
+<div>
+    <a href="#/app/selfprofile">
+                                <img src="img/Badges/{{profile.badge}}.png" style="border-radius:50% ; height:70px ; width:70px" height="50" />
+</a>
+</div>
+<div align="center">
+    <h2>Barcelona</h2>
+    <p style="color:white">{{profile.ranking}} AR</p>
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+<br />
+
+<h3 style="color:darkorange" align="middle">Next game in 2 hours 30 minutes ...</h3>
+</ion-item>
+
+<div class="row" style="background-color:rgb(30,30,30)">
+<div class="col">
+
+    <div class="list">
+
+        <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="showConfirm()"> Reserve Stadium
+</button>
+
+</div>
+</div>
+
+<div class="col">
+    <div class="list">
+
+        <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="showConfirm()"> Player Finder
+</button>
+
+</div>
+</div>
+
+<div class="col">
+    <div class="list">
+
+        <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="showConfirm()"> Match Making
+</button>
+
+</div>
+</div>
+</div>
+
+<ion-item style="background-color:black">
+<div align="center">
+    <h2 class="whitetext" align="middle"><b>Upcoming Matches</b></h2>
+    <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
+</div>
+</ion-item>
+
+
+<ion-list>
+
+    <ion-item class="row row-center" ng-repeat="upmatches in profile.upcominteamgmatches" style="background-color:black">
+<div class="col col-75">
+
+    <h4 class="whitetext">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h4>
+</div>
+
+<div class="col">
+
+    <button ng-show="true" class="button button-balanced button-small" ng-click="playeroperations(1,0)">
+						Promote
+					</button>
+</div>
+
+</ion-item>
+
+
+</ion-list>
+
+<ion-item style="background-color:black" ng-show="showteaminvite">
+
+<div align="center">
+    <h2 class="whitetext" align="middle"><b>Team Invitation</b></h2>
+    <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
+</div>
+
+</ion-item>
+
+
+<ion-list>
+
+    <ion-item class="row row-center" ng-repeat="upmatches in profile.teaminvitations" style="background-color:black">
+<div class="col col-25">
+
+
+    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:50px ; width:50px" />
+
+<h4 class="whitetext">
+    {{upmatches.teamname}}
+</h4>
+</div>
+
+<div class="col">
+    <h4 class="whitetext" style="color:white"> {{upmatches.date |date:'MMM d, y'}}
+</h4>
+<div class="row  row-top">
+
+
+
+
+    <div class="col col-20">
+        <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:40px ; width:40px" />
+
+</div>
+<div class="col">
+    <h4 class="whitetext">
+        Hey Would you like to join?
+    </h4>
+
+</div>
+</div>
+
+<div class="col">
+
+    <div class="row row-top">
+        <div class="col col">
+            <button class="button button-block button-balanced button-small" style="color:white" ng-click="acceptteaminvitation(upmatches,1)"> Accept
+</button>
+</div>
+<div class="col">
+
+    <button class="button button-block button-assertive button-small" style="color:white" ng-click="acceptteaminvitation(upmatches,2)"> Decline
+</button>
+</div>
+</div>
+
+</div>
+</div>
+
+</ion-item>
+
+
+</ion-list>
+
+<ion-item style="background-color:black">
+<div align="center">
+    <h2 class="whitetext" align="middle"><b>Pending Challenges</b></h2>
+    <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
+</div>
+</ion-item>
+
+
+<ion-list>
+
+    <ion-item style="background-color:rgb(62,83,100)" ng-repeat="challenges in profile.challenges">
+<div align="center">
+    <h3 class="whitetext" style="color:white"> {{challenges.date |date:'MMM d, y h:mm a'}}
+</h3>
+</div>
+<div class="row ">
+    <div class="col">
+        <div align="center">
+            <img src="img/Badges/{{challenges.team1logo}}.png" style="width:60px;height:60px ">
+</div>
+<div align="center">
+    <h4 class="whitetext">
+        {{challenges.team1name}}
+    </h4>
+    <h5 class="whitetext">
+        Rank:{{challenges.team1rank}}
+    </h5>
+    <img src="img/Jerseys/{{challenges.team1logo}}.png" style="width:40px;height:40px ">
+</div>
+</div>
+<div class="col">
+    <div align="center">
+        <h4 class="whitetext">
+            VS
+        </h4>
+        <img src="https://bossip.files.wordpress.com/2015/03/nba-face-6.png?w=700" style="border-radius:50% ; height:80px ; width:80px" align="right" height="50" />
+
+
+</div>
+
+
+</div>
+<div class="col">
+    <div align="center">
+        <img src="img/Badges/{{challenges.team2logo}}.png" style="width:60px;height:60px ">
+</div>
+<div align="center">
+    <h4 class="whitetext">
+        {{challenges.team2name}}
+    </h4>
+    <h5 class="whitetext">
+        Rank:{{challenges.team2rank}}
+    </h5>
+    <img src="img/Jerseys/Blue.png" style="width:40px;height:40px ">
+</div>
+</div>
+
+</div>
+<div class="row">
+    <div class="col">
+        <button class="button button-block button-balanced button-small" style="color:white" ng-click="acceptinvitation(challenges)"> Accept
+</button>
+</div>
+
+
+<div class="col">
+    <button class="button button-block button-assertive button-small" style="color:white" ng-click="declineinvitation(challenges)"> Decline
+</button>
+</div>
+</div>
+</ion-item>
+
+
+</ion-list>
+
+
+
+</ion-list>
+
+
+<ion-item style="background-color:black">
+<h2 align="middle"><b>Special Offers</b></h2>
+</ion-item>
+
+<ion-scroll direction="x" class="item wide-item" style="background-color:rgb(30,30,30)">
+
+
+<div class="row">
+    <div class="col">
+        <div class="list">
+
+            <a class="item item-thumbnail-left" style="height:180px;width:180px"
+<!--href="#" -->>
+<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg" height="300" width="300">
+</a>
+
+</div>
+</div>
+
+<div class="col">
+    <div class="list">
+
+        <a class="item item-thumbnail-left" style="height:180px;width:180px" href="#">
+<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg">
+</a>
+
+</div>
+</div>
+
+<div class="col">
+    <div class="list">
+
+        <a class="item item-thumbnail-left" style="height:180px;width:180px" href="#">
+<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg">
+</a>
+
+</div>
+</div>
+<div class="col">
+    <div class="list">
+
+        <a class="item item-thumbnail-left" style="height:180px;width:180px" href="#">
+<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg">
+</a>
+
+</div>
+</div>
+<div class="col">
+    <div class="list">
+
+        <a class="item item-thumbnail-left" style="height:180px;width:180px" href="#">
+<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg">
+</a>
+
+</div>
+</div>
+
+</div>
+</ion-scroll>
+
+<ion-item style="background-color:black">
+<h2 align="middle"><b>Recommended Opponents</b></h2>
+</ion-item>
+
+<ion-scroll direction="x" class="item wide-item" style="background-color:rgb(30,30,30) ;border-style:solid;border-color:red">
+
+
+<div class="row">
+
+
+    <div class="col" style="width:400px ; border-style:solid;border-color:red">
+<div class="list">
+
+    <div class="row">
+
+        <div class="col">
+
+            <a href="#/app/selfprofile">
+                                    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:70px ; width:70px" height="50" />
+</a>
+<div align="center">
+    <h2>Barcelona</h2>
+    <p style="color:white">1500 AR</p>
+</div>
+
+</div>
+
+<div class="col">
+
+    <div align="center">
+        <h2>Opponent Streak : WWLLW</h2>
+        <h2>Barcelona</h2>
+        <p style="color:white">Preferred Stadium : Footers</p>
+<p style="color:white">Difficulty : 1500</p>
+</div>
+</div>
+
+
+</div>
+</div>
+</div>
+
+<div class="col" style="width:400px ;border-style:solid;border-color:red">
+<div class="list" style="border-style:solid;border-color:red">
+
+<div class="row">
+
+    <div class="col">
+
+        <a href="#/app/selfprofile">
+                                    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:70px ; width:70px" height="50" />
+</a>
+<div align="center">
+    <h2>Barcelona</h2>
+    <p style="color:white">1500 AR</p>
+</div>
+
+</div>
+
+<div class="col">
+
+    <div align="center">
+        <h2>Opponent Streak : WWLLW</h2>
+        <h2>Barcelona</h2>
+        <p style="color:white">Preferred Stadium : Footers</p>
+<p style="color:white">Difficulty : 1500</p>
+</div>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+</ion-scroll>
+
+
+<ion-item style="background-color:black">
+<h2 align="middle"><b>Previous Stadiums</b></h2>
+</ion-item>
+
+<ion-scroll direction="x" class="item wide-item" style="background-color:rgb(30,30,30)">
+
+
+<div class="row">
+    <div class="col">
+        <div class="list">
+
+            <a class="item item-thumbnail-left" style="height:180px;width:180px"
+<!--href="#" -->>
+<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg" height="300" width="300">
+</a>
+
+</div>
+</div>
+
+<div class="col">
+    <div class="list">
+
+        <a class="item item-thumbnail-left" style="height:180px;width:180px" href="#">
+<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg">
+</a>
+
+</div>
+</div>
+
+</div>
+</ion-scroll>
+
+<ion-item style="background-color:black">
+<h2 align="middle"><b>Match History</b></h2>
+</ion-item>
+
+<ion-scroll direction="x" class="item wide-item" style="background-color:rgb(30,30,30)">
+
+
+<div class="row">
+
+
+    <div class="col" style="width:400px ;border-style:solid;border-color:white;background-color:darkred">
+<div class="list">
+
+    <div class="row">
+
+        <div class="col" style="border:thick">
+
+<a href="#/app/selfprofile">
+                                    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:70px ; width:70px" height="50" />
+</a>
+<div align="center">
+    <h2>Barcelona</h2>
+    <p style="color:white">1500 AR</p>
+</div>
+
+</div>
+
+<div class="col">
+
+    <div align="center">
+        <h2>VS</h2>
+        <br />
+        <h2>Loss</h2>
+        <p style="color:white">-23AR</p>
+<p style="color:white">6.June 2016</p>
+</div>
+</div>
+<div class="col" style="border:thick">
+
+<a href="#/app/selfprofile">
+                                    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:70px ; width:70px" height="50" />
+</a>
+<div align="center">
+    <h2>Barcelona</h2>
+    <p style="color:white">1500 AR</p>
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="col" style="width:400px ;border-style:solid;border-color:white;background-color:darkgreen">
+<div class="list">
+
+    <div class="row">
+
+        <div class="col" style="border:thick">
+
+<a href="#/app/selfprofile">
+                                    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:70px ; width:70px" height="50" />
+</a>
+<div align="center">
+    <h2>Barcelona</h2>
+    <p style="color:white">1500 AR</p>
+</div>
+
+</div>
+
+<div class="col">
+
+    <div align="center">
+        <h2>VS</h2>
+        <br />
+        <h2>Loss</h2>
+        <p style="color:white">-23AR</p>
+<p style="color:white">6.June 2016</p>
+</div>
+</div>
+<div class="col" style="border:thick">
+
+<a href="#/app/selfprofile">
+                                    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:70px ; width:70px" height="50" />
+</a>
+<div align="center">
+    <h2>Barcelona</h2>
+    <p style="color:white">1500 AR</p>
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="col" style="width:400px ;border-style:solid;border-color:white;background-color:darkred">
+<div class="list">
+
+    <div class="row">
+
+        <div class="col" style="border:thick">
+
+<a href="#/app/selfprofile">
+                                    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:70px ; width:70px" height="50" />
+</a>
+<div align="center">
+    <h2>Barcelona</h2>
+    <p style="color:white">1500 AR</p>
+</div>
+
+</div>
+
+<div class="col">
+
+    <div align="center">
+        <h2>VS</h2>
+        <br />
+        <h2>Loss</h2>
+        <p style="color:white">-23AR</p>
+<p style="color:white">6.June 2016</p>
+</div>
+</div>
+<div class="col" style="border:thick">
+
+<a href="#/app/selfprofile">
+                                    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:70px ; width:70px" height="50" />
+</a>
+<div align="center">
+    <h2>Barcelona</h2>
+    <p style="color:white">1500 AR</p>
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</ion-scroll>
+<ion-item style="background-color:black">
+<h2 align="middle"><b>Invite Friend</b></h2>
+</ion-item>
+
+<ion-item style="background-image:url(img/InviteFriends.png); background-size:100% 100%;height:200px">
+
+</ion-item>
+
+
+</ion-content>
+</ion-view>

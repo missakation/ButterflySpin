@@ -1,0 +1,95 @@
+
+
+<style>
+    .col-50 {
+        border: thick;
+        border-color: black;
+    }
+
+    .ion-item {
+        background-color: rgb(30,30,30);
+    }
+
+    .div {
+        background-color: rgb(30,30,30);
+    }
+
+    .h3, h2, h1, h4, p {
+        color: white;
+    }
+
+    .button {
+        color: black;
+    }
+</style>
+
+
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+
+<ion-view view-title="Stadium Details">
+    <style>
+        body {
+            background-color: lightgrey;
+        }
+
+        h4.titles {
+            background-color:lightgray;
+            text-align: center;
+            height: 25px;
+        }
+    </style>
+
+
+
+
+    <ion-content style="background-color:rgb(30,30,30)">
+        <ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="doRefresh()">
+  </ion-refresher>
+        <div class="item item-image" id="image-container" >
+            <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" height="120">
+        </div>
+
+        <ion-list>
+            <ion-item style="background-color:darkblue">
+                <h2 style="font-size:130% ; color:white" align="middle"><b>Vatche Stadium</b></h2>
+                <rating style="color:gold" ng-model="rating.rate" max="rating.max"></rating>
+
+            </ion-item>
+
+
+            <ion-item style="background-color:black">
+                <h2 style="font-size:130%" align="middle"><b>Details</b></h2>
+            </ion-item>
+
+            <ion-item style="background-color:black">
+                <h2 style="font-size:130%" align="middle"><b>Cancelation Policy</b></h2>
+            </ion-item>
+
+            <ion-item style="background-color:black">
+                <h2 style="font-size:130%" align="middle"><b>Contact US</b></h2>
+            </ion-item>
+
+    <div id="map"></div>
+
+  <iframe src="//www.google.com/maps/embed/v1/place?q=Harrods,Brompton%20Rd,%20UK
+      &zoom=17
+      &key=AIzaSyBLRPrDZuaGR0u5X4V1t17CMMnHVHbCDMQ" style="width:100%;height:200px">
+  </iframe>
+
+  
+
+</ion-list>
+
+</ion-content>
+</ion-view>

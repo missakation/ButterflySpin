@@ -1,0 +1,537 @@
+<ion-view view-title="Add New Team">
+	<style>
+		body {
+			background-color: lightgrey;
+		}
+		
+		h4.titles,
+		h5.titles {
+			color: white;
+			text-align: center;
+		}
+	</style>
+
+	<ion-content style="background-color:rgb(40,80,120)">
+
+
+		<script id="my-popover.html" type="text/ng-template">
+			<ion-popover-view>
+				<ion-header-bar>
+					<h1 class="title" style="color:black">Choose a Badge</h1>
+				</ion-header-bar>
+				<ion-content>
+					<div class="row">
+
+						<div class="col">
+				<img src="img/Badges/01.png" style="width:30px;height:30px " ng-click="RefreshBadge('01')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/02.png" style="width:30px;height:30px " ng-click="RefreshBadge('02')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/03.png" style="width:30px;height:30px " ng-click="RefreshBadge('03')">
+
+						</div>
+
+												<div class="col">
+				<img src="img/Badges/04.png" style="width:30px;height:30px " ng-click="RefreshBadge('04')">
+
+						</div>
+
+					</div>
+
+
+
+										<div class="row">
+
+
+
+						<div class="col">
+				<img src="img/Badges/05.png" style="width:30px;height:30px " ng-click="RefreshBadge('05')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/06.png" style="width:30px;height:30px " ng-click="RefreshBadge('06')">
+
+						</div>
+
+												<div class="col">
+				<img src="img/Badges/07.png" style="width:30px;height:30px " ng-click="RefreshBadge('07')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/08.png" style="width:30px;height:30px " ng-click="RefreshBadge('08')">
+
+						</div>
+
+					</div>
+
+
+
+
+										<div class="row">
+
+
+
+						<div class="col">
+				<img src="img/Badges/09.png" style="width:30px;height:30px " ng-click="RefreshBadge('09')">
+
+						</div>
+						<div class="col">
+				<img src="img/Badges/10.png" style="width:30px;height:30px " ng-click="RefreshBadge('10')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/11.png" style="width:30px;height:30px " ng-click="RefreshBadge('11')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/12.png" style="width:30px;height:30px " ng-click="RefreshBadge('12')">
+
+						</div>
+
+
+					</div>
+
+
+
+															<div class="row">
+
+						<div class="col">
+				<img src="img/Badges/13.png" style="width:30px;height:30px " ng-click="RefreshBadge('13')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/14.png" style="width:30px;height:30px " ng-click="RefreshBadge('14')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/15.png" style="width:30px;height:30px " ng-click="RefreshBadge('15')">
+
+						</div>
+
+
+						<div class="col">
+				<img src="img/Badges/b01.png" style="width:30px;height:30px " ng-click="RefreshBadge('b01')">
+
+						</div>
+					</div>
+
+
+
+					<div class="row">
+
+
+
+						<div class="col">
+				<img src="img/Badges/b02.png" style="width:30px;height:30px " ng-click="RefreshBadge('b02')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/b03.png" style="width:30px;height:30px " ng-click="RefreshBadge('b03')">
+
+						</div>
+
+												<div class="col">
+				<img src="img/Badges/b04.png" style="width:30px;height:30px " ng-click="RefreshBadge('b04')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/b05.png" style="width:30px;height:30px " ng-click="RefreshBadge('b05')">
+
+						</div>
+
+					</div>
+
+
+
+										<div class="row">
+
+
+
+						<div class="col">
+				<img src="img/Badges/b06.png" style="width:30px;height:30px " ng-click="RefreshBadge('b06')">
+
+						</div>
+
+						
+						<div class="col">
+				<img src="img/Badges/b07.png" style="width:30px;height:30px " ng-click="RefreshBadge('b07')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/b08.png" style="width:30px;height:30px " ng-click="RefreshBadge('b08')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/b09.png" style="width:30px;height:30px " ng-click="RefreshBadge('b09')">
+
+						</div>
+
+					</div>
+
+
+
+															<div class="row">
+
+						<div class="col">
+				<img src="img/Badges/b10.png" style="width:30px;height:30px " ng-click="RefreshBadge('b10')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/b11.png" style="width:30px;height:30px " ng-click="RefreshBadge('b11')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/b12.png" style="width:30px;height:30px " ng-click="RefreshBadge('b12')">
+
+						</div>
+
+												<div class="col">
+				<img src="img/Badges/b13.png" style="width:30px;height:30px " ng-click="RefreshBadge('b13')">
+
+						</div>
+
+					</div>
+
+
+
+				<div class="row">
+
+
+
+						<div class="col">
+				<img src="img/Badges/b14.png" style="width:30px;height:30px " ng-click="RefreshBadge('b14')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/b15.png" style="width:30px;height:30px " ng-click="RefreshBadge('b15')">
+
+						</div>
+
+												<div class="col">
+				<img src="img/Badges/c01.png" style="width:30px;height:30px " ng-click="RefreshBadge('c01')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/c02.png" style="width:30px;height:30px " ng-click="RefreshBadge('c02')">
+
+						</div>
+
+					</div>
+
+
+					<div class="row">
+
+
+
+						<div class="col">
+				<img src="img/Badges/c03.png" style="width:30px;height:30px " ng-click="RefreshBadge('c03')">
+
+						</div>
+
+
+												<div class="col">
+				<img src="img/Badges/c04.png" style="width:30px;height:30px " ng-click="RefreshBadge('c04')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/c05.png" style="width:30px;height:30px " ng-click="RefreshBadge('c05')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/c06.png" style="width:30px;height:30px " ng-click="RefreshBadge('c06')">
+
+						</div>
+
+					</div>
+
+
+										<div class="row">
+
+						<div class="col">
+				<img src="img/Badges/c07.png" style="width:30px;height:30px " ng-click="RefreshBadge('c07')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/c08.png" style="width:30px;height:30px " ng-click="RefreshBadge('c08')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/c09.png" style="width:30px;height:30px " ng-click="RefreshBadge('c09')">
+
+						</div>
+
+												<div class="col">
+				<img src="img/Badges/c10.png" style="width:30px;height:30px " ng-click="RefreshBadge('c10')">
+
+						</div>
+
+					</div>
+
+
+
+															<div class="row">
+
+
+
+						<div class="col">
+				<img src="img/Badges/c11.png" style="width:30px;height:30px " ng-click="RefreshBadge('c11')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/c12.png" style="width:30px;height:30px " ng-click="RefreshBadge('c12')">
+
+						</div>
+
+												<div class="col">
+				<img src="img/Badges/c13.png" style="width:30px;height:30px " ng-click="RefreshBadge('c13')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/c14.png" style="width:30px;height:30px " ng-click="RefreshBadge('c14')">
+
+						</div>
+
+					</div>
+
+
+
+				<div class="row">
+
+
+
+						<div class="col">
+				<img src="img/Badges/c15.png" style="width:30px;height:30px " ng-click="RefreshBadge('c15')">
+
+						</div>
+
+						
+						<div class="col">
+				<img src="img/Badges/d01.png" style="width:30px;height:30px " ng-click="RefreshBadge('d01')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/d02.png" style="width:30px;height:30px " ng-click="RefreshBadge('d02')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/d03.png" style="width:30px;height:30px " ng-click="RefreshBadge('d03')">
+
+						</div>
+
+					</div>
+
+
+										<div class="row">
+
+						<div class="col">
+				<img src="img/Badges/d04.png" style="width:30px;height:30px " ng-click="RefreshBadge('d04')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/d05.png" style="width:30px;height:30px " ng-click="RefreshBadge('d05')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/d06.png" style="width:30px;height:30px " ng-click="RefreshBadge('d06')">
+
+						</div>
+
+						
+						<div class="col">
+				<img src="img/Badges/d07.png" style="width:30px;height:30px " ng-click="RefreshBadge('d07')">
+
+						</div>
+
+					</div>
+
+
+
+
+										<div class="row">
+
+
+						<div class="col">
+				<img src="img/Badges/d08.png" style="width:30px;height:30px " ng-click="RefreshBadge('d08')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/d09.png" style="width:30px;height:30px " ng-click="RefreshBadge('d09')">
+
+						</div>
+
+												<div class="col">
+				<img src="img/Badges/d10.png" style="width:30px;height:30px " ng-click="RefreshBadge('d10')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/d11.png" style="width:30px;height:30px " ng-click="RefreshBadge('d11')">
+
+						</div>
+
+					</div>
+
+
+
+															<div class="row">
+
+
+
+						<div class="col">
+				<img src="img/Badges/d12.png" style="width:30px;height:30px " ng-click="RefreshBadge('d12')">
+
+						</div>
+
+												<div class="col">
+				<img src="img/Badges/d13.png" style="width:30px;height:30px " ng-click="RefreshBadge('d13')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/d14.png" style="width:30px;height:30px " ng-click="RefreshBadge('d14')">
+
+						</div>
+
+						<div class="col">
+				<img src="img/Badges/d15.png" style="width:30px;height:30px " ng-click="RefreshBadge('d15')">
+
+						</div>
+
+					</div>
+				
+				</ion-content>
+			</ion-popover-view>
+		</script>
+
+
+		<div align="center" >
+		<h5  style="background-color:transparent;border-color:white;color:white;border-radius:5px">
+              Team Name
+          </h5>
+
+		   <label class="item item-input" style="background-color:transparent;border-color:white;border-radius:5px">
+                <input type="text"  ng-model="adduser.teamname" style="color:white" >
+
+            </label>
+		</div>
+
+
+
+
+		<label class="item item-input item-select" style="background-color:transparent;border-color:white;color:white;border-radius:5px">
+              Favorite Stadium
+          <select ng-model="adduser.favstadium"  style="background-color:transparent;border-color:white;color:white;border-radius:5px" >
+              <option selected>None</option>
+			  <option ng-repeat="item in allstadiums" >{{item.name}}</option>
+          </select>
+      </label>
+		<label class="item item-input item-select" style="background-color:transparent;border-color:white;color:white;border-radius:5px">
+          Preferred Team Size
+          <select ng-model="adduser.pteamsize"  style="background-color:transparent;border-color:white;color:white;border-radius:5px">
+              <option>5</option>
+              <option selected>6</option>
+              <option selected>7</option>
+              <option selected>8</option>
+              <option selected>9</option>
+              <option>10</option>
+              <option selected>11</option>
+          </select>
+      </label>
+
+	  		<div class="button-bar">
+			<button class="button" ng-click="updateteamsize(1)">5</button>
+			<button class="button" ng-click="updateteamsize(2)">6</button>
+			<button class="button" ng-click="updateteamsize(3)">7</button>
+			<button class="button" ng-click="updateteamsize(4)">8</button>
+			<button class="button" ng-click="updateteamsize(5)">9</button>
+			<button class="button" ng-click="updateteamsize(6)">10</button>
+			<button class="button" ng-click="updateteamsize(6)">11</button>
+		</div>
+
+
+		<div align="center">
+			<h5 class="titles">
+				<u>Badge</u>
+			</h5>
+			<img src="img/Badges/{{adduser.badge}}.png" style="width:70px;height:70px " ng-click="openPopover($event)">
+		</div>
+
+
+		<br>
+		<div align="center">
+			<h5 class="titles">
+				<u>Home Jersey color</u>
+			</h5>
+		</div>
+		<div align="center">
+			<img src="img/Jerseys/{{adduser.homejersey}}.png" style="width:70px;height:50px " ng-click="FacebookLogin()">
+		</div>
+		<div class="button-bar">
+			<button class="button button-assertive" ng-click="updatehomejersey(1)"></button>
+			<button class="button button-positive" ng-click="updatehomejersey(2)"></button>
+			<button class="button button-balanced" ng-click="updatehomejersey(3)"></button>
+			<button class="button button-dark" ng-click="updatehomejersey(4)"></button>
+			<button class="button button-energized" ng-click="updatehomejersey(5)"></button>
+			<button class="button" ng-click="updatehomejersey(6)"></button>
+		</div>
+
+		<br>
+
+
+		<div align="center">
+			<h5 class="titles">
+				<u>Away Jersey color</u>
+			</h5>
+		</div>
+		<div align="center">
+			<img src="img/Jerseys/{{adduser.awayjersey}}.png" style="width:70px;height:50px " ng-click="FacebookLogin()">
+		</div>
+		<div class="button-bar">
+			<button class="button button-assertive" ng-click="updateawayjersey(1)"></button>
+			<button class="button button-positive" ng-click="updateawayjersey(2)"></button>
+			<button class="button button-balanced" ng-click="updateawayjersey(3)"></button>
+			<button class="button button-dark" ng-click="updateawayjersey(4)"></button>
+			<button class="button button-energized" ng-click="updateawayjersey(5)"></button>
+			<button class="button" ng-click="updateawayjersey(6)"></button>
+		</div>
+		<br>
+
+
+
+		<button class="button button-full button-positive" ng-disabled="disabledbutton" style="background-color:darkorange" ng-click="add()">
+          ADD TEAM
+      </button>
+
+	</ion-content>
+</ion-view>

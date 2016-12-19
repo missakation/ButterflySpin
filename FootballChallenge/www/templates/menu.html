@@ -1,0 +1,116 @@
+<style>
+    .item .item-content {
+  background-color: rgb(64, 64, 64);
+  color:white;
+  border:rgb(64, 64, 64);
+  border-color:rgb(64, 64, 64);
+}
+
+    .icon {
+   font-size: 30px;
+}
+</style>
+
+
+<ion-side-menus enable-menu-with-back-views="false">
+    <ion-side-menu-content drag-content="false" >
+        <ion-nav-bar class="bar-stable">
+            <ion-nav-back-button>
+            </ion-nav-back-button>
+
+            <ion-nav-buttons side="left">
+                <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="menuContent"></ion-nav-view>
+    </ion-side-menu-content>
+
+
+
+    <ion-side-menu side="left" >
+        <ion-header-bar class="bar-stable" >
+            <h1 class="title">Menu</h1>
+
+        </ion-header-bar>
+
+        <ion-content style="background-color:rgb(64, 64, 64)" ng-controller="MenuController">
+            <ion-list>
+                <ion-item class="item item-icon-left"  menu-toggle="left" href="#/app/search" style="border-color:rgb(64, 64, 64)">
+                            <i class="icon ion-email"></i>
+                        Search
+                </ion-item>
+
+                    <ion-item  class="item item-icon-left" menu-close  href="#/app/homepage" style="border-color:rgb(64, 64, 64)">
+                        <i class="icon ion-email"></i>
+                        Home
+                    </ion-item>
+
+                    <ion-item class="item item-icon-left" menu-toggle="left" href="#/app/reservestadium" style="border-color:rgb(64, 64, 64)">
+                        <i class="icon ion-email"></i>
+                        Reserve
+                    </ion-item>
+
+                    <ion-item class="item item-icon-left" menu-toggle="left" href="#/app/matchmakinghome" style="border-color:rgb(64, 64, 64)">
+                        <i class="icon ion-email"></i>
+                        Match Making
+                    </ion-item>
+
+                <ion-item class="item item-icon-left" menu-toggle="left" href="#/app/availableplayers" style="border-color:rgb(64, 64, 64)">
+                    <i class="icon ion-email"></i>
+                    Player Finder
+                </ion-item>
+
+                <ion-item class="item item-icon-left" menu-toggle="left" href="#/app/selfprofile" style="border-color:rgb(64, 64, 64)">
+                    <i class="icon ion-email"></i>
+                    Profile
+                </ion-item>
+
+                <ion-item class="item item-icon-left" menu-toggle="left" href="#/app/teammanagement" style="border-color:rgb(64, 64, 64)">
+                    <i class="icon ion-email"></i>
+                    Team
+                </ion-item>
+
+                <ion-item class="item item-icon-left" menu-toggle="left" href="#/app/bookings" style="border-color:rgb(64, 64, 64)">
+                    <i class="icon ion-email"></i>
+                    Upcoming Matches
+                </ion-item>
+                
+                <ion-item class="item item-icon-left" menu-toggle="left" href="#/app/bookings" style="border-color:rgb(64, 64, 64)">
+                    <i class="icon ion-email"></i>
+                    Bookings
+                </ion-item>
+               
+
+                <ion-item class="item item-icon-left" menu-toggle="left" href="#/app/settings" style="border-color:rgb(64, 64, 64)">
+                    <i class="icon ion-chatbubble-working"></i>
+                    Settings
+                </ion-item>
+
+                <ion-item menu-close href="#/app/homepage" style="border-color:rgb(64, 64, 64)">
+                    Invite Your Friends
+                </ion-item>
+                <ion-item menu-close href="#/app/homepage" style="border-color:rgb(64, 64, 64)">
+                    Updates
+                </ion-item>
+
+                <ion-item menu-close href="#/app/homepage" style="border-color:rgb(64, 64, 64)">
+                    Leaderboard
+                </ion-item>
+
+                <ion-item menu-close href="#/app/homepage" style="border-color:rgb(64, 64, 64)">
+                    Tournament
+                </ion-item>
+
+
+                <ion-item menu-close href="#/app/feedbacks" style="border-color:rgb(64, 64, 64)">
+                    Contact Us
+                </ion-item>
+
+                <ion-item menu-close style="border-color:rgb(64, 64, 64)" ng-click="logout()">
+                    Log Out
+                </ion-item>
+
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>

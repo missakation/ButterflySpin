@@ -1,0 +1,16 @@
+<ion-view view-title="settings">
+  <ion-content>
+    
+
+      <ion-list>
+
+          <ion-checkbox ng-model="filter.red">Notification</ion-checkbox>
+          <ion-checkbox ng-model="filter.red">Email Verified</ion-checkbox>
+          <ion-checkbox ng-model="filter.red">Facebook Verified</ion-checkbox>
+          <ion-checkbox ng-model="filter.red">SMS Verified</ion-checkbox>
+          <a class="button open-button" on-tap="openPickerView()">{{ pickerOutput }}</a>
+
+      </ion-list>
+
+  </ion-content>
+</ion-view>
