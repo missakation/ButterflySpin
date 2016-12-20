@@ -31,399 +31,385 @@
 		}
 	</style>
 
-	</style>
-	<ion-nav-buttons side="primary">
-		<h5 ng-show="currentprofile.amiadmin" ng-click="goupdate(currentprofile)" style="color:black">
-			<u>
-				Edit
-			</u>
-		</h5>
-	</ion-nav-buttons>
-	<ion-content style="background-color:rgb(40,80,120)">
+</style>
+<ion-nav-buttons side="primary">
+	<h5 ng-show="currentprofile.amiadmin" ng-click="goupdate(currentprofile)" style="color:black">
+<u>
+	Edit
+</u>
+</h5>
+</ion-nav-buttons>
+<ion-content style="background-color:rgb(40,80,120)">
 
 
-		<ion-item>
+<ion-item>
 
-			<div class="row ">
-				<div class="col" align="center">
-					<img src="img/Badges/{{currentprofile.badge}}.png" style="width:80px;height:80px;">
-					<h5 class="whitetext"> {{currentprofile.teamname}} </h5>
-					<h5 class="whitetext"> {{currentprofile.ranking}} </h5>
-				</div>
+	<div class="row ">
+		<div class="col" align="center">
+			<img src="img/Badges/{{currentprofile.badge}}.png" style="width:80px;height:80px;">
+<h5 class="whitetext"> {{currentprofile.teamname}} </h5>
+<h5 class="whitetext"> {{currentprofile.ranking}} </h5>
+</div>
 
-				<div class="col" align="center">
-					<img src={{team.favstadiumphoto}} style="width:100%;height:80px;">
-					<h5 class="whitetext"> Fav. Stadium </h5>
-					<h5 class="whitetext"> {{currentprofile.favstadium}} </h5>
-				</div>
+<div class="col" align="center">
+	<img src={{team.favstadiumphoto}} style="width:100%;height:80px;">
+<h5 class="whitetext"> Fav. Stadium </h5>
+<h5 class="whitetext"> {{currentprofile.favstadium}} </h5>
+</div>
 
-			</div>
+</div>
 
 
-			<div class="row row-top">
-				<div class="col" align="center" style="color:white">
+<div class="row row-top">
+	<div class="col" align="center" style="color:white"> Matches
 
-					Matches
+</div>
 
-				</div>
+<div class="col " style="color:white" align="center"> Difficulty
 
-				<div class="col " style="color:white" align="center">
+</div>
 
-					Difficulty
+<div class="col " style="color:white" align="center"> Rating
 
-				</div>
+</div>
 
-				<div class="col " style="color:white" align="center">
+<div class="col " align="right" style="color:white"> Av. Res
 
-					Rating
+</div>
 
-				</div>
+</div>
 
-				<div class="col " align="right" style="color:white">
+<div class="row ">
+	<div class="col" align="center" style="color:white"> {{item.playposition}}
 
-					Av. Res
+</div>
 
-				</div>
+<div class="col" style="color:white" align="center"> {{item.age}}
 
-			</div>
+</div>
 
-			<div class="row ">
-				<div class="col" align="center" style="color:white">
+<div class="col" style="color:white"> {{item.nummatches}}
 
-					{{item.playposition}}
+</div>
 
-				</div>
+<div class="col" align="right" align="center">
 
-				<div class="col" style="color:white" align="center">
+</div>
 
-					{{item.age}}
+</div>
 
-				</div>
+<p class="whitetext">
+	I am the best
+</p>
 
-				<div class="col" style="color:white">
+</ion-item>
 
-					{{item.nummatches}}
 
-				</div>
+<ion-item class="row" align="center">
+	<div class="col" align="center">
+		<button class="button button-small button-balanced" ng-click="Invite()" style="border-radius:15px">Invite Member</button>
+</div>
 
-				<div class="col" align="right" align="center">
+<div class="col" align="center">
+	<button class="button button-small button-balanced" ng-click="Challengeteam()" style="border-radius:15px">challenge</button>
+</div>
+</ion-item>
 
-				</div>
+<ion-item>
+	<div align="center">
+		<h2>
+			Upcoming Games
 
-			</div>
+		</h2>
+	</div>
+</ion-item>
 
-			<p class="whitetext">
-				I am the best
-			</p>
+<ion-item>
+	<ion-list>
+		<ion-item style="background-color:rgb(30,30,30);border-radius:10px; ">
 
-		</ion-item>
+<div class="row row-center" style="height:10px ">
+<div class="col col-75">
 
+	<h3>June 7, 8pm @ Macity</h3>
+</div>
 
-		<ion-item class="row" align="center">
-			<div class="col" align="center">
-				<button class="button button-small button-balanced" ng-click="Invite()" style="border-radius:15px">Invite Member</button>
-			</div>
+<div class="col">
+	<h3>22</h3>
+</div>
+<div class="col">
 
-			<div class="col" align="center">
-				<button class="button button-small button-balanced" ng-click="Challengeteam()" style="border-radius:15px">challenge</button>
-			</div>
-		</ion-item>
 
-		<ion-item>
-			<div align="center">
-				<h2>
-					Upcoming Games
+</div>
 
-				</h2>
-			</div>
-		</ion-item>
+</div>
 
-		<ion-item>
-			<ion-list>
-				<ion-item style="background-color:rgb(30,30,30);border-radius:10px; ">
+</ion-item>
+<ion-item style="background-color:rgb(30,30,30);border-radius:10px; ">
 
-					<div class="row row-center" style="height:10px ">
-						<div class="col col-75">
+<div class="row row-center" style="height:10px ">
+<div class="col col-75">
 
-							<h3>June 7, 8pm @ Macity</h3>
-						</div>
+	<h3>June 7, 8pm @ Macity</h3>
+</div>
 
-						<div class="col">
-							<h3>22</h3>
-						</div>
-						<div class="col">
+<div class="col">
+	<h3>22</h3>
+</div>
+<div class="col">
 
 
-						</div>
+</div>
 
-					</div>
+</div>
 
-				</ion-item>
-				<ion-item style="background-color:rgb(30,30,30);border-radius:10px; ">
+</ion-item>
 
-					<div class="row row-center" style="height:10px ">
-						<div class="col col-75">
+<ion-item style="background-color:rgb(30,30,30);border-radius:10px; ">
 
-							<h3>June 7, 8pm @ Macity</h3>
-						</div>
+<div class="row row-center" style="height:10px ">
+<div class='col col-75'>
 
-						<div class="col">
-							<h3>22</h3>
-						</div>
-						<div class="col">
+	<h3>June 7, 8pm @ Macity</h3>
+</div>
 
+<div class='col '>
+	<h3>22</h3>
+</div>
+<div class="col">
 
-						</div>
 
-					</div>
+</div>
 
-				</ion-item>
+</div>
 
-				<ion-item style="background-color:rgb(30,30,30);border-radius:10px; ">
+</ion-item>
 
-					<div class="row row-center" style="height:10px ">
-						<div class='col col-75'>
 
-							<h3>June 7, 8pm @ Macity</h3>
-						</div>
+</ion-list>
 
-						<div class='col '>
-							<h3>22</h3>
-						</div>
-						<div class="col">
+</ion-item>
 
+<ion-item>
+	<div class="row row-center">
+		<div class="col">
+			<h3 ng-click="switchscreens(1)">
+				Availability
+			</h3>
+			<hr ng-show="tabs.Available">
+		</div>
 
-						</div>
+		<div class='col '>
+			<h3 ng-click="switchscreens(2)">
+				Statistics
+			</h3>
+			<hr ng-show="tabs.Statistics">
+		</div>
+		<div class="col">
 
-					</div>
+			<h3 ng-click="switchscreens(3)">
+				Members
+			</h3>
+			<hr ng-show="tabs.Members">
+		</div>
 
-				</ion-item>
+	</div>
 
 
-			</ion-list>
 
-		</ion-item>
+</ion-item>
 
-		<ion-item>
-			<div class="row row-center">
-				<div class="col">
-					<h3 ng-click="switchscreens(1)">
-						Availability
-					</h3>
-					<hr ng-show="tabs.Available">
-				</div>
 
-				<div class='col '>
-					<h3 ng-click="switchscreens(2)">
-						Statistics
-					</h3>
-					<hr ng-show="tabs.Statistics">
-				</div>
-				<div class="col">
+<ion-item ng-show="tabs.Members">
 
-					<h3 ng-click="switchscreens(3)">
-						Members
-					</h3>
-					<hr ng-show="tabs.Members">
-				</div>
 
-			</div>
+	<div class="row row-center" ng-repeat="item in currentprofile.players">
+		<div class="col col-50">
 
+			<h3>{{item.name}}</h3>
+		</div>
 
+		<div class="col">
 
-		</ion-item>
-
-
-		<ion-item ng-show="tabs.Members">
-
-
-			<div class="row row-center" ng-repeat="item in currentprofile.players">
-				<div class="col col-50">
-
-					<h3>{{item.name}}</h3>
-				</div>
-
-				<div class="col">
-
-					<button ng-show="false" class="button button-balanced button-small" ng-click="playeroperations(2,0)">
+			<button ng-show="item.isadmin" class="button button-balanced button-small" style="width:60px" ng-click="playeroperations(2,item)">
 						Demote
 					</button>
 
-					<button ng-show="true" class="button button-balanced button-small" ng-click="playeroperations(1,0)">
+			<button ng-show="!(item.isadmin)" class="button button-balanced button-small" style="width:60px" ng-click="playeroperations(1,item)">
 						Promote
 					</button>
 
-					<button class="button button-assertive button-small" ng-click="playeroperations(3,0)">
+			<button ng-show="true" class="button button-assertive button-small" ng-click="playeroperations(3,item)">
 						Remove
 					</button>
-				</div>
+		</div>
 
-			</div>
+	</div>
 
 
-		</ion-item>
+</ion-item>
 
-		<ion-item ng-show="tabs.Statistics">
+<ion-item ng-show="tabs.Statistics">
 
 
-			<div class="row row-center">
-				<div class='col col-75'>
+	<div class="row row-center">
+		<div class='col col-75'>
 
-					<h3>Games On Arina</h3>
-				</div>
+			<h3>Games On Arina</h3>
+		</div>
 
-				<div class="col">
+		<div class="col">
 
-					<h3>1</h3>
-				</div>
+			<h3>1</h3>
+		</div>
 
-			</div>
+	</div>
 
-			<div class="row row-center">
-				<div class='col col-75'>
+	<div class="row row-center">
+		<div class='col col-75'>
 
-					<h3>Wins</h3>
-				</div>
+			<h3>Wins</h3>
+		</div>
 
-				<div class="col">
+		<div class="col">
 
-					<h3>1</h3>
-				</div>
+			<h3>1</h3>
+		</div>
 
-			</div>
+	</div>
 
-			<div class="row row-center">
-				<div class='col col-75'>
+	<div class="row row-center">
+		<div class='col col-75'>
 
-					<h3>Win Streak</h3>
-				</div>
+			<h3>Win Streak</h3>
+		</div>
 
-				<div class="col">
+		<div class="col">
 
-					<h3>1</h3>
-				</div>
+			<h3>1</h3>
+		</div>
 
-			</div>
+	</div>
 
 
 
 
-		</ion-item>
+</ion-item>
 
-		<ion-item ng-show="tabs.Available">
+<ion-item ng-show="tabs.Available">
 
 
-			<div class="row row-center">
-				<div class="col">
+	<div class="row row-center">
+		<div class="col">
 
-					<h3>Monday</h3>
-				</div>
+			<h3>Monday</h3>
+		</div>
 
-				<div class="col">
+		<div class="col">
 
-					<h3>From <b>{{currentprofile.startmonday}}:00</b> till <b>{{currentprofile.startmondayend}}:00</b> </h3>
-				</div>
+			<h3>From <b>{{currentprofile.startmonday}}:00</b> till <b>{{currentprofile.startmondayend}}:00</b> </h3>
+		</div>
 
-			</div>
+	</div>
 
-			<div class="row row-center">
-				<div class="col">
+	<div class="row row-center">
+		<div class="col">
 
-					<h3>Tuesday</h3>
-				</div>
+			<h3>Tuesday</h3>
+		</div>
 
-				<div class="col">
+		<div class="col">
 
-					<h3>From <b>{{currentprofile.starttuesday}}:00</b> till <b>{{currentprofile.starttuesdayend}}:00</b> </h3>
-				</div>
+			<h3>From <b>{{currentprofile.starttuesday}}:00</b> till <b>{{currentprofile.starttuesdayend}}:00</b> </h3>
+		</div>
 
-			</div>
+	</div>
 
-			<div class="row row-center">
-				<div class="col">
+	<div class="row row-center">
+		<div class="col">
 
-					<h3>Wednesday</h3>
-				</div>
+			<h3>Wednesday</h3>
+		</div>
 
-				<div class="col">
+		<div class="col">
 
-					<h3>From <b>{{currentprofile.startwednesday}}:00</b> till <b>{{currentprofile.startwednesdayend}}:00</b> </h3>
-				</div>
+			<h3>From <b>{{currentprofile.startwednesday}}:00</b> till <b>{{currentprofile.startwednesdayend}}:00</b> </h3>
+		</div>
 
-			</div>
+	</div>
 
-			<div class="row row-center">
-				<div class="col">
+	<div class="row row-center">
+		<div class="col">
 
-					<h3>Wednesday</h3>
-				</div>
+			<h3>Wednesday</h3>
+		</div>
 
-				<div class="col">
+		<div class="col">
 
-					<h3>From <b>{{currentprofile.startthursday}}:00</b> till <b>{{currentprofile.startthursdayend}}:00</b> </h3>
-				</div>
+			<h3>From <b>{{currentprofile.startthursday}}:00</b> till <b>{{currentprofile.startthursdayend}}:00</b> </h3>
+		</div>
 
-			</div>
+	</div>
 
-			<div class="row row-center">
-				<div class="col">
+	<div class="row row-center">
+		<div class="col">
 
-					<h3>Thursday</h3>
-				</div>
+			<h3>Thursday</h3>
+		</div>
 
-				<div class="col">
+		<div class="col">
 
-					<h3>From <b>{{currentprofile.startthursday}}:00</b> till <b>{{currentprofile.startthursdayend}}:00</b> </h3>
-				</div>
+			<h3>From <b>{{currentprofile.startthursday}}:00</b> till <b>{{currentprofile.startthursdayend}}:00</b> </h3>
+		</div>
 
-			</div>
+	</div>
 
-			<div class="row row-center">
-				<div class="col">
+	<div class="row row-center">
+		<div class="col">
 
-					<h3>Friday</h3>
-				</div>
+			<h3>Friday</h3>
+		</div>
 
-				<div class="col">
+		<div class="col">
 
-					<h3>From <b>{{currentprofile.startfriday}}:00</b> till <b>{{currentprofile.startfridayend}}:00</b> </h3>
-				</div>
+			<h3>From <b>{{currentprofile.startfriday}}:00</b> till <b>{{currentprofile.startfridayend}}:00</b> </h3>
+		</div>
 
-			</div>
+	</div>
 
-			<div class="row row-center">
-				<div class="col">
+	<div class="row row-center">
+		<div class="col">
 
-					<h3>Saturday</h3>
-				</div>
+			<h3>Saturday</h3>
+		</div>
 
-				<div class="col">
+		<div class="col">
 
-					<h3>From <b>{{currentprofile.startsaturday}}:00</b> till <b>{{currentprofile.startsaturdayend}}:00</b> </h3>
-				</div>
+			<h3>From <b>{{currentprofile.startsaturday}}:00</b> till <b>{{currentprofile.startsaturdayend}}:00</b> </h3>
+		</div>
 
-			</div>
+	</div>
 
-			<div class="row row-center">
-				<div class="col">
+	<div class="row row-center">
+		<div class="col">
 
-					<h3>Sunday</h3>
-				</div>
+			<h3>Sunday</h3>
+		</div>
 
-				<div class="col">
+		<div class="col">
 
-					<h3>From <b>{{currentprofile.startsunday}}:00</b> till <b>{{currentprofile.startsundayend}}:00</b> </h3>
-				</div>
+			<h3>From <b>{{currentprofile.startsunday}}:00</b> till <b>{{currentprofile.startsundayend}}:00</b> </h3>
+		</div>
 
-			</div>
+	</div>
 
 
 
 
-		</ion-item>
+</ion-item>
 
 
 
-	</ion-content>
+</ion-content>
 
 </ion-view>

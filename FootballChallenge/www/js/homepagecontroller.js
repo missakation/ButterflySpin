@@ -4,8 +4,9 @@ angular.module('football.controllers')
 
     .controller('HomeController', function ($scope,$state,HomeStore, $timeout, $ionicPopup, $ionicLoading) {
 
-        $scope.showteaminvite = false;
-        $scope.showpendingchallenge = false;
+        $scope.showteaminvite = true;
+        $scope.showpendingchallenge = true;
+        $scope.showupcomingmatches = true;
         
 
         $scope.notloaded = true;
@@ -16,6 +17,21 @@ angular.module('football.controllers')
                 HomeStore.GetProfileInfo(function (leagues) {
                  $scope.profile = leagues;
                  $scope.notloaded = false;
+
+                 if( $scope.profile.challenges.length==0)
+                 {
+                     $scope.showpendingchallenge = false;
+                 }
+                 if( $scope.profile.upcominteamgmatches.length==0)
+                 {
+                     $scope.showupcomingmatches = false;
+                 }
+                 if( $scope.profile.teaminvitations.length==0)
+                 {
+                     $scope.showteaminvite = false;
+                 }
+
+
                  $scope.$digest();
                 })
             }, 2000);
@@ -121,6 +137,7 @@ angular.module('football.controllers')
 
         $scope.doRefresh = function()
         {
+          
           try {
             $scope.profile = {};
 
@@ -132,6 +149,31 @@ angular.module('football.controllers')
         } catch (error) {
             alert(error.message);
         }
+        }
+        
+
+        $scope.homepagedirect = function(opercode)
+        {
+            switch(opercode) 
+            {
+                case 1:
+                   $state.go('app.reservestadium');
+                   break;
+                case 2:
+                   $state.go('app.availableplayers');
+                   break;
+                case 3:
+                   $state.go('app.matchmakinghome');
+                   break;
+            }
+        }
+
+        $scope.gogamedetails = function(gameid)
+        {
+            $state.go('app.gamedetails',
+            {
+                gameid:gameid
+            })
         }
 
 

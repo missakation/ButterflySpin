@@ -79,7 +79,7 @@
 
     <div class="list">
 
-        <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="showConfirm()"> Reserve Stadium
+        <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(1)"> Reserve Stadium
 </button>
 
 </div>
@@ -88,7 +88,7 @@
 <div class="col">
     <div class="list">
 
-        <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="showConfirm()"> Player Finder
+        <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(2)"> Player Finder
 </button>
 
 </div>
@@ -97,14 +97,14 @@
 <div class="col">
     <div class="list">
 
-        <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="showConfirm()"> Match Making
+        <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(3)"> Match Making
 </button>
 
 </div>
 </div>
 </div>
 
-<ion-item style="background-color:black">
+<ion-item style="background-color:black" ng-show="showupcomingmatches">
 <div align="center">
     <h2 class="whitetext" align="middle"><b>Upcoming Matches</b></h2>
     <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
@@ -122,9 +122,13 @@
 
 <div class="col">
 
-    <button ng-show="true" class="button button-balanced button-small" ng-click="playeroperations(1,0)">
-						Promote
-					</button>
+    <button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="width:60px" ng-click="gogamedetails(upmatches.key)">
+						Manage
+	</button>
+
+    <button ng-show="!(upmatches.isadmin)" class="button button-balanced button-small" style="width:60px" ng-click="gogamedetails(upmatches.key)">
+						View
+	</button>
 </div>
 
 </ion-item>
@@ -197,7 +201,7 @@
 
 </ion-list>
 
-<ion-item style="background-color:black">
+<ion-item style="background-color:black" ng-show="showpendingchallenge">
 <div align="center">
     <h2 class="whitetext" align="middle"><b>Pending Challenges</b></h2>
     <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>

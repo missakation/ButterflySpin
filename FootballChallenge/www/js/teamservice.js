@@ -145,13 +145,13 @@
 
                     contact.players[id] = {
                         name: "Missak",
-                        isadmin: "True"
+                        isadmin: true
                     };
 
                     contact.captain[id] =
                         {
                             name: "Missak",
-                            isadmin: "True"
+                            isadmin: true
                         };
 
 
@@ -229,6 +229,7 @@
                                 amiadmin = true;
                             }
 
+                            //get all the captains with ID and Name
                             if (snapshot.child("captain").exists()) {
                                 snapshot.child("captain").forEach(function (pl) {
 
@@ -243,16 +244,22 @@
                                 })
                             }
 
+                            //get all the players name with ID and Name
                             if (snapshot.child("players").exists()) {
                                 snapshot.child("players").forEach(function (pl) {
 
+                                    if(pl.key != "firstone")
+                                    {
                                     var data = {
 
                                         key : pl.key,
-                                        name : pl.child("name").val()
+                                        name : pl.child("name").val(),
+                                        isadmin : pl.child("isadmin").val()
 
                                     }
                                     players.push(data);
+                                    }
+
 
                                 })
                             }
@@ -284,7 +291,11 @@
                                     "wins": 0,
                                     "amiadmin": amiadmin,
                                     "players": players,
-                                    "captain":admins
+                                    "captain":admins,
+                                    "teamadmin":snapshot.child("teamadmin").val(),
+                                    "accepted":false,
+                                    "pending":false,
+                                    "invite":false
                                 };
                                 TeamProfile = Items;
 
@@ -364,18 +375,20 @@
             PromoteDeletePlayers: function (team, player, operation) {
 
 
+                try {
                 var updates = {};
 
                 switch (operation) {
                     case 1: //promote
-                        updates['/teams/' + team.key + '/admins/' + player.key] = player;
+                        updates['/teams/' + team.key + '/players/' + player.key +'/isadmin'] = true;
                         break;
                     case 2: //demote
-                        updates['/teams/' + team.key + '/admins/' + player.key] = null;
+                        updates['/teams/' + team.key + '/players/' + player.key +'/isadmin'] = false;
                         break;
                     case 3: //remove
                         updates['/teams/' + team.key + '/players/' + player.key] = null;
                         updates['/teams/' + team.key + '/admins/' + player.key] = null;
+                        updates['/players/' + player.key + '/teams/' + team.key] = null;
                         break;
                     case 4: //add
                         updates['/teams/' + team.key + '/players/' + player.key] = player;
@@ -386,6 +399,11 @@
                 }
 
                 return firebase.database().ref().update(updates);
+                    
+                } catch (error) {
+                    alert(error.message);
+                }
+
             },
 
             InvitePlayerToTeam: function (team, player) {

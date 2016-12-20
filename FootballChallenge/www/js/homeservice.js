@@ -28,7 +28,7 @@ angular.module('football.controllers')
                         snapshot.child("challenges").forEach(function (challenges) {
 
                             var challengedate = new Date();
-
+                            var isadmin = challenges.child("team1adminid").val() == id;
 
                             challengedate.setMinutes(challenges.child("minute").val());
                             challengedate.setFullYear(challenges.child("year").val());
@@ -55,7 +55,8 @@ angular.module('football.controllers')
                                 team2name: challenges.child("team2name").val(),
                                 team2rank: challenges.child("team2rank").val(),
                                 year: challenges.child("year").val(),
-                                date: challengedate
+                                date: challengedate,
+                                isadmin:isadmin
                             }
                             totchallenges.push(challengedata);
 
@@ -75,6 +76,9 @@ angular.module('football.controllers')
                             matchdate.setDate(challenges.child("day").val());
 
                             var matchdata = {
+
+                                key: challenges.key,
+
                                 accepted: challenges.child("accepted").val(),
                                 day: challenges.child("day").val(),
                                 hour: challenges.child("hour").val(),
@@ -125,6 +129,7 @@ angular.module('football.controllers')
                                 hour: challenges.child("hour").val(),
                                 minute: challenges.child("minute").val(),
                                 month: challenges.child("month").val(),
+                                year: challenges.child("year").val(),
                                 
                                 key: challenges.child("key").val(),
                                 teamname: challenges.child("teamname").val(),
@@ -369,9 +374,14 @@ angular.module('football.controllers')
 
                 updates['/players/' + challenge.team2adminid + '/upcominteamgmatches/' + challenge.key] = postDataPlayer;
 
+                //add to teams upcoming matches
+                updates['/teams/' + challenge.team1key + '/upcominteamgmatches/' + challenge.key] = postDataPlayer;
+
+                updates['/teams/' + challenge.team2key + '/upcominteamgmatches/' + challenge.key] = postDataPlayer;
+
 
                 //delete from challenges
-                updates['/challenges/' + challenge.key] = null;
+                //updates['/challenges/' + challenge.key] = null;
 
                 updates['/players/' + challenge.team1adminid + '/challenges/'+challenge.key ] = null;
 
@@ -396,7 +406,7 @@ angular.module('football.controllers')
 
                 updates['/players/' + id + '/teams/'+invitation.key ] = null;
 
-                updates['/teams/' + invitation.teamid + '/players/'+ id] = 
+                updates['/teams/' + invitation.key + '/players/'+ id] = 
                 {
                     isadmin : false,
                     name : myprofile.displayname
@@ -408,12 +418,12 @@ angular.module('football.controllers')
                       teamname: invitation.teamname,
                       badge: invitation.badge,
 
-                      dateyear : invitation.dateyear,
-                      datemonth : invitation.datemonth,
-                      dateday : invitation.dateday,
+                      dateyear : invitation.year,
+                      datemonth : invitation.month,
+                      dateday : invitation.day,
 
-                      datehour : invitation.datehour,
-                      dateminute : invitation.dateminute
+                      datehour : invitation.hour,
+                      dateminute : invitation.minute
                 };
 
                 return firebase.database().ref().update(updates);

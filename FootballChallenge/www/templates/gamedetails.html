@@ -34,175 +34,165 @@
 			color: white;
 		}
 	</style>
-	<ion-nav-buttons side="primary">
-		<ion-spinner ng-show="loadingphase" icon="spiral"></ion-spinner>
-	</ion-nav-buttons>
-	<ion-content style="background-color:rgb(46,62,75)">
+<ion-nav-buttons side="primary">
+	<ion-spinner ng-show="loadingphase" icon="spiral"></ion-spinner>
+</ion-nav-buttons>
+<ion-content style="background-color:rgb(46,62,75)">
+<div align="center">
+	<ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
+</div>
 
 
-		<div class="card" style="background-color:rgb(62,83,100)">
-			<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
+<div class="card" style="background-color:rgb(62,83,100)">
+<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
 
-			<div class="row ">
-				<div class="col">
-					<div align="center">
-						<img src="img/Badges/b01.png" style="width:60px;height:60px ">
-					</div>
-					<div align="center">
-						<h4 class="whitetext">
-							FC Arena
-						</h4>
-						<h5 class="whitetext">
-							Rank:42
-						</h5>
-						<img src="img/Jerseys/Blue.png" style="width:40px;height:40px ">
-					</div>
-				</div>
-				<div class="col">
-					<div align="center">
-						<h4 class="whitetext">
-							VS
-						</h4>
-						<h5 class="whitetext">
-							Stadium
-						</h5>
-						<h5 class="whitetext">
-							ManUnited
-						</h5>
-						<img src="https://bossip.files.wordpress.com/2015/03/nba-face-6.png?w=700" style="border-radius:50% ; height:80px ; width:80px"
-							align="right" height="50" />
+<div class="row ">
+	<div class="col">
+		<div align="center">
+			<img src="img/Badges/b01.png" style="width:60px;height:60px ">
+</div>
+<div align="center">
+	<h4 class="whitetext">
+		FC Arena
+	</h4>
+	<h5 class="whitetext">
+		Rank:42
+	</h5>
+	<img src="img/Jerseys/Blue.png" style="width:40px;height:40px ">
+</div>
+</div>
+<div class="col">
+	<div align="center">
+		<h4 class="whitetext">
+			VS
+		</h4>
+		<h5 class="whitetext">
+			Stadium
+		</h5>
+		<h5 class="whitetext">
+			ManUnited
+		</h5>
+		<img src="https://bossip.files.wordpress.com/2015/03/nba-face-6.png?w=700" style="border-radius:50% ; height:80px ; width:80px" align="right" height="50" />
 
 
-					</div>
+</div>
 
 
-				</div>
-				<div class="col">
-					<div align="center">
-						<img src="img/Badges/b01.png" style="width:60px;height:60px ">
-					</div>
-					<div align="center">
-						<h4 class="whitetext">
-							FC Arena
-						</h4>
-						<h5 class="whitetext">
-							Rank:42
-						</h5>
-						<img src="img/Jerseys/Blue.png" style="width:40px;height:40px ">
-					</div>
-				</div>
+</div>
+<div class="col">
+	<div align="center">
+		<img src="img/Badges/b01.png" style="width:60px;height:60px ">
+</div>
+<div align="center">
+	<h4 class="whitetext">
+		FC Arena
+	</h4>
+	<h5 class="whitetext">
+		Rank:42
+	</h5>
+	<img src="img/Jerseys/Blue.png" style="width:40px;height:40px ">
+</div>
+</div>
 
-			</div>
-
-
+</div>
 
 
 
 
 
-		</div>
 
 
-		<div class="card" style="background-color:rgb(62,83,100)">
-			<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
-
-			<div align="center">
-				<h4 class="whitetext">
-					Players List
-				</h4>
-				<h6 class="graytext">
-					Invite at Least 5 Players
-				</h6>
-			</div>
-
-			<div class="row ">
-				<div class="col col-50">
-					<h5 class="whitetext">
-						Missak Boyajian
-					</h5>
-				</div>
-
-				<div class="col">
-
-					<div align="center">
-						<a href="#/app/gamedetails/1" class="button button-block button-balanced button-small" style="color:white" type="submit"
-							ng-click="InvitePlayer()">
-                                Invite
-                            </a>
-
-					</div>
-
-				</div>
-				<div class="col">
-					<a href="#/app/gamedetails/1" class="button button-block button-balanced button-small" style="color:white" type="submit"
-						ng-click="showConfirm()">
-                                Accept
-                            </a>
-				</div>
-
-			</div>
-			<div class="row ">
-				<div class="col col-50">
-					<h5 class="whitetext">
-						Missak Boyajian
-					</h5>
-				</div>
-
-				<div class="col">
-
-					<div align="center">
-						<a href="#/app/gamedetails/1" class="button button-block button-balanced button-small" style="color:white" type="submit"
-							ng-click="InvitePlayer()">
-                                Invite
-                            </a>
-
-					</div>
-
-				</div>
-				<div class="col">
-					<a href="#/app/gamedetails/1" class="button button-block button-balanced button-small" style="color:white" type="submit"
-						ng-click="showConfirm()">
-                                Accept
-                            </a>
-				</div>
-
-			</div>
-
-			<div class="row ">
-				<div class="col col-50">
-					<h5 class="whitetext">
-						Missak Boyajian
-					</h5>
-				</div>
-
-				<div class="col">
-
-					<div align="center">
-						<a href="#/app/gamedetails/1" class="button button-block button-energized button-small" style="color:white" type="submit"
-							ng-click="showConfirm()">
-                                Invite
-                            </a>
-
-					</div>
-
-				</div>
-				<div class="col">
-					<a href="#/app/gamedetails/1" class="button button-block button-balanced button-small" style="color:white" type="submit"
-						ng-click="showConfirm()">
-                                Accept
-                            </a>
-				</div>
-
-			</div>
+</div>
 
 
-		</div>
+<div class="card" style="background-color:rgb(62,83,100)">
+<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
-		<br />
-		<br />
+<div align="center">
+	<h4 class="whitetext">
+		Players List
+	</h4>
+	<h6 class="graytext">
+		Invite at Least 5 Players
+	</h6>
+</div>
+
+<div class="row ">
+	<div class="col col-50">
+		<h5 class="whitetext">
+			Missak Boyajian
+		</h5>
+	</div>
+
+	<div class="col">
+
+		<div align="center">
+			<a href="#/app/gamedetails/1" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="InvitePlayer()"> Invite
+</a>
+
+</div>
+
+</div>
+<div class="col">
+	<a href="#/app/gamedetails/1" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="showConfirm()"> Accept
+</a>
+</div>
+
+</div>
+<div class="row ">
+	<div class="col col-50">
+		<h5 class="whitetext">
+			Missak Boyajian
+		</h5>
+	</div>
+
+	<div class="col">
+
+		<div align="center">
+			<a href="#/app/gamedetails/1" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="InvitePlayer()"> Invite
+</a>
+
+</div>
+
+</div>
+<div class="col">
+	<a href="#/app/gamedetails/1" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="showConfirm()"> Accept
+</a>
+</div>
+
+</div>
+
+<div class="row ">
+	<div class="col col-50">
+		<h5 class="whitetext">
+			Missak Boyajian
+		</h5>
+	</div>
+
+	<div class="col">
+
+		<div align="center">
+			<a href="#/app/gamedetails/1" class="button button-block button-energized button-small" style="color:white" type="submit" ng-click="showConfirm()"> Invite
+</a>
+
+</div>
+
+</div>
+<div class="col">
+	<a href="#/app/gamedetails/1" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="showConfirm()"> Accept
+</a>
+</div>
+
+</div>
 
 
-	</ion-content>
+</div>
+
+<br />
+<br />
+
+
+</ion-content>
 
 </ion-view>

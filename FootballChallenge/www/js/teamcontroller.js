@@ -17,10 +17,11 @@ angular.module('football.controllers')
         //$timeout(function () {
 
             try {
+                $timeout(function()
+                {
                 TeamStores.GetMyTeams(function (leagues) {
                     $ionicLoading.hide();
                     $scope.test = leagues;
-                    $scope.$digest();
 
                     if (leagues.length == 0) {
                         var alertPopup = $ionicPopup.alert({
@@ -33,6 +34,8 @@ angular.module('football.controllers')
                     }
 
                 })
+                },200);
+
 
             }
             catch (error) {
@@ -532,7 +535,7 @@ angular.module('football.controllers')
 
 
 
-        $scope.playeroperations = function (opercode, playerid) {
+        $scope.playeroperations = function (opercode, player) {
             var message = "";
             switch (opercode) {
                 case 1:
@@ -542,7 +545,7 @@ angular.module('football.controllers')
                     message = "Are you sure you want to demote the player?"
                     break;
                 case 3:
-                    message = "Are you sure you want to remove the player?"
+                    message = "Are you sure you want to remove the player from the team?"
                     break;
                 default:
                     break;
@@ -555,9 +558,28 @@ angular.module('football.controllers')
 
             confirmPopup.then(function (res) {
                 if (res) {
-                    TeamStores.PromoteDeletePlayers(opercode, playerid).then(function () {
+                    TeamStores.PromoteDeletePlayers($scope.currentprofile,player,opercode).then(function () {
 
-                    }, function (error) {
+
+            switch (opercode) {
+                case 1:
+                    player.isadmin = true;
+                    break;
+                case 2:
+                     player.isadmin = false;
+                    break;
+                case 3:
+                    $scope.currentprofile.players = $scope.currentprofile.players.filter(function (el) {
+                        return el.key !== player.key;
+                        
+                         });
+                    break;
+                default:
+                    break;
+            }
+            $scope.$digest();
+
+                 }, function (error) {
                         alert(error.message);
                     });
                 }
