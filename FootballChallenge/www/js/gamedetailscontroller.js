@@ -1,22 +1,20 @@
 ﻿
 angular.module('football.controllers')
 
-    .controller('GameDetailsController', function ($scope, $ionicPopup, $ionicLoading, $state, $stateParams, TeamStores, $timeout) {
+    .controller('GameDetailsController', function ($scope, $ionicPopup, $ionicLoading, $state, $stateParams, TeamStores, ChallengeStore, $timeout) {
 
         $scope.loadingphase = false;
         $scope.isadmin = false;
         $scope.first = true;
         $scope.currentteam = "";
 
-
+        $scope.myplayers = [];
 
         $scope.gameid = $state.params.gameid;
 
         //alert($scope.gameid);
 
-        $scope.inviteplayer = function (key) {
 
-        }
 
         $scope.notloaded = true;
         try {
@@ -24,34 +22,83 @@ angular.module('football.controllers')
 
             $timeout(function () {
                 $scope.user = firebase.auth().currentUser;
-                $scope.myid = user.uid;
-                ChallengeStore.GetChallengeByKey($scope.gameid,function (challengedetails) {
+                $scope.myid = $scope.user.uid;
+
+                ChallengeStore.GetChallengeByKey($scope.myid, $scope.gameid, function (challengedetails) {
 
                     $scope.challenge = challengedetails;
 
-                    if ($scope.challenge.team1admin == $scope.myid) {
+                    //alert(JSON.stringify($scope.challenge));
+
+                    if ($scope.challenge.team1adminid === $scope.myid) {
                         $scope.isadmin = true;
                         $scope.first = true;
                         $scope.currentteam = $scope.challenge.team1key;
                     }
-                    else if ($scope.challenge.team1admin == $scope.myid) {
-                        $scope.isadmin = false;
+                    else if ($scope.challenge.team2adminid === $scope.myid) {
+                        $scope.isadmin = true;
                         $scope.first = false;
                         $scope.currentteam = $scope.challenge.team2key;
                     }
+                    else {
+                        $scope.isadmin = false;
+                    }
 
                     if ($scope.isadmin) {
+
+
+
+                        //get team depending on your admin key
                         TeamStores.GetTeamByKey($scope.currentteam, function (myteam) {
+
+
 
                             $scope.myteam = myteam;
 
-                            
 
-                            $scope.profile = leagues;
+                            $scope.myplayers = $scope.myteam.players;
+
+                            if ($scope.isadmin) {
+                                if ($scope.first) {
+                                    for (var i = 0; i < $scope.myplayers.length; i++) {
+
+                                        for (var j = 0; i < $scope.challenge.team1players.length; j++) {
+
+                                            if ($scope.myplayers[i].key == $scope.challenge.team1players[j].key) {
+                                                $scope.myplayers[i].status = $scope.challenge.team1players[j].status;
+                                            }
+                                            if ($scope.myplayers[i].key == $scope.myid) {
+                                                $scope.myplayers[i].status = 5;
+                                            }
+                                        }
+
+                                    }
+                                }
+                                else {
+                                    for (var i = 0; i < $scope.myplayers.length; i++) {
+
+                                        for (var j = 0; i < $scope.challenge.team2players.length; j++) {
+
+                                            if ($scope.myplayers[i].key == $scope.challenge.team2players[j].key) {
+                                                $scope.myplayers[i].status = $scope.challenge.team2players[j].status;
+                                            }
+
+                                        }
+                                        if ($scope.myplayers[i].key == $scope.myid) {
+                                            $scope.myplayers[i].status = 5;
+                                        }
+
+                                    }
+                                }
+                            }
+
                             $scope.notloaded = false;
+
+                            $scope.$digest();
 
                         })
                     }
+                    $scope.$digest();
 
                 })
             }, 2000);
@@ -61,41 +108,27 @@ angular.module('football.controllers')
 
 
 
+        $scope.InvitePlayer = function(player)
+        {
+
+          /*  try {
+                ChallengeStore.AcceptTeamInvitation(player).then(function () {
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'New Team',
+                                template: 'You know below to team ' + invitation.teamname
+                            }).then(function () {
+                                $state.go("app.teammanagement");
+                            }, function (error) {
+                                    alert(error.message);
+                                })
 
 
+                        });
+            } catch (error) {
+                
+            }*/
 
-        /*  $ionicLoading.show({
-              content: 'Loading',
-              animation: 'fade-in',
-              showBackdrop: true,
-              maxWidth: 200,
-              showDelay: 0
-          });
-  
-          //works
-          $timeout(function () {
-  
-              try {
-  
-                  TeamStores.GetMyTeams(function (leagues) {
-  
-                      $ionicLoading.hide();
-                      $scope.test = leagues;
-  
-                      if (leagues.length == 0) {
-                          var alertPopup = $ionicPopup.alert({
-                              title: 'Error',
-                              template: 'No Available Stadiums'
-                          });
-                      }
-  
-                  })
-  
-              }
-              catch (error) {
-                  alert(error.message);
-              }
-          }, 2000)*/
+        }
 
         $scope.gotoadd = function () {
             $state.go("app.teamadd");

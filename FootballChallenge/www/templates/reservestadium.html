@@ -7,8 +7,33 @@
 	h6.whitetext,
 	p.whitetext {
 		color: white;
-		height: 8px
 	}
+
+	.h3.bluetext,
+	h2.bluetext,
+	h1.bluetext,
+	h4.bluetext,
+	h5.bluetext,
+	h6.bluetext,
+	p.bluetext {
+		color: darkblue;
+	}
+
+	.h3.greytext,
+	h2.greytext,
+	h1.greytext,
+	h4.greytext,
+	h5.greytext,
+	h6.greytext,
+	p.greytext {
+		color: gray;
+	}
+	  .item .item-content1 {
+  background-color: white;
+  color:black;
+  border:rgb(64, 64, 64);
+  border-color:rgb(64, 64, 64);
+}
 	
 	.popup-body {
 		background-color: rgb(40, 80, 120);
@@ -31,38 +56,41 @@
 
 	<ion-nav-buttons side="primary">
 		<button class="button button-icon ion-android-funnel" ng-click="popover.show($event)"></button>
-		
+
 	</ion-nav-buttons>
 
 	<ion-content style="background-color:rgb(40,80,120)">
 
 
-		<script id="templates/my-popover.html" type="text/ng-template">
-            <ion-popover-view style="height:400px;width:300px">
+<script id="templates/my-popover.html" type="text/ng-template">
+            <ion-popover-view style="height:500px;width:250px">
                 <ion-content>
-                    <ion-list>
-                        <div class="bar bar-header bar-light" style="background-color:rgb(90,90,90);color:white">
-                            <h1 style="color:white;vertical-align:bottom" class="title">Filter</h1>
-                        </div>
-                        <br />
-                        <br />
-                        <div class="row">
-                            <div class="col">
-                                <ion-checkbox ng-true-value="1"  ng-false-value="0" ng-model="filter.indoor">Indoor</ion-checkbox>
-                            </div>
-                            <div class="col">
-                                <ion-checkbox ng-true-value="1"  ng-false-value="0" ng-model="filter.outdoor">Outdoor</ion-checkbox>
-                            </div>
+                        <div align="center">
+                            <h4 >Search filter</h4>
                         </div>
 
-                        <div class="row">
-                            <div class="col">
-                                <ion-checkbox ng-true-value="1"  ng-false-value="0" ng-model="filter.grass">Grass</ion-checkbox>
-                            </div>
-                            <div class="col">
-                                <ion-checkbox ng-true-value="1" ng-false-value="0" ng-model="filter.clay">Clay</ion-checkbox>
-                            </div>
-                        </div>
+							<div class="list">
+
+							<label class="item item-input item-select">
+								<div class="input-label">
+										Sort By	
+								</div>
+								<select>
+								<option selected>Rating</option>
+								<option> Price</option>
+								<option>Distance</option>
+								</select>
+							</label>
+
+							</div>
+							<div>
+								
+                                <ion-checkbox style="background-color:white" ng-true-value="1"  ng-false-value="0" ng-model="filter.indoor">Indoor</ion-checkbox>
+								<ion-checkbox style="background:white" ng-true-value="1"  ng-false-value="0" ng-model="filter.outdoor">Outdoor</ion-checkbox>
+								<ion-checkbox style="background:white" ng-true-value="1"  ng-false-value="0" ng-model="filter.grass">Grass</ion-checkbox>
+								<ion-checkbox style="background:white" ng-true-value="1" ng-false-value="0" ng-model="filter.clay">Clay</ion-checkbox>
+								</div>
+
                         <div class="item range">
                             <i class="icon ion-volume-low"></i>
                             <input type="range" name="volume">
@@ -70,9 +98,20 @@
                         </div>
 
 
+								<div class = "row">
+									<div class="col col-33">
+									<h4 class = "bluetext">
+										Apply
+									</h4>
+										</div>
+										<div class="col col-33">
+									<h4 class = "bluetext">
+										Cancel
+									</h4>
+										</div>
+										</div>
 
-
-                        <div style="background-color:rgb(90,90,90);color:white ;vertical-align:middle">
+              <!--          <div style="background-color:rgb(90,90,90);color:white ;vertical-align:middle">
                             <h4 class="title" align="center" style="color:white;vertical-align:bottom">Sort By</h4>
                         </div>
 
@@ -101,116 +140,115 @@
                             </div>
                         </div>
                         
-
+						-->
 
 
 
                         <!--<button class="button button-full button-positive" ng-click="closePopover()">
                             OK
                         </button>-->
-                    </ion-list>
                 </ion-content>
             </ion-popover-view>
         </script>
-		
-		<div align="center">
-			<!--<p style="background-color:lightgray">Date</p>-->
-			<label class="item item-input">
+
+<div align="center">
+	<!--<p style="background-color:lightgray">Date</p>-->
+	<label class="item item-input">
                     <input type="datetime-local" step="30"  ng-model="search.date" ng-change="checkfree()">
                 </label>
-		</div>
+</div>
 
-		<div class="card" ng-repeat="stadiums in allfreestadiums | orderBy:choice.sort:reverse" style="background-color:rgb(100,120,140)">
-			<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
+<div class="card" ng-repeat="stadiums in allfreestadiums | orderBy:choice.sort:reverse" style="background-color:rgb(100,120,140)">
+<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
-			<div align="center">
-				<img src="{{stadiums.photo}}" style="width:100%;height:140px;">
-			</div>
+<div align="center">
+	<img src="{{stadiums.photo}}" style="width:100%;height:140px;">
+</div>
 
-			<div class="row ">
-				<div class="col col-80">
-					<h5 class="whitetext">
-						{{stadiums.stadiumname}} / {{stadiums.description}}
-					</h5>
-				</div>
+<div class="row ">
+	<div class="col col-80">
+		<h5 class="whitetext">
+			{{stadiums.stadiumname}} / {{stadiums.description}}
+		</h5>
+	</div>
 
-				<div class="col" align="right">
-					<h6 class="whitetext">
-						Price
-					</h6>
-				</div>
+	<div class="col" align="right">
+		<h6 class="whitetext">
+			Price
+		</h6>
+	</div>
 
-			</div>
+</div>
 
-			<div class="row">
-				<div class="col col-80" align="left">
-					<rating style="color:gold" ng-model=stadiums.rating max="rating.max" align="left"></rating>
-				</div>
+<div class="row">
+	<div class="col col-80" align="left">
+		<rating style="color:gold" ng-model=stadiums.rating max="rating.max" align="left"></rating>
+</div>
 
-				<div class="col" align="right">
-					<h6 class="whitetext">
-						{{stadiums.price}}
-					</h6>
-				</div>
-			</div>
+<div class="col" align="right">
+	<h6 class="whitetext">
+		{{stadiums.price}}
+	</h6>
+</div>
+</div>
 
-			<div class="row ">
-				<div class="col">
-					<h5 class="whitetext">
-						{{stadiums.stadiumname}}
-					</h5>
-				</div>
+<div class="row ">
+	<div class="col">
+		<h5 class="whitetext">
+			{{stadiums.stadiumname}}
+		</h5>
+	</div>
 
-				<div class="col" align="right">
-					<h6 class="whitetext">
-						Type
-					</h6>
-				</div>
+	<div class="col" align="right">
+		<h6 class="whitetext">
+			Type
+		</h6>
+	</div>
 
-				<div class="col" align="right">
-					<h6 class="whitetext">
-						Stadium Size
-					</h6>
-				</div>
+	<div class="col" align="right">
+		<h6 class="whitetext">
+			Stadium Size
+		</h6>
+	</div>
 
-			</div>
+</div>
 
 
-			<div class="row ">
-				<div class="col">
-					<h5 class="whitetext">
-						2.1km
-					</h5>
-				</div>
+<div class="row ">
+	<div class="col">
+		<h5 class="whitetext">
+			2.1km
+		</h5>
+	</div>
 
-				<div class="col" align="right">
-					<h6 class="whitetext">
-						{{stadiums.typefloor}}/{{stadiums.typefloor}}
-					</h6>
-				</div>
+	<div class="col" align="right">
+		<h6 class="whitetext">
+			{{stadiums.typefloor}}/{{stadiums.typefloor}}
+		</h6>
+	</div>
 
-				<div class="col" align="right">
-					<h6 class="whitetext">
-						5vs5
-					</h6>
-				</div>
+	<div class="col" align="right">
+		<h6 class="whitetext">
+			5vs5
+		</h6>
+	</div>
 
-			</div>
+</div>
 
-			<!--			<h3 class="whitetext"> Number: <b>{{stadiums.description}}</b></h3> -->
+<!--			<h3 class="whitetext"> Number: <b>{{stadiums.description}}</b></h3> -->
 
-			<div class="row">
-				<div class="col">
-					<button class="button button-block button-balanced button-small" type="submit" ng-disabled="verified" ng-click="reserve(search,stadiums)">
+<div class="row">
+	<div class="col">
+		<button class="button button-block button-balanced button-small" type="submit" ng-disabled="verified" ng-click="reserve(search,stadiums)">
                         Reserve On : {{stadiums.datetime | date:'short'}}
                     </button>
-				</div>
+	</div>
 
-			</div>
-
-
-		</div>
+</div>
 
 
-	</ion-content>
+</div>
+
+
+</ion-content>
 </ion-view>
