@@ -158,6 +158,7 @@ angular.module('football.controllers')
                         "playposition": snapshot.child("playposition").val(),
                         "ranking": snapshot.child("ranking").val(),
                         "status": snapshot.child("status").val(),
+                        "photo": snapshot.child("photoURL").val(),
                         //"teams": snapshot.child("teams").exists() ? snapshot.child("teams").val() : "",
                         "telephone": snapshot.child("telephone").val(),
                         "winstreak": snapshot.child("winstreak").val(),

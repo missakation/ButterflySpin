@@ -93,10 +93,12 @@ angular.module('football.controllers', [])
             },
             AddFbUser: function (newuser) {
                 try {
+                    var user = firebase.auth().currentUser;
+                    var id = user.uid;
                     if (newuser != null) {
                         var usertoadd =
                             {
-                                uid: newuser.uid,
+                                uid: id,
                                 email: newuser.email == null ? "" : newuser.email,
                                 winstreak: 0,
                                 userdescription: "",
@@ -157,6 +159,7 @@ angular.module('football.controllers', [])
     .controller('LoginController', function ($scope, $ionicModal, $ionicPopup, $timeout, $state, LoginStore) {
 
         $scope.loginData = {};
+        $scope.myprofile = {};
 
         // Create the login modal that we will use later
         $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -301,7 +304,7 @@ angular.module('football.controllers', [])
                 });
         };
 
-        $scope.myprofile = {};
+        
 
         $scope.FacebookLogin = function () {
             try {
@@ -312,15 +315,35 @@ angular.module('football.controllers', [])
                     function (userData) {
 
                         if (userData.authResponse) {
-                            facebookConnectPlugin.api('me/?fields=email,gender,name,first_name,last_name', ["public_profile"],
+                            facebookConnectPlugin.api('me/?fields=email,name,first_name,last_name', ["public_profile"],
                                 function (infoesult) {
 
                         facebookConnectPlugin.getAccessToken(function (token) {
                             //alert("Token: " + token);
                             var credential = firebase.auth.FacebookAuthProvider.credential(token);
                             firebase.auth().signInWithCredential(credential).then(function (result) {
-
                                 $scope.myprofile = result;
+                                $timeout(function () {
+                                    var user = firebase.auth().currentUser;
+                                    if (user) {
+
+                                        LoginStore.GetUser(function (data) {
+                                            if (data) {
+                                                $state.go('app.homepage');
+                                            }
+                                            else {
+                                                LoginStore.AddFbUser($scope.myprofile).then(function (result) {
+                                                    $state.go('app.homepage');
+                                                }, function (error) {
+                                                    alert(error.message);
+                                                });
+                                            }
+                                        });
+
+                                    }
+                                }, 3000);
+                                
+
 
                             }).catch(function (error) {
                                 // Handle Errors here.
@@ -352,23 +375,11 @@ angular.module('football.controllers', [])
         };
 
 
-        firebase.auth().onAuthStateChanged(function (user) {
+        //firebase.auth().onAuthStateChanged(function (user) {
 
-            if (user) {
-                 LoginStore.GetUser(function (data) {
-                    if (data) {
-                        $state.go('app.homepage');
-                    }
-                    else {
-                        LoginStore.AddFbUser($scope.myprofile).then(function (result) {
-                            $state.go('app.homepage');
-                        }, function (error) {
-                            alert(error.message);
-                        });
-                    }
-                });
-            }
-        });
+        //    alert("test");
+
+        //});
 
 
 
