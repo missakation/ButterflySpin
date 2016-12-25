@@ -140,10 +140,11 @@ angular.module('football.controllers')
                             stadiums: stadiums,
 
                             challengeradmin: teams[i].teamadmin,
+                            
                             //challengeradminname: adminname,
                             //challengerteamname: name,
                             //challengerteamlogo: logo,
-
+                            team1adminid : teams[i].teamadmin,
                             team1key : teams[i].key,
                             team1name: teams[i].teamname, //
                             team1logo: teams[i].badge, //
@@ -224,19 +225,21 @@ angular.module('football.controllers')
 
 
             },
-            GetChallengeByKey(key,callback)
+            GetChallengeByKey: function(myid,key,callback)
             {
-
-           try {
-                    
+                
+                try {
+                
                 firebase.database().ref('/challenges/' + key).once('value', function (challenges) {
                     ChallengeDetails = {};
                             var team1players = [];
                             var team2players = [];
 
                             var challengedate = new Date();
-                            var isadmin = challenges.child("team1adminid").val() == id;
 
+                            
+                            var isadmin = challenges.child("team1adminid").val() == myid;
+                            
                             challengedate.setMinutes(challenges.child("minute").val());
                             challengedate.setFullYear(challenges.child("year").val());
                             challengedate.setMonth(challenges.child("month").val());
@@ -251,7 +254,8 @@ angular.module('football.controllers')
                                     var data = {
 
                                         key : pl.key,
-                                        name : pl.child("name").val()
+                                        name : pl.child("name").val(),
+                                        status : pl.child("status").val()
 
                                     }
                                     team1players.push(data);
@@ -259,7 +263,7 @@ angular.module('football.controllers')
                                 })
 
                             }
-
+                            
                            if (challenges.child("team2players").exists()) 
                             {
 
@@ -268,7 +272,8 @@ angular.module('football.controllers')
                                     var data = {
 
                                         key : pl.key,
-                                        name : pl.child("name").val()
+                                        name : pl.child("name").val(),
+                                        status : pl.child("status").val()
 
                                     }
                                     team2players.push(data);
@@ -298,11 +303,13 @@ angular.module('football.controllers')
                                 year: challenges.child("year").val(),
                                 date: challengedate,
                                 isadmin:isadmin,
-                                team1players = team1players,
-                                team2players = team2players
+                                team1players : team1players,
+                                team2players : team2players
                                 
                             }
                             ChallengeDetails = challengedata;
+
+                           // alert(JSON.stringify(ChallengeDetails));
                             callback(ChallengeDetails);
 
                           }, function (error)
@@ -313,6 +320,67 @@ angular.module('football.controllers')
                 } catch (error) {
                     alert(error.message);
                 }
+
+            },
+            InvitePlayerToGame: function(player)
+            {
+
+                 var updates = {};
+
+                var year = date.getFullYear();
+                var month = date.getMonth();
+                var day = date.getDate();
+
+                var hour = date.getHours();
+                var minute = date.getMinutes();
+
+                try {
+                   
+
+                        var challengedata = {
+                            day: day,
+                            month: month,
+                            year: year,
+                            hour: hour,
+                            minute: minute,
+
+                            stadiums: stadiums,
+
+                            challengeradmin: teams[i].teamadmin,
+
+                            team1key : teams[i].key,
+                            team1name: teams[i].teamname, //
+                            team1logo: teams[i].badge, //
+                            team1rank: teams[i].rank, //
+                            //team1jersey: teams[i].jersey, //
+
+                            team2key: myteam.key,
+                            team2name: myteam.teamname,
+                            team2logo: myteam.badge,
+                            team2rank: myteam.rank,
+                            //team2jersey: myteam.jersey,
+
+                            team2adminid: myteam.teamadmin,
+                            accepted: false
+
+
+                        }
+
+                        // Get a key for a new Post.
+                        var newPostKey = firebase.database().ref().child('challenges').push().key;
+
+                        updates['/players/' + teams[i].teamadmin + '/gameinvitation/'+newPostKey] = challengedata;
+
+                    return firebase.database().ref().update(updates);
+
+
+
+                } catch (error) {
+                    alert(error.message)
+                }
+            },
+            AcceptGameInvitation:function(player)
+            {
 
             }
 

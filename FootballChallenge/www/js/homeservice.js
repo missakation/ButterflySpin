@@ -220,7 +220,7 @@ angular.module('football.controllers')
             DeleteChallenge: function(challenge){
 
                 try {    
-
+                alert(challenge.team1adminid);
                 // Write the new post's data simultaneously in the posts list and the user's post list.
                 var updates = {};
                 updates['/players/' + challenge.team1adminid + '/challenges/'+challenge.key ] = null;

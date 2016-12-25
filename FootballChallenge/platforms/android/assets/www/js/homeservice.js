@@ -217,13 +217,10 @@ angular.module('football.controllers')
 
                 //return firebase.database().ref().update(updates);
             },
-            DeleteInvitation: function(challenge){
+            DeleteChallenge: function(challenge){
 
-                try {
-                    
-                alert(challenge.team1admin);
-                alert(challenge.key);
-
+                try {    
+                alert(challenge.team1adminid);
                 // Write the new post's data simultaneously in the posts list and the user's post list.
                 var updates = {};
                 updates['/players/' + challenge.team1adminid + '/challenges/'+challenge.key ] = null;
@@ -238,6 +235,7 @@ angular.module('football.controllers')
                     alert(error.message);
                 }
             },
+            
             RegisterTeamMatch: function (search, user, stadiums,challenge) {
                 //alert("here");
 
@@ -387,6 +385,8 @@ angular.module('football.controllers')
 
                 updates['/players/' + challenge.team2adminid +'/challenges/'+challenge.key] = null;
 
+                updates['/challenges/'+challenge.key+'/stadiums'] = angular.copy(stadiums);
+
 
                 return firebase.database().ref().update(updates);
                 } catch (error) {
@@ -443,9 +443,10 @@ angular.module('football.controllers')
                 var updates = {};
 
                 updates['/players/' + id + '/teaminvitations/'+invitation.key ] = null;
+                
 
                 return firebase.database().ref().update(updates);
-            } 
+                   } 
                    catch (error) 
                    {
                     alert(error.message);

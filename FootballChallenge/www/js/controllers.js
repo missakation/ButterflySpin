@@ -44,7 +44,8 @@ angular.module('football.controllers', [])
                                 startsunday: 0,
                                 startsundayend: 0,
                                 favstadium: "",
-                                favstadiumphoto: ""
+                                favstadiumphoto: "",
+                                photoURL: "",
 
                             }
                         //alert(newPostKey);
@@ -84,6 +85,63 @@ angular.module('football.controllers', [])
                     });
 
 
+                }
+                catch (error) {
+                    alert(error.message);
+                }
+
+            },
+            AddFbUser: function (newuser) {
+                try {
+                    if (newuser != null) {
+                        var usertoadd =
+                            {
+                                uid: newuser.uid,
+                                email: newuser.email == null ? "" : newuser.email,
+                                winstreak: 0,
+                                userdescription: "",
+                                telephone: "",
+                                enableinvitations: true,
+                                highestrating: 1500,
+                                firstname: "",
+                                lastname: "",
+                                status: "0",
+                                playposition: "Defender",
+                                displayname: newuser.displayName == null ? "" : newuser.displayName,
+                                favouritesport: "football",
+                                middlename: "",
+                                ranking: 100,
+                                cancelled: 0,
+                                cancelledweather: 0,
+                                didnotshowup: 0,
+                                startmonday: 0,
+                                startmondayend: 0,
+                                starttuesday: 0,
+                                starttuesdayend: 0,
+                                startwednesday: 0,
+                                startwednesdayend: 0,
+                                startthursday: 0,
+                                startthursdayend: 0,
+                                startfriday: 0,
+                                startfridayend: 0,
+                                startsaturday: 0,
+                                startsaturdayend: 0,
+                                startsunday: 0,
+                                startsundayend: 0,
+                                favstadium: "",
+                                favstadiumphoto: "",
+                                photoURL: newuser.photoURL == null ? "" : newuser.photoURL,
+
+                            }
+                        //alert(newPostKey);
+                        // Write the new post's data simultaneously in the posts list and the user's post list.
+                        var updates = {};
+                        updates['/players/' + usertoadd.uid + '/'] = usertoadd;
+
+
+                        return firebase.database().ref().update(updates);
+
+                    }
                 }
                 catch (error) {
                     alert(error.message);
@@ -243,6 +301,7 @@ angular.module('football.controllers', [])
                 });
         };
 
+        $scope.myprofile = {};
 
         $scope.FacebookLogin = function () {
             try {
@@ -256,46 +315,27 @@ angular.module('football.controllers', [])
                             facebookConnectPlugin.api('me/?fields=email,gender,name,first_name,last_name', ["public_profile"],
                                 function (infoesult) {
 
-                                    alert(JSON.stringify(infoesult));
-                                    alert('Good to see you, ' +
-                                        infoesult.email + infoesult.name + '.');
-                                });
-
-                        }
-
                         facebookConnectPlugin.getAccessToken(function (token) {
                             //alert("Token: " + token);
                             var credential = firebase.auth.FacebookAuthProvider.credential(token);
                             firebase.auth().signInWithCredential(credential).then(function (result) {
 
-                                LoginStore.GetUser(function (data) {
-                                    if (data) {
-                                        $state.go('app.homepage');
-                                    }
-                                    else {
-                                        LoginStore.AddUser(infoesult).then(function (result) {
-
-                                            $state.go('app.homepage');
-
-                                        }, function (error) {
-                                            alert(error.message);
-                                        });
-
-
-                                    }
-
-                                });
+                                $scope.myprofile = result;
 
                             }).catch(function (error) {
                                 // Handle Errors here.
-                                alert("test3");
                                 alert(error.code);
                                 alert(error.message);
                                 // ...
                             });
                         });
+                           //         alert(JSON.stringify(infoesult));
+                           //         alert('Good to see you, ' +
+                           //             infoesult.email + infoesult.name + '.');
 
+                                });
 
+                        }
 
                     },
                     function (error) {
@@ -311,6 +351,28 @@ angular.module('football.controllers', [])
 
         };
 
+
+        firebase.auth().onAuthStateChanged(function (user) {
+
+            if (user) {
+                 LoginStore.GetUser(function (data) {
+                    if (data) {
+                        $state.go('app.homepage');
+                    }
+                    else {
+                        LoginStore.AddFbUser($scope.myprofile).then(function (result) {
+                            $state.go('app.homepage');
+                        }, function (error) {
+                            alert(error.message);
+                        });
+                    }
+                });
+            }
+        });
+
+
+
+
         $scope.GoToRegister = function () {
             $state.go('registerpage');
         };
@@ -324,23 +386,23 @@ angular.module('football.controllers', [])
     .controller('FirstPageController', function ($scope, $ionicPopover, $ionicLoading, $state, $timeout) {
 
 
-        try {
-            $timeout(function () {
-                var user = firebase.auth().currentUser;
+            try {
+                $timeout(function () {
+                    var user = firebase.auth().currentUser;
 
-                if (user) {
-                    $state.go('app.homepage');
-                } else {
-                    $state.go('signin');
-                }
+                    if (user) {
+                        $state.go('app.homepage');
+                    } else {
+                        $state.go('signin');
+                    }
 
-            }, 2000);
+                }, 3000);
 
 
-        }
-        catch (error) {
-            alert(error.message);
-        }
+            }
+            catch (error) {
+                alert(error.message);
+            }
 
 
     })

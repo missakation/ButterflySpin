@@ -140,10 +140,11 @@ angular.module('football.controllers')
                             stadiums: stadiums,
 
                             challengeradmin: teams[i].teamadmin,
+                            
                             //challengeradminname: adminname,
                             //challengerteamname: name,
                             //challengerteamlogo: logo,
-
+                            team1adminid : teams[i].teamadmin,
                             team1key : teams[i].key,
                             team1name: teams[i].teamname, //
                             team1logo: teams[i].badge, //

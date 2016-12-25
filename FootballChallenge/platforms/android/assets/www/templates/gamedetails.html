@@ -43,23 +43,23 @@
 </div>
 
 
-<div class="card" style="background-color:rgb(62,83,100)">
+<div class="card" style="background-color:rgb(62,83,100)" ng-show="!notloaded">
 <!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
 
 <div class="row ">
 	<div class="col">
 		<div align="center">
-			<img src="img/Badges/b01.png" style="width:60px;height:60px ">
+			<img src="img/Badges/{{challenge.team1logo}}.png" style="width:60px;height:60px ">
 </div>
 <div align="center">
 	<h4 class="whitetext">
-		FC Arena
+		{{challenge.team1name}}
 	</h4>
 	<h5 class="whitetext">
-		Rank:42
+		{{challenge.team1rank}}
 	</h5>
-	<img src="img/Jerseys/Blue.png" style="width:40px;height:40px ">
+	<img src="img/Jerseys/{{challenge.team1badge}}.png" style="width:40px;height:40px ">
 </div>
 </div>
 <div class="col">
@@ -77,21 +77,20 @@
 
 
 </div>
-
-
 </div>
+
 <div class="col">
 	<div align="center">
-		<img src="img/Badges/b01.png" style="width:60px;height:60px ">
+		<img src="img/Badges/{{challenge.team2logo}}.png" style="width:60px;height:60px ">
 </div>
 <div align="center">
 	<h4 class="whitetext">
-		FC Arena
+		{{challenge.team2name}}
 	</h4>
 	<h5 class="whitetext">
-		Rank:42
+		Rank:{{challenge.team1rank}}
 	</h5>
-	<img src="img/Jerseys/Blue.png" style="width:40px;height:40px ">
+	<img src="img/Jerseys/{{challenge.team2badge}}.png" style="width:40px;height:40px ">
 </div>
 </div>
 
@@ -106,7 +105,7 @@
 </div>
 
 
-<div class="card" style="background-color:rgb(62,83,100)">
+<div class="card" style="background-color:rgb(62,83,100)" ng-show="!notloaded">
 <!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
 <div align="center">
@@ -118,73 +117,37 @@
 	</h6>
 </div>
 
-<div class="row ">
+<div class="row " ng-repeat="item in myplayers">
 	<div class="col col-50">
 		<h5 class="whitetext">
-			Missak Boyajian
+			{{item.name}}
 		</h5>
 	</div>
 
 	<div class="col">
 
 		<div align="center">
-			<a href="#/app/gamedetails/1" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="InvitePlayer()"> Invite
-</a>
+			<button ng-show="item.status == 0" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="InvitePlayer(item)"> Invite
+</button>
+
+			<button ng-show="item.status == 1" class="button button-block button-balanced button-small" style="color:white" type="submit" > Pending
+</button>
+
+			<button ng-show="item.status == 2" class="button button-block button-balanced button-small" style="color:white" type="submit" > Accepted
+</button>
 
 </div>
 
 </div>
-<div class="col">
-	<a href="#/app/gamedetails/1" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="showConfirm()"> Accept
-</a>
-</div>
-
-</div>
-<div class="row ">
-	<div class="col col-50">
-		<h5 class="whitetext">
-			Missak Boyajian
-		</h5>
-	</div>
-
-	<div class="col">
-
-		<div align="center">
-			<a href="#/app/gamedetails/1" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="InvitePlayer()"> Invite
-</a>
+<!--<div class="col">
+	<button class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="showConfirm()"> Accept
+</button>
+</div>-->
 
 </div>
 
-</div>
-<div class="col">
-	<a href="#/app/gamedetails/1" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="showConfirm()"> Accept
-</a>
-</div>
 
-</div>
 
-<div class="row ">
-	<div class="col col-50">
-		<h5 class="whitetext">
-			Missak Boyajian
-		</h5>
-	</div>
-
-	<div class="col">
-
-		<div align="center">
-			<a href="#/app/gamedetails/1" class="button button-block button-energized button-small" style="color:white" type="submit" ng-click="showConfirm()"> Invite
-</a>
-
-</div>
-
-</div>
-<div class="col">
-	<a href="#/app/gamedetails/1" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="showConfirm()"> Accept
-</a>
-</div>
-
-</div>
 
 
 </div>

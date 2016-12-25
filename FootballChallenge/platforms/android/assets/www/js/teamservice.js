@@ -254,7 +254,10 @@
 
                                         key : pl.key,
                                         name : pl.child("name").val(),
-                                        isadmin : pl.child("isadmin").val()
+                                        isadmin : pl.child("isadmin").val(),
+
+                                        //for game details
+                                        status : 0  
 
                                     }
                                     players.push(data);
