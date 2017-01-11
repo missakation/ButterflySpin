@@ -24,6 +24,7 @@ angular.module('football.controllers')
                 $scope.user = firebase.auth().currentUser;
                 $scope.myid = $scope.user.uid;
 
+                
                 ChallengeStore.GetChallengeByKey($scope.myid, $scope.gameid, function (challengedetails) {
 
                     $scope.challenge = challengedetails;
@@ -93,6 +94,8 @@ angular.module('football.controllers')
                             }
 
                             $scope.notloaded = false;
+                            
+
 
                             $scope.$digest();
 

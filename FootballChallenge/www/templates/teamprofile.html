@@ -18,7 +18,7 @@
 		}
 		
 		.item {
-			background-color: rgb(46, 62, 75);
+			background-color: rgb(62, 83, 100);
 		}
 		
 		hr {
@@ -39,15 +39,15 @@
 </u>
 </h5>
 </ion-nav-buttons>
-<ion-content style="background-color:rgb(40,80,120)">
+<ion-content style="background-color:rgb(46,62,75)">
 
-
+<div class="card">
 <ion-item>
 
 	<div class="row ">
 		<div class="col" align="center">
 			<img src="img/Badges/{{currentprofile.badge}}.png" style="width:80px;height:80px;">
-<h5 class="whitetext"> {{currentprofile.teamname}} </h5>
+<h2 class="whitetext"> {{currentprofile.teamname}} </h2>
 <h5 class="whitetext"> {{currentprofile.ranking}} </h5>
 </div>
 
@@ -61,20 +61,30 @@
 
 
 <div class="row row-top">
-	<div class="col" align="center" style="color:white"> Matches
+	<div class="col" align="center">
+		<h4 style="color:lightgray"> Matches
+</h4>
+
 
 </div>
 
-<div class="col " style="color:white" align="center"> Difficulty
+<div class="col " style="color:lightgray" align="center">
+
+<h4 style="color:lightgray"> Difficulty
+</h4>
 
 </div>
 
-<div class="col " style="color:white" align="center"> Rating
+<div class="col " style="color:lightgray" align="center">
 
+
+<h4 style="color:lightgray"> Rating
+</h4>
 </div>
 
-<div class="col " align="right" style="color:white"> Av. Res
-
+<div class="col " align="right"> 
+<h4 style="color:lightgray"> Av. Res
+</h4>
 </div>
 
 </div>
@@ -98,23 +108,33 @@
 
 </div>
 
-<p class="whitetext">
-	I am the best
-</p>
+<h4 class="whitetext">
+	{{currentprofile.comments}}
+</h4>
 
 </ion-item>
+</div>
 
 
-<ion-item class="row" align="center">
+<!--<div class="row" align="center">
 	<div class="col" align="center">
-		<button class="button button-small button-balanced" ng-click="Invite()" style="border-radius:15px">Invite Member</button>
+		<button class="button button-full button-balanced" ng-click="Invite()" style="border-radius:15px">Invite Member</button>
 </div>
 
 <div class="col" align="center">
-	<button class="button button-small button-balanced" ng-click="Challengeteam()" style="border-radius:15px">challenge</button>
+	<button class="button button-full button-balanced" ng-click="Challengeteam()" style="border-radius:15px">challenge</button>
 </div>
-</ion-item>
+</div> -->
 
+<div class="card" style="background-color:rgb(46,62,75)">
+<div class="button-bar" style="background-color:rgb(46,62,75)">
+
+	<button class="button  button-balanced" style="border-radius:15px" ng-click="Invite()" >Invite Member</button>
+	<button class="button  button-balanced" style="border-radius:15px" ng-click="Challengeteam()" >challenge</button>
+</div>
+</div>
+
+<div class="card">
 <ion-item>
 	<div align="center">
 		<h2>
@@ -124,72 +144,25 @@
 	</div>
 </ion-item>
 
-<ion-item>
-	<ion-list>
-		<ion-item style="background-color:rgb(30,30,30);border-radius:10px; ">
-
-<div class="row row-center" style="height:10px ">
+	<div class="row row-center" ng-repeat="upmatches in currentprofile.upcomingmatches" style="background-color:rgb(62,83,100)">
 <div class="col col-75">
 
-	<h3>June 7, 8pm @ Macity</h3>
+	<h4 class="whitetext">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h4>
 </div>
 
 <div class="col">
-	<h3>22</h3>
-</div>
-<div class="col">
 
+	<button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="width:60px" ng-click="gogamedetails(upmatches.key)"> Manage
+</button>
 
-</div>
-
-</div>
-
-</ion-item>
-<ion-item style="background-color:rgb(30,30,30);border-radius:10px; ">
-
-<div class="row row-center" style="height:10px ">
-<div class="col col-75">
-
-	<h3>June 7, 8pm @ Macity</h3>
-</div>
-
-<div class="col">
-	<h3>22</h3>
-</div>
-<div class="col">
-
-
+<button ng-show="!(upmatches.isadmin)" class="button button-balanced button-small" style="width:60px" ng-click="gogamedetails(upmatches.key)"> View
+</button>
 </div>
 
 </div>
-
-</ion-item>
-
-<ion-item style="background-color:rgb(30,30,30);border-radius:10px; ">
-
-<div class="row row-center" style="height:10px ">
-<div class='col col-75'>
-
-	<h3>June 7, 8pm @ Macity</h3>
 </div>
 
-<div class='col '>
-	<h3>22</h3>
-</div>
-<div class="col">
-
-
-</div>
-
-</div>
-
-</ion-item>
-
-
-</ion-list>
-
-</ion-item>
-
+<div class="card">
 <ion-item>
 	<div class="row row-center">
 		<div class="col">
@@ -231,20 +204,18 @@
 
 		<div class="col">
 
-			<button ng-show="item.isadmin" class="button button-balanced button-small" style="width:60px" ng-click="playeroperations(2,item)">
-						Demote
-					</button>
+			<button ng-show="item.isadmin" class="button button-balanced button-small" style="width:60px" ng-click="playeroperations(2,item)"> Demote
+			</button>
 
-			<button ng-show="!(item.isadmin)" class="button button-balanced button-small" style="width:60px" ng-click="playeroperations(1,item)">
-						Promote
-					</button>
+<button ng-show="!(item.isadmin)" class="button button-balanced button-small" style="width:60px" ng-click="playeroperations(1,item)"> Promote
+</button>
 
-			<button ng-show="true" class="button button-assertive button-small" ng-click="playeroperations(3,item)">
+<button ng-show="true" class="button button-assertive button-small" ng-click="playeroperations(3,item)">
 						Remove
 					</button>
-		</div>
+</div>
 
-	</div>
+</div>
 
 
 </ion-item>
@@ -407,7 +378,7 @@
 
 
 </ion-item>
-
+</div>
 
 
 </ion-content>

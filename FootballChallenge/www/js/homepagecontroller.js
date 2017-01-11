@@ -28,6 +28,11 @@ angular.module('football.controllers')
                         $scope.showteaminvite = false;
                     }
 
+                    HomeStore.GetFirstFour(function(leagues)
+                    {
+                        $scope.rankedteams = leagues;
+                    })
+
 
                     $scope.$digest();
                 })
@@ -164,6 +169,11 @@ angular.module('football.controllers')
                     gameid: gameid
                 })
         }
+
+                $scope.showSearch = false;
+        $scope.toggleSearch = function () {
+            $scope.showSearch = !$scope.showSearch;
+        };
 
 
     })

@@ -80,7 +80,8 @@ angular.module('football.controllers')
             },
 
             GetAllTeams: function (callback) {
-                firebase.database().ref('/teams').limitToFirst(4).once('value').then(function (snapshot) {
+            //    firebase.database().ref('/teams').limitToFirst(4).once('value').then(function (snapshot) {
+                    firebase.database().ref('/teams').once('value').then(function (snapshot) {
                     //alert(firstName);
                     AllITems = [];
 
@@ -100,8 +101,8 @@ angular.module('football.controllers')
                             "numberofgames": childSnapshot.child("numberofgames").val(),
                             "wins": childSnapshot.child("wins").val(),
                             "selected": "select",
-                            "color":"white",
-                            "backcolor":"green",
+                            "color":"green",
+                            "backcolor":"white",
                             "teamadmin":childSnapshot.child("teamadmin").val(),
 
                         };

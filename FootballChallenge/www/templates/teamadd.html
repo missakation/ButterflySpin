@@ -11,10 +11,10 @@
 		}
 	</style>
 
-	<ion-content style="background-color:rgb(40,80,120)">
+<ion-content style="background-color:rgb(45,62,75)">
 
 
-		<script id="my-popover.html" type="text/ng-template">
+<script id="my-popover.html" type="text/ng-template">
 			<ion-popover-view>
 				<ion-header-bar>
 					<h1 class="title" style="color:black">Choose a Badge</h1>
@@ -435,103 +435,99 @@
 		</script>
 
 
-		<div align="center" >
-		<h5  style="background-color:transparent;border-color:white;color:white;border-radius:5px">
-              Team Name
-          </h5>
+<div align="center">
+	<h5 style="color:white"> Team Name
+</h5>
 
-		   <label class="item item-input" style="background-color:transparent;border-color:white;border-radius:5px">
-                <input type="text"  ng-model="adduser.teamname" style="color:white" >
+<label class="item item-input" style="background-color:transparent;border-color:white;border-radius:5px">
+<input type="text" ng-model="adduser.teamname" style="color:white" >
 
-            </label>
-		</div>
-
+</label>
+</div>
 
 
 
-		<label class="item item-input item-select" style="background-color:transparent;border-color:white;color:white;border-radius:5px">
-              Favorite Stadium
-          <select ng-model="adduser.favstadium"  style="background-color:transparent;border-color:white;color:white;border-radius:5px" >
-              <option selected>None</option>
-			  <option ng-repeat="item in allstadiums" >{{item.name}}</option>
-          </select>
-      </label>
-		<label class="item item-input item-select" style="background-color:transparent;border-color:white;color:white;border-radius:5px">
-          Preferred Team Size
-          <select ng-model="adduser.pteamsize"  style="background-color:transparent;border-color:white;color:white;border-radius:5px">
-              <option>5</option>
-              <option selected>6</option>
-              <option selected>7</option>
-              <option selected>8</option>
-              <option selected>9</option>
-              <option>10</option>
-              <option selected>11</option>
-          </select>
-      </label>
 
-	  		<div class="button-bar">
-			<button class="button" ng-click="updateteamsize(1)">5</button>
-			<button class="button" ng-click="updateteamsize(2)">6</button>
-			<button class="button" ng-click="updateteamsize(3)">7</button>
-			<button class="button" ng-click="updateteamsize(4)">8</button>
-			<button class="button" ng-click="updateteamsize(5)">9</button>
-			<button class="button" ng-click="updateteamsize(6)">10</button>
-			<button class="button" ng-click="updateteamsize(6)">11</button>
-		</div>
+<label class="item item-input item-select" style="background-color:transparent;border-color:transparent;color:white;border-radius:5px"> Favorite Stadium
+<select ng-model="adduser.favstadium" style="background-color:transparent;border-color:transparent;color:white;border-radius:5px" >
+<option selected>None</option>
+<option ng-repeat="item in allstadiums">{{item.name}}</option>
+</select>
+</label>
+<label class="item item-input item-select" style="background-color:transparent;border-color:white;color:white;border-radius:5px"> Preferred Team Size
+<select ng-model="adduser.pteamsize" style="background-color:transparent;border-color:white;color:white;border-radius:5px">
+<option>5</option>
+<option selected>6</option>
+<option selected>7</option>
+<option selected>8</option>
+<option selected>9</option>
+<option>10</option>
+<option selected>11</option>
+</select>
+</label>
 
-
-		<div align="center">
-			<h5 class="titles">
-				<u>Badge</u>
-			</h5>
-			<img src="img/Badges/{{adduser.badge}}.png" style="width:70px;height:70px " ng-click="openPopover($event)">
-		</div>
+<div class="button-bar">
+	<button class="button" style="background-color: {{managecolors.five.backcolor}} ; color:{{managecolors.five.color}}" ng-click="updateteamsize(1)">5</button>
+<button class="button" style="background-color: {{managecolors.six.backcolor}}; color:{{managecolors.six.color}}" ng-click="updateteamsize(2)">6</button>
+<button class="button" style="background-color: {{managecolors.seven.backcolor}}; color:{{managecolors.seven.color}}" ng-click="updateteamsize(3)">7</button>
+<button class="button" style="background-color: {{managecolors.eight.backcolor}}; color:{{managecolors.eight.color}}" ng-click="updateteamsize(4)">8</button>
+<button class="button" style="background-color: {{managecolors.nine.backcolor}}; color:{{managecolors.nine.color}}" ng-click="updateteamsize(5)">9</button>
+<button class="button" style="background-color: {{managecolors.ten.backcolor}}; color:{{managecolors.ten.color}}" ng-click="updateteamsize(6)">10</button>
+<button class="button" style="background-color: {{managecolors.eleven.backcolor}}; color:{{managecolors.eleven.color}}" ng-click="updateteamsize(7)">11</button>
+</div>
 
 
-		<br>
-		<div align="center">
-			<h5 class="titles">
-				<u>Home Jersey color</u>
-			</h5>
-		</div>
-		<div align="center">
-			<img src="img/Jerseys/{{adduser.homejersey}}.png" style="width:70px;height:50px " ng-click="FacebookLogin()">
-		</div>
-		<div class="button-bar">
-			<button class="button button-assertive" ng-click="updatehomejersey(1)"></button>
-			<button class="button button-positive" ng-click="updatehomejersey(2)"></button>
-			<button class="button button-balanced" ng-click="updatehomejersey(3)"></button>
-			<button class="button button-dark" ng-click="updatehomejersey(4)"></button>
-			<button class="button button-energized" ng-click="updatehomejersey(5)"></button>
-			<button class="button" ng-click="updatehomejersey(6)"></button>
-		</div>
-
-		<br>
+<div align="center">
+	<h5 class="titles">
+		<u>Choose Your Team Badge</u>
+	</h5>
+	<img src="img/Badges/{{adduser.badge}}.png" style="width:70px;height:70px " ng-click="openPopover($event)">
+</div>
 
 
-		<div align="center">
-			<h5 class="titles">
-				<u>Away Jersey color</u>
-			</h5>
-		</div>
-		<div align="center">
-			<img src="img/Jerseys/{{adduser.awayjersey}}.png" style="width:70px;height:50px " ng-click="FacebookLogin()">
-		</div>
-		<div class="button-bar">
-			<button class="button button-assertive" ng-click="updateawayjersey(1)"></button>
-			<button class="button button-positive" ng-click="updateawayjersey(2)"></button>
-			<button class="button button-balanced" ng-click="updateawayjersey(3)"></button>
-			<button class="button button-dark" ng-click="updateawayjersey(4)"></button>
-			<button class="button button-energized" ng-click="updateawayjersey(5)"></button>
-			<button class="button" ng-click="updateawayjersey(6)"></button>
-		</div>
-		<br>
+<br>
+<div align="center">
+	<h5 class="titles">
+		<u>Home Jersey color</u>
+	</h5>
+</div>
+<div align="center">
+	<img src="img/Jerseys/{{adduser.homejersey}}.png" style="width:70px;height:50px " ng-click="FacebookLogin()">
+</div>
+<div class="button-bar">
+	<button class="button button-assertive" ng-click="updatehomejersey(1)"></button>
+	<button class="button button-positive" ng-click="updatehomejersey(2)"></button>
+	<button class="button button-balanced" ng-click="updatehomejersey(3)"></button>
+	<button class="button button-dark" ng-click="updatehomejersey(4)"></button>
+	<button class="button button-energized" ng-click="updatehomejersey(5)"></button>
+	<button class="button" ng-click="updatehomejersey(6)"></button>
+</div>
+
+<br>
+
+
+<div align="center">
+	<h5 class="titles">
+		<u>Away Jersey color</u>
+	</h5>
+</div>
+<div align="center">
+	<img src="img/Jerseys/{{adduser.awayjersey}}.png" style="width:70px;height:50px " ng-click="FacebookLogin()">
+</div>
+<div class="button-bar">
+	<button class="button button-assertive" ng-click="updateawayjersey(1)"></button>
+	<button class="button button-positive" ng-click="updateawayjersey(2)"></button>
+	<button class="button button-balanced" ng-click="updateawayjersey(3)"></button>
+	<button class="button button-dark" ng-click="updateawayjersey(4)"></button>
+	<button class="button button-energized" ng-click="updateawayjersey(5)"></button>
+	<button class="button" ng-click="updateawayjersey(6)"></button>
+</div>
+<br>
 
 
 
-		<button class="button button-full button-positive" ng-disabled="disabledbutton" style="background-color:darkorange" ng-click="add()">
-          ADD TEAM
-      </button>
+<button class="button button-full button-positive" ng-disabled="disabledbutton" style="background-color:darkorange" ng-click="add()"> ADD TEAM
+</button>
 
-	</ion-content>
+</ion-content>
 </ion-view>

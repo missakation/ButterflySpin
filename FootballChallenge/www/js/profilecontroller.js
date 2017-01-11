@@ -2,7 +2,7 @@
 angular.module('football.controllers')
 
 
-    .controller('profilecontroller', function ($scope, ProfileStore, $ionicPopup, $ionicLoading, $timeout) {
+    .controller('profilecontroller', function ($scope, ProfileStore, $ionicPopup,$state, $stateParams, $ionicLoading, $timeout) {
 
         $scope.currentprofile = {};
 
@@ -23,16 +23,91 @@ angular.module('football.controllers')
             })
         }, 3000);
 
+        $ionicLoading.show({
+            content: 'Loading',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
 
 
-        //$scope.value = 150;
+        $scope.tabs =
+            {
+                Available: false,
+                Members: true,
+                Statistics: false
+            }
+
+        $scope.switchscreens = function (x) {
+            switch (x) {
+                case 1:
+                    $scope.tabs.Available = false;
+                    $scope.tabs.Members = false;
+                    $scope.tabs.Statistics = false;
+                    $scope.tabs.Available = true;
+
+                    break;
+
+                case 2:
+                    $scope.tabs.Available = false;
+                    $scope.tabs.Members = false;
+                    $scope.tabs.Statistics = false;
+                    $scope.tabs.Statistics = true;
+
+                    break;
+
+                case 3:
+                    $scope.tabs.Available = false;
+                    $scope.tabs.Members = false;
+                    $scope.tabs.Statistics = false;
+                    $scope.tabs.Members = true;
+                    break;
+            }
+        }
+
+        $scope.UpdateUser = function (profile) {
+
+
+            ProfileStore.UpdateProfile(profile).then(function (result) {
+
+            }, function (error) {
+                alert(error.message);
+            });
+
+        }
+
+        $scope.goupdate = function () {
+            $state.go('app.selfprofileedit',
+
+                {
+                    myprofile: $scope.currentprofile
+                });
+        }
+
+                $scope.gogamedetails = function (gameid) {
+            $state.go('app.gamedetails',
+                {
+                    gameid: gameid
+                })
+        }
+
+
+    })
+    .controller('ProfileEditController', function ($scope, $ionicLoading,$state, $stateParams, $timeout, $ionicPopup, $stateParams, $state, TeamStores) {
+
+        $scope.currentprofile = $state.params.myprofile;
+
 
         $scope.slider1 = {
             minValue: 1,
             maxValue: 23,
+
             options: {
                 floor: 0,
                 showSelectionBar: true,
+                readOnly: true,
+                disabled: true,
                 getSelectionBarColor: function (value) {
                     return 'White';
                 },
@@ -52,6 +127,8 @@ angular.module('football.controllers')
             options: {
                 floor: 0,
                 showSelectionBar: true,
+                readOnly: true,
+                disabled: true,
                 getSelectionBarColor: function (value) {
                     return 'White';
                 },
@@ -72,6 +149,8 @@ angular.module('football.controllers')
             options: {
                 floor: 0,
                 showSelectionBar: true,
+                readOnly: true,
+                disabled: true,
                 getSelectionBarColor: function (value) {
                     return 'White';
                 },
@@ -92,6 +171,8 @@ angular.module('football.controllers')
             options: {
                 floor: 0,
                 showSelectionBar: true,
+                readOnly: true,
+                disabled: true,
                 getSelectionBarColor: function (value) {
                     return 'White';
                 },
@@ -112,6 +193,8 @@ angular.module('football.controllers')
             options: {
                 floor: 0,
                 showSelectionBar: true,
+                readOnly: true,
+                disabled: true,
                 getSelectionBarColor: function (value) {
                     return 'White';
                 },
@@ -131,6 +214,8 @@ angular.module('football.controllers')
             options: {
                 floor: 0,
                 showSelectionBar: true,
+                readOnly: true,
+                disabled: true,
                 getSelectionBarColor: function (value) {
                     return 'White';
                 },
@@ -147,10 +232,13 @@ angular.module('football.controllers')
         $scope.slider7 = {
             minValue: 1,
             maxValue: 23,
+
             options: {
                 floor: 0,
                 showSelectionBar: true,
-                 getSelectionBarColor: function (value) {
+                readOnly: true,
+                disabled: true,
+                getSelectionBarColor: function (value) {
                     return 'White';
                 },
                 getPointerColor: function (value) {
@@ -163,26 +251,47 @@ angular.module('football.controllers')
             }
         };
 
-        $ionicLoading.show({
-            content: 'Loading',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-        });
+        try {
 
-        $scope.UpdateUser = function (profile) {
+
+            $scope.slider1.options.readOnly = $scope.currentprofile.admiadmin;
+            $scope.slider1.options.disabled = $scope.currentprofile.admiadmin;
+
+            $scope.slider2.options.readOnly = $scope.currentprofile.admiadmin;
+            $scope.slider2.options.disabled = $scope.currentprofile.admiadmin;
+
+            $scope.slider3.options.readOnly = $scope.currentprofile.admiadmin;
+            $scope.slider3.options.disabled = $scope.currentprofile.admiadmin;
+
+            $scope.slider4.options.readOnly = $scope.currentprofile.admiadmin;
+            $scope.slider4.options.disabled = $scope.currentprofile.admiadmin;
+
+            $scope.slider5.options.readOnly = $scope.currentprofile.admiadmin;
+            $scope.slider5.options.disabled = $scope.currentprofile.admiadmin;
+
+            $scope.slider6.options.readOnly = $scope.currentprofile.admiadmin;
+            $scope.slider6.options.disabled = $scope.currentprofile.admiadmin;
+
+
+            $scope.slider7.options.readOnly = $scope.currentprofile.admiadmin;
+            $scope.slider7.options.disabled = $scope.currentprofile.admiadmin;
+
+        }
+        catch (error) {
+            alert(error.message);
+        }
+
+        $scope.UpdateProfile = function (profile) {
 
 
             ProfileStore.UpdateProfile(profile).then(function (result) {
+
+
 
             }, function (error) {
                 alert(error.message);
             });
 
         }
-
-
-
 
     })

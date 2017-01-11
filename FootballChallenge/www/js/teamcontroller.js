@@ -6,7 +6,7 @@ angular.module('football.controllers')
         $scope.showadd = true;
 
         $ionicLoading.show({
-            content: 'Loading',
+            template: 'Loading...',
             animation: 'fade-in',
             showBackdrop: true,
             maxWidth: 200,
@@ -16,9 +16,8 @@ angular.module('football.controllers')
         //works
         //$timeout(function () {
 
-            try {
-                $timeout(function()
-                {
+        try {
+            $timeout(function () {
                 TeamStores.GetMyTeams(function (leagues) {
                     $ionicLoading.hide();
                     $scope.test = leagues;
@@ -34,14 +33,14 @@ angular.module('football.controllers')
                     }
 
                 })
-                },200);
+            }, 200);
 
 
-            }
-            catch (error) {
-                alert(error.message);
-            }
-      //  }, 2000)
+        }
+        catch (error) {
+            alert(error.message);
+        }
+        //  }, 2000)
 
         $scope.gotoadd = function () {
             $state.go("app.teamadd");
@@ -51,10 +50,10 @@ angular.module('football.controllers')
 
     })
 
-    .controller('TeamAddController', function ($scope,$ionicLoading, $cordovaToast, $ionicPopover,ReservationFact, $state, $ionicLoading, $ionicPopup, TeamStores) {
+    .controller('TeamAddController', function ($scope, $ionicLoading, $cordovaToast, $ionicPopover, ReservationFact, $state, $ionicLoading, $ionicPopup, TeamStores) {
 
         $ionicLoading.show({
-            content: 'Loading',
+            template: 'Loading',
             animation: 'fade-in',
             showBackdrop: true,
             maxWidth: 200,
@@ -62,20 +61,20 @@ angular.module('football.controllers')
         });
 
         //works
-            try {
+        try {
 
-                ReservationFact.GetAllStadiums(function (leagues) {
+            ReservationFact.GetAllStadiums(function (leagues) {
 
-                    $ionicLoading.hide();
-                    $scope.allstadiums = leagues;
+                $ionicLoading.hide();
+                $scope.allstadiums = leagues;
 
-                })
+            })
 
-            }
-            catch (error) {
-                alert(error.message);
-            }
-        
+        }
+        catch (error) {
+            alert(error.message);
+        }
+
 
         // .fromTemplate() method
         var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
@@ -121,10 +120,50 @@ angular.module('football.controllers')
                 eight: false,
                 nine: false,
                 ten: false,
-                eleven: false,
+                eleven: false
+            }
+
+        $scope.managecolors =
+            {
+                five:
+                {
+                    color: "black",
+                    backcolor: "white"
+                },
+                six:
+                {
+                    color: "black",
+                    backcolor: "white"
+                },
+                seven:
+                {
+                    color: "black",
+                    backcolor: "white"
+                },
+                eight:
+                {
+                    color: "black",
+                    backcolor: "white"
+                },
+                nine:
+                {
+                    color: "black",
+                    backcolor: "white"
+                },
+                ten:
+                {
+                    color: "black",
+                    backcolor: "white"
+                },
+                eleven:
+                {
+                    color: "black",
+                    backcolor: "white"
+                }
             }
 
         $scope.add = function () {
+            
             $scope.disabledbutton = true;
             try {
                 var team = {
@@ -143,14 +182,12 @@ angular.module('football.controllers')
                     nine: $scope.adduser.nine,
                     ten: $scope.adduser.ten,
                     eleven: $scope.adduser.eleven,
-                    photo :""
+                    photo: ""
 
                 };
 
-                for(var i = 0; i <$scope.allstadiums.length;i++)
-                {
-                    if($scope.adduser.favstadium == $scope.allstadiums[i].name)
-                    {
+                for (var i = 0; i < $scope.allstadiums.length; i++) {
+                    if ($scope.adduser.favstadium == $scope.allstadiums[i].name) {
                         team.photo = $scope.allstadiums[i].photo
                     }
                 }
@@ -160,6 +197,7 @@ angular.module('football.controllers')
                     $scope.disabledbutton = false;
                 }
                 else {
+                    
                     TeamStores.AddNewTeam(team)
                         .then(function (value) {
 
@@ -273,6 +311,118 @@ angular.module('football.controllers')
                     break;
             }
 
+        }
+
+        $scope.updateteamsize = function (x) {
+
+            switch (x) {
+                case 1:
+                if($scope.adduser.five)
+                {
+                    $scope.managecolors.five.color = "Black";
+                    $scope.managecolors.five.backcolor = "White";
+                    $scope.adduser.five = false;
+                }
+                else
+
+                {
+                    $scope.managecolors.five.color = "white";
+                    $scope.managecolors.five.backcolor = "Green";
+                    $scope.adduser.five = true;
+                }
+
+                    break;
+                case 2:
+                if($scope.adduser.six)
+                {
+                    $scope.managecolors.six.color = "Black";
+                    $scope.managecolors.six.backcolor = "White";
+                    $scope.adduser.six = false;
+                }
+                else
+
+                {
+                    $scope.managecolors.six.color = "white";
+                    $scope.managecolors.six.backcolor = "Green";
+                    $scope.adduser.six = true;
+                }
+                    break;
+                case 3:
+                if($scope.adduser.seven)
+                {
+                    $scope.managecolors.seven.color = "Black";
+                    $scope.managecolors.seven.backcolor = "White";
+                    $scope.adduser.seven = false;
+                }
+                else
+
+                {
+                    $scope.managecolors.seven.color = "white";
+                    $scope.managecolors.seven.backcolor = "Green";
+                    $scope.adduser.seven = true;
+                }
+                    break;
+                case 4:
+                if($scope.adduser.eight)
+                {
+                    $scope.managecolors.eight.color = "Black";
+                    $scope.managecolors.eight.backcolor = "White";
+                    $scope.adduser.eight = false;
+                }
+                else
+
+                {
+                    $scope.managecolors.eight.color = "white";
+                    $scope.managecolors.eight.backcolor = "Green";
+                    $scope.adduser.eight = true;
+                }
+                    break;
+                case 5:
+                if($scope.adduser.nine)
+                {
+                    $scope.managecolors.nine.color = "Black";
+                    $scope.managecolors.nine.backcolor = "White";
+                    $scope.adduser.nine = false;
+                }
+                else
+
+                {
+                    $scope.managecolors.nine.color = "white";
+                    $scope.managecolors.nine.backcolor = "Green";
+                    $scope.adduser.nine = true;
+                }
+                    break;
+                case 6:
+                if($scope.adduser.ten)
+                {
+                    $scope.managecolors.ten.color = "Black";
+                    $scope.managecolors.ten.backcolor = "White";
+                    $scope.adduser.ten = false;
+                }
+                else
+
+                {
+                    $scope.managecolors.ten.color = "white";
+                    $scope.managecolors.ten.backcolor = "Green";
+                    $scope.adduser.ten = true;
+                }
+                    break;
+                case 7:
+                if($scope.adduser.eleven)
+                {
+                    $scope.managecolors.eleven.color = "Black";
+                    $scope.managecolors.eleven.backcolor = "White";
+                    $scope.adduser.eleven = false;
+                }
+                else
+
+                {
+                    $scope.managecolors.eleven.color = "white";
+                    $scope.managecolors.eleven.backcolor = "Green";
+                    $scope.adduser.eleven = true;
+                }
+                    break;
+            }
         }
 
 
@@ -558,28 +708,28 @@ angular.module('football.controllers')
 
             confirmPopup.then(function (res) {
                 if (res) {
-                    TeamStores.PromoteDeletePlayers($scope.currentprofile,player,opercode).then(function () {
+                    TeamStores.PromoteDeletePlayers($scope.currentprofile, player, opercode).then(function () {
 
 
-            switch (opercode) {
-                case 1:
-                    player.isadmin = true;
-                    break;
-                case 2:
-                     player.isadmin = false;
-                    break;
-                case 3:
-                    $scope.currentprofile.players = $scope.currentprofile.players.filter(function (el) {
-                        return el.key !== player.key;
-                        
-                         });
-                    break;
-                default:
-                    break;
-            }
-            $scope.$digest();
+                        switch (opercode) {
+                            case 1:
+                                player.isadmin = true;
+                                break;
+                            case 2:
+                                player.isadmin = false;
+                                break;
+                            case 3:
+                                $scope.currentprofile.players = $scope.currentprofile.players.filter(function (el) {
+                                    return el.key !== player.key;
 
-                 }, function (error) {
+                                });
+                                break;
+                            default:
+                                break;
+                        }
+                        $scope.$digest();
+
+                    }, function (error) {
                         alert(error.message);
                     });
                 }
@@ -787,27 +937,27 @@ angular.module('football.controllers')
         try {
 
 
-                    $scope.slider1.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider1.options.disabled = $scope.currentprofile.admiadmin;
+            $scope.slider1.options.readOnly = $scope.currentprofile.admiadmin;
+            $scope.slider1.options.disabled = $scope.currentprofile.admiadmin;
 
-                    $scope.slider2.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider2.options.disabled = $scope.currentprofile.admiadmin;
+            $scope.slider2.options.readOnly = $scope.currentprofile.admiadmin;
+            $scope.slider2.options.disabled = $scope.currentprofile.admiadmin;
 
-                    $scope.slider3.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider3.options.disabled = $scope.currentprofile.admiadmin;
+            $scope.slider3.options.readOnly = $scope.currentprofile.admiadmin;
+            $scope.slider3.options.disabled = $scope.currentprofile.admiadmin;
 
-                    $scope.slider4.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider4.options.disabled = $scope.currentprofile.admiadmin;
+            $scope.slider4.options.readOnly = $scope.currentprofile.admiadmin;
+            $scope.slider4.options.disabled = $scope.currentprofile.admiadmin;
 
-                    $scope.slider5.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider5.options.disabled = $scope.currentprofile.admiadmin;
+            $scope.slider5.options.readOnly = $scope.currentprofile.admiadmin;
+            $scope.slider5.options.disabled = $scope.currentprofile.admiadmin;
 
-                    $scope.slider6.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider6.options.disabled = $scope.currentprofile.admiadmin;
+            $scope.slider6.options.readOnly = $scope.currentprofile.admiadmin;
+            $scope.slider6.options.disabled = $scope.currentprofile.admiadmin;
 
 
-                    $scope.slider7.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider7.options.disabled = $scope.currentprofile.admiadmin;
+            $scope.slider7.options.readOnly = $scope.currentprofile.admiadmin;
+            $scope.slider7.options.disabled = $scope.currentprofile.admiadmin;
 
         }
         catch (error) {
@@ -819,7 +969,7 @@ angular.module('football.controllers')
 
             TeamStores.UpdateTeamByKey(profile).then(function (result) {
 
-                
+
 
             }, function (error) {
                 alert(error.message);
@@ -827,7 +977,7 @@ angular.module('football.controllers')
 
         }
 
-       $scope.deleteteam = function (team) {
+        $scope.deleteteam = function (team) {
             try {
 
 
@@ -889,12 +1039,12 @@ angular.module('football.controllers')
         $scope.InvitePlayerToTeam = function (player) {
             TeamStores.InvitePlayerToTeam($scope.myteam, player).then(function () {
 
-            player.status = "Invitation Sent";
-            $scope.$digest();
+                player.status = "Invitation Sent";
+                $scope.$digest();
 
             }, function (error) {
-                    alert(error.message)
-                })
+                alert(error.message)
+            })
         }
 
 

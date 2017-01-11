@@ -89,8 +89,8 @@ angular.module('football.controllers')
                         return el.key !== team.key;
                     });
                     team.selected = "select";
-                    team.color = "white";
-                    team.backcolor = "green";
+                    team.color = "green";
+                    team.backcolor = "white";
 
                 }
                 else {
@@ -104,8 +104,8 @@ angular.module('football.controllers')
 
                         $scope.selectedteams.push(angular.copy(team));
                         team.selected = "unselect";
-                        team.color = "green";
-                        team.backcolor = "white";
+                        team.color = "white";
+                        team.backcolor = "green";
 
                     }
                 }
@@ -173,18 +173,18 @@ angular.module('football.controllers')
             }
 
         })
-
         $scope.updateselectedteams = function (stadiums) {
 
             try {
 
                 if (stadiums.selected == "unselect") {
                     $scope.selectedstadiums = $scope.selectedstadiums.filter(function (el) {
-                        return ((el.stadiumkey !== stadiums.stadiumkey)||( el.stadiumkey == stadiums.stadiumkey && el.ministadiumkey !== stadiums.ministadiumkey));
+                        return ((el.stadiumkey !== stadiums.stadiumkey) || (el.stadiumkey == stadiums.stadiumkey && el.ministadiumkey !== stadiums.ministadiumkey));
                     });
                     stadiums.selected = "select";
-                    stadiums.color = "white";
-                    stadiums.backcolor = "green";
+                    stadiums.color = "green";
+                    stadiums.backcolor = "white";
+
                 }
                 else {
                     if ($scope.selectedstadiums.length == 3) {
@@ -196,8 +196,8 @@ angular.module('football.controllers')
                     else {
                         $scope.selectedstadiums.push(angular.copy(stadiums));
                         stadiums.selected = "unselect";
-                        stadiums.color = "green";
-                        stadiums.backcolor = "white";
+                        stadiums.color = "white";
+                        stadiums.backcolor = "green";
                     }
                 }
             }

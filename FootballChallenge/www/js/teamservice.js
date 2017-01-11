@@ -76,7 +76,8 @@
                 // Get a key for a new Post.
                 var user = firebase.auth().currentUser;
                 var id = user.uid;
-
+                
+                
 
                  var today = new Date();
 
@@ -120,13 +121,13 @@
                         numberofgames: 0,
                         wins: 0,
 
-                        five: newteam.five,
-                        six: newteam.six,
-                        seven: newteam.seven,
-                        eight: newteam.eight,
-                        nine: newteam.nine,
-                        ten: newteam.ten,
-                        eleven: newteam.eleven,
+                        teamoffive: newteam.five,
+                        teamofsix: newteam.six,
+                        teamofseven: newteam.seven,
+                        teamofeight: newteam.eight,
+                        teamofnine: newteam.nine,
+                        teamoften: newteam.ten,
+                        teamofeleven: newteam.eleven,
 
                         dateyear : year,
                         datemonth : month,
@@ -141,13 +142,15 @@
                             firstone:true,
                             },
 
+                        comments:""
+
                     };
 
                     contact.players[id] = {
                         name: "Missak",
                         isadmin: true
                     };
-
+                    
                     contact.captain[id] =
                         {
                             name: "Missak",
@@ -181,17 +184,18 @@
                         };
 
 
-
-
-
+                        
+                        
                     var newPostKey = firebase.database().ref().child('teams').push().key;
                     var teamstats = {
                         rank: 1500,
                         numberofgames: 0,
-                        wins: 0
+                        wins: 0,
+                        badge: newteam.badge,
+                        name: newteam.teamname
                     }
 
-
+                    
                     var updates = {};
                     updates['/teams/' + newPostKey] = contact;
 
@@ -298,7 +302,9 @@
                                     "teamadmin":snapshot.child("teamadmin").val(),
                                     "accepted":false,
                                     "pending":false,
-                                    "invite":false
+                                    "invite":false,
+
+                                    "comments":snapshot.child("comments").val(),
                                 };
                                 TeamProfile = Items;
 
@@ -365,6 +371,7 @@
               updates['teams/' + id + '/startsaturdayend'] = profile.startsaturdayend;
               updates['teams/' + id + '/startsunday'] = profile.startsunday;
               updates['teams/' + id + '/startsundayend'] = profile.startsundayend;
+              updates['teams/' + id + '/comments'] = profile.comments;
 
                 return firebase.database().ref().update(updates);
             }

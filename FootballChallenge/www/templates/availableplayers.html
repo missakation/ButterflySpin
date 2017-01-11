@@ -25,109 +25,103 @@
 
 	<ion-content ng-controller="SearchController" style="background-color:rgb(46,62,75)">
 
-		
+<div class="bar bar-header item-input-inset" >
+	<label class="item-input-wrapper" style="background-color: white">
+    <i class="icon ion-ios-search placeholder-icon"></i>
+    <input type="search" placeholder="Search">
+  </label>
+	<button class="button button-clear">
+    Cancel
+  </button>
+</div>
 
-		<div class="item item-dark" ion-datetime-picker ng-model="search.date" minute-step="15" ng-change="checkfree()">
-			{{search.date| date: "yyyy-MM-dd H:mm"}}
-		</div>
+<div class="item item-dark" ion-datetime-picker ng-model="search.date" minute-step="15" ng-change="checkfree()">
+	{{search.date| date: "yyyy-MM-dd H:mm"}}
+</div>
 
-			<div class="card" style="background-color:rgb(62,83,100)" ng-repeat="item in allfreeplayers">
-				<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
+<div class="card" style="background-color:rgb(62,83,100)" ng-repeat="item in allfreeplayers">
+<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
-				<div class="row ">
-					<div class="col" align="center">
-						<img src="https://leafii.com/images/defaultProfilePic.png" style="width:100%;height:80px;">
-						<h5 class="whitetext"> {{item.displayname}} </h5>
-						<h5 class="whitetext"> {{item.ranking}} </h5>
-					</div>
+<div class="row ">
+	<div class="col" align="center">
+		<img src="https://leafii.com/images/defaultProfilePic.png" style="width:100%;height:80px;">
+<h5 class="whitetext"> {{item.displayname}} </h5>
+<h5 class="whitetext"> {{item.ranking}} </h5>
+</div>
 
-					<div class="col" align="center" >
-						<img src="https://leafii.com/images/defaultProfilePic.png" style="width:100%;height:80px;">
-						<h5 class="whitetext"> Fav. Stadium </h5>
-						<h5 class="whitetext"> {{item.favstadium}} </h5>
-					</div>
+<div class="col" align="center">
+	<img src="https://leafii.com/images/defaultProfilePic.png" style="width:100%;height:80px;">
+<h5 class="whitetext"> Fav. Stadium </h5>
+<h5 class="whitetext"> {{item.favstadium}} </h5>
+</div>
 
-					<div class="col" align="center">
-						<img src="https://leafii.com/images/defaultProfilePic.png" style="width:100%;height:80px;">
-						<h5 class="whitetext"> Beirut Eagle</h5>
-						<h5 class="whitetext"> Rank 49 </h5>
-					</div>
+<div class="col" align="center">
+	<img src="https://leafii.com/images/defaultProfilePic.png" style="width:100%;height:80px;">
+<h5 class="whitetext"> Beirut Eagle</h5>
+<h5 class="whitetext"> Rank 49 </h5>
+</div>
 
-				</div>
+</div>
 
 
-				<div class="row row-top">
-					<div class="col" align="right"  style="border-right: 0.2px solid;border-color:grey;color:white">
-						
-							Position
-					
-					</div>
+<div class="row row-top">
+	<div class="col" align="right" style="color:lightgray"> Position
 
-					<div class="col " style="border-right: 0.2px solid;border-color:grey;color:white" align="right">
-						
-							Age
-						
-					</div>
+</div>
 
-					<div class="col " style="border-right: 0.2px solid;border-color:grey;color:white" align="right" > 
-						
-							Matches
-						
-					</div>
+<!--	<div class="col " style="border-right: 0.2px solid;border-color:grey;color:white" align="right">-->
+<div class="col " style="color:lightgray" align="right"> Age
 
-					<div class="col " align="right"  style="border-right: 0.2px solid;border-color:grey" >
-						
-							Av. Res
-						
-					</div>
+</div>
 
-				</div>
+<div class="col " style="color:lightgray" align="right" > Matches
 
-				<div class="row " >
-					<div class="col" align="right" style="border-right: 0.2px solid;border-color:grey;color:white">
-						
-                            {{item.playposition}}
-						
-					</div>
+</div>
 
-					<div class="col" style="border-right: 0.2px solid;border-color:grey;color:white" align="right">
-						
-                            {{item.age}}
-						
-					</div>
+<div class="col " align="right" style="color:lightgray" > Av. Res
 
-					<div class="col" align="right" style="border-right: 1px solid;border-color:white;color:white">
-						
-                            {{item.nummatches}}
-						
-					</div>
+</div>
 
-					<div class="col" align="right" align="center">
+</div>
 
-					</div>
+<div class="row ">
+	<div class="col" align="right" style="color:white"> {{item.playposition}}
 
-				</div>
+</div>
 
-                <p class="whitetext">
-                    I am the best
-                </p>
+<div class="col" style="color:white" align="right"> {{item.age}}
 
-				<div class="row">
-					<div class="col">
-						<button class="button button-block button-balanced button-small" type="submit" ng-click="requestnumber(item)" style="border-radius:25px">
-                        <h5 style="color:white">
-                            Request Number
-                        </h5>
-                    </button>
-					</div>
+</div>
 
-				</div>
+<div class="col" align="right" style="color:white"> {{item.nummatches}}
+
+</div>
+
+<div class="col" align="right" align="center" style="color:white">
+
+</div>
+
+</div>
+
+<p class="whitetext">
+	{{item.comments}}
+</p>
+
+<div class="row">
+	<div class="col">
+		<button class="button button-block button-balanced button-small" style="background-color: {{item.backcolor}};border-radius:25px" type="submit" ng-click="requestnumber(item)">
+			<h5 style="color:{{item.color}}"> {{item.statusdesc}}
+			</h5>
+		</button>
+</div>
+
+</div>
 
 
 
 
-			</div>
+</div>
 
 
-	</ion-content>
+</ion-content>
 </ion-view>
