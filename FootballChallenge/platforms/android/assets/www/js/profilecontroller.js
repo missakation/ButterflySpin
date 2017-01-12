@@ -66,16 +66,6 @@ angular.module('football.controllers')
             }
         }
 
-        $scope.UpdateUser = function (profile) {
-
-
-            ProfileStore.UpdateProfile(profile).then(function (result) {
-
-            }, function (error) {
-                alert(error.message);
-            });
-
-        }
 
         $scope.goupdate = function () {
             $state.go('app.selfprofileedit',
@@ -94,7 +84,7 @@ angular.module('football.controllers')
 
 
     })
-    .controller('ProfileEditController', function ($scope, $ionicLoading,$state, $stateParams, $timeout, $ionicPopup, $stateParams, $state, TeamStores) {
+    .controller('ProfileEditController', function ($scope,ProfileStore1, $ionicLoading,$state, $stateParams, $timeout, $ionicPopup, $stateParams, $state, TeamStores) {
 
         $scope.currentprofile = $state.params.myprofile;
 
@@ -281,10 +271,9 @@ angular.module('football.controllers')
             alert(error.message);
         }
 
-        $scope.UpdateProfile = function (profile) {
+        $scope.UpdateUser = function (profile) {
 
-
-            ProfileStore.UpdateProfile(profile).then(function (result) {
+            ProfileStore1.UpdateProfile(profile).then(function (result) {
 
 
 

@@ -21,6 +21,7 @@ angular.module('football.controllers')
                         
                     TempItems = {};
                     if (snapshot.child("upcominteamgmatches").exists()) {
+
                         snapshot.child("upcominteamgmatches").forEach(function (challenges) {
 
                             
@@ -99,6 +100,7 @@ angular.module('football.controllers')
                             "startsaturdayend": snapshot.child("startsaturdayend").val(),
                             "startsunday": snapshot.child("startsunday").val(),
                             "startsundayend": snapshot.child("startsundayend").val(),
+                            "comments": snapshot.child("comments").val()
 
                         };
 
@@ -113,38 +115,37 @@ angular.module('football.controllers')
                 }
             },
 
-            UpdateProfile: function (profile) {
-
-                var user = firebase.auth().currentUser;
-                var id = user.uid;
-
-            try
+            UpdateProfile: function (profile)
             {
-             var updates = {};
+                    try
+                    {
+                        var user = firebase.auth().currentUser;
+                        var id = user.uid;
 
-              updates['players/' + id + '/enableinvitations'] = profile.enableinvitations;
-              updates['players/' + id + '/startmonday'] = profile.startmonday;
-              updates['players/' + id + '/startmondayend'] = profile.startmondayend;
-              updates['players/' + id + '/starttuesday'] = profile.starttuesday;
-              updates['players/' + id + '/starttuesdayend'] = profile.starttuesdayend;
-              updates['players/' + id + '/startwednesday'] = profile.startwednesday;
-              updates['players/' + id + '/startwednesdayend'] = profile.startwednesdayend;
-              updates['players/' + id + '/startthursday'] = profile.startthursday;
-              updates['players/' + id + '/startthursdayend'] = profile.startthursdayend;
-              updates['players/' + id + '/startfriday'] = profile.startfriday;
-              updates['players/' + id + '/startfridayend'] = profile.startfridayend;
-              updates['players/' + id + '/startsaturday'] = profile.startsaturday;
-              updates['players/' + id + '/startsaturdayend'] = profile.startsaturdayend;
-              updates['players/' + id + '/startsunday'] = profile.startsunday;
-              updates['players/' + id + '/startsundayend'] = profile.startsundayend;
+                    var updates = {};
+                    updates['players/' + id + '/enableinvitations'] = profile.enableinvitations;
+                    updates['players/' + id + '/startmonday'] = profile.startmonday;
+                    updates['players/' + id + '/startmondayend'] = profile.startmondayend;
+                    updates['players/' + id + '/starttuesday'] = profile.starttuesday;
+                    updates['players/' + id + '/starttuesdayend'] = profile.starttuesdayend;
+                    updates['players/' + id + '/startwednesday'] = profile.startwednesday;
+                    updates['players/' + id + '/startwednesdayend'] = profile.startwednesdayend;
+                    updates['players/' + id + '/startthursday'] = profile.startthursday;
+                    updates['players/' + id + '/startthursdayend'] = profile.startthursdayend;
+                    updates['players/' + id + '/startfriday'] = profile.startfriday;
+                    updates['players/' + id + '/startfridayend'] = profile.startfridayend;
+                    updates['players/' + id + '/startsaturday'] = profile.startsaturday;
+                    updates['players/' + id + '/startsaturdayend'] = profile.startsaturdayend;
+                    updates['players/' + id + '/startsunday'] = profile.startsunday;
+                    updates['players/' + id + '/startsundayend'] = profile.startsundayend;
 
-                return firebase.database().ref().update(updates);
-            }
-            catch(error)
-            {
-                alert(error.message)
-            }
-            }
+                        return firebase.database().ref().update(updates);
+                    }
+                    catch(error)
+                    {
+                        alert(error.message);
+                    }
+        }
             
 
 

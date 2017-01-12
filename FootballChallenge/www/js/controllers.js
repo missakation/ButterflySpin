@@ -46,6 +46,7 @@ angular.module('football.controllers', [])
                                 favstadium: "",
                                 favstadiumphoto: "",
                                 photoURL: "",
+                                comments : ""
 
                             }
                         //alert(newPostKey);
@@ -117,22 +118,23 @@ angular.module('football.controllers', [])
                                 cancelledweather: 0,
                                 didnotshowup: 0,
                                 startmonday: 0,
-                                startmondayend: 0,
+                                startmondayend: 23,
                                 starttuesday: 0,
-                                starttuesdayend: 0,
+                                starttuesdayend: 23,
                                 startwednesday: 0,
-                                startwednesdayend: 0,
+                                startwednesdayend: 23,
                                 startthursday: 0,
-                                startthursdayend: 0,
+                                startthursdayend: 23,
                                 startfriday: 0,
-                                startfridayend: 0,
+                                startfridayend: 23,
                                 startsaturday: 0,
-                                startsaturdayend: 0,
+                                startsaturdayend: 23,
                                 startsunday: 0,
-                                startsundayend: 0,
+                                startsundayend: 23,
                                 favstadium: "",
                                 favstadiumphoto: "",
                                 photoURL: newuser.photoURL == null ? "" : newuser.photoURL,
+                                comments : ""
 
                             }
                         //alert(newPostKey);

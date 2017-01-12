@@ -85,9 +85,9 @@
 
 </div>
 
-<h4 class="whitetext">
-	{{currentprofile.comments}}
-</h4>
+<label class="item item-input">
+    <textarea ng-model="currentprofile.comments" placeholder="Comments" style="color: white;background-color: transparent"></textarea>
+</label>
 
 </ion-item>
 
@@ -187,7 +187,7 @@
 </div>
 </ion-item>
 <ion-item>
-	<button class="button button-block button-calm button-full" ng-click="UpdateProfile(currentprofile)">
+	<button class="button button-block button-calm button-full" ng-click="UpdateUser(currentprofile)">
                                 Save
            </button>
 

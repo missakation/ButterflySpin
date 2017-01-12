@@ -369,6 +369,24 @@ angular.module('football.controllers')
                 catch (error) {
                     alert(error.message);
                 }
+            },
+            SearchAllByField: function (table, fieldName, fieldValue, callback)
+            {
+                var searchResult = [];
+                //var yarraw = firebase.database().ref('/players');//.orderByChild(fieldName).startAt(fieldValue);
+                firebase.database().ref(table).orderByChild(fieldName).startAt(fieldValue).endAt(fieldValue).once('value').then(function (snapshot) {
+                //firebase.database().ref('players').once('value').then(function (snapshot) {
+                    
+                    snapshot.forEach(function (childSnapshot) {
+                        if (childSnapshot.val() != null) {
+                            searchResult.push(childSnapshot.val());
+                        }
+                        //console.log(JSON.stringify(childSnapshot.val(),null,2));
+                    });
+                    callback(searchResult);
+                });
+
+               
             }
 
         }

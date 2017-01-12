@@ -53,7 +53,7 @@ angular.module('football.controllers')
     .controller('TeamAddController', function ($scope, $ionicLoading, $cordovaToast, $ionicPopover, ReservationFact, $state, $ionicLoading, $ionicPopup, TeamStores) {
 
         $ionicLoading.show({
-            template: 'Loading',
+            template: 'Loading...',
             animation: 'fade-in',
             showBackdrop: true,
             maxWidth: 200,

@@ -435,7 +435,7 @@
 		</script>
 
 
-<div align="center">
+<div align="center" style="padding-left: 50px;padding-right:50px ">
 	<h5 style="color:white"> Team Name
 </h5>
 
@@ -454,18 +454,12 @@
 <option ng-repeat="item in allstadiums">{{item.name}}</option>
 </select>
 </label>
-<label class="item item-input item-select" style="background-color:transparent;border-color:white;color:white;border-radius:5px"> Preferred Team Size
-<select ng-model="adduser.pteamsize" style="background-color:transparent;border-color:white;color:white;border-radius:5px">
-<option>5</option>
-<option selected>6</option>
-<option selected>7</option>
-<option selected>8</option>
-<option selected>9</option>
-<option>10</option>
-<option selected>11</option>
-</select>
-</label>
 
+<div align="center">
+	<h5 class="titles">
+		<u>Choose Your Preferred Team Size</u>
+	</h5>
+</div>
 <div class="button-bar">
 	<button class="button" style="background-color: {{managecolors.five.backcolor}} ; color:{{managecolors.five.color}}" ng-click="updateteamsize(1)">5</button>
 <button class="button" style="background-color: {{managecolors.six.backcolor}}; color:{{managecolors.six.color}}" ng-click="updateteamsize(2)">6</button>
