@@ -30,22 +30,45 @@
 </style>
 
 <ion-view title="Home">
+    <ion-nav-buttons side="secondary">
+        <button class="button button-icon" ng-click="toggleSearch()">{{showSearch && 'Hide' || 'Search'}}
+            </button>
+    </ion-nav-buttons>
+    <ion-content style="background-color:rgb(45,62,75)">
 
-    <ion-content>
-        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
-        </ion-refresher>
-        <ion-list>
+<ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+</ion-refresher>
+<div class="list" ng-show="showSearch">
 
-            <ion-item style="background-color:rgb(30,30,30)">
+    <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+                <i class="icon ion-search placeholder-icon"></i>
+              <input type="text" placeholder="Search players, teams, stadiums" ng-model="query">
+            </label>
+        <button ui-sref="app.searchAll({searchCriteria: query})" class="button button-small button-balanced">
+              Search
+            </button>
+    </div>
+
+</div>
+<ion-list>
+    <div align="center">
+        <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
+    </div>
+
+    <div style="background-color:rgb(62,83,100)">
 <div class="row" style="height:140px ">
 
 
 <div class="col" align="center" style="border-radius: 10px;">
-<h2 class="whitetext">Hello {{profile.displayname}}</h2>
-<a href="#/app/selfprofile">
-                            <img src="{{profile.photo}}" style="border-radius:50% ; height:100px ; width:100px" align="right" height="50" />
-</a>
 
+<div align="center">
+    <a href="#/app/selfprofile">
+  <img src="{{profile.photo}}" style="border-radius:50% ; height:60px ; width:60px" height="50" />
+</a>
+<h5 class="whitetext">Hello {{profile.displayname}}</h5>
+
+</div>
 
 
 
@@ -55,11 +78,11 @@
 
 <div>
     <a href="#/app/selfprofile">
-                                <img src="img/Badges/{{profile.badge}}.png" style="border-radius:50% ; height:70px ; width:70px" height="50" />
+    <img src="img/Badges/{{profile.badge}}.png" style="border-radius:50% ; height:60px ; width:60px" height="50" />
 </a>
 </div>
 <div align="center">
-    <h2>Barcelona</h2>
+    <h5 class="whitetext">Barcelona</h5>
     <p style="color:white">{{profile.ranking}} AR</p>
 </div>
 
@@ -73,50 +96,102 @@
 
 <br />
 
-<h3 style="color:darkorange" align="middle">Next game in 2 hours 30 minutes ...</h3>
-</ion-item>
-
-<div class="row" style="background-color:rgb(30,30,30)">
-<div class="col">
-
-    <div class="list">
-
-        <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(1)"> Reserve Stadium
-</button>
-
-</div>
+<h5 style="color:darkorange" align="middle">Next game in 2 hours 30 minutes ...</h5>
+<br />
 </div>
 
-<div class="col">
-    <div class="list">
 
-        <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(2)"> Player Finder
-</button>
-
-</div>
-</div>
-
-<div class="col">
-    <div class="list">
-
-        <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(3)"> Match Making
-</button>
-
-</div>
-</div>
-</div>
-
-<ion-item style="background-color:black" ng-show="showupcomingmatches">
+<div style="background-color:rgb(62,83,100)">
 <div align="center">
-    <h2 class="whitetext" align="middle"><b>Upcoming Matches</b></h2>
-    <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
+    <h4 class="whitetext" align="middle"><b>Ranking</b></h4>
 </div>
-</ion-item>
+<div class="row" style="background-color:rgb(62,83,100)">
+
+<div class="col" align="center">
+    <img src="img/Badges/{{rankedteams[0].badge}}.png" style="width:50px;height:50px ">
+<h5 class="whitetext">
+    {{rankedteams[0].teamname}}
+</h5>
+<h6 style="color: DarkTurquoise "> <b>{{rankedteams[0].rank}}</b>
+</h6>
+</div>
+
+<div class="col">
+    <img src="img/Badges/{{rankedteams[1].badge}}.png" style="width:50px;height:50px ">
+<h5 class="whitetext">
+    {{rankedteams[1].teamname}}
+</h5>
+<h6 style="color: DarkTurquoise "> <b>{{rankedteams[1].rank}}</b>
+</h6>
+</div>
+
+<div class="col">
+    <img src="img/Badges/{{rankedteams[2].badge}}.png" style="width:50px;height:50px ">
+<h5 class="whitetext">
+    {{rankedteams[2].teamname}}
+</h5>
+<h6 style="color: DarkTurquoise "> <b>{{rankedteams[2].rank}}</b>
+</h6>
+</div>
+
+<div class="col">
+    <img src="img/Badges/{{rankedteams[3].badge}}.png" style="width:50px;height:50px ">
+<h5 class="whitetext">
+    {{rankedteams[3].teamname}}
+</h5>
+<h6 style="color: DarkTurquoise "> <b>{{rankedteams[3].rank}}</b>
+</h6>
+</div>
+
+
+
+</div>
+<div align="center">
+    <h6 class="whitetext">
+        Season Ends June 1 2016 - Price Pool 500$
+    </h6>
+</div>
+</br>
+</div>
+
+<div class="row" style="background-color:rgb(45,62,75)">
+<div class="col">
+
+
+    <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(1)"> Reserve Stadium
+</button>
+
+</div>
+
+<div class="col">
+
+    <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(2)"> Player Finder
+</button>
+
+</div>
+
+<div class="col">
+
+    <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(3)"> Match Making
+</button>
+
+</div>
+</div>
+
+
+
+
+
+<div style="background-color:rgb(62,83,100)" ng-show="showupcomingmatches">
+<div align="center">
+    <h4 class="whitetext" align="middle"><b>Upcoming Matches</b></h4>
+
+</div>
 
 
 <ion-list>
 
-    <ion-item class="row row-center" ng-repeat="upmatches in profile.upcominteamgmatches" style="background-color:black">
+    <ion-item class="row row-center" ng-repeat="upmatches in profile.upcominteamgmatches" style="background-color:rgb(62,83,100)">
 <div class="col col-75">
 
     <h4 class="whitetext">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h4>
@@ -124,25 +199,23 @@
 
 <div class="col">
 
-    <button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="width:60px" ng-click="gogamedetails(upmatches.key)">
-						Manage
-	</button>
+    <button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="width:60px" ng-click="gogamedetails(upmatches.key)"> Manage
+</button>
 
-    <button ng-show="!(upmatches.isadmin)" class="button button-balanced button-small" style="width:60px" ng-click="gogamedetails(upmatches.key)">
-						View
-	</button>
+<button ng-show="!(upmatches.isadmin)" class="button button-balanced button-small" style="width:60px" ng-click="gogamedetails(upmatches.key)"> View
+</button>
 </div>
 
 </ion-item>
 
 
 </ion-list>
+</div>
 
-<ion-item style="background-color:black" ng-show="showteaminvite">
+<ion-item style="background-color:rgb(62,83,100)" ng-show="showteaminvite">
 
 <div align="center">
     <h2 class="whitetext" align="middle"><b>Team Invitation</b></h2>
-    <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
 </div>
 
 </ion-item>
@@ -150,7 +223,7 @@
 
 <ion-list>
 
-    <ion-item class="row row-center" ng-repeat="upmatches in profile.teaminvitations" style="background-color:black">
+    <ion-item class="row row-center" ng-repeat="upmatches in profile.teaminvitations" style="background-color:rgb(62,83,100)">
 <div class="col col-25">
 
 
@@ -203,10 +276,9 @@
 
 </ion-list>
 
-<ion-item style="background-color:black" ng-show="showpendingchallenge">
+<ion-item style="background-color:rgb(62,83,100)" ng-show="showpendingchallenge">
 <div align="center">
     <h2 class="whitetext" align="middle"><b>Pending Challenges</b></h2>
-    <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
 </div>
 </ion-item>
 
@@ -283,71 +355,26 @@
 </ion-list>
 
 
-<ion-item style="background-color:black">
-<h2 align="middle"><b>Special Offers</b></h2>
-</ion-item>
-
-<ion-scroll direction="x" class="item wide-item" style="background-color:rgb(30,30,30)">
+<div style="background-color:rgb(62,83,100)">
+<h4 class="whitetext" align="middle"><b>Special Offers</b></h4>
 
 
-<div class="row">
-    <div class="col">
-        <div class="list">
+<ion-slide-box on-slide-changed="slideHasChanged($index)">
+    <ion-slide>
+        <img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg" style="height:200px">
+</ion-slide>
+<ion-slide>
 
-            <a class="item item-thumbnail-left" style="height:180px;width:180px"
-<!--href="#" -->>
-<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg" height="300" width="300">
-</a>
-
-</div>
+    <img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg" style="height:200px">
+</ion-slide>
+</ion-slide-box>
 </div>
 
-<div class="col">
-    <div class="list">
-
-        <a class="item item-thumbnail-left" style="height:180px;width:180px" href="#">
-<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg">
-</a>
-
-</div>
+<div style="background-color:rgb(62,83,100)">
+<h4 class="whitetext" align="middle"><b>Recommended Opponents</b></h4>
 </div>
 
-<div class="col">
-    <div class="list">
-
-        <a class="item item-thumbnail-left" style="height:180px;width:180px" href="#">
-<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg">
-</a>
-
-</div>
-</div>
-<div class="col">
-    <div class="list">
-
-        <a class="item item-thumbnail-left" style="height:180px;width:180px" href="#">
-<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg">
-</a>
-
-</div>
-</div>
-<div class="col">
-    <div class="list">
-
-        <a class="item item-thumbnail-left" style="height:180px;width:180px" href="#">
-<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg">
-</a>
-
-</div>
-</div>
-
-</div>
-</ion-scroll>
-
-<ion-item style="background-color:black">
-<h2 align="middle"><b>Recommended Opponents</b></h2>
-</ion-item>
-
-<ion-scroll direction="x" class="item wide-item" style="background-color:rgb(30,30,30) ;border-style:solid;border-color:red">
+<ion-scroll direction="x" class="item wide-item" style="background-color:rgb(62,83,100)">
 
 
 <div class="row">
@@ -420,7 +447,7 @@
 </ion-scroll>
 
 
-<ion-item style="background-color:black">
+<ion-item style="background-color:rgb(45,62,75)">
 <h2 align="middle"><b>Previous Stadiums</b></h2>
 </ion-item>
 
@@ -452,7 +479,7 @@
 </div>
 </ion-scroll>
 
-<ion-item style="background-color:black">
+<ion-item style="background-color:rgb(45,62,75)">
 <h2 align="middle"><b>Match History</b></h2>
 </ion-item>
 

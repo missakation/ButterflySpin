@@ -4,13 +4,14 @@ angular.module('football.controllers')
     .controller('stadiumcontroller', function ($scope, $ionicPopover, ReservationFact, $ionicPopup, $ionicLoading, $timeout, $state, $cordovaDatePicker) {
 
 
-        $scope.notverified = true;
+        $scope.notverified = false;
 
-            var user = firebase.auth().currentUser;
+    /*        var user = firebase.auth().currentUser;
 
             if (user != null) {
                 user.providerData.forEach(function (profile) 
                 {
+                    
                     if(user.emailVerified)
                     {
                          $scope.verified = false;
@@ -25,7 +26,7 @@ angular.module('football.controllers')
             {
                 $scope.verified = true;
             }
-
+*/
 
 
         $scope.filter = {
@@ -36,6 +37,9 @@ angular.module('football.controllers')
 
         }
         $scope.choice = {
+            sort: 'price'
+        };
+        $scope.tempchoice = {
             sort: 'price'
         };
 
@@ -84,6 +88,7 @@ angular.module('football.controllers')
         $scope.rating.rate = 3;
         $scope.rating.max = 5;
 
+        $scope.readOnly = true;
 
         var freestadiums = [];
 
@@ -209,6 +214,42 @@ angular.module('football.controllers')
         }
 
 
+
+      //  $scope.filter = {
+      //      indoor: true,
+      //      outdoor: true,
+      //      clay: true,
+      //      grass: true
+      //
+     //   }
+
+
+        $scope.updatefilter = function()
+        {
+            $scope.closePopover();
+            $ionicLoading.show({
+                content: 'Loading',
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 200,
+                showDelay: 0
+            });
+
+           $scope.choice.sort =  $scope.tempchoice.sort  ;
+           $ionicLoading.hide();
+
+        //    $scope.allfreestadiums = $scope.allfreestadiums.filter(function (el) {
+        //                return el.key !== team.key;
+        //            });
+
+        }
+
+        $scope.cancelfilter = function()
+        {
+            $scope.closePopover();
+        }
+
+
     })
 
     .controller('stadiumdetailscontroller', function ($scope, $stateParams, $ionicPopover, ReservationFact, $ionicPopup, $ionicLoading, $timeout, $state, $cordovaDatePicker) {
@@ -260,6 +301,9 @@ angular.module('football.controllers')
 
 
         }
+
+
+
         // onSuccess Callback
         // This method accepts a Position object, which contains the
         // current GPS coordinates
@@ -289,57 +333,3 @@ angular.module('football.controllers')
 
 
     })
-
-
-var weekday = new Array(7);
-weekday[0] = "Sun";
-weekday[1] = "Mon";
-weekday[2] = "Tue";
-weekday[3] = "Wed";
-weekday[4] = "Thu";
-weekday[5] = "Fri";
-weekday[6] = "Sat";
-
-var weekdayFull = new Array(7);
-weekdayFull[0] = "Sunday";
-weekdayFull[1] = "Monday";
-weekdayFull[2] = "Tuesday";
-weekdayFull[3] = "Wednesday";
-weekdayFull[4] = "Thursday";
-weekdayFull[5] = "Friday";
-weekdayFull[6] = "Saturday";
-
-
-monthChar = new Array(12);
-monthChar[0] = "Jan";
-monthChar[1] = "Feb";
-monthChar[2] = "Mar";
-monthChar[3] = "Apr";
-monthChar[4] = "May";
-monthChar[5] = "Jun";
-monthChar[6] = "Jul";
-monthChar[7] = "Aug";
-monthChar[8] = "Sep";
-monthChar[9] = "Oct";
-monthChar[10] = "Nov";
-monthChar[11] = "Dec";
-
-var nesheDate = new Date();
-var dateArrayThingy = new Array();
-dateArrayThingy.push("Today");
-dateArrayThingy.push("Tomorrow");
-//alert(nesheDate.getDay());
-nesheDate.setDate(nesheDate.getDate() + 2);
-for (i = 2; i < 7; i++) {
-    dateArrayThingy.push(weekdayFull[nesheDate.getDay()]);
-    nesheDate.setDate(nesheDate.getDate() + 1);
-}
-for (i = 0; i < 100; i++) {
-    nesheDate.setDate(nesheDate.getDate() + 1);
-    //alert(weekday[nesheDate.getDay()]);
-    var day = weekday[nesheDate.getDay()];
-    var month = monthChar[nesheDate.getMonth()];
-    var dayInMonth = nesheDate.getDate();
-    dateArrayThingy.push(day + ", " + month + " " + dayInMonth);
-}
-

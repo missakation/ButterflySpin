@@ -11,11 +11,63 @@ angular.module('football.controllers')
                 var user = firebase.auth().currentUser;
                 var id = user.uid;
 
+                var upcomingmatches = [];
+
+
                 try {
 
                         
-                    firebase.database().ref('/players/' +id).on('value', function (snapshot) {
-                        TempItems = {};
+                    firebase.database().ref('/players/' +id).once('value').then(function (snapshot) {
+                        
+                    TempItems = {};
+                    if (snapshot.child("upcominteamgmatches").exists()) {
+                        snapshot.child("upcominteamgmatches").forEach(function (challenges) {
+
+                            
+                            var matchdate = new Date();
+
+
+                            matchdate.setMinutes(challenges.child("minute").val());
+                            matchdate.setFullYear(challenges.child("year").val());
+                            matchdate.setMonth(challenges.child("month").val());
+                            matchdate.setHours(challenges.child("hour").val());
+                            matchdate.setDate(challenges.child("day").val());
+
+                            var matchdata = {
+
+                                key: challenges.key,
+
+                                accepted: challenges.child("accepted").val(),
+                                day: challenges.child("day").val(),
+                                hour: challenges.child("hour").val(),
+                                minute: challenges.child("minute").val(),
+                                month: challenges.child("month").val(),
+                                
+                                team1adminid: challenges.child("team1adminid").val(),
+                                team1key: challenges.child("team1key").val(),
+                                team1logo: challenges.child("team1logo").val(),
+                                team1name: challenges.child("team1name").val(),
+                                team1rank: challenges.child("team1rank").val(),
+                                team2adminid: challenges.child("team2adminid").val(),
+                                team2key: challenges.child("team2key").val(),
+                                team2logo: challenges.child("team2logo").val(),
+                                team2name: challenges.child("team2name").val(),
+                                team2rank: challenges.child("team2rank").val(),
+                                year: challenges.child("year").val(),
+                                date: matchdate,
+
+                                stadiumkey: challenges.child("stadiumkey").val(),
+                                ministadiumkey: challenges.child("ministadiumkey").val(),
+                                photo: challenges.child("photo").val(),
+                                price: challenges.child("price").val(),
+                                stadiumdescription: challenges.child("stadiumdescription").val()
+                            }
+                            upcomingmatches.push(matchdata);
+
+                        }) 
+
+
+                    }
                         var Items = {
                             "key": snapshot.key,
                             "displayname": snapshot.child("displayname").val(),
@@ -30,7 +82,7 @@ angular.module('football.controllers')
                             "status": snapshot.child("status").val(),
                          //   "teams": snapshot.child("teams").exists() ? snapshot.child("teams").val() : "",
                             "telephone": snapshot.child("telephone").val(),
-                         //   "upcomingmatches": snapshot.child("upcomingmatches").exists() ? snapshot.child("upcomingmatches").val() : "",
+                            "upcomingmatches": upcomingmatches,
                          //   "winstreak": snapshot.child("winstreak").val(),
 
                             "startmonday": snapshot.child("startmonday").val(),

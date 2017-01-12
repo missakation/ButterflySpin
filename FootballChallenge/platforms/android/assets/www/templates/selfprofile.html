@@ -5,10 +5,11 @@
 			width: 100px;
 		}
 		
-		h3,
-		h2,
-		h1,
-		h4,
+		h3.whitetext,
+		h2.whitetext,
+		h1.whitetext,
+		h5.whitetext,
+		h4.whitetext,
 		p {
 			color: white;
 		}
@@ -18,308 +19,330 @@
 		}
 		
 		.item {
-			background-color: rgb(46, 62, 75);
+			background-color: rgb(62, 83, 100);
 		}
 	</style>
-	<ion-content>
+<ion-nav-buttons side="primary">
+	<h5 ng-click="goupdate(currentprofile)" style="color:black">
+<u>
+	Edit
+</u>
+</h5>
+</ion-nav-buttons>
+<ion-content style="background-color:rgb(46,62,75)">
 
 
-		<ion-list>
+<ion-list>
 
-			<ion-item style="background-image:url(https://bossip.files.wordpress.com/2015/03/nba-face-6.png?w=700);background-size:100% 100%;;height:200px">
-				<div align="center">
-					<img src="https://bossip.files.wordpress.com/2015/03/nba-face-6.png?w=700" style="border-radius:50%;opacity:1" align="left"
-					/>
 
-					<h2 style="color:darkorange"> Missak Boyajian</h2>
-					<h3 style="color:darkorange"> ID: 1244
-					</h3>
-				</div>
+<div class="card">
 
+	<ion-item>
 
-			</ion-item>
+		<div class="row ">
+			<div class="col" align="center">
+				<img src="{{item.photo}}" style="width:80px;height:80px;">
+<h2 class="whitetext"> {{currentprofile.teamname}} </h2>
+<h5 class="whitetext"> {{currentprofile.ranking}} </h5>
+</div>
 
-			<li class="item item-toggle " style="SteelBlue">
-				<h2 style="color:white ">
-					Available
-				</h2>
-				<label class="toggle toggle-assertive ">
-                    <input type="checkbox ">
-                    <div class="track ">
-                        <div class="handle "></div>
-                    </div>
-                    </label>
-			</li>
+<div class="col" align="center">
+	<img src={{team.favstadiumphoto}} style="width:100%;height:80px;">
+<h5 class="whitetext"> Fav. Stadium </h5>
+<h5 class="whitetext"> {{currentprofile.favstadium}} </h5>
+</div>
 
+</div>
 
 
+<div class="row row-top">
+	<div class="col" align="center">
+		<h4 style="color:lightgray"> Position
+</h4>
 
 
-			<ion-item>
-				<div align="center">
-					<h2>
-						Upcoming Games
+</div>
 
-					</h2>
-				</div>
-				</div>
-			</ion-item>
+<div class="col " style="color:lightgray" align="center">
 
-			<ion-item>
-				<ion-list>
-					<ion-item style="background-color:rgb(30,30,30);border-radius:10px; ">
+<h4 style="color:lightgray"> Age
+</h4>
 
-						<div class='row row-center' style="height:10px ">
-							<div class='col col-75'>
+</div>
 
-								<h3>June 7, 8pm @ Macity</h3>
-							</div>
+<div class="col " style="color:lightgray" align="center">
 
-							<div class='col '>
-								<h3>22</h3>
-							</div>
-							<div class='col'>
 
+<h4 style="color:lightgray"> Fav Stadium
+</h4>
+</div>
 
-							</div>
+</div>
 
-						</div>
+<div class="row ">
+	<div class="col" align="center" style="color:white"> {{item.playposition}}
 
-					</ion-item>
-					<ion-item style="background-color:rgb(30,30,30);border-radius:10px; ">
+</div>
 
-						<div class='row row-center' style="height:10px ">
-							<div class='col col-75'>
+<div class="col" style="color:white" align="center"> {{item.age}}
 
-								<h3>June 7, 8pm @ Macity</h3>
-							</div>
+</div>
 
-							<div class='col '>
-								<h3>22</h3>
-							</div>
-							<div class='col'>
+<div class="col" style="color:white"> {{item.nummatches}}
 
+</div>
 
-							</div>
+<div class="col" align="right" align="center">
 
-						</div>
+</div>
 
-					</ion-item>
+</div>
 
-					<ion-item style="background-color:rgb(30,30,30);border-radius:10px; ">
+<h4 class="whitetext">
+	{{currentprofile.comments}}
+</h4>
 
-						<div class='row row-center' style="height:10px ">
-							<div class='col col-75'>
+</ion-item>
+</div>
 
-								<h3>June 7, 8pm @ Macity</h3>
-							</div>
+<!--<div class="card">
+<ion-item class="row" align="center">
+	<div class="col" align="center">
+		<button class="button button-full button-balanced" ng-click="Invite()" style="border-radius:15px">Invite Member</button>
+</div>
 
-							<div class='col '>
-								<h3>22</h3>
-							</div>
-							<div class='col'>
+<div class="col" align="center">
+	<button class="button button-full button-balanced" ng-click="Challengeteam()" style="border-radius:15px">challenge</button>
+</div>
+</ion-item>
+</div>-->
 
 
-							</div>
 
-						</div>
+<div class="card" style="background-color:rgb(46,62,75)">
+<div class="button-bar" style="background-color:rgb(46,62,75)">
 
-					</ion-item>
+	<button class="button button-full button-balanced" ng-click="Invite()" style="border-radius:15px">Invite Member</button>
+	<button class="button button-full button-balanced" ng-click="Challengeteam()" style="border-radius:15px">challenge</button>
+</div>
+</div>
+
+<div class="card">
+<ion-item>
+	<div class="row row-center">
+		<div class="col">
+			<h3 class="whitetext" ng-click="switchscreens(1)">
+				Availability
+			</h3>
+			<hr ng-show="tabs.Available">
+		</div>
+
+		<div class='col '>
+			<h3 class="whitetext" ng-click="switchscreens(2)">
+				Statistics
+			</h3>
+			<hr ng-show="tabs.Statistics">
+		</div>
+		<div class="col">
+
+			<h3 class="whitetext" ng-click="switchscreens(3)">
+				Upcoming Games
+			</h3>
+			<hr ng-show="tabs.Members">
+		</div>
 
-
-				</ion-list>
-
-			</ion-item>
-
-			<ion-item>
-				<div align="center">
-					<h2>
-						Statistics
-
-					</h2>
-				</div>
-				</div>
-			</ion-item>
-
-			<ion-item>
-				<ion-list>
-					<ion-item style="background-color:rgb(30,30,30);border-radius:10px; ">
-
-						<div class='row row-center' style="height:10px ">
-							<div class='col col-50'>
-
-								<h3>Rank</h3>
-							</div>
-
-							<div class='col '>
-								<h3>22</h3>
-							</div>
-							<div class='col'>
-
-
-							</div>
-
-						</div>
-
-					</ion-item>
-					<ion-item style="background-color:rgb(30,30,30);border-radius:10px; ">
-
-						<div class='row row-center' style="height:10px ">
-							<div class='col col-50'>
-
-								<h3>Number of Games</h3>
-							</div>
-
-							<div class='col '>
-								<h3>22</h3>
-							</div>
-							<div class='col'>
-
-
-							</div>
-
-						</div>
-
-					</ion-item>
-
-					<ion-item style="background-color:rgb(30,30,30);border-radius:10px; ">
-
-						<div class='row row-center' style="height:10px ">
-							<div class='col col-50'>
-
-								<h3>Wins</h3>
-							</div>
-
-							<div class='col '>
-								<h3>22</h3>
-							</div>
-							<div class='col'>
-
-
-							</div>
-
-						</div>
-
-					</ion-item>
-
-
-				</ion-list>
-
-			</ion-item>
-
-
-
-
-			<ion-item>
-					<div align="center">
-						<h2>
-							Available
-
-						</h2>
-					</div>
-					</div>
-			</ion-item>
-
-
-
-		<ion-item style="background-color:rgb(46,62,75) ">
-			<div class="row row-center">
-				<div class="col col-20">
-					<h3>
-						Mon
-					</h3>
-				</div>
-				<div class="col">
-					<rzslider rz-slider-model="currentprofile.startmonday" rz-slider-high="currentprofile.startmondayend " rz-slider-options="slider1.options "
-						style="color:white "></rzslider>
-				</div>
-			</div>
-
-			<div class="row row-center">
-				<div class="col col-20">
-					<h3>
-						Tue
-					</h3>
-				</div>
-				<div class="col">
-					<rzslider rz-slider-model="currentprofile.starttuesday " rz-slider-high="currentprofile.starttuesdayend " rz-slider-options="slider2.options "
-						style="color:white "></rzslider>
-				</div>
-			</div>
-
-			<div class="row row-center">
-				<div class="col col-20">
-					<h3>
-						Wed
-					</h3>
-				</div>
-				<div class="col">
-					<rzslider rz-slider-model="currentprofile.startwednesday " rz-slider-high="currentprofile.startwednesdayend " rz-slider-options="slider3.options "
-						style="color:white "></rzslider>
-				</div>
-			</div>
-
-			<div class="row row-center">
-				<div class="col col-20">
-					<h3>
-						Thu
-					</h3>
-				</div>
-				<div class="col">
-					<rzslider rz-slider-model="currentprofile.startthursday " rz-slider-high="currentprofile.startthursdayend " rz-slider-options="slider4.options "
-						style="color:white "></rzslider>
-				</div>
-			</div>
-
-			<div class="row row-center">
-				<div class="col col-20">
-					<h3>
-						Fri
-					</h3>
-				</div>
-				<div class="col">
-					<rzslider rz-slider-model="currentprofile.startfriday " rz-slider-high="currentprofile.startfridayend " rz-slider-options="slider5.options "
-						style="color:white "></rzslider>
-				</div>
-			</div>
-
-			<div class="row row-center">
-				<div class="col col-20">
-					<h3>
-						Sat
-					</h3>
-				</div>
-				<div class="col">
-					<rzslider rz-slider-model="currentprofile.startsaturday " rz-slider-high="currentprofile.startsaturdayend " rz-slider-options="slider6.options "
-						style="color:white "></rzslider>
-				</div>
-			</div>
-
-			<div class="row row-center">
-				<div class="col col-20">
-					<h3>
-						Sun
-					</h3>
-				</div>
-				<div class="col">
-					<rzslider rz-slider-model="currentprofile.startsunday " rz-slider-high="currentprofile.startsundayend " rz-slider-options="slider7.options "
-						style="color:white "></rzslider>
-				</div>
-			</div>
-
-
-		</ion-item>
-
-
-			<br />
-			<br />
-
-
-	</ion-content>
-	<div class="bar bar-footer ">
-
-		<button class="button button-calm button-large " ng-click="UpdateUser(currentprofile)">
-          Save
-        </button>
 	</div>
+
+
+
+</ion-item>
+
+
+
+<ion-item ng-show="tabs.Statistics">
+
+
+	<div class="row row-center">
+		<div class='col col-75'>
+
+			<h3 class="whitetext">Games On Arina</h3>
+		</div>
+
+		<div class="col">
+
+			<h3 class="whitetext">1</h3>
+		</div>
+
+	</div>
+
+	<div class="row row-center">
+		<div class='col col-75'>
+
+			<h3 class="whitetext">Wins</h3>
+		</div>
+
+		<div class="col">
+
+			<h3 class="whitetext">1</h3>
+		</div>
+
+	</div>
+
+	<div class="row row-center">
+		<div class='col col-75'>
+
+			<h3 class="whitetext">Win Streak</h3>
+		</div>
+
+		<div class="col">
+
+			<h3 class="whitetext">1</h3>
+		</div>
+
+	</div>
+
+
+
+
+</ion-item>
+
+<ion-item ng-show="tabs.Available">
+
+
+	<div class="row row-center">
+		<div class="col">
+
+			<h3 class="whitetext">Monday</h3>
+		</div>
+
+		<div class="col">
+
+			<h3 class="whitetext">From <b>{{currentprofile.startmonday}}:00</b> till <b>{{currentprofile.startmondayend}}:00</b> </h3>
+		</div>
+
+	</div>
+
+	<div class="row row-center">
+		<div class="col">
+
+			<h3 class="whitetext">Tuesday</h3>
+		</div>
+
+		<div class="col">
+
+			<h3 class="whitetext">From <b>{{currentprofile.starttuesday}}:00</b> till <b>{{currentprofile.starttuesdayend}}:00</b> </h3>
+		</div>
+
+	</div>
+
+	<div class="row row-center">
+		<div class="col">
+
+			<h3 class="whitetext">Wednesday</h3>
+		</div>
+
+		<div class="col">
+
+			<h3 class="whitetext">From <b>{{currentprofile.startwednesday}}:00</b> till <b>{{currentprofile.startwednesdayend}}:00</b> </h3>
+		</div>
+
+	</div>
+
+	<div class="row row-center">
+		<div class="col">
+
+			<h3 class="whitetext">Wednesday</h3>
+		</div>
+
+		<div class="col">
+
+			<h3 class="whitetext">From <b>{{currentprofile.startthursday}}:00</b> till <b>{{currentprofile.startthursdayend}}:00</b> </h3>
+		</div>
+
+	</div>
+
+	<div class="row row-center">
+		<div class="col">
+
+			<h3 class="whitetext">Thursday</h3>
+		</div>
+
+		<div class="col">
+
+			<h3 class="whitetext">From <b>{{currentprofile.startthursday}}:00</b> till <b>{{currentprofile.startthursdayend}}:00</b> </h3>
+		</div>
+
+	</div>
+
+	<div class="row row-center">
+		<div class="col">
+
+			<h3 class="whitetext">Friday</h3>
+		</div>
+
+		<div class="col">
+
+			<h3 class="whitetext">From <b>{{currentprofile.startfriday}}:00</b> till <b>{{currentprofile.startfridayend}}:00</b> </h3>
+		</div>
+
+	</div>
+
+	<div class="row row-center">
+		<div class="col">
+
+			<h3 class="whitetext">Saturday</h3>
+		</div>
+
+		<div class="col">
+
+			<h3 class="whitetext">From <b>{{currentprofile.startsaturday}}:00</b> till <b>{{currentprofile.startsaturdayend}}:00</b> </h3>
+		</div>
+
+	</div>
+
+	<div class="row row-center">
+		<div class="col">
+
+			<h3 class="whitetext">Sunday</h3>
+		</div>
+
+		<div class="col">
+
+			<h3 class="whitetext">From <b>{{currentprofile.startsunday}}:00</b> till <b>{{currentprofile.startsundayend}}:00</b> </h3>
+		</div>
+
+	</div>
+
+
+
+
+</ion-item>
+
+</ion-list>
+
+
+<ion-item ng-show="tabs.Members">
+
+	<div class="row row-center" ng-repeat="upmatches in currentprofile.upcomingmatches" style="background-color:rgb(62,83,100)">
+<div class="col col-75">
+
+	<h4 class="whitetext">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h4>
+</div>
+
+<div class="col">
+
+	<button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="width:60px" ng-click="gogamedetails(upmatches.key)"> Manage
+</button>
+
+<button ng-show="!(upmatches.isadmin)" class="button button-balanced button-small" style="width:60px" ng-click="gogamedetails(upmatches.key)"> View
+</button>
+</div>
+
+</div>
+</div>
+
+
+</ion-item>
+
+</ion-content>
 </ion-view>

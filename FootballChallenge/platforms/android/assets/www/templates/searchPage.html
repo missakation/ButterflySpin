@@ -1,0 +1,88 @@
+﻿<ion-view title="Search Page">
+    <ion-content>    
+        <div class="list">
+            <div class="item item-input-inset">
+            <label class="item-input-wrapper">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="text" placeholder="Search players, teams, stadiums" ng-model="query">
+            </label>
+            <button ng-click="searchAll(query)" class="button button-small button-balanced">
+                Search
+            </button>
+            </div>
+            
+            <ion-list>
+                 <ion-item class="item-divider">
+                     Players
+                 </ion-item>
+                
+                <ion-item ng-hide="players.length > 0">No players found</ion-item>
+                <ion-scroll ng-show="players.length > 0" direction="x" class="item wide-item" style="background-color:#3E5364">
+                    <div class="row" style="background-color:#3E5364">                        
+                        <div class="col" ng-repeat="player in players" >
+                            <div class="row">
+                                
+                                <div class="col">
+                                    <div class="item item-avatar-center" style="background-color:#3E5364;color:white" >
+                                        <img class="item-image" src="https://bossip.files.wordpress.com/2015/03/nba-face-6.png" style="width:75px;margin: 10px auto;border-radius:35px;" />
+                                        </br>
+                                        <div>{{player.displayname}}</div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </ion-scroll>
+                <ion-item class="item-divider">
+                     Stadiums
+                 </ion-item>
+                <ion-item ng-hide="stadiums.length > 0">No stadiums found</ion-item>
+                <ion-scroll ng-show="stadiums.length > 0" direction="x" class="item wide-item" style="background-color:#3E5364;color:white">
+                    <div class="row" style="background-color:#3E5364">                        
+                        <div class="col" ng-repeat="stadium in stadiums" >
+                            <div class="row">
+                                
+                                <div class="col">
+                                    <a ng-href="#/app/reservestadiumdetails/{{stadium.id}}">
+                                    <div class="item item-avatar-center" style="background-color:#3E5364;color:white" >
+                                        
+                                            <img class="item-image" src="http://media.gettyimages.com/videos/dramatic-soccer-stadium-full-of-spectators-video-id533074742?s=640x640" style="width:100px;margin: 10px auto;" />
+                                            </br>
+                                            <div>{{stadium.name}}</div>
+                                        
+                                    </div></a>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </ion-scroll>
+                <ion-item class="item-divider">
+                     Teams
+                 </ion-item>
+                <ion-item ng-hide="teams.length > 0">No teams found</ion-item>
+                <ion-scroll ng-show="teams.length > 0" direction="x" class="item wide-item" style="background-color:#3E5364;color:white">
+                    <div class="row" style="background-color:#3E5364">                        
+                        <div class="col" ng-repeat="team in teams" >
+                            <div class="row">
+                                
+                                <div class="col">
+                                    <a ng-href="#/app/teamprofile/{{team.id}}">
+                                    <div class="item item-avatar-center" style="background-color:#3E5364;" >
+                                        
+                                        <img class="item-image" src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="width:75px;margin: 10px auto;border-radius:35px;" />
+                                        </br>
+                                        <div>{{team.teamname}}</div>
+                                            
+                                    </div></a>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </ion-scroll>
+            </ion-list>
+        </div>
+    </ion-content>
+</ion-view>

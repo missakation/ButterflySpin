@@ -91,8 +91,9 @@ angular.module('football.controllers')
                                         "hour": hour,
                                         "minute": minute,
                                         "selected": "select",
-                                        "color": "white",
-                                        "backcolor": "green",
+                                        "color": "green",
+                                        "backcolor": "white",
+                                        "rating" : 1
                                         //"indoor": indoor,
                                         //"outdoor": outdoor,
                                         //"clay": clay,

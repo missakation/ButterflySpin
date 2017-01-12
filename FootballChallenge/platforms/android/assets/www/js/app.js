@@ -71,6 +71,15 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                     }
                 }
             })
+           .state('app.searchAll', {
+                url: '/searchAll/:searchCriteria',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/searchPage.html',
+                        controller: 'GlobalSearchController'
+                    }
+                }
+            })
 
             .state('app.browse', {
                 url: '/browse',
@@ -235,9 +244,13 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
             })
             .state('app.selfprofileedit', {
                 url: '/selfprofileedit',
+                    params: {
+                    myprofile: null
+                },
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/selfprofileedit.html',
+                        controller: 'ProfileEditController'
                     }
                 }
             })

@@ -1,7 +1,7 @@
 ﻿
 angular.module('football.controllers')
 
-    .controller('SearchController', function ($scope, SearchStore, $ionicPopup, $ionicLoading) {
+    .controller('SearchController', function ($scope, SearchStore, $ionicPopup,$timeout, $ionicLoading) {
 
 
 
@@ -11,18 +11,19 @@ angular.module('football.controllers')
             date: new Date(),
         };
 
-        try {
+        
 
         var user = firebase.auth().currentUser;
 
-        if (user != null) {
+     /*   if (user != null) {
             user.providerData.forEach(function (profile) {
 
                 alert("  Provider-specific UID: " + profile.uid);
                 alert("  Name: " + profile.displayName);
                 alert("  Email: " + profile.email);
             });
-        }
+        }*/
+        
             $scope.search.date.setDate($scope.search.date.getDate() + 1);
             $scope.search.date.setHours(21);
             $scope.search.date.setMinutes(0);
@@ -60,18 +61,42 @@ angular.module('football.controllers')
             });
 
             //})
+            try {
+            $timeout(function()
+            {
             SearchStore.SearchAvailablePlayers($scope.search, function (leagues) {
-                $ionicLoading.hide();
                 $scope.allfreeplayers = leagues;
-
+                
+                SearchStore.GetMyProfileInfo( function (profile) {
+                $ionicLoading.hide();
+                $scope.myprofile = profile;
             })
+            })
+            },2000)
+
         }
         catch (error) {
             alert(error.message);
         }
 
-        $scope.requestnumber = function () {
+        $scope.requestnumber = function (player) {
 
+            
+
+         if(!player.status>0)
+            {
+                
+               SearchStore.RequestNumber($scope.myprofile,player).then(function (value) 
+                 {
+
+
+                 }, function (error)
+            {
+                    alert(error.message);
+            })
+
+           }
+           
         }
 
 
