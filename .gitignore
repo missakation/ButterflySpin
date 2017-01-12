@@ -243,3 +243,21 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/FootballChallenge/platforms/android/assets/www/lib/ngCordova/.bower.json
+/FootballChallenge/platforms/android/assets/www/lib/ng-cordova-oauth/.bower.json
+/FootballChallenge/platforms/android/assets/www/lib/ionic-rating/.bower.json
+/FootballChallenge/platforms/android/assets/www/lib/ionic/.bower.json
+/FootballChallenge/platforms/android/assets/www/lib/ion-floating-menu/.bower.json
+/FootballChallenge/platforms/android/assets/www/lib/ion-datetime-picker/.bower.json
+/FootballChallenge/platforms/android/assets/www/lib/install/.bower.json
+/FootballChallenge/platforms/android/assets/www/lib/angularjs-slider/.travis.yml
+/FootballChallenge/platforms/android/assets/www/lib/angularjs-slider/.npmignore
+/FootballChallenge/platforms/android/assets/www/lib/angularjs-slider/.editorconfig
+/FootballChallenge/platforms/android/assets/www/lib/angular-ui-router/.bower.json
+/FootballChallenge/platforms/android/assets/www/lib/angular-sanitize/.bower.json
+/FootballChallenge/platforms/android/assets/www/lib/angular-jwt/.bower.json
+/FootballChallenge/platforms/android/assets/www/lib/angular-animate/.bower.json
+/FootballChallenge/platforms/android/assets/www/lib/angular/.bower.json
+/FootballChallenge/platforms/android/assets/www/js/globalSearch.js
+/FootballChallenge/platforms/android/assets/www/js/globalearchcontroller.js
+/FootballChallenge/platforms/android/assets/www/config.xml
