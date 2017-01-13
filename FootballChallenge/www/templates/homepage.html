@@ -227,7 +227,7 @@
 <div class="col col-25">
 
 
-    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:50px ; width:50px" />
+    <img src="{{upmatches.badge}}" style="border-radius:50% ; height:50px ; width:50px" />
 
 <h4 class="whitetext">
     {{upmatches.teamname}}
@@ -243,12 +243,13 @@
 
 
     <div class="col col-20">
-        <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:40px ; width:40px" />
+        <img src="{{upmatches.adminphoto}}" style="border-radius:50% ; height:40px ; width:40px" />
 
 </div>
 <div class="col">
     <h4 class="whitetext">
-        Hey Would you like to join?
+        Hello I am {{upmatches.admindisplayname}}</br>
+        Would you like to join my team {{upmatches.teamname}}?
     </h4>
 
 </div>
@@ -333,7 +334,7 @@
 </div>
 
 </div>
-<div class="row">
+<div class="row" ng-show="!challenges.isadmin">
     <div class="col">
         <button class="button button-block button-balanced button-small" style="color:white" ng-click="acceptinvitation(challenges)"> Accept
 </button>
@@ -342,6 +343,19 @@
 
 <div class="col">
     <button class="button button-block button-assertive button-small" style="color:white" ng-click="declineinvitation(challenges)"> Decline
+</button>
+</div>
+</div>
+
+<div class="row" ng-show="challenges.isadmin">
+    <div class="col">
+        <button class="button button-block button-balanced button-small" style="background-color:white;color: green" ng-click="cancelinvitation(challenges)"> Cancel
+</button>
+</div>
+
+
+<div class="col">
+    <button class="button button-block button-energized button-small" style="color:white" > Pending
 </button>
 </div>
 </div>
