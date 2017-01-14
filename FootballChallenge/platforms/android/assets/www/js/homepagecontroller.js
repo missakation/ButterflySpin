@@ -87,6 +87,38 @@ angular.module('football.controllers')
                 alert(error.message);
             }
         }
+        $scope.cancelinvitation = function (challenge) {
+            try {
+
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Decline',
+                    template: 'Are you sure you want to cancel the challenge?'
+                });
+
+                confirmPopup.then(function (res) {
+                    if (res) {
+                        HomeStore.DeleteChallenge(challenge).then(function () {
+
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Success',
+                                template: 'Challenge Declined'
+                            })
+                            $scope.profile.challenges = $scope.profile.challenges.filter(function (el) {
+                                return el.key !== challenge.key;
+                                $scope.$digest();
+                            })
+
+                        }, function (error) {
+                            alert(error.message);
+                        })
+                    }
+
+                })
+
+            } catch (error) {
+                alert(error.message);
+            }
+        }
 
         $scope.acceptteaminvitation = function (invitation, x) {
             try {
@@ -182,6 +214,11 @@ angular.module('football.controllers')
     .controller('ChallengeStadiumController', function ($timeout, $scope, $state, HomeStore, $ionicPopup, $ionicLoading) {
 
         $scope.allfreestadiums = $state.params.challenge.stadiums;
+
+        $scope.rating = {};
+        $scope.rating.max = 5;
+
+        $scope.readOnly = true;
 
         $scope.challenge = $state.params.challenge;
 

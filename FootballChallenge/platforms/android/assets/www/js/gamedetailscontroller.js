@@ -1,7 +1,7 @@
 ﻿
 angular.module('football.controllers')
 
-    .controller('GameDetailsController', function ($scope, $ionicPopup, $ionicLoading, $state, $stateParams, TeamStores, ChallengeStore, $timeout) {
+    .controller('GameDetailsController', function ($scope,HomeStore, $ionicPopup, $ionicLoading, $state, $stateParams, TeamStores, ChallengeStore, $timeout) {
 
         $scope.loadingphase = false;
         $scope.isadmin = false;
@@ -109,7 +109,37 @@ angular.module('football.controllers')
             alert(error.message);
         }
 
+        $scope.CancelChallenge = function(challenge)
+        {
+               try {
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Decline',
+                    template: 'Are you sure you want to Cancel the game?'
+                });
 
+                confirmPopup.then(function (res) {
+                    if (res) {
+                        HomeStore.DeleteChallenge(challenge).then(function () {
+
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Success',
+                                template: 'Challenge Cancelled'
+                            }).then(function()
+                            {
+                                $state.go('app.homepage');
+                            })
+
+                        }, function (error) {
+                            alert(error.message);
+                        })
+                    }
+
+                })
+
+            } catch (error) {
+                alert(error.message);
+            }
+        }
 
         $scope.InvitePlayer = function(player)
         {

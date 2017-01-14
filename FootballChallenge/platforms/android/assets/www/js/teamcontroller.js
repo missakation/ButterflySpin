@@ -23,10 +23,10 @@ angular.module('football.controllers')
                     $scope.test = leagues;
 
                     if (leagues.length == 0) {
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Empty',
-                            template: 'You do not below to any team right now'
-                        });
+                    //    var alertPopup = $ionicPopup.alert({
+                    //        title: 'Empty',
+                    //        template: 'You do not below to any team right now'
+                    //    });
                     }
                     else if (leagues.length > 10) {
                         $scope.showadd = false;
@@ -50,7 +50,7 @@ angular.module('football.controllers')
 
     })
 
-    .controller('TeamAddController', function ($scope, $ionicLoading, $cordovaToast, $ionicPopover, ReservationFact, $state, $ionicLoading, $ionicPopup, TeamStores) {
+    .controller('TeamAddController', function ($scope,SearchStore, $ionicLoading, $cordovaToast, $ionicPopover, ReservationFact, $state, $ionicLoading, $ionicPopup, TeamStores) {
 
         $ionicLoading.show({
             template: 'Loading...',
@@ -65,8 +65,12 @@ angular.module('football.controllers')
 
             ReservationFact.GetAllStadiums(function (leagues) {
 
-                $ionicLoading.hide();
                 $scope.allstadiums = leagues;
+                     SearchStore.GetMyProfileInfo( function (profile) {
+                     $ionicLoading.hide();
+                     $scope.myprofile = profile;
+            })
+                
 
             })
 
@@ -198,7 +202,7 @@ angular.module('football.controllers')
                 }
                 else {
                     
-                    TeamStores.AddNewTeam(team)
+                    TeamStores.AddNewTeam(team , $scope.myprofile)
                         .then(function (value) {
 
                             /*   $cordovaToast.showShortTop('Team Added Successfully').then(function (success) {
@@ -1017,7 +1021,7 @@ angular.module('football.controllers')
 
     })
 
-    .controller('InvitePlayersController', function ($scope, $ionicPopup, $ionicLoading, $state, $stateParams, SearchStore, TeamStores, $timeout) {
+    .controller('InvitePlayersController', function ($scope, $ionicPopup,HomeStore, $ionicLoading, $state, $stateParams, SearchStore, TeamStores, $timeout) {
 
         $scope.notloaded = true;
 
@@ -1026,10 +1030,12 @@ angular.module('football.controllers')
 
         $timeout(function () {
             SearchStore.SearchPlayers($scope.myteam, function (leagues) {
-                $ionicLoading.hide();
                 $scope.allplayers = leagues;
-                $scope.notloaded = false;
-
+                HomeStore.GetProfileInfo(function (players) {
+                    $scope.profile = players;
+                    $scope.notloaded = false;
+                    $scope.$apply();
+                })
             })
         }, 2000)
 
@@ -1037,7 +1043,7 @@ angular.module('football.controllers')
 
 
         $scope.InvitePlayerToTeam = function (player) {
-            TeamStores.InvitePlayerToTeam($scope.myteam, player).then(function () {
+            TeamStores.InvitePlayerToTeam($scope.myteam, player,$scope.profile).then(function () {
 
                 player.status = "Invitation Sent";
                 $scope.$digest();

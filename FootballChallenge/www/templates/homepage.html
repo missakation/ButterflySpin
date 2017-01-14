@@ -34,6 +34,10 @@
         <button class="button button-icon" ng-click="toggleSearch()">{{showSearch && 'Hide' || 'Search'}}
             </button>
     </ion-nav-buttons>
+
+    <!--<ion-nav-bar  style="background-color:rgb(62,83,100)" class="bar-calm">
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>-->
     <ion-content style="background-color:rgb(45,62,75)">
 
 <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
@@ -51,12 +55,12 @@
     </div>
 
 </div>
-<ion-list>
+
     <div align="center">
         <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
     </div>
 
-    <div style="background-color:rgb(62,83,100)">
+    <div class="card" style="background-color:rgb(62,83,100)">
 <div class="row" style="height:140px ">
 
 
@@ -90,20 +94,16 @@
 
 </div>
 
-
+</div>
 
 </div>
 
-<br />
 
-<h5 style="color:darkorange" align="middle">Next game in 2 hours 30 minutes ...</h5>
-<br />
-</div>
+<div class="card" style="background-color:rgb(62,83,100)">
 
-
-<div style="background-color:rgb(62,83,100)">
-<div align="center">
-    <h4 class="whitetext" align="middle"><b>Ranking</b></h4>
+<div align="center" >
+    
+    <h4 class="whitetext" align="middle"><b>RANKING</b></h4>
 </div>
 <div class="row" style="background-color:rgb(62,83,100)">
 
@@ -143,22 +143,20 @@
 </h6>
 </div>
 
-
-
 </div>
 <div align="center">
     <h6 class="whitetext">
         Season Ends June 1 2016 - Price Pool 500$
     </h6>
 </div>
-</br>
 </div>
 
-<div class="row" style="background-color:rgb(45,62,75)">
+<div style="background-color:rgb(45,62,75)">
+<div class="row" style="background-color:rgb(45,62,75)" >
 <div class="col">
 
 
-    <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(1)"> Reserve Stadium
+<button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(1)"> Reserve Stadium
 </button>
 
 </div>
@@ -177,14 +175,15 @@
 
 </div>
 </div>
+</div>
 
 
 
 
-
-<div style="background-color:rgb(62,83,100)" ng-show="showupcomingmatches">
+<div class="card" style="background-color:rgb(62,83,100)" ng-show="showupcomingmatches">
+<div style="background-color:rgb(62,83,100)" >
 <div align="center">
-    <h4 class="whitetext" align="middle"><b>Upcoming Matches</b></h4>
+    <h4 class="whitetext" align="middle"><b>UPCOMING MATCHES</b></h4>
 
 </div>
 
@@ -211,11 +210,13 @@
 
 </ion-list>
 </div>
+</div>
 
 <ion-item style="background-color:rgb(62,83,100)" ng-show="showteaminvite">
 
 <div align="center">
-    <h2 class="whitetext" align="middle"><b>Team Invitation</b></h2>
+    <h2 class="whitetext" align="middle"><b>Team Invitation</b>
+    </h2>
 </div>
 
 </ion-item>
@@ -227,7 +228,7 @@
 <div class="col col-25">
 
 
-    <img src="{{upmatches.badge}}" style="border-radius:50% ; height:50px ; width:50px" />
+    <img src="img/Badges/{{upmatches.badge}}.png" style="border-radius:50% ; height:50px ; width:50px" />
 
 <h4 class="whitetext">
     {{upmatches.teamname}}
@@ -248,29 +249,27 @@
 </div>
 <div class="col">
     <h4 class="whitetext">
-        Hello I am {{upmatches.admindisplayname}}</br>
-        Would you like to join my team {{upmatches.teamname}}?
+        Hello I am {{upmatches.admindisplayname}}<br> Would you like to join my team {{upmatches.teamname}}?
     </h4>
 
 </div>
 </div>
 
-<div class="col">
-
-    <div class="row row-top">
-        <div class="col col">
-            <button class="button button-block button-balanced button-small" style="color:white" ng-click="acceptteaminvitation(upmatches,1)"> Accept
+<div class="row row-top">
+    <div class="col">
+        <button class="button button-block button-full button-balanced button-small" style="color:white" ng-click="acceptteaminvitation(upmatches,1)"> Accept
 </button>
 </div>
 <div class="col">
 
-    <button class="button button-block button-assertive button-small" style="color:white" ng-click="acceptteaminvitation(upmatches,2)"> Decline
+    <button class="button button-block button-full button-assertive button-small" style="color:white" ng-click="acceptteaminvitation(upmatches,2)"> Decline
 </button>
 </div>
 </div>
 
+
 </div>
-</div>
+
 
 </ion-item>
 
@@ -377,7 +376,7 @@
     <ion-slide>
         <img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg" style="height:200px;width: 100%">
 </ion-slide>
-<ion-slide>
+<ion-slide >
 
     <img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg" style="height:200px;width: 100%">
 </ion-slide>

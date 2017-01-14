@@ -144,7 +144,8 @@ angular.module('football.controllers')
                                 adminkey: challenges.child("adminkey").val(),
                                 admindisplayname: challenges.child("admindisplayname").val(),
                                 adminphoto: challenges.child("adminphoto").val(),
-                                admintelephone: challenges.child("admintelephone").val()
+                                admintelephone: challenges.child("admintelephone").val(),
+                                
                             }
                             teaminvitations.push(matchdata);
 

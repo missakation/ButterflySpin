@@ -138,6 +138,8 @@ angular.module('football.controllers')
                             hour: hour,
                             minute: minute,
 
+                            admin : myteam.teamadmin,
+
                             stadiums: stadiums,
 
                             challengeradmin: teams[i].teamadmin,
@@ -175,6 +177,8 @@ angular.module('football.controllers')
 
                             stadiums: stadiums,
 
+                            admin : myteam.teamadmin,
+
                             //challengeradmin: id,
                             //challengeradminname: adminname,
                             //challengerteamname: name,
@@ -184,7 +188,7 @@ angular.module('football.controllers')
                             team2name: teams[i].teamname,
                             team2logo: teams[i].badge,
                             team2rank: teams[i].rank,
-                            team2adminid: myteam.teamadmin,
+                            team2adminid: teams[i].teamadmin,
                             //team2jersey: myteam.jersey,
 
                             team1key : myteam.key,
@@ -239,7 +243,7 @@ angular.module('football.controllers')
                             var challengedate = new Date();
 
                             
-                            var isadmin = challenges.child("team1adminid").val() == myid;
+                            var isadmin = challenges.child("admin").val() == myid;
                             
                             challengedate.setMinutes(challenges.child("minute").val());
                             challengedate.setFullYear(challenges.child("year").val());

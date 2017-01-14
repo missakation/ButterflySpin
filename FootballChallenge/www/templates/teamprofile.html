@@ -40,7 +40,9 @@
 </h5>
 </ion-nav-buttons>
 <ion-content style="background-color:rgb(46,62,75)">
-
+	
+<ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+</ion-refresher>
 <div class="card">
 <ion-item>
 
@@ -202,7 +204,7 @@
 			<h3>{{item.name}}</h3>
 		</div>
 
-		<div class="col">
+		<div class="col" ng-show="currentprofile.amiadmin" >
 
 			<button ng-show="item.isadmin" class="button button-balanced button-small" style="width:60px" ng-click="playeroperations(2,item)"> Demote
 			</button>
