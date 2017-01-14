@@ -48,6 +48,8 @@ angular.module('football.controllers')
 
 
 
+
+
     })
 
     .controller('TeamAddController', function ($scope,SearchStore, $ionicLoading, $cordovaToast, $ionicPopover, ReservationFact, $state, $ionicLoading, $ionicPopup, TeamStores) {
@@ -475,157 +477,6 @@ angular.module('football.controllers')
         }
 
 
-        $scope.slider1 = {
-            minValue: 1,
-            maxValue: 23,
-
-            options: {
-                floor: 0,
-                showSelectionBar: true,
-                readOnly: true,
-                disabled: true,
-                getSelectionBarColor: function (value) {
-                    return 'White';
-                },
-                getPointerColor: function (value) {
-                    return 'Green';
-
-                },
-                ceil: 23,
-                draggableRange: true
-
-            }
-        };
-
-        $scope.slider2 = {
-            minValue: 1,
-            maxValue: 23,
-            options: {
-                floor: 0,
-                showSelectionBar: true,
-                readOnly: true,
-                disabled: true,
-                getSelectionBarColor: function (value) {
-                    return 'White';
-                },
-                getPointerColor: function (value) {
-                    return 'Green';
-
-                },
-                ceil: 23,
-                draggableRange: true
-
-            }
-        };
-
-
-        $scope.slider3 = {
-            minValue: 1,
-            maxValue: 23,
-            options: {
-                floor: 0,
-                showSelectionBar: true,
-                readOnly: true,
-                disabled: true,
-                getSelectionBarColor: function (value) {
-                    return 'White';
-                },
-                getPointerColor: function (value) {
-                    return 'Green';
-
-                },
-                ceil: 23,
-                draggableRange: true
-
-            }
-        };
-
-
-        $scope.slider4 = {
-            minValue: 1,
-            maxValue: 23,
-            options: {
-                floor: 0,
-                showSelectionBar: true,
-                readOnly: true,
-                disabled: true,
-                getSelectionBarColor: function (value) {
-                    return 'White';
-                },
-                getPointerColor: function (value) {
-                    return 'Green';
-
-                },
-                ceil: 23,
-                draggableRange: true
-
-            }
-        };
-
-
-        $scope.slider5 = {
-            minValue: 1,
-            maxValue: 23,
-            options: {
-                floor: 0,
-                showSelectionBar: true,
-                readOnly: true,
-                disabled: true,
-                getSelectionBarColor: function (value) {
-                    return 'White';
-                },
-                getPointerColor: function (value) {
-                    return 'Green';
-
-                },
-                ceil: 23,
-                draggableRange: true
-
-            }
-        };
-
-        $scope.slider6 = {
-            minValue: 1,
-            maxValue: 23,
-            options: {
-                floor: 0,
-                showSelectionBar: true,
-                readOnly: true,
-                disabled: true,
-                getSelectionBarColor: function (value) {
-                    return 'White';
-                },
-                getPointerColor: function (value) {
-                    return 'Green';
-
-                },
-                ceil: 23,
-                draggableRange: true
-
-            }
-        };
-
-        $scope.slider7 = {
-            minValue: 1,
-            maxValue: 23,
-
-            options: {
-                floor: 0,
-                showSelectionBar: true,
-                readOnly: true,
-                disabled: true,
-                getSelectionBarColor: function (value) {
-                    return 'White';
-                },
-                getPointerColor: function (value) {
-                    return 'Green';
-
-                },
-                ceil: 23,
-                draggableRange: true
-
-            }
-        };
 
         //here
         $ionicLoading.show({
@@ -643,29 +494,6 @@ angular.module('football.controllers')
 
                     $ionicLoading.hide();
                     $scope.currentprofile = myprofile;
-
-
-                    $scope.slider1.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider1.options.disabled = $scope.currentprofile.admiadmin;
-
-                    $scope.slider2.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider2.options.disabled = $scope.currentprofile.admiadmin;
-
-                    $scope.slider3.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider3.options.disabled = $scope.currentprofile.admiadmin;
-
-                    $scope.slider4.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider4.options.disabled = $scope.currentprofile.admiadmin;
-
-                    $scope.slider5.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider5.options.disabled = $scope.currentprofile.admiadmin;
-
-                    $scope.slider6.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider6.options.disabled = $scope.currentprofile.admiadmin;
-
-
-                    $scope.slider7.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider7.options.disabled = $scope.currentprofile.admiadmin;
                 })
             }, 2000);
 
@@ -687,7 +515,21 @@ angular.module('football.controllers')
                 });
         }
 
+       $scope.doRefresh = function () {
 
+            try {
+
+                TeamStores.GetTeamByKey($stateParams.teamid, function (myprofile) {
+                    $scope.currentprofile = myprofile;
+                    $scope.$apply();
+                    $scope.$broadcast('scroll.refreshComplete');
+                   
+
+                })
+            } catch (error) {
+                alert(error.message);
+            }
+        }
 
         $scope.playeroperations = function (opercode, player) {
             var message = "";
