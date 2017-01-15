@@ -4,9 +4,13 @@ angular.module('football.controllers')
 
     .controller('HomeController', function ($scope, $state, HomeStore, $timeout, $ionicPopup, $ionicLoading) {
 
-        $scope.showteaminvite = true;
-        $scope.showpendingchallenge = true;
-        $scope.showupcomingmatches = true;
+
+        //Section Visibility Variables
+        $scope.showteaminvite = false;
+        $scope.showpendingchallenge = false;
+        $scope.showupcomingmatches = false;
+
+        $scope.teaminvitationoperation = true;
 
 
         $scope.notloaded = true;
@@ -14,20 +18,16 @@ angular.module('football.controllers')
             $scope.profile = {};
 
             $timeout(function () {
+                //Get My Profile
                 HomeStore.GetProfileInfo(function (leagues) {
                     $scope.profile = leagues;
                     $scope.notloaded = false;
 
-                    if ($scope.profile.challenges.length == 0) {
-                        $scope.showpendingchallenge = false;
-                    }
-                    if ($scope.profile.upcominteamgmatches.length == 0) {
-                        $scope.showupcomingmatches = false;
-                    }
-                    if ($scope.profile.teaminvitations.length == 0) {
-                        $scope.showteaminvite = false;
-                    }
+                    $scope.showpendingchallenge = $scope.profile.challenges.length == 0?false:true;
+                    $scope.showupcomingmatches = $scope.profile.upcominteamgmatches.length == 0?false:true;
+                    $scope.showteaminvite = $scope.profile.teaminvitations.length == 0?false:true;
 
+                    //Get the first 4 ranked teams
                     HomeStore.GetFirstFour(function(leagues)
                     {
                         $scope.rankedteams = leagues;
@@ -65,6 +65,40 @@ angular.module('football.controllers')
 
                 confirmPopup.then(function (res) {
                     if (res) {
+                        //decline the challenge
+                        HomeStore.DeleteChallenge(challenge).then(function () {
+
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Success',
+                                template: 'Challenge Declined'
+                            })
+                            //remove the challenge from homepage
+                            $scope.profile.challenges = $scope.profile.challenges.filter(function (el) {
+                                return el.key !== challenge.key;
+                                $scope.$digest();
+                            })
+
+                        }, function (error) {
+                            alert(error.message);
+                        })
+                    }
+
+                })
+
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+        $scope.cancelinvitation = function (challenge) {
+            try {
+
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Decline',
+                    template: 'Are you sure you want to cancel the challenge?'
+                });
+
+                confirmPopup.then(function (res) {
+                    if (res) {
                         HomeStore.DeleteChallenge(challenge).then(function () {
 
                             var alertPopup = $ionicPopup.alert({
@@ -90,7 +124,7 @@ angular.module('football.controllers')
 
         $scope.acceptteaminvitation = function (invitation, x) {
             try {
-
+                $scope.teaminvitationoperation = true;
                 switch (x) {
                     case 1:
                         HomeStore.AcceptTeamInvitation(invitation, $scope.profile).then(function () {
@@ -112,9 +146,9 @@ angular.module('football.controllers')
 
                             $scope.profile.teaminvitations = $scope.profile.teaminvitations.filter(function (el) {
                                 return el.key !== invitation.key;
-                                $scope.$digest();
+                                
                             });
-
+                            $scope.$apply();
                         }, function (error) {
                                 alert(error.message);
                             })
@@ -123,10 +157,12 @@ angular.module('football.controllers')
                     default:
                         break;
                 }
+                $scope.teaminvitationoperation = false;
 
             } catch (error) {
                 alert(error.message);
             }
+             
 
         }
 
@@ -140,8 +176,15 @@ angular.module('football.controllers')
 
                 HomeStore.GetProfileInfo(function (leagues) {
                     $scope.profile = leagues;
-                    $scope.$digest();
+                    
+                    $scope.showpendingchallenge = $scope.profile.challenges.length == 0?false:true;
+                    $scope.showupcomingmatches = $scope.profile.upcominteamgmatches.length == 0?false:true;
+                    $scope.showteaminvite = $scope.profile.teaminvitations.length == 0?false:true;
+
+                    $scope.$apply();
                     $scope.$broadcast('scroll.refreshComplete');
+
+
                 })
             } catch (error) {
                 alert(error.message);
@@ -182,6 +225,11 @@ angular.module('football.controllers')
     .controller('ChallengeStadiumController', function ($timeout, $scope, $state, HomeStore, $ionicPopup, $ionicLoading) {
 
         $scope.allfreestadiums = $state.params.challenge.stadiums;
+
+        $scope.rating = {};
+        $scope.rating.max = 5;
+
+        $scope.readOnly = true;
 
         $scope.challenge = $state.params.challenge;
 

@@ -71,7 +71,7 @@
                 return TempItems;
             },
 
-            AddNewTeam: function (newteam) {
+            AddNewTeam: function (newteam , profile) {
                 //alert(user.teamname);
                 // Get a key for a new Post.
                 var user = firebase.auth().currentUser;
@@ -147,13 +147,13 @@
                     };
 
                     contact.players[id] = {
-                        name: "Missak",
+                        name: profile.displayname,
                         isadmin: true
                     };
                     
                     contact.captain[id] =
                         {
-                            name: "Missak",
+                            name: profile.displayname,
                             isadmin: true
                         };
 
@@ -179,7 +179,7 @@
 
                     playerside.players[id] =
                         {
-                            name: "Missak",
+                            name: profile.displayname,
                             isadmin: "True"
                         };
 
@@ -329,6 +329,7 @@
 
                     var updates = {};
                     updates['/teams/' + team.key] = null;
+                    updates['/teampoints/' + team.key] = null;
 
                     for(var i = 0 ;i<members.length; i++)
                     {
@@ -416,7 +417,7 @@
 
             },
 
-            InvitePlayerToTeam: function (team, player) {
+            InvitePlayerToTeam: function (team, player,admindetails) {
 
                 try {
                     var user = firebase.auth().currentUser;
@@ -457,7 +458,13 @@
                         "dateday" : day,
 
                         "datehour" : hour,
-                        "dateminute" : minute
+                        "dateminute" : minute,
+
+                        "adminkey": admindetails.key,
+                        "admindisplayname": admindetails.displayname,
+                        "adminphoto": admindetails.photo,
+                        "admintelephone": admindetails.telephone
+
 
                     };
 

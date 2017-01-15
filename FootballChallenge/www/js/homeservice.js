@@ -28,7 +28,7 @@ angular.module('football.controllers')
                         snapshot.child("challenges").forEach(function (challenges) {
 
                             var challengedate = new Date();
-                            var isadmin = challenges.child("team1adminid").val() == id;
+                            var isadmin = challenges.child("admin").val() == id;
 
                             challengedate.setMinutes(challenges.child("minute").val());
                             challengedate.setFullYear(challenges.child("year").val());
@@ -139,7 +139,13 @@ angular.module('football.controllers')
 
                                 status: challenges.child("status").val(),
 
-                                date:matchdate
+                                date:matchdate,
+
+                                adminkey: challenges.child("adminkey").val(),
+                                admindisplayname: challenges.child("admindisplayname").val(),
+                                adminphoto: challenges.child("adminphoto").val(),
+                                admintelephone: challenges.child("admintelephone").val(),
+                                
                             }
                             teaminvitations.push(matchdata);
 

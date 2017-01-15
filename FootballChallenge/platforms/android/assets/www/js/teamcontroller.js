@@ -23,10 +23,10 @@ angular.module('football.controllers')
                     $scope.test = leagues;
 
                     if (leagues.length == 0) {
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Empty',
-                            template: 'You do not below to any team right now'
-                        });
+                    //    var alertPopup = $ionicPopup.alert({
+                    //        title: 'Empty',
+                    //        template: 'You do not below to any team right now'
+                    //    });
                     }
                     else if (leagues.length > 10) {
                         $scope.showadd = false;
@@ -48,9 +48,11 @@ angular.module('football.controllers')
 
 
 
+
+
     })
 
-    .controller('TeamAddController', function ($scope, $ionicLoading, $cordovaToast, $ionicPopover, ReservationFact, $state, $ionicLoading, $ionicPopup, TeamStores) {
+    .controller('TeamAddController', function ($scope,SearchStore, $ionicLoading, $cordovaToast, $ionicPopover, ReservationFact, $state, $ionicLoading, $ionicPopup, TeamStores) {
 
         $ionicLoading.show({
             template: 'Loading...',
@@ -65,8 +67,12 @@ angular.module('football.controllers')
 
             ReservationFact.GetAllStadiums(function (leagues) {
 
-                $ionicLoading.hide();
                 $scope.allstadiums = leagues;
+                     SearchStore.GetMyProfileInfo( function (profile) {
+                     $ionicLoading.hide();
+                     $scope.myprofile = profile;
+            })
+                
 
             })
 
@@ -198,7 +204,7 @@ angular.module('football.controllers')
                 }
                 else {
                     
-                    TeamStores.AddNewTeam(team)
+                    TeamStores.AddNewTeam(team , $scope.myprofile)
                         .then(function (value) {
 
                             /*   $cordovaToast.showShortTop('Team Added Successfully').then(function (success) {
@@ -471,157 +477,6 @@ angular.module('football.controllers')
         }
 
 
-        $scope.slider1 = {
-            minValue: 1,
-            maxValue: 23,
-
-            options: {
-                floor: 0,
-                showSelectionBar: true,
-                readOnly: true,
-                disabled: true,
-                getSelectionBarColor: function (value) {
-                    return 'White';
-                },
-                getPointerColor: function (value) {
-                    return 'Green';
-
-                },
-                ceil: 23,
-                draggableRange: true
-
-            }
-        };
-
-        $scope.slider2 = {
-            minValue: 1,
-            maxValue: 23,
-            options: {
-                floor: 0,
-                showSelectionBar: true,
-                readOnly: true,
-                disabled: true,
-                getSelectionBarColor: function (value) {
-                    return 'White';
-                },
-                getPointerColor: function (value) {
-                    return 'Green';
-
-                },
-                ceil: 23,
-                draggableRange: true
-
-            }
-        };
-
-
-        $scope.slider3 = {
-            minValue: 1,
-            maxValue: 23,
-            options: {
-                floor: 0,
-                showSelectionBar: true,
-                readOnly: true,
-                disabled: true,
-                getSelectionBarColor: function (value) {
-                    return 'White';
-                },
-                getPointerColor: function (value) {
-                    return 'Green';
-
-                },
-                ceil: 23,
-                draggableRange: true
-
-            }
-        };
-
-
-        $scope.slider4 = {
-            minValue: 1,
-            maxValue: 23,
-            options: {
-                floor: 0,
-                showSelectionBar: true,
-                readOnly: true,
-                disabled: true,
-                getSelectionBarColor: function (value) {
-                    return 'White';
-                },
-                getPointerColor: function (value) {
-                    return 'Green';
-
-                },
-                ceil: 23,
-                draggableRange: true
-
-            }
-        };
-
-
-        $scope.slider5 = {
-            minValue: 1,
-            maxValue: 23,
-            options: {
-                floor: 0,
-                showSelectionBar: true,
-                readOnly: true,
-                disabled: true,
-                getSelectionBarColor: function (value) {
-                    return 'White';
-                },
-                getPointerColor: function (value) {
-                    return 'Green';
-
-                },
-                ceil: 23,
-                draggableRange: true
-
-            }
-        };
-
-        $scope.slider6 = {
-            minValue: 1,
-            maxValue: 23,
-            options: {
-                floor: 0,
-                showSelectionBar: true,
-                readOnly: true,
-                disabled: true,
-                getSelectionBarColor: function (value) {
-                    return 'White';
-                },
-                getPointerColor: function (value) {
-                    return 'Green';
-
-                },
-                ceil: 23,
-                draggableRange: true
-
-            }
-        };
-
-        $scope.slider7 = {
-            minValue: 1,
-            maxValue: 23,
-
-            options: {
-                floor: 0,
-                showSelectionBar: true,
-                readOnly: true,
-                disabled: true,
-                getSelectionBarColor: function (value) {
-                    return 'White';
-                },
-                getPointerColor: function (value) {
-                    return 'Green';
-
-                },
-                ceil: 23,
-                draggableRange: true
-
-            }
-        };
 
         //here
         $ionicLoading.show({
@@ -639,29 +494,6 @@ angular.module('football.controllers')
 
                     $ionicLoading.hide();
                     $scope.currentprofile = myprofile;
-
-
-                    $scope.slider1.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider1.options.disabled = $scope.currentprofile.admiadmin;
-
-                    $scope.slider2.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider2.options.disabled = $scope.currentprofile.admiadmin;
-
-                    $scope.slider3.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider3.options.disabled = $scope.currentprofile.admiadmin;
-
-                    $scope.slider4.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider4.options.disabled = $scope.currentprofile.admiadmin;
-
-                    $scope.slider5.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider5.options.disabled = $scope.currentprofile.admiadmin;
-
-                    $scope.slider6.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider6.options.disabled = $scope.currentprofile.admiadmin;
-
-
-                    $scope.slider7.options.readOnly = $scope.currentprofile.admiadmin;
-                    $scope.slider7.options.disabled = $scope.currentprofile.admiadmin;
                 })
             }, 2000);
 
@@ -683,7 +515,21 @@ angular.module('football.controllers')
                 });
         }
 
+       $scope.doRefresh = function () {
 
+            try {
+
+                TeamStores.GetTeamByKey($stateParams.teamid, function (myprofile) {
+                    $scope.currentprofile = myprofile;
+                    $scope.$apply();
+                    $scope.$broadcast('scroll.refreshComplete');
+                   
+
+                })
+            } catch (error) {
+                alert(error.message);
+            }
+        }
 
         $scope.playeroperations = function (opercode, player) {
             var message = "";
@@ -1017,7 +863,7 @@ angular.module('football.controllers')
 
     })
 
-    .controller('InvitePlayersController', function ($scope, $ionicPopup, $ionicLoading, $state, $stateParams, SearchStore, TeamStores, $timeout) {
+    .controller('InvitePlayersController', function ($scope, $ionicPopup,HomeStore, $ionicLoading, $state, $stateParams, SearchStore, TeamStores, $timeout) {
 
         $scope.notloaded = true;
 
@@ -1026,10 +872,12 @@ angular.module('football.controllers')
 
         $timeout(function () {
             SearchStore.SearchPlayers($scope.myteam, function (leagues) {
-                $ionicLoading.hide();
                 $scope.allplayers = leagues;
-                $scope.notloaded = false;
-
+                HomeStore.GetProfileInfo(function (players) {
+                    $scope.profile = players;
+                    $scope.notloaded = false;
+                    $scope.$apply();
+                })
             })
         }, 2000)
 
@@ -1037,7 +885,7 @@ angular.module('football.controllers')
 
 
         $scope.InvitePlayerToTeam = function (player) {
-            TeamStores.InvitePlayerToTeam($scope.myteam, player).then(function () {
+            TeamStores.InvitePlayerToTeam($scope.myteam, player,$scope.profile).then(function () {
 
                 player.status = "Invitation Sent";
                 $scope.$digest();
