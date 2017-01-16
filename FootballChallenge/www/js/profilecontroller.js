@@ -275,8 +275,6 @@ angular.module('football.controllers')
 
             ProfileStore1.UpdateProfile(profile).then(function (result) {
 
-
-
             }, function (error) {
                 alert(error.message);
             });

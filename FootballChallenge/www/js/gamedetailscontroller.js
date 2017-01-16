@@ -144,22 +144,22 @@ angular.module('football.controllers')
         $scope.InvitePlayer = function(player)
         {
 
-          /*  try {
-                ChallengeStore.AcceptTeamInvitation(player).then(function () {
-                            var alertPopup = $ionicPopup.alert({
-                                title: 'New Team',
-                                template: 'You know below to team ' + invitation.teamname
-                            }).then(function () {
-                                $state.go("app.teammanagement");
-                            }, function (error) {
-                                    alert(error.message);
-                                })
+            try {
+                ChallengeStore.InvitePlayerToGame(player)
+                .then(function () 
+                 {
 
 
-                        });
+                 }
+                  , 
+                 function (error) 
+                 {
+                     alert(error.message);
+                 })
+
             } catch (error) {
                 
-            }*/
+            }
 
         }
 

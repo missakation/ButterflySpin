@@ -127,13 +127,13 @@
 	<div class="col">
 
 		<div align="center">
-			<button ng-show="item.status == 0" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="InvitePlayer(item)"> Invite
+			<button ng-show="item.status == 0 && !item.isadmin" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="InvitePlayer(item)"> Invite
 </button>
 
-			<button ng-show="item.status == 1" class="button button-block button-balanced button-small" style="color:white" type="submit" > Pending
+			<button ng-show="item.status == 1 && !item.isadmin" class="button button-block button-balanced button-small" style="color:white" type="submit" > Pending
 </button>
 
-			<button ng-show="item.status == 2" class="button button-block button-balanced button-small" style="color:white" type="submit" > Accepted
+			<button ng-show="item.status == 2 && !item.isadmin" class="button button-block button-balanced button-small" style="color:white" type="submit" > Accepted
 </button>
 
 </div>

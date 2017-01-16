@@ -10,6 +10,10 @@
                 var user = firebase.auth().currentUser;
                 var id = user.uid;
 
+                if(id !== null || id == '' || id === undefined)
+                {
+
+                
                 firebase.database().ref('/players/' + id + '/teams').on('value', function (snapshot) {
                     MyTeams = [];
                     snapshot.forEach(function (childSnapshot) {
@@ -38,6 +42,11 @@
                     });
                     callback(MyTeams);
                 });
+                }
+                else
+                {
+                    callback(MyTeams);
+                }
 
             },
 
@@ -47,12 +56,7 @@
                     //alert(firstName);
                     var members = 0 ;
 
-
-                    
-
                     snapshot.forEach(function (childSnapshot) {
-
-
 
                         var Items = {
 
@@ -197,6 +201,11 @@
 
                     
                     var updates = {};
+                    
+                    if(id !== null || id == '' || id === undefined)
+                    {
+
+                    
                     updates['/teams/' + newPostKey] = contact;
 
 
@@ -205,6 +214,7 @@
 
                     updates['/teampoints/' + newPostKey] = teamstats;
 
+                    }
                     return firebase.database().ref().update(updates);
                 }
                 catch (error) {
@@ -420,9 +430,6 @@
             InvitePlayerToTeam: function (team, player,admindetails) {
 
                 try {
-                    var user = firebase.auth().currentUser;
-
-                    var id = user.uid;
 
                     var updates = {};
 

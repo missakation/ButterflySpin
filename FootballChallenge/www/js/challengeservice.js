@@ -85,7 +85,14 @@ angular.module('football.controllers')
                     //alert(firstName);
                     AllITems = [];
 
+                    var user = firebase.auth().currentUser;
+                    var id = user.uid;
+
+                    if(id !== null || id == '' || id === undefined)
+                    {
                     snapshot.forEach(function (childSnapshot) {
+                        if(!childSnapshot.child("players/"+id).exists())
+                        {
                         var Items = {
                             "key": childSnapshot.key,
                             "teamname": childSnapshot.child("teamname").val(),
@@ -106,10 +113,10 @@ angular.module('football.controllers')
                             "teamadmin":childSnapshot.child("teamadmin").val(),
 
                         };
-
+                        }
                         AllITems.push(Items)
                     });
-                    
+                    }
                     callback(AllITems);
                 });
             },
@@ -327,54 +334,47 @@ angular.module('football.controllers')
                 }
 
             },
-            InvitePlayerToGame: function(player)
+            
+            InvitePlayerToGame: function(player,challenge)
             {
 
-                 var updates = {};
-
-                var year = date.getFullYear();
-                var month = date.getMonth();
-                var day = date.getDate();
-
-                var hour = date.getHours();
-                var minute = date.getMinutes();
+                var updates = {};
 
                 try {
                    
 
                         var challengedata = {
-                            day: day,
-                            month: month,
-                            year: year,
-                            hour: hour,
-                            minute: minute,
 
-                            stadiums: stadiums,
+                            day: challenge.day,
+                            month: challenge.month,
+                            year: challenge.year,
+                            hour: challenge.hour,
+                            minute: challenge.minute,
 
-                            challengeradmin: teams[i].teamadmin,
+                            challengeradmin:challenge.challengeradmin,
 
-                            team1key : teams[i].key,
-                            team1name: teams[i].teamname, //
-                            team1logo: teams[i].badge, //
-                            team1rank: teams[i].rank, //
+                            team1key:challenge.team1key,
+                            team1name:challenge.team1name, //
+                            team1logo:challenge.team1logo, //
+                            team1rank:challenge.team1rank, //
                             //team1jersey: teams[i].jersey, //
 
-                            team2key: myteam.key,
-                            team2name: myteam.teamname,
-                            team2logo: myteam.badge,
-                            team2rank: myteam.rank,
+                            team2key:challenge.team2key,
+                            team2name:challenge.team2name,
+                            team2logo:challenge.team2logo,
+                            team2rank:challenge.team2rank,
                             //team2jersey: myteam.jersey,
 
-                            team2adminid: myteam.teamadmin,
-                            accepted: false
+                            team2adminid:challenge.team2adminid,
 
+                            stadium : challenge.stadiums
+
+
+                        
 
                         }
 
-                        // Get a key for a new Post.
-                        var newPostKey = firebase.database().ref().child('challenges').push().key;
-
-                        updates['/players/' + teams[i].teamadmin + '/gameinvitation/'+newPostKey] = challengedata;
+                        updates['/players/' + player.key + '/gameinvitation/'+challenge.key] = challengedata;
 
                     return firebase.database().ref().update(updates);
 
