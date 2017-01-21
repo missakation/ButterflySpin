@@ -32,7 +32,7 @@ angular.module('football.controllers')
                     {
                         $scope.rankedteams = leagues;
                     })
-
+                    //JSON.stringify()
 
                     $scope.$digest();
                 })
@@ -148,7 +148,7 @@ angular.module('football.controllers')
                                 return el.key !== invitation.key;
                                 
                             });
-                            $scope.$apply();
+                            
                         }, function (error) {
                                 alert(error.message);
                             })
@@ -163,6 +163,48 @@ angular.module('football.controllers')
                 alert(error.message);
             }
              
+
+        }
+
+        $scope.acceptgameinvitation = function(type,gameinvitation)
+        {
+            try
+            {
+             switch(type)
+                {
+                    case 1:
+                       HomeStore.AccepGameInvitation(gameinvitation).then(function () {
+
+                            $scope.profile.gameinvitations = $scope.profile.gameinvitations.filter(function (el) {
+                                return el.key !== gameinvitation.key;      
+                            });
+                            $scope.$apply();
+                        }, function (error) {
+                                alert(error.message);
+                            })
+                    break;
+
+                    case 2:
+                        HomeStore.DeleteGameInvitation(gameinvitation).then(function () {
+
+                            $scope.profile.gameinvitations = $scope.profile.gameinvitations.filter(function (el) {
+                                return el.key !== gameinvitation.key;
+                            });
+                            $scope.$apply();
+                        }, function (error) {
+                                alert(error.message);
+                            })
+                    break;
+
+                    default:
+                    break;
+                }
+                $scope.$apply();
+            }
+            catch(error)
+            {
+                alert(error.message);
+            }
 
         }
 

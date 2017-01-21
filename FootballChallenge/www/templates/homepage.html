@@ -44,7 +44,8 @@
 </style>
 
 <ion-view title="Home">
-    <ion-nav-buttons side="secondary">
+
+    <ion-nav-buttons side="right">
         <button class="button button-icon" ng-click="toggleSearch()" style="color:white">{{showSearch && 'Hide' || 'Search'}}
 </button>
 </ion-nav-buttons>
@@ -60,6 +61,8 @@
 
     </ion-nav-back-button>
 </ion-nav-bar>
+
+
 <ion-content style="background-color:rgb(45,62,75)">
 
 <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
@@ -72,7 +75,7 @@
               <input type="text" placeholder="Search players, teams, stadiums" ng-model="query">
             </label>
         <button ui-sref="app.searchAll({searchCriteria: query})" class="button button-small button-balanced">
-              Search This
+              Search
             </button>
     </div>
 
@@ -157,11 +160,11 @@
 </div>
 
 <div class="col">
-    <img src="img/Badges/{{rankedteams[3].badge}}.png" style="width:50px;height:50px ">
+    <img src="img/Badges/{{profile.myteams[0].badge}}.png" style="width:50px;height:50px ">
 <h5 class="whitetext">
-    {{rankedteams[3].teamname}}
+    {{profile.myteams[0].teamname}}
 </h5>
-<h6 style="color: DarkTurquoise "> <b>{{rankedteams[3].rank}}</b>
+<h6 style="color: DarkTurquoise "> <b>{{profile.myteams[0].rank}}</b>
 </h6>
 </div>
 
@@ -370,7 +373,7 @@
 
 
 
-<div class="card" style="background-color:rgb(62,83,100)" ng-repeat="challenges in profile.challenges">
+<div class="card" style="background-color:rgb(62,83,100)" ng-repeat="challenges in profile.gameinvitation">
 <div align="center">
     <h4 class="whitetext" align="middle"><b>Pending Attendance</b></h4>
 </div>
@@ -402,7 +405,7 @@
             Stadium
         </h6>
         <h6 class="whitetext">
-            {{challenges.stadium.stadiumname}}
+            {{challenges.stadium.description}}
         </h6>
 
     </div>
@@ -427,13 +430,13 @@
 </div>
 <div class="row">
     <div class="col">
-        <button class="button button-block button-balanced button-small" style="color:white" ng-click="acceptinvitation(challenges)"> Accept
+        <button class="button button-block button-balanced button-small" style="color:white" ng-click="acceptgameinvitation(1,challenges)"> Accept
 </button>
 </div>
 
 
 <div class="col">
-    <button class="button button-block button-assertive button-small" style="color:white" ng-click="declineinvitation(challenges)"> Decline
+    <button class="button button-block button-assertive button-small" style="color:white" ng-click="acceptgameinvitation(2,challenges)"> Decline
 </button>
 </div>
 </div>
@@ -534,38 +537,6 @@
 </div>
 </ion-scroll>
 
-
-<ion-item style="background-color:rgb(45,62,75)">
-<h2 align="middle"><b>Previous Stadiums</b></h2>
-</ion-item>
-
-<ion-scroll direction="x" class="item wide-item" style="background-color:rgb(30,30,30)">
-
-
-<div class="row">
-    <div class="col">
-        <div class="list">
-
-            <a class="item item-thumbnail-left" style="height:180px;width:180px"
-<!--href="#" -->>
-<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg" height="300" width="300">
-</a>
-
-</div>
-</div>
-
-<div class="col">
-    <div class="list">
-
-        <a class="item item-thumbnail-left" style="height:180px;width:180px" href="#">
-<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg">
-</a>
-
-</div>
-</div>
-
-</div>
-</ion-scroll>
 
 <ion-item style="background-color:rgb(45,62,75)">
 <h2 align="middle"><b>Match History</b></h2>

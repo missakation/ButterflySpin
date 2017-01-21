@@ -266,7 +266,6 @@ angular.module('football.controllers')
                                     var data = {
 
                                         key : pl.key,
-                                        name : pl.child("name").val(),
                                         status : pl.child("status").val()
 
                                     }
@@ -279,16 +278,15 @@ angular.module('football.controllers')
                            if (challenges.child("team2players").exists()) 
                             {
 
-                            challenges.child("team2players").forEach(function (pl) {
+                            challenges.child("team2players").forEach(function (p2) {
 
-                                    var data = {
+                                    var data2 = {
 
-                                        key : pl.key,
-                                        name : pl.child("name").val(),
-                                        status : pl.child("status").val()
+                                        key : p2.key,
+                                        status : p2.child("status").val()
 
                                     }
-                                    team2players.push(data);
+                                    team2players.push(data2);
 
                                 })
 
@@ -312,6 +310,7 @@ angular.module('football.controllers')
                                 team2logo: challenges.child("team2logo").val(),
                                 team2name: challenges.child("team2name").val(),
                                 team2rank: challenges.child("team2rank").val(),
+                                challengeradmin: challenges.child("challengeradmin").val(),
                                 year: challenges.child("year").val(),
                                 date: challengedate,
                                 isadmin:isadmin,
@@ -335,7 +334,7 @@ angular.module('football.controllers')
 
             },
             
-            InvitePlayerToGame: function(player,challenge)
+            InvitePlayerToGame: function(challenge,player,whichteam)
             {
 
                 var updates = {};
@@ -353,6 +352,7 @@ angular.module('football.controllers')
 
                             challengeradmin:challenge.challengeradmin,
 
+                            team1adminid:challenge.team1adminid,
                             team1key:challenge.team1key,
                             team1name:challenge.team1name, //
                             team1logo:challenge.team1logo, //
@@ -367,14 +367,16 @@ angular.module('football.controllers')
 
                             team2adminid:challenge.team2adminid,
 
-                            stadium : challenge.stadiums
+                            stadium : challenge.stadiums,
 
-
-                        
+                            belonging : whichteam
 
                         }
-
                         updates['/players/' + player.key + '/gameinvitation/'+challenge.key] = challengedata;
+                        updates['/challenges/' + challenge.key +'/'+whichteam +'/'+player.key] = 
+                        {
+                            status : 1
+                        };
 
                     return firebase.database().ref().update(updates);
 

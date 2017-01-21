@@ -22,6 +22,7 @@ angular.module('football.controllers')
                     var upcomingmatches = [];
                     var teaminvitations = [];
                     var gameinvitation = [];
+                    var myteams = [];
 
                     if (snapshot.child("challenges").exists()) {
 
@@ -154,8 +155,28 @@ angular.module('football.controllers')
 
 
                     }
+
+
+                   if (snapshot.child("teams").exists()) {
+                        snapshot.child("teams").forEach(function (teams) {                  
+
+                            var matchdata = {
+                                key:teams.key,
+                                badge: teams.child("badge").val(),
+                                rank: teams.child("rank").val(),
+                                teamname: teams.child("teamname").val()
+                                             
+                            }
+                            myteams.push(matchdata);
+
+                        })
+
+
+                    }
+
+
                     if (snapshot.child("gameinvitation").exists()) {
-                        snapshot.child("toattendmatches").forEach(function (challenges) {
+                        snapshot.child("gameinvitation").forEach(function (challenges) {
 
                             
                             var matchdate = new Date();
@@ -168,30 +189,35 @@ angular.module('football.controllers')
                             matchdate.setDate(challenges.child("day").val());
 
                             var matchdata = {
-                                accepted: challenges.child("accepted").val(),
+                                key: challenges.key,
+
+                                
                                 day: challenges.child("day").val(),
                                 hour: challenges.child("hour").val(),
                                 minute: challenges.child("minute").val(),
                                 month: challenges.child("month").val(),
-                                year: challenges.child("year").val(),
                                 
-                                key: challenges.child("key").val(),
-                                teamname: challenges.child("teamname").val(),
-                                badge: challenges.child("badge").val(),
-                                homejersey: challenges.child("homejersey").val(),
-                                awayjersey: challenges.child("awayjersey").val(),
+                                team1adminid: challenges.child("team1adminid").val(),
+                                team1key: challenges.child("team1key").val(),
+                                team1logo: challenges.child("team1logo").val(),
+                                team1name: challenges.child("team1name").val(),
+                                team1rank: challenges.child("team1rank").val(),
 
-                                status: challenges.child("status").val(),
+                                team2adminid: challenges.child("team2adminid").val(),
+                                team2key: challenges.child("team2key").val(),
+                                team2logo: challenges.child("team2logo").val(),
+                                team2name: challenges.child("team2name").val(),
+                                team2rank: challenges.child("team2rank").val(),
 
-                                date:matchdate,
+                                year: challenges.child("year").val(),
+                                date: matchdate,
 
-                                adminkey: challenges.child("adminkey").val(),
-                                admindisplayname: challenges.child("admindisplayname").val(),
-                                adminphoto: challenges.child("adminphoto").val(),
-                                admintelephone: challenges.child("admintelephone").val(),
+                                stadium : challenges.child("stadium").val(),
+
+                                belonging: challenges.child("belonging").val(),
                                 
                             }
-                            attendancematch.push(matchdata);
+                            gameinvitation.push(matchdata);
 
                         })
 
@@ -215,7 +241,8 @@ angular.module('football.controllers')
                         "challenges": totchallenges,
                         "upcominteamgmatches": upcomingmatches,
                         "teaminvitations":teaminvitations,
-                        "gameinvitation":gameinvitation
+                        "gameinvitation":gameinvitation,
+                        "myteams":myteams
 
                     };
                     callback(myprofile);
@@ -277,8 +304,27 @@ angular.module('football.controllers')
                 var updates = {};
                 updates['/players/' + challenge.team1adminid + '/upcomingteammatches/'+challenge.key ] = null;
                 updates['/players/' + challenge.team2adminid +'/upcomingteammatches/'+challenge.key] = null;
+
+                for(var i = 0 ; i < challenge.team1players ; i++)
+                {
+                    updates['/players/' + challenge.team1players[i].key + '/upcomingteammatches/'+challenge.key ] = null;
+                }
+                for(var i = 0 ; i < challenge.team2players ; i++)
+                {
+                    updates['/players/' + challenge.team2players[i].key + '/upcomingteammatches/'+challenge.key ] = null;
+                }
+
+                //should be already nulls;
                 updates['/players/' + challenge.team1adminid + '/challenges/'+challenge.key ] = null;
                 updates['/players/' + challenge.team2adminid +'/challenges/'+challenge.key] = null;
+
+                //
+                updates['/teams/' + challenge.team1key + '/upcomingteammatches/'+challenge.key ] = null;
+                updates['/teams/' + challenge.team2key +'/upcomingteammatches/'+challenge.key] = null;
+
+                updates['/stadiums/' + challenge.stadiums.stadiumkey +'/ministadiums/'+challenge.stadiums.ministadiumkey+'/schedules/'+challenge.stadiums.year +'/'+challenge.stadiums.month +'/'+challenge.stadiums.day+'/'+challenge.key] = null;
+
+
                 updates['/challenges/' + challenge.key ] = null;
                 //updates['/user-posts/' + uid + '/' + newPostKey] = postData;
 
@@ -444,6 +490,18 @@ angular.module('football.controllers')
                 updates['/players/' + challenge.team2adminid +'/challenges/'+challenge.key] = null;
 
                 updates['/challenges/'+challenge.key+'/stadiums'] = angular.copy(stadiums);
+
+                updates['/challenges/'+challenge.key+'/team1players/'+challenge.team1adminid] = 
+                {
+                    status:5, //it means already accepted
+                }
+
+                updates['/challenges/'+challenge.key+'/team2players/'+challenge.team2adminid] = 
+                {
+                    status:5, //it means already accepted
+                }
+
+
                 }
 
                 return firebase.database().ref().update(updates);
@@ -452,7 +510,7 @@ angular.module('football.controllers')
                     alert(error.message)
                 }
             },
-             AcceptTeamInvitation: function(invitation,myprofile){
+            AcceptTeamInvitation: function(invitation,myprofile){
                 try {
 
                 var user = firebase.auth().currentUser;
@@ -541,6 +599,61 @@ angular.module('football.controllers')
                     });
                     callback(RankedTeams);
                 });
+            },
+            AcceptGameInvitation : function(gameinvitation)
+            {
+
+                try {
+                var user = firebase.auth().currentUser;
+                var id = user.uid;
+
+                // Write the new post's data simultaneously in the posts list and the user's post list.
+                var updates = {};
+
+                if(id !== null || id == '' || id === undefined)
+                {
+                //add to players upcoming matches
+
+                    updates['/players/' + id + '/gameinvitation/' + gameinvitation.key] = null;
+
+                    updates['/challenges/'+gameinvitation.key+'/'+gameinvitation.belonging+'/'+id +'/status'] = 5;
+
+                updates['/players/' + id + '/upcominteamgmatches/' + challenge.key] = gameinvitation;
+      
+                }
+                return firebase.database().ref().update(updates);
+                }
+                catch(error)
+                { 
+                    alert(error.message);
+                }
+
+
+
+            },
+            DeleteGameInvitation : function(gameinvitation)
+            {
+                try {
+                var user = firebase.auth().currentUser;
+                var id = user.uid;
+
+                // Write the new post's data simultaneously in the posts list and the user's post list.
+                var updates = {};
+
+                if(id !== null || id == '' || id === undefined)
+                {
+                //add to players upcoming matches
+
+                    updates['/players/' + id + '/gameinvitation/' + gameinvitation.key] = null;
+
+                    updates['/challenges/'+gameinvitation.key+'/'+gameinvitation.belonging+'/'+id +'/status'] = 3;
+                }
+                return firebase.database().ref().update(updates);
+                }
+                catch(error)
+                {
+                    alert(error.message);
+                }
             }
         }
 
