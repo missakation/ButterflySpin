@@ -1,16 +1,40 @@
-<ion-view view-title="settings">
-  <ion-content>
+<style>
+    .headercolor{
+        background-color: rgb(62,83,100);
+        color: white
+    }
+    .whitecheck{
+        background-color: transparent;
+        color: white;
+        border: none
+    }
     
+</style>
 
-      <ion-list>
+<ion-view view-title="settings">
 
-          <ion-checkbox ng-model="filter.red">Notification</ion-checkbox>
-          <ion-checkbox ng-model="filter.red">Email Verified</ion-checkbox>
-          <ion-checkbox ng-model="filter.red">Facebook Verified</ion-checkbox>
-          <ion-checkbox ng-model="filter.red">SMS Verified</ion-checkbox>
-          <a class="button open-button" on-tap="openPickerView()">{{ pickerOutput }}</a>
+    <ion-nav-back-button>
+    </ion-nav-back-button>
+    <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+    </ion-nav-buttons>
 
-      </ion-list>
+    <ion-nav-bar class="headercolor">
+        <ion-nav-back-button>
 
-  </ion-content>
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content style="background-color:rgb(46,62,75)">
+
+
+<ion-list>
+
+    <ion-checkbox ng-model="filter.red" class="whitecheck">Notification</ion-checkbox>
+    <ion-checkbox ng-model="filter.red" class="whitecheck">Email Verified</ion-checkbox>
+    <ion-checkbox ng-model="filter.red" class="whitecheck">Facebook Verified</ion-checkbox>
+    <ion-checkbox ng-model="filter.red" class="whitecheck">SMS Verified</ion-checkbox>
+
+</ion-list>
+
+</ion-content>
 </ion-view>

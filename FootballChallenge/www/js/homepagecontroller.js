@@ -170,10 +170,11 @@ angular.module('football.controllers')
         {
             try
             {
+             
              switch(type)
                 {
                     case 1:
-                       HomeStore.AccepGameInvitation(gameinvitation).then(function () {
+                       HomeStore.AccepGameInvitation(angular.copy(gameinvitation)).then(function () {
 
                             $scope.profile.gameinvitations = $scope.profile.gameinvitations.filter(function (el) {
                                 return el.key !== gameinvitation.key;      

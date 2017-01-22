@@ -12,7 +12,7 @@ angular.module('football.controllers')
                 var id = user.uid;
 
                 var upcomingmatches = [];
-
+                var myteams = [];
 
                 try {
 
@@ -20,7 +20,9 @@ angular.module('football.controllers')
                     firebase.database().ref('/players/' +id).once('value').then(function (snapshot) {
                         
                     TempItems = {};
-                    if (snapshot.child("upcominteamgmatches").exists()) {
+                    if (snapshot.child("upcominteamgmatches").exists()) 
+                    
+                    {
 
                         snapshot.child("upcominteamgmatches").forEach(function (challenges) {
 
@@ -69,6 +71,24 @@ angular.module('football.controllers')
 
 
                     }
+
+                    if (snapshot.child("teams").exists()) {
+                        snapshot.child("teams").forEach(function (teams) {                  
+
+                            var matchdata = {
+                                key:teams.key,
+                                badge: teams.child("badge").val(),
+                                rank: teams.child("rank").val(),
+                                teamname: teams.child("teamname").val()
+                                             
+                            }
+                            myteams.push(matchdata);
+
+                        })
+
+
+                    }
+
                         var Items = {
                             "key": snapshot.key,
                             "displayname": snapshot.child("displayname").val(),
@@ -100,7 +120,8 @@ angular.module('football.controllers')
                             "startsaturdayend": snapshot.child("startsaturdayend").val(),
                             "startsunday": snapshot.child("startsunday").val(),
                             "startsundayend": snapshot.child("startsundayend").val(),
-                            "comments": snapshot.child("comments").val()
+                            "comments": snapshot.child("comments").val(),
+                            "myteams":myteams
 
                         };
 

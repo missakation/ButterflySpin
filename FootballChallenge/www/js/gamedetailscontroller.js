@@ -26,7 +26,6 @@ angular.module('football.controllers')
 
                 
                 ChallengeStore.GetChallengeByKey($scope.myid, $scope.gameid, function (challengedetails) {
-
                     $scope.challenge = challengedetails;
 
                     //alert(JSON.stringify($scope.challenge));
@@ -48,23 +47,21 @@ angular.module('football.controllers')
 
                     if ($scope.isadmin) {
 
-
+                        
 
                         //get team depending on your admin key
                         TeamStores.GetTeamByKey($scope.currentteam, function (myteam) {
 
                             $scope.myteam = myteam;
-                            
+
+
                             $scope.myplayers = $scope.myteam.players;
                             
                             if ($scope.isadmin) {
-                                alert( $scope.myplayers.length);
-                                alert( $scope.challenge.team1players.length);
+
                                 if ($scope.first) {
                                     for (var i = 0; i < $scope.myplayers.length; i++) {
-                                        alert("test1");
-                                        for (var j = 0; i < $scope.challenge.team1players.length; j++) {
-                                            alert($scope.myplayers[i].key);
+                                        for (var j = 0; j < $scope.challenge.team1players.length; j++) {
                                             if ($scope.myplayers[i].key == $scope.challenge.team1players[j].key) 
                                             {
                                                 $scope.myplayers[i].status = $scope.challenge.team1players[j].status;
@@ -73,15 +70,15 @@ angular.module('football.controllers')
                                             {
                                                 $scope.myplayers[i].status = 5;
                                             }
+                                            
                                         }
-                                        alert("test1");
 
                                     }
                                 }
                                 else {
                                     for (var i = 0; i < $scope.myplayers.length; i++) {
 
-                                        for (var j = 0; i < $scope.challenge.team2players.length; j++) {
+                                        for (var j = 0; j < $scope.challenge.team2players.length; j++) {
 
                                             if ($scope.myplayers[i].key == $scope.challenge.team2players[j].key) {
                                                 $scope.myplayers[i].status = $scope.challenge.team2players[j].status;
@@ -96,17 +93,14 @@ angular.module('football.controllers')
                                 }
                             }
 
-                            
                             $scope.notloaded = false;
                             
-
-
                             $scope.$apply();
                           //  alert("test2");
 
                         })
                     }
-                    
+                    $scope.notloaded = false;
                     $scope.$apply();
 
                 })
@@ -154,17 +148,21 @@ angular.module('football.controllers')
 
                 var fieldname = $scope.first ? "team1players":"team2players"
 
+                if(player.status == 0)
+                {
+               
                 ChallengeStore.InvitePlayerToGame(challenge,player,fieldname)
                 .then(function () 
                  {
 
-
+                     player.status = 0;
                  }
                   , 
                  function (error) 
                  {
                      alert(error.message);
                  })
+                  }
 
             } catch (error) {
                 

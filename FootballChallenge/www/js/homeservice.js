@@ -212,7 +212,7 @@ angular.module('football.controllers')
                                 year: challenges.child("year").val(),
                                 date: matchdate,
 
-                                stadium : challenges.child("stadium").val(),
+                                stadiums : challenges.child("stadium").val(),
 
                                 belonging: challenges.child("belonging").val(),
                                 
@@ -434,14 +434,13 @@ angular.module('football.controllers')
                     discount: "0",
                     month: month,
                     nettotal: "",
-                    teamone: "",
                     teamonescore: 0,
-                    teamtwo: "",
                     teamtwoscore: 0,
                     year: year,
                     bookedadmin: false,
 
                     challengekey: challenge.key,
+
                     accepted: challenge.accepted,
                     //stadium: challenge.stadium,
                     team1adminid: challenge.team1adminid,
@@ -454,8 +453,7 @@ angular.module('football.controllers')
                     team2logo: challenge.team2logo,
                     team2name: challenge.team2name,
                     team2rank: challenge.team2rank,
-                    teamone: 0,
-                    teamonescore: 0
+
 
                 };
 
@@ -600,7 +598,7 @@ angular.module('football.controllers')
                     callback(RankedTeams);
                 });
             },
-            AcceptGameInvitation : function(gameinvitation)
+            AccepGameInvitation : function(gameinvitation)
             {
 
                 try {
@@ -612,13 +610,46 @@ angular.module('football.controllers')
 
                 if(id !== null || id == '' || id === undefined)
                 {
+                 var postDataPlayer = {
+                    stadiumkey: gameinvitation.stadiums.stadiumkey,
+                    ministadiumkey: gameinvitation.stadiums.ministadiumkey,
+                    photo: gameinvitation.stadiums.photo,
+                    price: gameinvitation.stadiums.price,
+                    stadiumdescription: gameinvitation.stadiums.stadiumname,
+                    hour: gameinvitation.hour,
+                    minute: gameinvitation.minute,
+                    day: gameinvitation.day,
+                    discount: "0",
+                    month: gameinvitation.month,
+                    nettotal: "",
+                    teamonescore: 0,
+                    teamtwoscore: 0,
+                    year: gameinvitation.year,
+
+                    challengekey: gameinvitation.key,
+
+                    //accepted: challenge.accepted,
+                    //stadium: challenge.stadium,
+                    team1adminid: gameinvitation.team1adminid,
+                    team1key: gameinvitation.team1key,
+                    team1logo: gameinvitation.team1logo,
+                    team1name: gameinvitation.team1name,
+                    team1rank: gameinvitation.team1rank,
+                    team2adminid: gameinvitation.team2adminid,
+                    team2key: gameinvitation.team2key,
+                    team2logo: gameinvitation.team2logo,
+                    team2name: gameinvitation.team2name,
+                    team2rank: gameinvitation.team2rank
+
+
+                };
                 //add to players upcoming matches
 
                     updates['/players/' + id + '/gameinvitation/' + gameinvitation.key] = null;
 
                     updates['/challenges/'+gameinvitation.key+'/'+gameinvitation.belonging+'/'+id +'/status'] = 5;
 
-                updates['/players/' + id + '/upcominteamgmatches/' + challenge.key] = gameinvitation;
+                updates['/players/' + id + '/upcominteamgmatches/' + gameinvitation.key] = postDataPlayer;
       
                 }
                 return firebase.database().ref().update(updates);
