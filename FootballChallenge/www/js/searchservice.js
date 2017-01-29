@@ -99,12 +99,10 @@ angular.module('football.controllers')
                                     "telephone": childSnapshot.child("telephone").val(),
                                     "userdescription": childSnapshot.child("userdescription").val(),
                                     "winstreak": childSnapshot.child("winstreak").val(),
-                                    "photo": childSnapshot.child("photo").val(),
                                     "favstadium": childSnapshot.child("favstadium").val(),
                                     "favstadiumphoto": childSnapshot.child("favstadiumphoto").val(),
                                     "age": childSnapshot.child("age").val(),
-                                    "nummatches": childSnapshot.child("nummatches").val(),
-
+                                    "nummatches": childSnapshot.child("nummatches").val(),     
                                     "status": status,
                                     "color":color,
                                     "backcolor":backcolor,
@@ -151,7 +149,7 @@ angular.module('football.controllers')
                                 "telephone": childSnapshot.child("telephone").val(),
                                 "userdescription": childSnapshot.child("userdescription").val(),
                                 "winstreak": childSnapshot.child("winstreak").val(),
-                                "photo": childSnapshot.child("photo").val()
+                                "photo": childSnapshot.child("photoURL").val()
 
                             };
 
@@ -320,6 +318,7 @@ angular.module('football.controllers')
                         requeststatus: 0,
                         requestorkey: myprofile.key,
                         requestorname: myprofile.displayname,
+                        requestorphoto: myprofile.photo,
                         requestortelephone:myprofile.telephone,
 
                     };
@@ -357,7 +356,8 @@ angular.module('football.controllers')
                             "playposition": snapshot.child("playposition").val(),
                             "ranking": snapshot.child("ranking").val(),
                             "status": snapshot.child("status").val(),
-                            "telephone": snapshot.child("telephone").val()
+                            "telephone": snapshot.child("telephone").val(),
+                            "photo": snapshot.child("photoURL").val()
                         };
 
                         TempItems = Items;

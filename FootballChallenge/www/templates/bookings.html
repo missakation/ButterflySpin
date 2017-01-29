@@ -26,93 +26,84 @@
 </style>
 
 <ion-view view-title="Bookings">
-    <ion-content scroll="true" style="background-color:rgb(46,62,75)" ng-controller="BookingController">
-
-
-        <!--  <ion-tabs class="tabs-icon-top" style="background-color:rgb(30,30,30)" >
-
-            <ion-tab title="Current" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline" >
-                <ion-scroll direction="y">
-
-
-                    <div>
-                        <br />
-                        <br />
-                        <br />
-                    </div> -->
-
-        <div class="card" ng-repeat="item in test" style="background-color:rgb(100,120,140)">
-
-
-
-            <div align="center">
-                <img src="{{item.photo}}" style="width:100%;height:140px;">
-            </div>
-
-            <div class="row ">
-                <div class="col">
-                    <h5 class="whitetext">
-                        Stadium
-                    </h5>
-                </div>
-                <div class="col ">
-                    <h5 class="whitetext">
-                        Date
-                    </h5>
-                </div>
-
-                <div class="col" align="right">
-                    <h6 class="whitetext">
-                        Price
-                    </h6>
-                </div>
-
-            </div>
-
-            <div class="row ">
-                <div class="col">
-                    <h5 class="whitetext">
-                        {{item.stadiumdescription}}
-                    </h5>
-                </div>
-
-                <div class="col" align="right">
-                    <h6 class="whitetext">
-                        {{item.price}} $/ hour
-                    </h6>
-                </div>
-
-            </div>
-
-
-
-            <div>
-                <button class="button button-assertive button-full button-small">
-                                Delete
-                </button>
-            </div>
-
-
-
+    <div class="bar bar-subheader" style="background-color:rgb(46,62,75);border: none" >
+        <div class="button-bar" >
+            <button class="button button-calm" ng-click="switchscreens(1)">Current Bookings</button>
+            <button class="button button-calm"  ng-click="switchscreens(2)">Previous Bookings</button>
         </div>
+    </div>
+    <ion-content style="background-color:rgb(46,62,75)">
+<br>
+<br>
 
-        </div>
-        <!--  </ion-scroll>
+<div align="center" style="padding-top: 15px">
+    <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
+</div>
 
-            </ion-tab>
+<div ng-show="tabs.Current" >
+<div class="card" ng-repeat="item in bookings" style="background-color:rgb(62,83,100)">
+
+<div align="center">
+	<img src="{{item.photo}}" style="width:100%;height:140px;" ui-sref="app.reservestadiumdetails({stadiumid: stadiums.stadiumkey})">
+</div>
+<div align="center">
+    <h5 class="whitetext" style="color:white"> {{item.date |date:'MMM d, y h:mm a'}}
+</h5>
+</div>
+<div class="row">
+
+<div class="col">
+
+<h5 class="whitetext">
+    Type: 
+</h5>
+
+<h5 class="whitetext">
+    Captain: 
+</h5>
+
+<h5 class="whitetext">
+    Price: {{item.price}}
+</h5>
+
+</div>
+
+<div class="col">
+
+<h5 class="whitetext">
+     Stadium: {{item.stadiumdescription}}
+</h5>
+
+<h5 class="whitetext">
+    Number: 
+</h5>
+
+</div>
 
 
 
+</div>
 
-            <ion-tab title="Previous" icon-on="ion-ios-clock" icon-off="ion-ios-clock-outline">
-                <div>
-                    <br />
-                    <br />
-                </div>
-            </ion-tab>
+<div class="row row-top">
+    <div class="col">
+        <button class="button button-block button-full button-energized button-small" style="color:white;border-radius: 10px" ng-click="acceptteaminvitation(upmatches,1)"> Pending
+</button>
+</div>
+<div class="col">
 
-        </ion-tabs> -->
+    <button class="button button-block button-full button-assertive button-small" style="color:white;border-radius: 10px" ng-click="acceptteaminvitation(upmatches,2)"> Decline
+</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<div ng-show="tabs.Previous">
 
 
-    </ion-content>
+</div>
+
+
+</ion-content>
 </ion-view>

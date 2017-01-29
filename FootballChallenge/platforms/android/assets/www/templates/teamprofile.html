@@ -206,13 +206,13 @@
 
 		<div class="col" ng-show="currentprofile.amiadmin" >
 
-			<button ng-show="item.isadmin" class="button button-balanced button-small" style="width:60px" ng-click="playeroperations(2,item)"> Demote
+			<button ng-show="item.isadmin && !(item.itsme)" class="button button-balanced button-small" style="width:60px" ng-click="playeroperations(2,item)"> Demote
 			</button>
 
-<button ng-show="!(item.isadmin)" class="button button-balanced button-small" style="width:60px" ng-click="playeroperations(1,item)"> Promote
+<button ng-show="!(item.isadmin) && !(item.itsme)" class="button button-balanced button-small" style="width:60px" ng-click="playeroperations(1,item)"> Promote
 </button>
 
-<button ng-show="true" class="button button-assertive button-small" ng-click="playeroperations(3,item)">
+<button ng-show=" !(item.itsme)" class="button button-assertive button-small" ng-click="playeroperations(3,item)">
 						Remove
 					</button>
 </div>

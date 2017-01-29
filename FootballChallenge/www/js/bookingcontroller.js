@@ -3,35 +3,44 @@ angular.module('football.controllers')
 
     .controller('BookingController', function ($scope, $timeout,BookingStore, $ionicPopup, $ionicLoading) {
 
-        $ionicLoading.show({
-            content: 'Loading',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-        });
+        $scope.tabs =
+            {
+                Current: false,
+                Previous: false
+            }
+        $scope.notloaded = true;
+
+
 
         $timeout(function () {
             BookingStore.GetMyUpcomingBookings(function (leagues) {
-
-                $ionicLoading.hide();
-                $scope.test = leagues;
-                $scope.$digest();
-
-                if (leagues.length == 0) {
-                    var alertPopup = $ionicPopup.alert({
-                        title: 'Error',
-                        template: 'You still have no bookings'
-                    });
-                }
-
-
+                
+                $scope.bookings = leagues;
+                $scope.tabs.Current = true;
+                $scope.notloaded = false;
+                $scope.$apply();
             });
         }, 2000);
 
         $scope.deletebooking = function()
         {
             
+        }
+
+        $scope.switchscreens = function(x)
+        {
+            switch (x) {
+                case 1:
+                    $scope.tabs.Current = true;
+                    $scope.tabs.Previous = false;
+                    break;
+
+                case 2:
+                     $scope.tabs.Previous = true;
+                     $scope.tabs.Current = false;
+
+                    break;
+        }
         }
 
 

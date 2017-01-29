@@ -14,6 +14,8 @@
                     var id = user.uid;
 
                     Temp = [];
+                     if(id !== null || id == '' || id === undefined)
+                     {
                     firebase.database().ref('/players/' + id + '/upcomingmatches').once('value', function (snapshot) {
 
                         snapshot.forEach(function (childSnapshot) {
@@ -36,6 +38,11 @@
                         });
                         callback(Temp);
                     });
+                 }
+                 else
+                 {
+                     callback(Temp);
+                 }
 
                 }
                 catch (error) {

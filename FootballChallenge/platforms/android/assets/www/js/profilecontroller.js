@@ -84,7 +84,7 @@ angular.module('football.controllers')
 
 
     })
-    .controller('ProfileEditController', function ($scope,ProfileStore1, $ionicLoading,$state, $stateParams, $timeout, $ionicPopup, $stateParams, $state, TeamStores) {
+    .controller('ProfileEditController', function ($scope,$ionicHistory,ProfileStore1, $ionicLoading,$state, $stateParams, $timeout, $ionicPopup, $stateParams, $state, TeamStores) {
 
         $scope.currentprofile = $state.params.myprofile;
 
@@ -275,7 +275,7 @@ angular.module('football.controllers')
 
             ProfileStore1.UpdateProfile(profile).then(function (result) {
 
-
+                $ionicHistory.goBack();
 
             }, function (error) {
                 alert(error.message);

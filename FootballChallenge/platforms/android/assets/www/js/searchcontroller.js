@@ -89,6 +89,11 @@ angular.module('football.controllers')
                SearchStore.RequestNumber($scope.myprofile,player).then(function (value) 
                  {
 
+                      player.status=1;
+                      player.statusdesc = "Number Requested";
+                      player.color="black";
+                      player.backcolor="white";
+                      $scope.apply();
 
                  }, function (error)
             {

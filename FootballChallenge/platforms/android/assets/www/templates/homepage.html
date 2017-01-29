@@ -23,22 +23,47 @@
     p.whitetext {
         color: white;
     }
+
+    .h3.greytext,
+    h2.greytext,
+    h1.greytext,
+    h4.greytext,
+    h5.greytext,
+    h6.greytext,
+    p.greytext {
+        color: lightgray;
+    }
     
     .button {
         color: black;
     }
+    .headercolor{
+        background-color: rgb(62,83,100);
+        color: white
+    }
 </style>
 
 <ion-view title="Home">
-    <ion-nav-buttons side="secondary">
-        <button class="button button-icon" ng-click="toggleSearch()">{{showSearch && 'Hide' || 'Search'}}
-            </button>
-    </ion-nav-buttons>
 
-    <!--<ion-nav-bar  style="background-color:rgb(62,83,100)" class="bar-calm">
-        <ion-nav-back-button></ion-nav-back-button>
-    </ion-nav-bar>-->
-    <ion-content style="background-color:rgb(45,62,75)">
+    <ion-nav-buttons side="right">
+        <button class="button button-icon" ng-click="toggleSearch()" style="color:white">{{showSearch && 'Hide' || 'Search'}}
+</button>
+</ion-nav-buttons>
+
+<ion-nav-back-button>
+</ion-nav-back-button>
+<ion-nav-buttons side="left">
+    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+</ion-nav-buttons>
+
+<ion-nav-bar class="headercolor">
+    <ion-nav-back-button>
+
+    </ion-nav-back-button>
+</ion-nav-bar>
+
+
+<ion-content style="background-color:rgb(45,62,75)">
 
 <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
 </ion-refresher>
@@ -50,17 +75,17 @@
               <input type="text" placeholder="Search players, teams, stadiums" ng-model="query">
             </label>
         <button ui-sref="app.searchAll({searchCriteria: query})" class="button button-small button-balanced">
-              Search This
+              Search
             </button>
     </div>
 
 </div>
 
-    <div align="center">
-        <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
-    </div>
+<div align="center">
+    <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
+</div>
 
-    <div class="card" style="background-color:rgb(62,83,100)">
+<div class="card" style="background-color:rgb(62,83,100)">
 <div class="row" style="height:140px ">
 
 
@@ -86,7 +111,7 @@
 </a>
 </div>
 <div align="center">
-    <h5 class="whitetext">Barcelona</h5>
+    <h5 class="whitetext">{{profile.myteams[0].teamname}}</h5>
     <p style="color:white">{{profile.ranking}} AR</p>
 </div>
 
@@ -101,22 +126,22 @@
 
 <div class="card" style="background-color:rgb(62,83,100)">
 
-<div align="center" >
-    
+<div align="center">
+
     <h4 class="whitetext" align="middle"><b>RANKING</b></h4>
 </div>
 <div class="row" style="background-color:rgb(62,83,100)">
 
 <div class="col" align="center">
     <img src="img/Badges/{{rankedteams[0].badge}}.png" style="width:50px;height:50px ">
-<h5 class="whitetext">
+<h6 class="whitetext">
     {{rankedteams[0].teamname}}
-</h5>
+</h6>
 <h6 style="color: DarkTurquoise "> <b>{{rankedteams[0].rank}}</b>
 </h6>
 </div>
 
-<div class="col">
+<div class="col" align="center">
     <img src="img/Badges/{{rankedteams[1].badge}}.png" style="width:50px;height:50px ">
 <h5 class="whitetext">
     {{rankedteams[1].teamname}}
@@ -125,21 +150,13 @@
 </h6>
 </div>
 
-<div class="col">
-    <img src="img/Badges/{{rankedteams[2].badge}}.png" style="width:50px;height:50px ">
-<h5 class="whitetext">
-    {{rankedteams[2].teamname}}
-</h5>
-<h6 style="color: DarkTurquoise "> <b>{{rankedteams[2].rank}}</b>
-</h6>
-</div>
 
-<div class="col">
-    <img src="img/Badges/{{rankedteams[3].badge}}.png" style="width:50px;height:50px ">
+<div class="col" align="center">
+    <img src="img/Badges/{{profile.myteams[0].badge}}.png" style="width:50px;height:50px ">
 <h5 class="whitetext">
-    {{rankedteams[3].teamname}}
+    {{profile.myteams[0].teamname}}
 </h5>
-<h6 style="color: DarkTurquoise "> <b>{{rankedteams[3].rank}}</b>
+<h6 style="color: DarkTurquoise "> <b>{{profile.myteams[0].rank}}</b>
 </h6>
 </div>
 
@@ -156,7 +173,7 @@
 <div class="col">
 
 
-<button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(1)"> Reserve Stadium
+    <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(1)"> Reserve Stadium
 </button>
 
 </div>
@@ -188,12 +205,11 @@
 </div>
 
 
-<ion-list>
 
-    <ion-item class="row row-center" ng-repeat="upmatches in profile.upcominteamgmatches" style="background-color:rgb(62,83,100)">
+<div class="row row-center" ng-repeat="upmatches in profile.upcominteamgmatches" style="background-color:rgb(62,83,100)">
 <div class="col col-75">
 
-    <h4 class="whitetext">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h4>
+    <h6 class="whitetext">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h6>
 </div>
 
 <div class="col">
@@ -205,10 +221,7 @@
 </button>
 </div>
 
-</ion-item>
-
-
-</ion-list>
+</div>
 </div>
 </div>
 
@@ -222,9 +235,8 @@
 </ion-item>
 
 
-<ion-list>
 
-    <ion-item class="row row-center" ng-repeat="upmatches in profile.teaminvitations" style="background-color:rgb(62,83,100)">
+<div class="row row-center" ng-repeat="upmatches in profile.teaminvitations" style="background-color:rgb(62,83,100)">
 <div class="col col-25">
 
 
@@ -271,24 +283,15 @@
 </div>
 
 
-</ion-item>
-
-
-</ion-list>
-
-<ion-item style="background-color:rgb(62,83,100)" ng-show="showpendingchallenge">
-<div align="center">
-    <h2 class="whitetext" align="middle"><b>Pending Challenges</b></h2>
 </div>
-</ion-item>
 
-
-<ion-list>
-
-    <ion-item style="background-color:rgb(62,83,100)" ng-repeat="challenges in profile.challenges">
+<div class="card" style="background-color:rgb(62,83,100)" ng-repeat="challenges in profile.challenges">
 <div align="center">
-    <h3 class="whitetext" style="color:white"> {{challenges.date |date:'MMM d, y h:mm a'}}
-</h3>
+    <h4 class="whitetext" align="middle"><b>Pending Challenges</b></h4>
+</div>
+<div align="center">
+    <h5 class="whitetext" style="color:white"> {{challenges.date |date:'MMM d, y h:mm a'}}
+</h5>
 </div>
 <div class="row ">
     <div class="col">
@@ -296,20 +299,20 @@
             <img src="img/Badges/{{challenges.team1logo}}.png" style="width:60px;height:60px ">
 </div>
 <div align="center">
-    <h4 class="whitetext">
-        {{challenges.team1name}}
-    </h4>
     <h5 class="whitetext">
-        Rank:{{challenges.team1rank}}
+        {{challenges.team1name}}
     </h5>
+    <h6 class="whitetext">
+        Rank:{{challenges.team1rank}}
+    </h6>
     <img src="img/Jerseys/{{challenges.team1logo}}.png" style="width:40px;height:40px ">
 </div>
 </div>
 <div class="col">
     <div align="center">
-        <h4 class="whitetext">
+        <h5 class="whitetext">
             VS
-        </h4>
+        </h5>
         <img src="https://bossip.files.wordpress.com/2015/03/nba-face-6.png?w=700" style="border-radius:50% ; height:80px ; width:80px" align="right" height="50" />
 
 
@@ -322,12 +325,12 @@
         <img src="img/Badges/{{challenges.team2logo}}.png" style="width:60px;height:60px ">
 </div>
 <div align="center">
-    <h4 class="whitetext">
-        {{challenges.team2name}}
-    </h4>
     <h5 class="whitetext">
-        Rank:{{challenges.team2rank}}
+        {{challenges.team2name}}
     </h5>
+    <h6 class="whitetext">
+        Rank:{{challenges.team2rank}}
+    </h6>
     <img src="img/Jerseys/Blue.png" style="width:40px;height:40px ">
 </div>
 </div>
@@ -358,14 +361,131 @@
 </button>
 </div>
 </div>
-</ion-item>
-
-
-</ion-list>
+</div>
 
 
 
-</ion-list>
+<div class="card" style="background-color:rgb(62,83,100)" ng-repeat="challenges in profile.gameinvitation">
+<div align="center">
+    <h4 class="whitetext" align="middle"><b>Pending Attendance</b></h4>
+</div>
+<div align="center">
+    <h5 class="whitetext" style="color:white"> {{challenges.date |date:'MMM d, y h:mm a'}}
+</h5>
+</div>
+<div class="row ">
+    <div class="col">
+        <div align="center">
+            <img src="img/Badges/{{challenges.team1logo}}.png" style="width:60px;height:60px ">
+</div>
+<div align="center">
+    <h5 class="whitetext">
+        {{challenges.team1name}}
+    </h5>
+    <h6 class="whitetext">
+        Rank:{{challenges.team1rank}}
+    </h6>
+    <img src="img/Jerseys/{{challenges.team1logo}}.png" style="width:40px;height:40px ">
+</div>
+</div>
+<div class="col">
+    <div align="center">
+        <h4 class="whitetext">
+            VS
+        </h4>
+        <h6 class="greytext">
+            Stadium
+        </h6>
+        <h6 class="whitetext">
+            {{challenges.stadium.description}}
+        </h6>
+
+    </div>
+
+
+</div>
+<div class="col">
+    <div align="center">
+        <img src="img/Badges/{{challenges.team2logo}}.png" style="width:60px;height:60px ">
+</div>
+<div align="center">
+    <h5 class="whitetext">
+        {{challenges.team2name}}
+    </h5>
+    <h6 class="whitetext">
+        Rank:{{challenges.team2rank}}
+    </h6>
+    <img src="img/Jerseys/Blue.png" style="width:40px;height:40px ">
+</div>
+</div>
+
+</div>
+<div class="row">
+    <div class="col">
+        <button class="button button-block button-balanced button-small" style="color:white" ng-click="acceptgameinvitation(1,challenges)"> Accept
+</button>
+</div>
+
+
+<div class="col">
+    <button class="button button-block button-assertive button-small" style="color:white" ng-click="acceptgameinvitation(2,challenges)"> Decline
+</button>
+</div>
+</div>
+
+</div>
+
+
+<div class="card" style="background-color:rgb(62,83,100)" ng-repeat="requests in profile.requestednumbers">
+<div align="center">
+    <h4 class="whitetext" align="middle"><b>PENDING REQUESTS</b></h4>
+</div>
+<div align="center">
+    <h5 class="whitetext" style="color:white"> {{Requests.date |date:'MMM d, y h:mm a'}}
+</h5>
+</div>
+<div class="row ">
+
+    <div class="col col-25">
+        <img src="{{requests.photo}}">
+    </div>
+
+    <div class="col">
+        <h5 class="whitetext" style="color:white">
+             Hey, My name is {{requests.name}}. I would to Request your mobile number
+        </h5>
+    </div>
+
+</div>
+
+
+<div class="row row-top">
+    <div class="col">
+        <button class="button button-block button-full button-balanced button-small" style="color:white" ng-click="acceptrequest(requests,1)"> Accept
+</button>
+</div>
+<div class="col">
+
+    <button class="button button-block button-full button-assertive button-small" style="color:white" ng-click="acceptrequest(requests,2)"> Decline
+</button>
+</div>
+</div>
+
+<div class="row" ng-show="challenges.isadmin">
+    <div class="col">
+        <button class="button button-block button-balanced button-small" style="background-color:white;color: green" ng-click="cancelinvitation(challenges)"> Cancel
+</button>
+</div>
+
+
+<div class="col">
+    <button class="button button-block button-energized button-small" style="color:white" > Pending
+</button>
+</div>
+</div>
+</div>
+
+
 
 
 <div style="background-color:rgb(62,83,100)">
@@ -376,7 +496,7 @@
     <ion-slide>
         <img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg" style="height:200px;width: 100%">
 </ion-slide>
-<ion-slide >
+<ion-slide>
 
     <img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg" style="height:200px;width: 100%">
 </ion-slide>
@@ -459,38 +579,6 @@
 </div>
 </ion-scroll>
 
-
-<ion-item style="background-color:rgb(45,62,75)">
-<h2 align="middle"><b>Previous Stadiums</b></h2>
-</ion-item>
-
-<ion-scroll direction="x" class="item wide-item" style="background-color:rgb(30,30,30)">
-
-
-<div class="row">
-    <div class="col">
-        <div class="list">
-
-            <a class="item item-thumbnail-left" style="height:180px;width:180px"
-<!--href="#" -->>
-<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg" height="300" width="300">
-</a>
-
-</div>
-</div>
-
-<div class="col">
-    <div class="list">
-
-        <a class="item item-thumbnail-left" style="height:180px;width:180px" href="#">
-<img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg">
-</a>
-
-</div>
-</div>
-
-</div>
-</ion-scroll>
 
 <ion-item style="background-color:rgb(45,62,75)">
 <h2 align="middle"><b>Match History</b></h2>

@@ -1,5 +1,3 @@
-
-
 <style>
     .col-50 {
         border: thick;
@@ -14,8 +12,24 @@
         background-color: rgb(30,30,30);
     }
 
-    .h3, h2, h1, h4, p {
+    .h3.whitetext,
+    h2.whitetext,
+    h1.whitetext,
+    h4.whitetext,
+    h5.whitetext,
+    h6.whitetext,
+    p.whitetext {
         color: white;
+    }
+
+    .h3.greytext,
+    h2.greytext,
+    h1.greytext,
+    h4.greytext,
+    h5.greytext,
+    h6.greytext,
+    p.greytext {
+        color: lightgray;
     }
 
     .button {
@@ -24,7 +38,7 @@
 </style>
 
 
-    <style>
+<style>
       html, body {
         height: 100%;
         margin: 0;
@@ -51,45 +65,165 @@
 
 
 
-    <ion-content style="background-color:rgb(30,30,30)">
-        <ion-refresher
-    pulling-text="Pull to refresh..."
-    on-refresh="doRefresh()">
-  </ion-refresher>
-        <div class="item item-image" id="image-container" >
-            <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" height="120">
-        </div>
+<ion-content style="background-color:rgb(45,62,75)">
+<ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+</ion-refresher>
+<ion-slide-box on-slide-changed="slideHasChanged($index)">
+    <ion-slide ng-repeat="item in stadiums.photos">
+        <img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg" style="height:150px;width: 100%">
+</ion-slide>
+<ion-slide>
+    <img src="http://www.beechwoodinn.ws/wp-content/uploads/2015/01/Special-Offers.jpg" style="height:150px;width: 100%">
+</ion-slide>
+</ion-slide-box>
 
-        <ion-list>
-            <ion-item style="background-color:darkblue">
-                <h2 style="font-size:130% ; color:white" align="middle"><b>Vatche Stadium</b></h2>
-                <rating style="color:gold" ng-model="rating.rate" max="rating.max"></rating>
+<div class="card" style="background-color:rgb(62,83,100)">
+<div class="row ">
+    <div class="col col-66" style="color:white"> {{stadiums.stadiumname}} / {{stadiums.description}}
+</div>
 
-            </ion-item>
+<div class="col" align="right" style="color:lightgray"> Price
+</div>
+
+</div>
+
+<div class="row">
+    <div class="col col-66" align="left">
+        <rating style="color:gold" readonly="readOnly" ng-model=stadiums.rating max="rating.max" align="left">
+
+</rating>
+
+</div>
+
+<div class="col" align="right" style="color:white">
+<b>
+	
+		{{stadiums.price}} L.L.
+		</b>
+</div>
+</div>
+</br>
+<div class="row ">
+    <div class="col" style="color:lightgray"> {{stadiums.stadiumname}}
+</div>
+
+<div class="col" style="color:lightgray" align="right"> Type
+</div>
+
+<div class="col" style="color:lightgray" align="right"> Size
+</div>
+
+</div>
 
 
-            <ion-item style="background-color:black">
-                <h2 style="font-size:130%" align="middle"><b>Details</b></h2>
-            </ion-item>
+<div class="row ">
+    <div class="col" style="color:white">
+<b>
+		
+			2.1km
+			</b>
+</div>
 
-            <ion-item style="background-color:black">
-                <h2 style="font-size:130%" align="middle"><b>Cancelation Policy</b></h2>
-            </ion-item>
+<div class="col" align="right" style="color:white">
+<b>
+			{{stadiums.typefloor}}/{{stadiums.typefloor}}
+			</b>
+</div>
 
-            <ion-item style="background-color:black">
-                <h2 style="font-size:130%" align="middle"><b>Contact US</b></h2>
-            </ion-item>
+<div class="col" align="right" style="color:white">
+<b>
+			5vs5
+			</b>
+</div>
 
-    <div id="map"></div>
+</div>
+</div>
 
-  <iframe src="//www.google.com/maps/embed/v1/place?q=Harrods,Brompton%20Rd,%20UK
+<div class="card" style="background-color:rgb(62,83,100)">
+
+<div align="center">
+    <h5 class="whitetext" align="middle"><b>AVAILABLE TOMORROW</b></h5>
+    <div class="row" ng-show="!challenges.isadmin">
+        <div class="col">
+            <button class="button button-block button-balanced button-small" style="color:black;background-color: white">
+<b> 10:00 - 12:00 </b>
+</button>
+</div>
+<div class="col">
+    <button class="button button-block button-balanced button-small" style="color:black;background-color: white">
+<b> 10:00 - 12:00 </b>
+</button>
+</div>
+<div class="col">
+    <button class="button button-block button-balanced button-small" style="color:black;background-color: white">
+<b> 10:00 - 12:00 </b>
+</button>
+</div>
+</div>
+</div>
+
+</div>
+
+
+
+<div class="card" style="background-color:rgb(62,83,100)">
+
+<div align="center">
+    <h5 class="whitetext" align="middle"><b>SPECIAL FEATURES</b></h5>
+</div>
+
+</div>
+
+
+
+<div class="card" style="background-color:rgb(62,83,100)">
+
+<div align="center">
+    <h5 class="whitetext" align="middle"><b>DETAILS</b></h5>
+    <p class="whitetext">
+        {{stadiums.details}}
+    </p>
+    <i class="icon ion-android-more-horizontal" style="color: white">
+</i>
+</div>
+
+</div>
+
+<div class="card" style="background-color:rgb(62,83,100)">
+
+<div align="center">
+    <h5 class="whitetext" align="middle"><b>DIRECTIONS</b></h5>
+    <p class="whitetext">
+        {{stadiums.direction}}
+    </p>
+    <i class="icon ion-android-more-horizontal" style="color: white">
+</i>
+</div>
+
+</div>
+
+<div class="card" style="background-color:rgb(62,83,100)">
+
+<div align="center">
+    <h5 class="whitetext" align="middle"><b>CANCELLATION POLICY</b></h5>
+    <p class="whitetext">
+        {{stadiums.cancelationpolicy}}
+    </p>
+</div>
+
+</div>
+
+<div class="card" style="background-color:rgb(62,83,100)">
+
+<div align="center" id="map">
+    <h5 class="whitetext" align="middle"><b>MAP</b></h5>
+    <iframe src="//www.google.com/maps/embed/v1/place?q=Harrods,Brompton%20Rd,%20UK
       &zoom=17
       &key=AIzaSyBLRPrDZuaGR0u5X4V1t17CMMnHVHbCDMQ" style="width:100%;height:200px">
-  </iframe>
+</iframe>
+</div>
 
-  
-
-</ion-list>
+</div>
 
 </ion-content>
 </ion-view>

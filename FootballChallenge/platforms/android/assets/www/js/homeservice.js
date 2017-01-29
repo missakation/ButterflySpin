@@ -21,6 +21,9 @@ angular.module('football.controllers')
                     var totchallenges = [];
                     var upcomingmatches = [];
                     var teaminvitations = [];
+                    var gameinvitation = [];
+                    var myteams = [];
+                    var requestednumbers = [];
 
                     if (snapshot.child("challenges").exists()) {
 
@@ -154,6 +157,91 @@ angular.module('football.controllers')
 
                     }
 
+
+                   if (snapshot.child("teams").exists()) {
+                        snapshot.child("teams").forEach(function (teams) {                  
+
+                            var matchdata = {
+                                key:teams.key,
+                                badge: teams.child("badge").val(),
+                                rank: teams.child("rank").val(),
+                                teamname: teams.child("teamname").val()
+                                             
+                            }
+                            myteams.push(matchdata);
+
+                        })
+
+
+                    }
+
+                   if (snapshot.child("myrequests").exists()) {
+                        snapshot.child("myrequests").forEach(function (teams) {                  
+
+                            var matchdata = {
+                                key:teams.key,
+                                name: teams.child("requestorname").val(),
+                                photo: teams.child("requestorphoto").val(),
+                                telephone: teams.child("requestortelephone").val()
+         
+                            }
+                            requestednumbers.push(matchdata);
+
+                        })
+
+
+                    }
+
+
+                    if (snapshot.child("gameinvitation").exists()) {
+                        snapshot.child("gameinvitation").forEach(function (challenges) {
+
+                            
+                            var matchdate = new Date();
+
+
+                            matchdate.setMinutes(challenges.child("minute").val());
+                            matchdate.setFullYear(challenges.child("year").val());
+                            matchdate.setMonth(challenges.child("month").val());
+                            matchdate.setHours(challenges.child("hour").val());
+                            matchdate.setDate(challenges.child("day").val());
+
+                            var matchdata = {
+                                key: challenges.key,
+
+                                
+                                day: challenges.child("day").val(),
+                                hour: challenges.child("hour").val(),
+                                minute: challenges.child("minute").val(),
+                                month: challenges.child("month").val(),
+                                
+                                team1adminid: challenges.child("team1adminid").val(),
+                                team1key: challenges.child("team1key").val(),
+                                team1logo: challenges.child("team1logo").val(),
+                                team1name: challenges.child("team1name").val(),
+                                team1rank: challenges.child("team1rank").val(),
+
+                                team2adminid: challenges.child("team2adminid").val(),
+                                team2key: challenges.child("team2key").val(),
+                                team2logo: challenges.child("team2logo").val(),
+                                team2name: challenges.child("team2name").val(),
+                                team2rank: challenges.child("team2rank").val(),
+
+                                year: challenges.child("year").val(),
+                                date: matchdate,
+
+                                stadiums : challenges.child("stadium").val(),
+
+                                belonging: challenges.child("belonging").val(),
+                                
+                            }
+                            gameinvitation.push(matchdata);
+
+                        })
+
+
+                    }
+
                     myprofile = {
                         "key": snapshot.key,
                         "displayname": snapshot.child("displayname").val(),
@@ -170,7 +258,10 @@ angular.module('football.controllers')
                         "winstreak": snapshot.child("winstreak").val(),
                         "challenges": totchallenges,
                         "upcominteamgmatches": upcomingmatches,
-                        "teaminvitations":teaminvitations
+                        "teaminvitations":teaminvitations,
+                        "gameinvitation":gameinvitation,
+                        "myteams":myteams,
+                        "requestednumbers":requestednumbers
 
                     };
                     callback(myprofile);
@@ -230,8 +321,29 @@ angular.module('football.controllers')
                 alert(challenge.team1adminid);
                 // Write the new post's data simultaneously in the posts list and the user's post list.
                 var updates = {};
+                updates['/players/' + challenge.team1adminid + '/upcomingteammatches/'+challenge.key ] = null;
+                updates['/players/' + challenge.team2adminid +'/upcomingteammatches/'+challenge.key] = null;
+
+                for(var i = 0 ; i < challenge.team1players ; i++)
+                {
+                    updates['/players/' + challenge.team1players[i].key + '/upcomingteammatches/'+challenge.key ] = null;
+                }
+                for(var i = 0 ; i < challenge.team2players ; i++)
+                {
+                    updates['/players/' + challenge.team2players[i].key + '/upcomingteammatches/'+challenge.key ] = null;
+                }
+
+                //should be already nulls;
                 updates['/players/' + challenge.team1adminid + '/challenges/'+challenge.key ] = null;
                 updates['/players/' + challenge.team2adminid +'/challenges/'+challenge.key] = null;
+
+                //
+                updates['/teams/' + challenge.team1key + '/upcomingteammatches/'+challenge.key ] = null;
+                updates['/teams/' + challenge.team2key +'/upcomingteammatches/'+challenge.key] = null;
+
+                updates['/stadiums/' + challenge.stadiums.stadiumkey +'/ministadiums/'+challenge.stadiums.ministadiumkey+'/schedules/'+challenge.stadiums.year +'/'+challenge.stadiums.month +'/'+challenge.stadiums.day+'/'+challenge.key] = null;
+
+
                 updates['/challenges/' + challenge.key ] = null;
                 //updates['/user-posts/' + uid + '/' + newPostKey] = postData;
 
@@ -341,14 +453,13 @@ angular.module('football.controllers')
                     discount: "0",
                     month: month,
                     nettotal: "",
-                    teamone: "",
                     teamonescore: 0,
-                    teamtwo: "",
                     teamtwoscore: 0,
                     year: year,
                     bookedadmin: false,
 
                     challengekey: challenge.key,
+
                     accepted: challenge.accepted,
                     //stadium: challenge.stadium,
                     team1adminid: challenge.team1adminid,
@@ -361,10 +472,13 @@ angular.module('football.controllers')
                     team2logo: challenge.team2logo,
                     team2name: challenge.team2name,
                     team2rank: challenge.team2rank,
-                    teamone: 0,
-                    teamonescore: 0
+
 
                 };
+
+
+                if(id !== null || id == '' || id === undefined)
+                {
 
 
                 // Write the new post's data simultaneously in the posts list and the user's post list.
@@ -394,13 +508,26 @@ angular.module('football.controllers')
 
                 updates['/challenges/'+challenge.key+'/stadiums'] = angular.copy(stadiums);
 
+                updates['/challenges/'+challenge.key+'/team1players/'+challenge.team1adminid] = 
+                {
+                    status:5, //it means already accepted
+                }
+
+                updates['/challenges/'+challenge.key+'/team2players/'+challenge.team2adminid] = 
+                {
+                    status:5, //it means already accepted
+                }
+
+
+                }
 
                 return firebase.database().ref().update(updates);
+                
                 } catch (error) {
                     alert(error.message)
                 }
             },
-             AcceptTeamInvitation: function(invitation,myprofile){
+            AcceptTeamInvitation: function(invitation,myprofile){
                 try {
 
                 var user = firebase.auth().currentUser;
@@ -408,6 +535,9 @@ angular.module('football.controllers')
 
                 // Write the new post's data simultaneously in the posts list and the user's post list.
                 var updates = {};
+
+                if(id !== null || id == '' || id === undefined)
+                {
 
                 updates['/players/' + id + '/teaminvitations/'+invitation.key ] = null;
 
@@ -432,7 +562,7 @@ angular.module('football.controllers')
                       datehour : invitation.hour,
                       dateminute : invitation.minute
                 };
-
+                }
                 return firebase.database().ref().update(updates);
             } 
                    catch (error) 
@@ -440,7 +570,7 @@ angular.module('football.controllers')
                     alert(error.message);
                 }
             },
-             DeleteInvitation: function(invitation){
+            AcceptMobileRequest: function(request, myprofile){
 
                 try {
                 var user = firebase.auth().currentUser;
@@ -449,7 +579,70 @@ angular.module('football.controllers')
                 // Write the new post's data simultaneously in the posts list and the user's post list.
                 var updates = {};
 
+                if(id !== null || id == '' || id === undefined)
+                {
+
+                    updates['/players/' + id + '/myrequests/'+request.key ] = null;
+
+
+
+                    updates['/players/' + request.key + '/friends/'+id ] = 
+                    {
+                        name : request.name,
+                        key : request.key,
+                        telephone:request.telephone,
+                        photo:request.photo
+                    };
+
+                  updates['/players/' + id + '/myrequests/'+request.key ] =  request ;
+
+                }
+            
+                return firebase.database().ref().update(updates);
+                   } 
+                   catch (error) 
+                   {
+                    alert(error.message);
+                }
+            },
+             DeleteMobileRequest: function(request){
+
+                try {
+                var user = firebase.auth().currentUser;
+                var id = user.uid;
+
+                // Write the new post's data simultaneously in the posts list and the user's post list.
+                var updates = {};
+
+                if(id !== null || id == '' || id === undefined)
+                {
+
+                updates['/players/' + id + '/myrequests/'+request.key ] = null;
+
+                }
+            
+                return firebase.database().ref().update(updates);
+                   } 
+                   catch (error) 
+                   {
+                    alert(error.message);
+                }
+            },
+               DeleteInvitation: function(invitation){
+
+                try {
+                var user = firebase.auth().currentUser;
+                var id = user.uid;
+
+                // Write the new post's data simultaneously in the posts list and the user's post list.
+                var updates = {};
+
+                if(id !== null || id == '' || id === undefined)
+                {
+
                 updates['/players/' + id + '/teaminvitations/'+invitation.key ] = null;
+
+                }
                 
 
                 return firebase.database().ref().update(updates);
@@ -481,6 +674,94 @@ angular.module('football.controllers')
                     });
                     callback(RankedTeams);
                 });
+            },
+            AccepGameInvitation : function(gameinvitation)
+            {
+
+                try {
+                var user = firebase.auth().currentUser;
+                var id = user.uid;
+
+                // Write the new post's data simultaneously in the posts list and the user's post list.
+                var updates = {};
+
+                if(id !== null || id == '' || id === undefined)
+                {
+                 var postDataPlayer = {
+                    stadiumkey: gameinvitation.stadiums.stadiumkey,
+                    ministadiumkey: gameinvitation.stadiums.ministadiumkey,
+                    photo: gameinvitation.stadiums.photo,
+                    price: gameinvitation.stadiums.price,
+                    stadiumdescription: gameinvitation.stadiums.stadiumname,
+                    hour: gameinvitation.hour,
+                    minute: gameinvitation.minute,
+                    day: gameinvitation.day,
+                    discount: "0",
+                    month: gameinvitation.month,
+                    nettotal: "",
+                    teamonescore: 0,
+                    teamtwoscore: 0,
+                    year: gameinvitation.year,
+
+                    challengekey: gameinvitation.key,
+
+                    //accepted: challenge.accepted,
+                    //stadium: challenge.stadium,
+                    team1adminid: gameinvitation.team1adminid,
+                    team1key: gameinvitation.team1key,
+                    team1logo: gameinvitation.team1logo,
+                    team1name: gameinvitation.team1name,
+                    team1rank: gameinvitation.team1rank,
+                    team2adminid: gameinvitation.team2adminid,
+                    team2key: gameinvitation.team2key,
+                    team2logo: gameinvitation.team2logo,
+                    team2name: gameinvitation.team2name,
+                    team2rank: gameinvitation.team2rank
+
+
+                };
+                //add to players upcoming matches
+
+                    updates['/players/' + id + '/gameinvitation/' + gameinvitation.key] = null;
+
+                    updates['/challenges/'+gameinvitation.key+'/'+gameinvitation.belonging+'/'+id +'/status'] = 5;
+
+                updates['/players/' + id + '/upcominteamgmatches/' + gameinvitation.key] = postDataPlayer;
+      
+                }
+                return firebase.database().ref().update(updates);
+                }
+                catch(error)
+                { 
+                    alert(error.message);
+                }
+
+
+
+            },
+            DeleteGameInvitation : function(gameinvitation)
+            {
+                try {
+                var user = firebase.auth().currentUser;
+                var id = user.uid;
+
+                // Write the new post's data simultaneously in the posts list and the user's post list.
+                var updates = {};
+
+                if(id !== null || id == '' || id === undefined)
+                {
+                //add to players upcoming matches
+
+                    updates['/players/' + id + '/gameinvitation/' + gameinvitation.key] = null;
+
+                    updates['/challenges/'+gameinvitation.key+'/'+gameinvitation.belonging+'/'+id +'/status'] = 3;
+                }
+                return firebase.database().ref().update(updates);
+                }
+                catch(error)
+                {
+                    alert(error.message);
+                }
             }
         }
 

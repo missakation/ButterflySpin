@@ -23,6 +23,7 @@ angular.module('football.controllers')
                     var teaminvitations = [];
                     var gameinvitation = [];
                     var myteams = [];
+                    var requestednumbers = [];
 
                     if (snapshot.child("challenges").exists()) {
 
@@ -174,6 +175,23 @@ angular.module('football.controllers')
 
                     }
 
+                   if (snapshot.child("myrequests").exists()) {
+                        snapshot.child("myrequests").forEach(function (teams) {                  
+
+                            var matchdata = {
+                                key:teams.key,
+                                name: teams.child("requestorname").val(),
+                                photo: teams.child("requestorphoto").val(),
+                                telephone: teams.child("requestortelephone").val()
+         
+                            }
+                            requestednumbers.push(matchdata);
+
+                        })
+
+
+                    }
+
 
                     if (snapshot.child("gameinvitation").exists()) {
                         snapshot.child("gameinvitation").forEach(function (challenges) {
@@ -242,7 +260,8 @@ angular.module('football.controllers')
                         "upcominteamgmatches": upcomingmatches,
                         "teaminvitations":teaminvitations,
                         "gameinvitation":gameinvitation,
-                        "myteams":myteams
+                        "myteams":myteams,
+                        "requestednumbers":requestednumbers
 
                     };
                     callback(myprofile);
@@ -551,7 +570,65 @@ angular.module('football.controllers')
                     alert(error.message);
                 }
             },
-             DeleteInvitation: function(invitation){
+            AcceptMobileRequest: function(request, myprofile){
+
+                try {
+                var user = firebase.auth().currentUser;
+                var id = user.uid;
+
+                // Write the new post's data simultaneously in the posts list and the user's post list.
+                var updates = {};
+
+                if(id !== null || id == '' || id === undefined)
+                {
+
+                    updates['/players/' + id + '/myrequests/'+request.key ] = null;
+
+
+
+                    updates['/players/' + request.key + '/friends/'+id ] = 
+                    {
+                        name : request.name,
+                        key : request.key,
+                        telephone:request.telephone,
+                        photo:request.photo
+                    };
+
+                  updates['/players/' + id + '/myrequests/'+request.key ] =  request ;
+
+                }
+            
+                return firebase.database().ref().update(updates);
+                   } 
+                   catch (error) 
+                   {
+                    alert(error.message);
+                }
+            },
+             DeleteMobileRequest: function(request){
+
+                try {
+                var user = firebase.auth().currentUser;
+                var id = user.uid;
+
+                // Write the new post's data simultaneously in the posts list and the user's post list.
+                var updates = {};
+
+                if(id !== null || id == '' || id === undefined)
+                {
+
+                updates['/players/' + id + '/myrequests/'+request.key ] = null;
+
+                }
+            
+                return firebase.database().ref().update(updates);
+                   } 
+                   catch (error) 
+                   {
+                    alert(error.message);
+                }
+            },
+               DeleteInvitation: function(invitation){
 
                 try {
                 var user = firebase.auth().currentUser;

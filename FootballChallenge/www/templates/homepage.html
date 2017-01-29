@@ -106,12 +106,12 @@
 <div class="col" align="center" style="border-radius: 10px;">
 
 <div>
-    <a href="#/app/selfprofile">
-    <img src="img/Badges/{{profile.badge}}.png" style="border-radius:50% ; height:60px ; width:60px" height="50" />
+    <a href="#/app/teamprofile/{{profile.myteams[0].key}}">
+    <img src="img/Badges/{{profile.myteams[0].badge}}.png" style="border-radius:50% ; height:60px ; width:60px" height="50" />
 </a>
 </div>
 <div align="center">
-    <h5 class="whitetext">Barcelona</h5>
+    <h5 class="whitetext">{{profile.myteams[0].teamname}}</h5>
     <p style="color:white">{{profile.ranking}} AR</p>
 </div>
 
@@ -154,9 +154,9 @@
 <div class="col" align="center">
     <img src="img/Badges/{{profile.myteams[0].badge}}.png" style="width:50px;height:50px ">
 <h5 class="whitetext">
-    {{profile.myteams[0].teamname}}
+    {{rankedteams[2].teamname}}
 </h5>
-<h6 style="color: DarkTurquoise "> <b>{{profile.myteams[0].rank}}</b>
+<h6 style="color: DarkTurquoise "> <b>{{rankedteams[2].rank}}</b>
 </h6>
 </div>
 
@@ -433,6 +433,56 @@
 </div>
 </div>
 
+</div>
+
+
+<div class="card" style="background-color:rgb(62,83,100)" ng-repeat="requests in profile.requestednumbers">
+<div align="center">
+    <h4 class="whitetext" align="middle"><b>PENDING REQUESTS</b></h4>
+</div>
+<div align="center">
+    <h5 class="whitetext" style="color:white"> {{Requests.date |date:'MMM d, y h:mm a'}}
+</h5>
+</div>
+<div class="row ">
+
+    <div class="col col-25">
+        <img src="{{requests.photo}}">
+    </div>
+
+    <div class="col">
+        <h5 class="whitetext" style="color:white">
+             Hey, My name is {{requests.name}}. I would to Request your mobile number
+        </h5>
+    </div>
+
+</div>
+
+
+<div class="row row-top">
+    <div class="col">
+        <button class="button button-block button-full button-balanced button-small" style="color:white" ng-click="acceptrequest(requests,1)"> Accept
+</button>
+</div>
+<div class="col">
+
+    <button class="button button-block button-full button-assertive button-small" style="color:white" ng-click="acceptrequest(requests,2)"> Decline
+</button>
+</div>
+</div>
+
+<div class="row" ng-show="challenges.isadmin">
+    <div class="col">
+        <button class="button button-block button-balanced button-small" style="background-color:white;color: green" ng-click="cancelinvitation(challenges)"> Cancel
+</button>
+</div>
+
+
+<div class="col">
+    <button class="button button-block button-energized button-small" style="color:white" > Pending
+</button>
+</div>
+</div>
 </div>
 
 

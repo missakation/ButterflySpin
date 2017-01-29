@@ -214,6 +214,8 @@
 
                     updates['/teampoints/' + newPostKey] = teamstats;
 
+                    updates['/teaminfo/' + newPostKey] = contact;
+
                     }
                     return firebase.database().ref().update(updates);
                 }
@@ -269,7 +271,7 @@
                                         key : pl.key,
                                         name : pl.child("name").val(),
                                         isadmin : pl.child("isadmin").val(),
-
+                                        itsme:pl.key==id,
                                         //for game details
                                         status : 0  
 
@@ -313,6 +315,7 @@
                                     "accepted":false,
                                     "pending":false,
                                     "invite":false,
+                                    
 
                                     "comments":snapshot.child("comments").val(),
                                 };

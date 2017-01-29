@@ -1,7 +1,7 @@
 ﻿
 angular.module('football.controllers')
 
-    .controller('TeamController', function ($scope, $ionicPopup, $ionicLoading, $state, $stateParams, TeamStores, $timeout) {
+    .controller('TeamController', function ($scope,$ionicHistory, $ionicPopup, $ionicLoading, $state, $stateParams, TeamStores, $timeout) {
 
         $scope.showadd = true;
 
@@ -448,6 +448,21 @@ angular.module('football.controllers')
                 Members: true,
                 Statistics: false
             }
+        $scope.colors =
+            {
+                Available: "",
+                Members: true,
+                Statistics: false
+            }
+         $scope.status =
+            {
+                Available: "none",
+                Members: "solid",
+                Statistics: "none"
+            }
+
+
+
 
         $scope.switchscreens = function (x) {
             switch (x) {
@@ -457,6 +472,11 @@ angular.module('football.controllers')
                     $scope.tabs.Statistics = false;
                     $scope.tabs.Available = true;
 
+                    $scope.status.Available= "none";
+                    $scope.Members.Available= "none";
+                    $scope.Statistics.Available= "none";
+                    $scope.status.Available= "solid";
+
                     break;
 
                 case 2:
@@ -465,6 +485,11 @@ angular.module('football.controllers')
                     $scope.tabs.Statistics = false;
                     $scope.tabs.Statistics = true;
 
+                    $scope.status.Available= "none";
+                    $scope.Members.Available= "none";
+                    $scope.Statistics.Available= "none";
+                    $scope.status.Statistics= "solid";
+
                     break;
 
                 case 3:
@@ -472,8 +497,15 @@ angular.module('football.controllers')
                     $scope.tabs.Members = false;
                     $scope.tabs.Statistics = false;
                     $scope.tabs.Members = true;
+
+                    $scope.status.Available= "none";
+                    $scope.Members.Available= "none";
+                    $scope.Statistics.Available= "none";
+                    $scope.status.Members= "solid";
                     break;
             }
+
+            $scope.$apply();
         }
 
 
@@ -621,11 +653,40 @@ angular.module('football.controllers')
 
     })
 
-    .controller('TeamEditController', function ($scope, $ionicLoading, $timeout, $ionicPopup, $stateParams, $state, TeamStores) {
+    .controller('TeamEditController', function ($scope,$ionicHistory,$ionicPopover, $ionicLoading, $timeout, $ionicPopup, $stateParams, $state, TeamStores) {
 
 
 
-        $scope.currentprofile = $state.params.myteam;
+       $scope.currentprofile = $state.params.myteam;
+
+        // .fromTemplate() method
+        var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
+
+        $scope.popover = $ionicPopover.fromTemplate(template, {
+            scope: $scope
+        });
+
+        // .fromTemplateUrl() method
+        $ionicPopover.fromTemplateUrl('my-popover.html', {
+            scope: $scope
+        }).then(function (popover) {
+            $scope.popover = popover;
+        });
+
+
+        $scope.openPopover = function ($event) {
+            $scope.popover.show($event);
+        };
+        $scope.closePopover = function () {
+            $scope.popover.hide();
+        };
+
+
+
+        $scope.$on("$ionicView.afterEnter", function (event, data) {
+            // handle event
+            $scope.disabledbutton = false;
+        });
 
 
         $scope.slider1 = {
@@ -815,7 +876,7 @@ angular.module('football.controllers')
 
             TeamStores.UpdateTeamByKey(profile).then(function (result) {
 
-
+            $ionicHistory.goBack();
 
             }, function (error) {
                 alert(error.message);
@@ -856,6 +917,10 @@ angular.module('football.controllers')
             catch (error) {
                 alert(error.message);
             }
+
+        }
+       $scope.RefreshBadge = function (col) {
+            $scope.currentprofile.badge = col;
 
         }
 

@@ -299,6 +299,51 @@ angular.module('football.controllers')
                     alert(error);
                 }
             },
+            GetMiniStadiumsByID: function (id, callback) {
+                //var q = $q.defer();
+                try {
+                    //firebase.database().ref('/stadiums/ministadiums').on('value',function (snapshot) {  
+
+                    firebase.database().ref('/stadiumsinfo/' + id).once('value', function (snapshot) {
+                        StadiumInfo = {};
+
+                        var Data = {
+                            "stadiumkey": snapshot.key,
+                            "stadiumname": snapshot.child("name").val(),
+                            "distance": "5",
+                            "cancelationpolicy": snapshot.child("cancelationpolicy").val(),
+                            "cordovaaccuracy": snapshot.child("cordovaaccuracy").val(),
+                            "cordovaaltitude": snapshot.child("cordovaaltitude").val(),
+                            "cordovaaltitudeAccuracy": snapshot.child("cordovaaltitudeAccuracy").val(),
+                            "cordovaheading": snapshot.child("cordovaheading").val(),
+                            "cordovalatitude": snapshot.child("cordovalatitude").val(),
+                            "cordovalongitude": snapshot.child("cordovalongitude").val(),
+                            "description": snapshot.child("description").val(),
+                            "email": snapshot.child("email").val(),
+                            "indoor": snapshot.child("indoor").val(),
+                            "locationarea": snapshot.child("locationarea").val(),
+                            "locationcity": snapshot.child("locationcity").val(),
+                            "locationtelephone": snapshot.child("locationtelephone").val(),
+                            "name": snapshot.child("name").val(),
+                            "numberofstadium": snapshot.child("numberofstadium").val(),
+                            "outdoor": snapshot.child("outdoor").val(),
+                            "rating": snapshot.child("rating").val(),
+                            "telephone": snapshot.child("telephone").val(),
+                            "water": snapshot.child("water").val()
+
+                        };
+                        StadiumInfo = Data;
+                        callback(StadiumInfo);
+
+                    });
+
+
+
+                }
+                catch (error) {
+                    alert(error);
+                }
+            },
             GetAllStadiums: function (callback) {
                 //var q = $q.defer();
                 try {

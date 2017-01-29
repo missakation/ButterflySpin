@@ -48,18 +48,35 @@
 	.popup-title {
 		color: white;
 	}
-
+    .headercolor{
+        background-color: rgb(62,83,100);
+        color: white
+    }
 </style>
 
 
 <ion-view view-title="Reserve">
 
-	<ion-nav-buttons side="primary">
-		<button class="button button-icon ion-android-funnel" ng-click="popover.show($event)"></button>
+<ion-nav-buttons side="primary">
+	<button class="button button-icon ion-android-funnel" ng-click="popover.show($event)"></button>
 
-	</ion-nav-buttons>
+</ion-nav-buttons>
 
-	<ion-content style="background-color:rgb(44,60,73)">
+<ion-nav-back-button>
+</ion-nav-back-button>
+<ion-nav-buttons side="left">
+	<button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+</ion-nav-buttons>
+
+<ion-nav-bar class="headercolor">
+    <ion-nav-back-button>
+
+    </ion-nav-back-button>
+</ion-nav-bar>
+
+
+
+<ion-content style="background-color:rgb(44,60,73)">
 
 
 <script id="templates/my-popover.html" type="text/ng-template">
@@ -162,7 +179,7 @@
 <!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
 <div align="center">
-	<img src="{{stadiums.photo}}" style="width:100%;height:140px;">
+	<img src="{{stadiums.photo}}" style="width:100%;height:140px;" ui-sref="app.reservestadiumdetails({stadiumid: stadiums.stadiumkey})">
 </div>
 
 <div class="row ">

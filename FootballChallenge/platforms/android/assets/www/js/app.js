@@ -278,7 +278,19 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                 url: '/settings',
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/settings.html'
+                        templateUrl: 'templates/settings.html',
+                        controller:'SettingsController'
+
+                    }
+                }
+            })
+
+             .state('app.settingssms', {
+                url: '/settingssms',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/settingssms.html',
+                        controller:'SettingsSmsController'
 
                     }
                 }

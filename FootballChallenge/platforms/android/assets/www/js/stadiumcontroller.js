@@ -266,33 +266,16 @@ angular.module('football.controllers')
         //here
 
         //works
-        ReservationFact.GetStadiumsByID($stateParams.stadiumid, function (leagues) {
-
-            $ionicLoading.hide();
-            $scope.currentstadium = leagues;
-
-            if (leagues.length == 0) {
-                var alertPopup = $ionicPopup.alert({
-                    title: 'Error',
-                    template: 'No Available Stadiums'
-                });
-            }
-        })
+        
 
         $scope.doRefresh = function () {
             try {
                 //works
-                alert($stateParams.stadiumid);
                 ReservationFact.GetStadiumsByID($stateParams.stadiumid, function (leagues) {
-                    alert("test");
-                    $scope.currentstadium = leagues;
-
-                    if (leagues.length == 0) {
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Error',
-                            template: 'No Available Stadiums'
-                        });
-                    }
+                    $ionicLoading.hide();
+                    $scope.stadiums = leagues;
+                    $scope.$apply();
+                    $scope.$broadcast('scroll.refreshComplete');
                 })
             }
             catch (error) {
@@ -302,7 +285,7 @@ angular.module('football.controllers')
 
         }
 
-
+        $scope.doRefresh();
 
         // onSuccess Callback
         // This method accepts a Position object, which contains the

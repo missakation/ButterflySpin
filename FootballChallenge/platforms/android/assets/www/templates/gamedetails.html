@@ -33,11 +33,24 @@
 		.popup-title {
 			color: white;
 		}
+		    .headercolor{
+        background-color: rgb(62,83,100);
+        color: white
+    }
 	</style>
-<ion-nav-buttons side="primary">
-	<ion-spinner ng-show="loadingphase" icon="spiral"></ion-spinner>
+<ion-nav-back-button>
+</ion-nav-back-button>
+<ion-nav-buttons side="left">
+    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
 </ion-nav-buttons>
+
+<ion-nav-bar class="headercolor">
+    <ion-nav-back-button>
+
+    </ion-nav-back-button>
+</ion-nav-bar>
 <ion-content style="background-color:rgb(46,62,75)">
+
 <div align="center">
 	<ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
 </div>
@@ -50,16 +63,16 @@
 <div class="row ">
 	<div class="col">
 		<div align="center">
-			<img src="img/Badges/{{challenge.team1logo}}.png" style="width:60px;height:60px ">
+			<img src="img/Badges/{{challenge.team1logo}}.png" style="width:50px;height:50px ">
 </div>
 <div align="center">
-	<h4 class="whitetext">
-		{{challenge.team1name}}
-	</h4>
 	<h5 class="whitetext">
-		{{challenge.team1rank}}
+		{{challenge.team1name}}
 	</h5>
-	<img src="img/Jerseys/{{challenge.team1badge}}.png" style="width:40px;height:40px ">
+	<h6 class="whitetext">
+		{{challenge.team1rank}}
+	</h6>
+	<img src="img/Jerseys/{{challenge.team1badge}}.png" style="width:35px;height:35px ">
 </div>
 </div>
 <div class="col">
@@ -81,16 +94,16 @@
 
 <div class="col">
 	<div align="center">
-		<img src="img/Badges/{{challenge.team2logo}}.png" style="width:60px;height:60px ">
+		<img src="img/Badges/{{challenge.team2logo}}.png" style="width:50px;height:50px ">
 </div>
 <div align="center">
-	<h4 class="whitetext">
-		{{challenge.team2name}}
-	</h4>
 	<h5 class="whitetext">
-		Rank:{{challenge.team1rank}}
+		{{challenge.team2name}}
 	</h5>
-	<img src="img/Jerseys/{{challenge.team2badge}}.png" style="width:40px;height:40px ">
+	<h6 class="whitetext">
+		Rank:{{challenge.team1rank}}
+	</h6>
+	<img src="img/Jerseys/{{challenge.team2badge}}.png" style="width:35px;height:35px ">
 </div>
 </div>
 
@@ -112,7 +125,7 @@
 	<h4 class="whitetext">
 		Players List
 	</h4>
-	<h6 class="graytext">
+	<h6 class="graytext" ng-hide="!item.isadmin">
 		Invite at Least 5 Players
 	</h6>
 </div>
@@ -124,16 +137,18 @@
 		</h5>
 	</div>
 
-	<div class="col">
+	<div class="col" ng-hide="notloaded">
 
 		<div align="center">
-			<button ng-show="item.status == 0" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="InvitePlayer(item)"> Invite
+			<button ng-show="item.status == 0 && !item.isadmin" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="InvitePlayer(challenge,item)"> Invite
 </button>
 
-			<button ng-show="item.status == 1" class="button button-block button-balanced button-small" style="color:white" type="submit" > Pending
+<button ng-show="item.status == 1 && !item.isadmin" class="button button-block button-balanced button-small" style="color:white" type="submit" > Pending
 </button>
 
-			<button ng-show="item.status == 2" class="button button-block button-balanced button-small" style="color:white" type="submit" > Accepted
+<button ng-show="item.status == 5 && !item.isadmin" class="button button-block button-balanced button-small" style="color:white" type="submit" > Accepted
+</button>
+<button ng-show="item.status == 3 && !item.isadmin" class="button button-block button-assertive button-small" style="color:white" > Cancelled
 </button>
 
 </div>
@@ -148,8 +163,8 @@
 
 
 </div>
-<div class="button-bar" ng-hide="notloaded">
-	<button class="button  button-assertive"  ng-click="CancelChallenge(challenge)" >Cancel Challenge</button>
+<div class="button-bar" ng-hide="notloaded || (!item.isadmin)">
+	<button class="button  button-assertive" ng-click="CancelChallenge(challenge)">Cancel Challenge</button>
 </div>
 <br />
 <br />
