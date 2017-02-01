@@ -63,7 +63,7 @@
 </ion-nav-bar>
 
 
-<ion-content style="background-color:rgb(45,62,75)">
+<ion-content class="has-footer" style="background-color:rgb(45,62,75)">
 
 <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
 </ion-refresher>
@@ -107,7 +107,7 @@
 
 <div>
     <a href="#/app/teamprofile/{{profile.myteams[0].key}}">
-    <img src="img/Badges/{{profile.myteams[0].badge}}.png" style="border-radius:50% ; height:60px ; width:60px" height="50" />
+    <img src="img/Badges/{{profile.myteams[0].badge}}.png" style="height:60px ; width:60px" height="50" />
 </a>
 </div>
 <div align="center">
@@ -137,7 +137,7 @@
 <h6 class="whitetext">
     {{rankedteams[0].teamname}}
 </h6>
-<h6 style="color: DarkTurquoise "> <b>{{rankedteams[0].rank}}</b>
+<h6 style="color: DarkTurquoise "> <b>1</b>
 </h6>
 </div>
 
@@ -146,7 +146,7 @@
 <h5 class="whitetext">
     {{rankedteams[1].teamname}}
 </h5>
-<h6 style="color: DarkTurquoise "> <b>{{rankedteams[1].rank}}</b>
+<h6 style="color: DarkTurquoise "> <b>2</b>
 </h6>
 </div>
 
@@ -156,7 +156,7 @@
 <h5 class="whitetext">
     {{rankedteams[2].teamname}}
 </h5>
-<h6 style="color: DarkTurquoise "> <b>{{rankedteams[2].rank}}</b>
+<h6 style="color: DarkTurquoise "> <b>3</b>
 </h6>
 </div>
 
@@ -451,10 +451,9 @@
     </div>
 
     <div class="col">
-        <h5 class="whitetext" style="color:white">
-             Hey, My name is {{requests.name}}. I would to Request your mobile number
-        </h5>
-    </div>
+        <h5 class="whitetext" style="color:white"> Hey, My name is {{requests.name}}. I would to Request your mobile number
+</h5>
+</div>
 
 </div>
 
@@ -724,10 +723,54 @@
 <h2 align="middle"><b>Invite Friend</b></h2>
 </ion-item>
 
-<ion-item style="background-image:url(img/InviteFriends.png); background-size:100% 100%;height:200px">
+<div class="card" style="background-color:rgb(62,83,100)">
 
-</ion-item>
+<div align="center">
+
+    <h4 class="whitetext" align="middle"><b>INVITE YOUR FRIENDS</b></h4>
+
+    <div class="row">
+        <div class="col">
+            <img src="img/whats.png" style="border-radius:50% ; height:60px ; width:60px" height="50" />
+        </div>
+        <div class="col">
+            <img src="img/fb.png" style="border-radius:50% ; height:60px ; width:60px" height="50" />
+        </div>
+        <div class="col">
+            <img src="img/sms.png" style="border-radius:50% ; height:60px ; width:60px" height="50" />
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col">
+            <h5 class="whitetext">
+               Whatsapp                 
+            </h5>
+        </div>
+        <div class="col">
+            <h5 class="whitetext">
+               Facebook
+            </h5>
+        </div>
+        <div class="col">
+            <h5 class="whitetext">
+              SMS
+            </h5>
+        </div>
+
+    </div>
+</div>
+
+</div>
 
 
 </ion-content>
+
+<ion-footer-bar align-title="left" class="bar-assertive" style="background-color: rgb(30,30,30);border: none" ng-show="nointernet">
+<div align="left" style="padding-left: 5px">
+<h6 class="whitetext">
+    Oops. You have no internet connection
+</h6>
+</div>
+</ion-footer-bar>
 </ion-view>

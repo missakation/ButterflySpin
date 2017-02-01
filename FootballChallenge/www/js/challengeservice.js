@@ -217,10 +217,14 @@ angular.module('football.controllers')
                         updates['/challenges/'+newPostKey] = challengedata;
 
                         updates['/teams/' + teams[i].key + '/challenges/'+newPostKey] = challengedata;
+
                         updates['/teams/' + myteam.key + '/challenges/'+newPostKey] = mychallengedata;
 
                         updates['/players/' + teams[i].teamadmin + '/challenges/'+newPostKey] = challengedata;
+
                         updates['/players/' + myteam.teamadmin + '/challenges/'+newPostKey] = mychallengedata;
+
+                        updates['/teams/' + myteam.key + '/challenges/'+year+'/'+month+'/'+day+'/'+newPostKey] = mychallengedata;
 
 
 

@@ -286,6 +286,18 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                 }
             })
 
+            .state('app.leaderboard', {
+                url: '/leaderboard',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/leaderboard.html',
+                        controller:'LeaderboardController'
+
+                    }
+                }
+            })
+
+
              .state('app.settingssms', {
                 url: '/settingssms',
                 views: {

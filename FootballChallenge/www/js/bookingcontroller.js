@@ -8,6 +8,14 @@ angular.module('football.controllers')
                 Current: false,
                 Previous: false
             }
+
+       $scope.status =
+             {
+                 Current: "solid",
+                 Previous: "none"
+             }
+
+
         $scope.notloaded = true;
 
 
@@ -33,11 +41,21 @@ angular.module('football.controllers')
                 case 1:
                     $scope.tabs.Current = true;
                     $scope.tabs.Previous = false;
+
+                    $scope.status.Current= "none";
+                    $scope.status.Previous= "none";
+
+                    $scope.status.Current= "solid";
                     break;
 
                 case 2:
                      $scope.tabs.Previous = true;
                      $scope.tabs.Current = false;
+
+                     $scope.status.Current= "none";
+                     $scope.status.Previous= "none";
+
+                     $scope.status.Previous= "solid";
 
                     break;
         }

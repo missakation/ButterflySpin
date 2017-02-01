@@ -32,6 +32,9 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.Arina"
+        },
+        "cordova-plugin-image-picker": {
+            "PACKAGE_NAME": "com.ionicframework.Arina"
         }
     },
     "dependent_plugins": {}

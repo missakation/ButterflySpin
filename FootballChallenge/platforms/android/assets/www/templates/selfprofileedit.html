@@ -4,7 +4,7 @@
             background-color: lightgrey;
         }
 
-        h3, h2 {
+        h5, h2 {
             
         }
 
@@ -20,61 +20,122 @@
 		.item {
 			background-color: rgb(46,62,75);
 		}
+
+		.headercolor{
+        background-color: rgb(62,83,100);
+        color: white;
+		}
+
+		    
+    .h3.whitetext,
+    h2.whitetext,
+    h1.whitetext,
+    h4.whitetext,
+    h5.whitetext,
+    h6.whitetext,
+    p.whitetext {
+        color: white;
+    }
+
+    .h3.greytext,
+    h2.greytext,
+    h1.greytext,
+    h4.greytext,
+    h5.greytext,
+    h6.greytext,
+    p.greytext {
+        color: lightgray;
+    }
     </style>
+
+	<ion-nav-back-button>
+</ion-nav-back-button>
+<ion-nav-buttons side="left">
+    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+</ion-nav-buttons>
+
+<ion-nav-bar class="headercolor">
+    <ion-nav-back-button>
+
+    </ion-nav-back-button>
+</ion-nav-bar>
+
 <ion-content style="background-color:rgb(46,62,75)">
 
+	<div class="card" style="background-color:rgb(62,83,100) ">
 
-<br>
-<br>
+		<div align="center">
+			<a href="#/app/selfprofile">
+		<img src="{{profile.photo}}" style="border-radius:50% ; height:60px ; width:60px" height="50" />
+		</a>
+		<h5 class="whitetext">{{profile.displayname}}</h5>
+			<button class="button button-block button-calm button-small" ng-click="ChangePicture()">
+                 Change Picture
+           </button>
 
-<div align="left" style="padding-left: 10px;padding-right:10px ">
+
+</div>
+	</div>
+
+<div class="card" style="background-color:rgb(62,83,100) ">
+<div align="center" style="padding-left: 10px;padding-right:10px ">
 <h5 style="color:lightgray"> First Name
 </h5>
 
-<label class="item item-input" style="background-color:transparent;border-color:white;border-radius:5px">
+<label class="item item-input" style="background-color:transparent;border-color:white;border-bottom: solid;border-color: white;border-top: none;border-width: 1px">
 <input type="text" ng-model="currentprofile.firstname" style="color:white" >
 
 </label>
 </div>
 
-<div align="left" style="padding-left: 10px;padding-right:10px ">
+<div align="center" style="padding-left: 10px;padding-right:10px ">
 <h5 style="color:lightgray"> Last Name
 </h5>
 
-<label class="item item-input" style="background-color:transparent;border-color:white;border-radius:5px">
+<label class="item item-input" style="background-color:transparent;border-color:white;border-bottom: solid;border-color: white;border-top: none;border-width: 1px">
 <input type="text" ng-model="currentprofile.lastname" style="color:white" >
 
 </label>
 </div>
 
-<div align="left" style="padding-left: 10px;padding-right:10px ">
-<h5 style="color:lightgray"> About Me
+<div align="center" style="padding-left: 10px;padding-right:10px ">
+<h5 style="color:lightgray"> Age
 </h5>
 
-<label class="item item-input">
-<textarea style="background-color:transparent;border-color:white;border-radius:5px;color: white" type="text" ng-model="currentprofile.comments" >
+<label class="item item-input" style="background-color:transparent;border-color:white;border-bottom: solid;border-color: white;border-top: none;border-width: 1px">
+<input type="date" ng-model="currentprofile.age" style="color:white" >
 
-</textarea>
 </label>
 </div>
 
 
-<ion-item>
+<div align="center" style="padding-left: 10px;padding-right:10px ">
+<h5 style="color:lightgray"> About Me
+</h5>
+
+<label class="item item-input" style="background-color:white">
+<textarea style="background-color:transparent;border-color:white;border-radius:5px;color: white" type="text" ng-model="currentprofile.comments" >
+
+</textarea>
+
+</label>
+<br>
+</div>
+</div>
+
+<div class="card" style="background-color:rgb(62,83,100) ">
 	<div align="center">
-		<h2 class="whitetext">
+		<h5 class="whitetext">
 			Availability
 
-		</h2>
+		</h5>
 	</div>
-</ion-item>
 
-
-<ion-item>
 <div class="row row-center">
 	<div class="col col-20">
-		<h3 class="whitetext">
+		<h5 class="whitetext">
 			Mon
-		</h3>
+		</h5>
 	</div>
 	<div class="col">
 		<rzslider rz-slider-model="currentprofile.startmonday" rz-slider-high="currentprofile.startmondayend " rz-slider-options="slider1.options "
@@ -84,9 +145,9 @@
 
 <div class="row row-center">
 	<div class="col col-20">
-		<h3 class="whitetext">
+		<h5 class="whitetext">
 			Tue
-		</h3>
+		</h5>
 	</div>
 	<div class="col">
 		<rzslider rz-slider-model="currentprofile.starttuesday " rz-slider-high="currentprofile.starttuesdayend " rz-slider-options="slider2.options "
@@ -96,9 +157,9 @@
 
 <div class="row row-center">
 	<div class="col col-20">
-		<h3 class="whitetext">
+		<h5 class="whitetext">
 			Wed
-		</h3>
+		</h5>
 	</div>
 	<div class="col">
 		<rzslider rz-slider-model="currentprofile.startwednesday " rz-slider-high="currentprofile.startwednesdayend " rz-slider-options="slider3.options "
@@ -108,9 +169,9 @@
 
 <div class="row row-center">
 	<div class="col col-20">
-		<h3 class="whitetext">
+		<h5 class="whitetext">
 			Thu
-		</h3>
+		</h5>
 	</div>
 	<div class="col">
 		<rzslider rz-slider-model="currentprofile.startthursday " rz-slider-high="currentprofile.startthursdayend " rz-slider-options="slider4.options "
@@ -120,9 +181,9 @@
 
 <div class="row row-center">
 	<div class="col col-20">
-		<h3 class="whitetext">
+		<h5 class="whitetext">
 			Fri
-		</h3>
+		</h5>
 	</div>
 	<div class="col">
 		<rzslider rz-slider-model="currentprofile.startfriday " rz-slider-high="currentprofile.startfridayend " rz-slider-options="slider5.options "
@@ -132,9 +193,9 @@
 
 <div class="row row-center">
 	<div class="col col-20">
-		<h3 class="whitetext">
+		<h5 class="whitetext">
 			Sat
-		</h3>
+		</h5>
 	</div>
 	<div class="col">
 		<rzslider rz-slider-model="currentprofile.startsaturday " rz-slider-high="currentprofile.startsaturdayend " rz-slider-options="slider6.options "
@@ -144,23 +205,19 @@
 
 <div class="row row-center">
 	<div class="col col-20">
-		<h3 class="whitetext">
+		<h5 class="whitetext">
 			Sun
-		</h3>
+		</h5>
 	</div>
 	<div class="col">
 		<rzslider rz-slider-model="currentprofile.startsunday " rz-slider-high="currentprofile.startsundayend " rz-slider-options="slider7.options "
 			style="color:white " ng-readonly="currentprofile.amiadmin"></rzslider>
 </div>
 </div>
-</ion-item>
-<ion-item>
+
+
+</div>
 	<button class="button button-block button-calm button-full" ng-click="UpdateUser(currentprofile)">
                                 Save
            </button>
-
-</ion-item>
-
-</ion-content>
-
 </ion-view>

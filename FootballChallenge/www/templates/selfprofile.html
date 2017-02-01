@@ -156,25 +156,25 @@
 <div class="card">
 <ion-item>
 	<div class="row row-center">
-		<div class="col">
+		<div class="col" style="border-bottom:{{status.Available}};border-color: green">
 			<h3 class="whitetext" ng-click="switchscreens(1)">
 				Availability
 			</h3>
-			<hr ng-show="tabs.Available">
+			
 		</div>
 
-		<div class='col '>
+		<div class='col ' style="border-bottom:{{status.Statistics}};border-color: green">
 			<h3 class="whitetext" ng-click="switchscreens(2)">
 				Statistics
 			</h3>
-			<hr ng-show="tabs.Statistics">
+			
 		</div>
-		<div class="col">
+		<div class="col" style="border-bottom:{{status.Members}};border-color: green">
 
 			<h3 class="whitetext" ng-click="switchscreens(3)">
 				Upcoming Games
 			</h3>
-			<hr ng-show="tabs.Members">
+			
 		</div>
 
 	</div>
@@ -236,7 +236,7 @@
 
 
 	<div class="row row-center">
-		<div class="col">
+		<div class="col col-33">
 
 			<h3 class="whitetext">Monday</h3>
 		</div>
@@ -249,7 +249,7 @@
 	</div>
 
 	<div class="row row-center">
-		<div class="col">
+		<div class="col col-33">
 
 			<h3 class="whitetext">Tuesday</h3>
 		</div>
@@ -262,7 +262,7 @@
 	</div>
 
 	<div class="row row-center">
-		<div class="col">
+		<div class="col col-33">
 
 			<h3 class="whitetext">Wednesday</h3>
 		</div>
@@ -275,20 +275,7 @@
 	</div>
 
 	<div class="row row-center">
-		<div class="col">
-
-			<h3 class="whitetext">Wednesday</h3>
-		</div>
-
-		<div class="col">
-
-			<h3 class="whitetext">From <b>{{currentprofile.startthursday}}:00</b> till <b>{{currentprofile.startthursdayend}}:00</b> </h3>
-		</div>
-
-	</div>
-
-	<div class="row row-center">
-		<div class="col">
+		<div class="col col-33">
 
 			<h3 class="whitetext">Thursday</h3>
 		</div>
@@ -301,7 +288,7 @@
 	</div>
 
 	<div class="row row-center">
-		<div class="col">
+		<div class="col col-33">
 
 			<h3 class="whitetext">Friday</h3>
 		</div>
@@ -314,7 +301,7 @@
 	</div>
 
 	<div class="row row-center">
-		<div class="col">
+		<div class="col col-33">
 
 			<h3 class="whitetext">Saturday</h3>
 		</div>
@@ -327,7 +314,7 @@
 	</div>
 
 	<div class="row row-center">
-		<div class="col">
+		<div class="col col-33">
 
 			<h3 class="whitetext">Sunday</h3>
 		</div>

@@ -28,8 +28,8 @@
 <ion-view view-title="Bookings">
     <div class="bar bar-subheader" style="background-color:rgb(46,62,75);border: none" >
         <div class="button-bar" >
-            <button class="button button-calm" ng-click="switchscreens(1)">Current Bookings</button>
-            <button class="button button-calm"  ng-click="switchscreens(2)">Previous Bookings</button>
+            <button class="button button-calm" ng-click="switchscreens(1)" style="background-color: transparent;border:none; border-bottom: {{status.Current}};border-color: green">Current Bookings</button>
+            <button class="button button-calm"  ng-click="switchscreens(2)" style="background-color: transparent;border:none; border-bottom: {{status.Previous}};border-color: green">Previous Bookings</button>
         </div>
     </div>
     <ion-content style="background-color:rgb(46,62,75)">

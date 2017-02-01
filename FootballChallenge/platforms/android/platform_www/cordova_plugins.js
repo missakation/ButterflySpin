@@ -49,6 +49,14 @@ module.exports = [
             "cordova.plugins.Keyboard"
         ],
         "runs": true
+    },
+    {
+        "id": "cordova-plugin-image-picker.ImagePicker",
+        "file": "plugins/cordova-plugin-image-picker/www/imagepicker.js",
+        "pluginId": "cordova-plugin-image-picker",
+        "clobbers": [
+            "plugins.imagePicker"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -61,7 +69,8 @@ module.exports.metadata =
     "cordova-plugin-inappbrowser": "1.4.1-dev",
     "cordova-plugin-statusbar": "2.1.3",
     "cordova-plugin-whitelist": "1.2.2",
-    "ionic-plugin-keyboard": "1.0.9"
+    "ionic-plugin-keyboard": "1.0.9",
+    "cordova-plugin-image-picker": "1.1.1"
 };
 // BOTTOM OF METADATA
 });

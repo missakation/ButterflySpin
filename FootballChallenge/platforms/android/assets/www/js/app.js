@@ -218,6 +218,7 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/bookings.html',
+                        controller: 'BookingController'
 
                     }
                 }

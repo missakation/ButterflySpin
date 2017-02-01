@@ -1,24 +1,34 @@
 ﻿angular.module('football.controllers')
 
     .factory('BookingStore', function () {
-        var TempItems = [];
+        var Temp = [];
 
         return {
             GetMyUpcomingBookings: function (callback) {
 
                 try {
 
-
+                    
                     var user = firebase.auth().currentUser;
-                    //alert("test");
                     var id = user.uid;
 
-                    Temp = [];
+                    
                      if(id !== null || id == '' || id === undefined)
                      {
-                    firebase.database().ref('/players/' + id + '/upcomingmatches').once('value', function (snapshot) {
+                         
+                         Temp = [];
+                    firebase.database().ref('/players/' + id + '/upcominteamgmatches').once('value', function (snapshot) {
 
                         snapshot.forEach(function (childSnapshot) {
+
+                           var gameedate = new Date();
+
+                            gameedate.setMinutes(childSnapshot.child("minute").val());
+                            gameedate.setFullYear(childSnapshot.child("year").val());
+                            gameedate.setMonth(childSnapshot.child("month").val());
+                            gameedate.setHours(childSnapshot.child("hour").val());
+                            gameedate.setDate(childSnapshot.child("day").val());
+
                             var mybookings = {
                                 "key": childSnapshot.val(),
                                 "stadiumkey": childSnapshot.child("stadiumkey").val(),
@@ -30,7 +40,8 @@
                                 "hour": childSnapshot.child("hour").val(),
                                 "price": childSnapshot.child("price").val(),
                                 "photo": childSnapshot.child("photo").val(),
-                                "stadiumdescription": childSnapshot.child("stadiumdescription").val()
+                                "stadiumdescription": childSnapshot.child("stadiumdescription").val(),
+                                "date":gameedate
 
                             };
 

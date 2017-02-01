@@ -448,6 +448,21 @@ angular.module('football.controllers')
                 Members: true,
                 Statistics: false
             }
+        $scope.colors =
+            {
+                Available: "",
+                Members: true,
+                Statistics: false
+            }
+         $scope.status =
+            {
+                Available: "none",
+                Members: "solid",
+                Statistics: "none"
+            }
+
+
+
 
         $scope.switchscreens = function (x) {
             switch (x) {
@@ -457,6 +472,11 @@ angular.module('football.controllers')
                     $scope.tabs.Statistics = false;
                     $scope.tabs.Available = true;
 
+                    $scope.status.Available= "none";
+                    $scope.Members.Available= "none";
+                    $scope.Statistics.Available= "none";
+                    $scope.status.Available= "solid";
+
                     break;
 
                 case 2:
@@ -465,6 +485,11 @@ angular.module('football.controllers')
                     $scope.tabs.Statistics = false;
                     $scope.tabs.Statistics = true;
 
+                    $scope.status.Available= "none";
+                    $scope.Members.Available= "none";
+                    $scope.Statistics.Available= "none";
+                    $scope.status.Statistics= "solid";
+
                     break;
 
                 case 3:
@@ -472,8 +497,15 @@ angular.module('football.controllers')
                     $scope.tabs.Members = false;
                     $scope.tabs.Statistics = false;
                     $scope.tabs.Members = true;
+
+                    $scope.status.Available= "none";
+                    $scope.Members.Available= "none";
+                    $scope.Statistics.Available= "none";
+                    $scope.status.Members= "solid";
                     break;
             }
+
+            $scope.$apply();
         }
 
 

@@ -53,7 +53,7 @@ angular.module('football.controllers', [])
                         // Write the new post's data simultaneously in the posts list and the user's post list.
                         var updates = {};
                         updates['/players/' + usertoadd.uid + '/'] = usertoadd;
-
+                        updates['/playersinfo/' + usertoadd.uid + '/'] = usertoadd;
 
                         return firebase.database().ref().update(updates);
 
@@ -141,7 +141,7 @@ angular.module('football.controllers', [])
                         // Write the new post's data simultaneously in the posts list and the user's post list.
                         var updates = {};
                         updates['/players/' + usertoadd.uid + '/'] = usertoadd;
-
+                        updates['/playersinfo/' + usertoadd.uid + '/'] = usertoadd;
 
                         return firebase.database().ref().update(updates);
 

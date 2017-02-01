@@ -21,14 +21,37 @@
 		.item {
 			background-color: rgb(62, 83, 100);
 		}
+
+		.headercolor{
+			background-color: rgb(62,83,100);
+			color: white
+		}
+
+
 	</style>
 <ion-nav-buttons side="primary">
-	<h5 ng-click="goupdate(currentprofile)" style="color:black">
+	<h5 ng-click="goupdate(currentprofile)" style="color:white">
 <u>
 	Edit
 </u>
 </h5>
 </ion-nav-buttons>
+
+
+
+<ion-nav-back-button>
+</ion-nav-back-button>
+<ion-nav-buttons side="left">
+    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+</ion-nav-buttons>
+
+<ion-nav-bar class="headercolor">
+    <ion-nav-back-button>
+
+    </ion-nav-back-button>
+</ion-nav-bar>
+
+
 <ion-content style="background-color:rgb(46,62,75)">
 
 

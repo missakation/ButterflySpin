@@ -214,6 +214,8 @@
 
                     updates['/teampoints/' + newPostKey] = teamstats;
 
+                    updates['/teaminfo/' + newPostKey] = contact;
+
                     }
                     return firebase.database().ref().update(updates);
                 }
