@@ -283,6 +283,13 @@
                                 })
                             }
 
+                            var teamcreateddate = new Date();
+                            teamcreateddate.setMinutes(snapshot.child("dateminute").val());
+                            teamcreateddate.setFullYear(snapshot.child("dateyear").val());
+                            teamcreateddate.setMonth(snapshot.child("datemonth").val());
+                            teamcreateddate.setHours(snapshot.child("datehour").val());
+                            teamcreateddate.setDate(snapshot.child("dateday").val());
+
                                 var Items = {
                                     "key": snapshot.key,
                                     "teamname": snapshot.child("teamname").val(),
@@ -316,8 +323,8 @@
                                     "pending":false,
                                     "invite":false,
                                     
-
                                     "comments":snapshot.child("comments").val(),
+                                    "datecreated":teamcreateddate
                                 };
                                 TeamProfile = Items;
 
@@ -387,6 +394,25 @@
               updates['teams/' + id + '/startsundayend'] = profile.startsundayend;
               updates['teams/' + id + '/comments'] = profile.comments;
 
+
+              updates['teaminfo/' + id + '/startmonday'] = profile.startmonday;
+              updates['teaminfo/' + id + '/startmondayend'] = profile.startmondayend;
+              updates['teaminfo/' + id + '/starttuesday'] = profile.starttuesday;
+              updates['teaminfo/' + id + '/starttuesdayend'] = profile.starttuesdayend;
+              updates['teaminfo/' + id + '/startwednesday'] = profile.startwednesday;
+              updates['teaminfo/' + id + '/startwednesdayend'] = profile.startwednesdayend;
+              updates['teaminfo/' + id + '/startthursday'] = profile.startthursday;
+              updates['teaminfo/' + id + '/startthursdayend'] = profile.startthursdayend;
+              updates['teaminfo/' + id + '/startfriday'] = profile.startfriday;
+              updates['teaminfo/' + id + '/startfridayend'] = profile.startfridayend;
+              updates['teaminfo/' + id + '/startsaturday'] = profile.startsaturday;
+              updates['teaminfo/' + id + '/startsaturdayend'] = profile.startsaturdayend;
+              updates['teaminfo/' + id + '/startsunday'] = profile.startsunday;
+              updates['teaminfo/' + id + '/startsundayend'] = profile.startsundayend;
+              updates['teaminfo/' + id + '/comments'] = profile.comments;
+
+
+
                 return firebase.database().ref().update(updates);
             }
             catch(error)
@@ -422,6 +448,23 @@
                         break;
                 }
 
+                return firebase.database().ref().update(updates);
+                    
+                } catch (error) {
+                    alert(error.message);
+                }
+
+            },
+
+             LeaveTeam: function (team) {
+
+
+                try {
+                var updates = {};
+
+                updates['/teams/' + team.key + '/players/' + player.key +'/isadmin'] = true;
+                updates['/teams/' + team.key + '/players/' + player.key +'/isadmin'] = false;
+                
                 return firebase.database().ref().update(updates);
                     
                 } catch (error) {

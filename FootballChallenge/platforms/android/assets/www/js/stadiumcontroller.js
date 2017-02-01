@@ -33,7 +33,8 @@ angular.module('football.controllers')
             indoor: true,
             outdoor: true,
             clay: true,
-            grass: true
+            grass: true,
+            money:0
 
         }
         $scope.choice = {
@@ -80,7 +81,26 @@ angular.module('football.controllers')
         });
 
 
+        $scope.slider6 = {
+            minValue: 1,
+            maxValue: 23,
+            options: {
+                floor: 0,
+                showSelectionBar: true,
+                readOnly: false,
+                disabled: false,
+                getSelectionBarColor: function (value) {
+                    return 'darkgreen';
+                },
+                getPointerColor: function (value) {
+                    return 'lightgrey';
 
+                },
+                ceil: 23,
+                draggableRange: true
+
+            }
+        };
 
         //alert(TeamStore.GetAccountInfo().code);
         // set the rate and max variables
@@ -123,6 +143,7 @@ angular.module('football.controllers')
             ReservationFact.FindFreeStadiums($scope.search, function (leagues) {
 
                 $ionicLoading.hide();
+                $scope.globalstadiums = leagues;
                 $scope.allfreestadiums = leagues;
 
                 if (leagues.length == 0) {
@@ -205,38 +226,42 @@ angular.module('football.controllers')
                 alert(error.message);
             }
 
-
-
-            //$scope.allfreestadiums = freestadiums;
-
-            //$ionicLoading.hide();
-
         }
-
-
-
-      //  $scope.filter = {
-      //      indoor: true,
-      //      outdoor: true,
-      //      clay: true,
-      //      grass: true
-      //
-     //   }
 
 
         $scope.updatefilter = function()
         {
             $scope.closePopover();
             $ionicLoading.show({
-                content: 'Loading',
+                content: 'Applying Filter',
                 animation: 'fade-in',
                 showBackdrop: true,
                 maxWidth: 200,
                 showDelay: 0
             });
 
-           $scope.choice.sort =  $scope.tempchoice.sort  ;
+          $scope.allfreestadiums = $scope.globalstadiums.filter(function (el) {
+                
+                        return ((el.type.toLowerCase() == "indoor" && $scope.filter.indoor) && 
+                               ( (el.typefloor.toLowerCase() == "grass" && $scope.filter.grass)||(el.typefloor.toLowerCase() == "clay" && $scope.filter.clay ))
+                                ||
+                               (el.type.toLowerCase() == "outdoor" && $scope.filter.outdoor ) && 
+                               ((el.typefloor.toLowerCase() == "grass" && $scope.filter.grass)||(el.typefloor.toLowerCase() == "clay" && $scope.filter.clay )))
+                               
+
+
+                    });
+
+          if(!$scope.filter.indoor && !$scope.filter.outdoor && !$scope.filter.grass && !$scope.filter.clay )
+          {
+              $scope.allfreestadiums = $scope.globalstadiums;
+          }
+          
+
+
            $ionicLoading.hide();
+
+           
 
         //    $scope.allfreestadiums = $scope.allfreestadiums.filter(function (el) {
         //                return el.key !== team.key;

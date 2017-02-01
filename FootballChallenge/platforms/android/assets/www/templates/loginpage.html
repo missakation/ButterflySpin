@@ -41,50 +41,59 @@
 
       <div align="center">
 
-		<img src="img/logo.jpg" style="width:80px;height:50px " ng-click="FacebookLogin()">
+		<img src="img/loggo.png" style="width:140px;height:70px " ng-click="FacebookLogin()">
       </div>
       <br />
+	  <br />
 		<div align=center>
 			<div class="list" style="width:75%; padding-left:20px">
 				<label class="item item-input" style="background-color:transparent;border-color:white;color:white;border-radius:5px">
-                <input type="text" ng-model="registerusername" style="color:white;background-color:transparent;">
+                <input type="text" ng-model="registerusername" style="color:white;background-color:transparent;padding-left:2px">
 
             </label>
+			<br>
 				<label class="item item-input" style="background-color:transparent;border-color:white;border-radius:5px">
-                <input type="password" ng-model="registerpassword" style="color:white">
+                <input type="password" ng-model="registerpassword" style="color:white;padding-left:2px">
 
             </label>
 			</div>
 		</div>
 
-		<div class="padding" style="width:100%; padding-left:20px" align="center">
-			<button style="width:75%" class="button button-balanced" ng-click="LogIn(user)">
+		<div class="padding" style="width:100%; padding-left:20px;" align="center">
+			<button style="width:75%;border-radius: 20px" class="button button-balanced" ng-click="LogIn(user)">
                 Sign-In
             </button>
 
 		</div>
 
-		<div style= "padding-left: 20px" align="center" >
+	<!--	<div style= "padding-left: 20px" align="center" >
 
-			<img src="img/facebook.jpg" style="width:250px; " ng-click="FacebookLogin()">
+			<img src="img/facebook2.png" style="width:230px; " ng-click="FacebookLogin()">
+		</div> -->
+
+		<div style="padding-left:20px" align="center">
+			<button class="button button-positive" style="width:75%;border-radius: 20px" ng-click="FacebookLogin()">
+                log in with Facebook
+            </button>
+
 		</div>
 
 		<div align="center">
 			<h5 style="color:white">
-				OR
+				or
 			</h5>
 		</div>
 
 		<div style="padding-left:20px" align="center">
-			<button class="button button-balanced" style="width:75%;color:white;background-color:green" ng-click="GoToRegister()">
-                Register
+			<button class="button button-balanced" style="width:75%;color:green;background-color:white;border-radius: 20px" ng-click="GoToRegister()">
+                Register With Email
             </button>
 
 		</div>
 
 		<div align="center">
 			<h5 style="color:white" ng-click="GoToForgetPass()">
-				Forgot Password?
+				Forgot Your Password?
 			</h5>
 		</div>
 

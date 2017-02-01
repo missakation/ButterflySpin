@@ -12,6 +12,9 @@ angular.module('football.controllers')
 
         $scope.teaminvitationoperation = true;
 
+        $scope.nointernet = false;
+
+
 
         $scope.notloaded = true;
         try {
@@ -34,7 +37,7 @@ angular.module('football.controllers')
                     })
                     //JSON.stringify()
 
-                    $scope.$digest();
+                    $scope.$apply();
                 })
             }, 2000);
         } catch (error) {
@@ -282,7 +285,7 @@ angular.module('football.controllers')
                     $state.go('app.availableplayers');
                     break;
                 case 3:
-                    $state.go('app.matchmakinghome');
+                    $state.go('app.chooseyourteam');
                     break;
             }
         }
@@ -298,6 +301,22 @@ angular.module('football.controllers')
         $scope.toggleSearch = function () {
             $scope.showSearch = !$scope.showSearch;
         };
+
+
+        
+        var connectedRef = firebase.database().ref(".info/connected");
+            connectedRef.on("value", function(snap)
+             {
+                 if (snap.val() === true) 
+                 {
+                     $scope.nointernet = false;
+                 } 
+                else
+                 {
+                   $ionicLoading.hide();
+                   $scope.nointernet = true;
+                 }
+            });
 
 
     })

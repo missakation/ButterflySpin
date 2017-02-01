@@ -46,7 +46,18 @@ angular.module('football.controllers')
             $state.go("app.teamadd");
         }
 
-
+        var connectedRef = firebase.database().ref(".info/connected");
+            connectedRef.on("value", function(snap)
+             {
+                 if (snap.val() === true) 
+                 {
+                     
+                 } 
+                else
+                 {
+                   $ionicLoading.hide();
+                 }
+            });
 
 
 
@@ -473,8 +484,9 @@ angular.module('football.controllers')
                     $scope.tabs.Available = true;
 
                     $scope.status.Available= "none";
-                    $scope.Members.Available= "none";
-                    $scope.Statistics.Available= "none";
+                    $scope.status.Members= "none";
+                    $scope.status.Statistics= "none";
+
                     $scope.status.Available= "solid";
 
                     break;
@@ -486,8 +498,9 @@ angular.module('football.controllers')
                     $scope.tabs.Statistics = true;
 
                     $scope.status.Available= "none";
-                    $scope.Members.Available= "none";
-                    $scope.Statistics.Available= "none";
+                    $scope.status.Members= "none";
+                    $scope.status.Statistics= "none";
+
                     $scope.status.Statistics= "solid";
 
                     break;
@@ -499,8 +512,8 @@ angular.module('football.controllers')
                     $scope.tabs.Members = true;
 
                     $scope.status.Available= "none";
-                    $scope.Members.Available= "none";
-                    $scope.Statistics.Available= "none";
+                    $scope.status.Members= "none";
+                    $scope.status.Statistics= "none";
                     $scope.status.Members= "solid";
                     break;
             }
@@ -649,6 +662,11 @@ angular.module('football.controllers')
             catch (error) {
                 alert(error.message);
             }
+        }
+
+        $scope.LeaveTeam = function()
+        {
+            
         }
 
     })

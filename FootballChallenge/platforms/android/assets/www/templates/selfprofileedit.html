@@ -72,6 +72,7 @@
 			<button class="button button-block button-calm button-small" ng-click="ChangePicture()">
                  Change Picture
            </button>
+		<h5 class="whitetext" ng-show="uploading">Uploading {{progress}} %</h5>
 
 
 </div>
@@ -114,7 +115,7 @@
 </h5>
 
 <label class="item item-input" style="background-color:white">
-<textarea style="background-color:transparent;border-color:white;border-radius:5px;color: white" type="text" ng-model="currentprofile.comments" >
+<textarea ng-maxlength="300" style="background-color:transparent;border-color:white;border-radius:5px;color: white" type="text" ng-model="currentprofile.comments" >
 
 </textarea>
 
