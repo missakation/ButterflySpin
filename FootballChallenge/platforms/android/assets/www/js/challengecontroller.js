@@ -149,20 +149,20 @@ angular.module('football.controllers')
 
     })
 
-    .controller('challengestadiumcontroller', function ($scope, ChallengeStore, ReservationFact, $state, $stateParams, $ionicPopup, $ionicLoading, $ionicPopover) {
+    .controller('challengestadiumcontroller', function ($scope, ChallengeStore,HomeStore, ReservationFact, $state, $stateParams, $ionicPopup, $ionicLoading, $ionicPopover) {
 
         $scope.selectedstadiums = [];
-
+        $scope.profile = [];
         $scope.selecteddate =
             {
                 date: $state.params.date
-            }
+            };
 
         $scope.myteam = $state.params.myteam;
 
         ReservationFact.FindFreeStadiums($state.params, function (leagues) {
 
-            $ionicLoading.hide();
+            
             $scope.allfreestadiums = leagues;
 
             if (leagues.length == 0) {
@@ -171,7 +171,11 @@ angular.module('football.controllers')
                     template: 'No Available Stadiums'
                 });
             }
-
+            HomeStore.GetProfileInfo(function (myprofile) {
+                $ionicLoading.hide();
+                $scope.profile = myprofile;
+            })
+            
         })
         $scope.updateselectedteams = function (stadiums) {
 
@@ -227,8 +231,8 @@ angular.module('football.controllers')
 
                     confirmPopup.then(function (res) {
                         if (res) {
-
-                            ChallengeStore.ChallengeTeams($state.params.date, $state.params.teams, $scope.selectedstadiums, $scope.myteam)
+                            
+                            ChallengeStore.ChallengeTeams($state.params.date, $state.params.teams, $scope.selectedstadiums, $scope.myteam, $scope.profile)
                                 .then(function (value) {
 
                                     var alertPopup = $ionicPopup.alert({

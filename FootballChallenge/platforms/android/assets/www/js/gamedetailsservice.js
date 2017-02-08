@@ -7,7 +7,7 @@ angular.module('football.controllers')
         return {
 
             GetGamedetails: function (callback) {
-                    firebase.database().ref('/teams/'+).once('value').then(function (snapshot) {
+                    firebase.database().ref('/teams/').once('value').then(function (snapshot) {
                     //alert(firstName);
                     AllITems = [];
 

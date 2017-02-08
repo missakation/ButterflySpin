@@ -64,7 +64,7 @@
 
 		<div class="row ">
 			<div class="col" align="center">
-				<img src="{{item.photo}}" style="width:80px;height:80px;">
+				<img src="{{currentprofile.photo}}" style="width:80px;height:80px;">
 <h2 class="whitetext"> {{currentprofile.teamname}} </h2>
 <h4 class="whitetext"> {{currentprofile.ranking}} </h4>
 </div>
@@ -105,25 +105,6 @@
 
 </div>
 
-<div class="row ">
-	<div class="col" align="center" style="color:white"> {{item.playposition}}
-
-</div>
-
-<div class="col" style="color:white" align="center"> {{item.age}}
-
-</div>
-
-<div class="col" style="color:white"> {{item.nummatches}}
-
-</div>
-
-<div class="col" align="right" align="center">
-
-</div>
-
-</div>
-
 <h4 class="whitetext">
 	{{currentprofile.comments}}
 </h4>
@@ -158,21 +139,21 @@
 	<div class="row row-center">
 		<div class="col" style="border-bottom:{{status.Available}};border-color: green">
 			<h3 class="whitetext" ng-click="switchscreens(1)">
-				Availability
+				AVAILABILITY
 			</h3>
 			
 		</div>
 
 		<div class='col ' style="border-bottom:{{status.Statistics}};border-color: green">
 			<h3 class="whitetext" ng-click="switchscreens(2)">
-				Statistics
+				STATISTICS
 			</h3>
 			
 		</div>
 		<div class="col" style="border-bottom:{{status.Members}};border-color: green">
 
 			<h3 class="whitetext" ng-click="switchscreens(3)">
-				Upcoming Games
+				UPCOMING GAMES
 			</h3>
 			
 		</div>

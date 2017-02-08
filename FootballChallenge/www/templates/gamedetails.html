@@ -1,4 +1,4 @@
-<ion-view view-title="Game Details">
+<ion-view view-title="Game Vs {{opponent}}">
 	<style>
 		.h3.whitetext,
 		h2.whitetext,
@@ -49,8 +49,14 @@
 
     </ion-nav-back-button>
 </ion-nav-bar>
-<ion-content style="background-color:rgb(46,62,75)">
 
+<div class="bar bar-subheader" style="color:rgb(46,62,75)" ng-show="!notloaded">
+  <h3 class="title">{{challenge.date |date:'MMM d, y h:mm a'}}</h3>
+</div>
+
+<ion-content style="background-color:rgb(46,62,75)">
+<br>
+<br>
 <div align="center">
 	<ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
 </div>
@@ -84,9 +90,9 @@
 			Stadium
 		</h5>
 		<h5 class="whitetext">
-			ManUnited
+			{{challenge.stadiums.stadiumname}}
 		</h5>
-		<img src="https://bossip.files.wordpress.com/2015/03/nba-face-6.png?w=700" style="border-radius:50% ; height:80px ; width:80px" align="right" height="50" />
+		<img src="{{challenge.adminphoto}}" style="border-radius:50% ; height:80px ; width:80px;border: none" align="right" height="50" />
 
 
 </div>

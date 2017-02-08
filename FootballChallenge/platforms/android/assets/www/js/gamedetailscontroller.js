@@ -14,7 +14,7 @@ angular.module('football.controllers')
 
         //alert($scope.gameid);
 
-
+        $scope.opponent = "" //for game details title
 
         $scope.notloaded = true;
         try {
@@ -35,11 +35,13 @@ angular.module('football.controllers')
                         $scope.isadmin = true;
                         $scope.first = true;
                         $scope.currentteam = $scope.challenge.team1key;
+                        $scope.opponent = $scope.challenge.team2name;
                     }
                     else if ($scope.challenge.team2adminid === $scope.myid) {
                         $scope.isadmin = true;
                         $scope.first = false;
                         $scope.currentteam = $scope.challenge.team2key;
+                        $scope.opponent = $scope.challenge.team1name;
                     }
                     else {
                         $scope.isadmin = false;

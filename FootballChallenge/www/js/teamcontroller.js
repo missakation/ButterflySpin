@@ -226,7 +226,7 @@ angular.module('football.controllers')
 
                             var alertPopup = $ionicPopup.alert({
                                 title: 'Success',
-                                template: 'Successfully Reserved'
+                                template: 'Team Added'
                             }).then(function () {
                                 $scope.adduser =
                                     {
@@ -666,7 +666,37 @@ angular.module('football.controllers')
 
         $scope.LeaveTeam = function()
         {
-            
+             try {
+
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Leave Team',
+                    template: 'Are you sure you want to leave the team?'
+                });
+
+                confirmPopup.then(function (res) {
+                    if (res) {
+                        TeamStores.LeaveTeam($scope.currentprofile)
+                            .then(function (value) {
+                                var alertPopup = $ionicPopup.alert({
+                                    title: 'Success',
+                                    template: 'You Left the Team'
+                                }).then(function () {
+                                    $state.go("app.homepage");
+                                });
+
+
+                            }, function (error) {
+                                alert(error.message);
+                            })
+                    }
+
+
+                })
+
+            }
+            catch (error) {
+                alert(error.message);
+            }
         }
 
     })
@@ -919,7 +949,7 @@ angular.module('football.controllers')
                                     title: 'Success',
                                     template: 'Successfully Deleted Team'
                                 }).then(function () {
-                                    $state.go("app.teammanagement");
+                                    $state.go("app.homepage");
                                 });
 
 

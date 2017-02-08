@@ -91,8 +91,6 @@ angular.module('football.controllers')
                     if(id !== null || id == '' || id === undefined)
                     {
                     snapshot.forEach(function (childSnapshot) {
-                        if(!childSnapshot.child("players/"+id).exists())
-                        {
                         var Items = {
                             "key": childSnapshot.key,
                             "teamname": childSnapshot.child("teamname").val(),
@@ -111,16 +109,15 @@ angular.module('football.controllers')
                             "color":"green",
                             "backcolor":"white",
                             "teamadmin":childSnapshot.child("teamadmin").val(),
-
                         };
-                        }
+                        
                         AllITems.push(Items)
                     });
                     }
                     callback(AllITems);
                 });
             },
-            ChallengeTeams: function (date, teams, stadiums, myteam) {
+            ChallengeTeams: function (date, teams, stadiums, myteam,myprofile) {
 
                 //alert(JSON.stringify(teams));
                 //alert(JSON.stringify(stadiums));
@@ -159,6 +156,7 @@ angular.module('football.controllers')
                             team1name: teams[i].teamname, //
                             team1logo: teams[i].badge, //
                             team1rank: teams[i].rank, //
+                            
                             //team1jersey: teams[i].jersey, //
 
                             team2key: myteam.key,
@@ -170,7 +168,10 @@ angular.module('football.controllers')
                             team2adminid: myteam.teamadmin,
                             //team2adminname: myteam.adminname,
                             //team2adminmobile: myteam.adminmobile,
-                            accepted: false
+                            accepted: false,
+                            adminphoto:myprofile.photo,
+                            admintelephon:myprofile.telephone,
+                            adminname:myprofile.displayname
 
 
                         }
@@ -207,7 +208,11 @@ angular.module('football.controllers')
                             //team2adminid: myteam.admin,
                             //team2adminname: myteam.adminname,
                             //team2adminmobile: myteam.adminmobile,
-                            accepted: false
+                            accepted: false,
+
+                            adminphoto:myprofile.photo,
+                            admintelephon:myprofile.telephone,
+                            adminname:myprofile.displayname
 
                         }
 
@@ -319,7 +324,13 @@ angular.module('football.controllers')
                                 date: challengedate,
                                 isadmin:isadmin,
                                 team1players : team1players,
-                                team2players : team2players
+                                team2players : team2players,
+
+                                adminphoto:challenges.child("adminphoto").val(),
+                                admintelephon:challenges.child("admintelephon").val(),
+                                adminname:challenges.child("adminname").val()
+
+
                                 
                             }
                             ChallengeDetails = challengedata;

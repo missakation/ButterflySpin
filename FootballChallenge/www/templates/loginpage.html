@@ -30,7 +30,7 @@
         -->
 		<div>
 			<br />
-            <br />
+			<br />
 
 		</div>
 
@@ -39,19 +39,19 @@
         </div>
       -->
 
-      <div align="center">
+		<div align="center">
 
-		<img src="img/loggo.png" style="width:140px;height:70px " ng-click="FacebookLogin()">
-      </div>
-      <br />
-	  <br />
+			<img src="img/loggo.png" style="width:140px;height:70px " ng-click="FacebookLogin()">
+		</div>
+		<br />
+		<br />
 		<div align=center>
-			<div class="list" style="width:75%; padding-left:20px">
+			<div class="list" style="width:85%; padding-left:20px">
 				<label class="item item-input" style="background-color:transparent;border-color:white;color:white;border-radius:5px">
                 <input type="text" ng-model="registerusername" style="color:white;background-color:transparent;padding-left:2px">
 
             </label>
-			<br>
+				<br>
 				<label class="item item-input" style="background-color:transparent;border-color:white;border-radius:5px">
                 <input type="password" ng-model="registerpassword" style="color:white;padding-left:2px">
 
@@ -60,32 +60,32 @@
 		</div>
 
 		<div class="padding" style="width:100%; padding-left:20px;" align="center">
-			<button style="width:75%;border-radius: 20px" class="button button-balanced" ng-click="LogIn(user)">
+			<button style="width:85%;border-radius: 20px" class="button button-balanced" ng-click="LogIn(user)">
                 Sign-In
             </button>
 
 		</div>
 
-	<!--	<div style= "padding-left: 20px" align="center" >
+		<!--	<div style= "padding-left: 20px" align="center" >
 
 			<img src="img/facebook2.png" style="width:230px; " ng-click="FacebookLogin()">
 		</div> -->
 
 		<div style="padding-left:20px" align="center">
-			<button class="button button-positive" style="width:75%;border-radius: 20px" ng-click="FacebookLogin()">
-                log in with Facebook
+			<button class="button button-positive" style="width:85%;border-radius: 20px" ng-click="FacebookLogin()">
+                Sign in with Facebook
             </button>
 
 		</div>
 
 		<div align="center">
-			<h5 style="color:white">
+			<h4 style="color:white">
 				or
-			</h5>
+			</h4>
 		</div>
 
 		<div style="padding-left:20px" align="center">
-			<button class="button button-balanced" style="width:75%;color:green;background-color:white;border-radius: 20px" ng-click="GoToRegister()">
+			<button class="button button-balanced" style="width:85%;color:green;background-color:white;border-radius: 20px" ng-click="GoToRegister()">
                 Register With Email
             </button>
 
@@ -100,7 +100,13 @@
 		</div>
 
 	</ion-content>
-
+	<ion-footer-bar align-title="left" class="bar-assertive" style="background-color: rgb(30,30,30);border: none" ng-show="nointernet">
+		<div align="left" style="padding-left: 5px">
+			<h6 class="whitetext">
+				Oops. You have no internet connection
+			</h6>
+		</div>
+	</ion-footer-bar>
 	<!--<div class="bar bar-footer ">
     </div>-->
 </ion-view>

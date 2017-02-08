@@ -1,5 +1,5 @@
 <style>
-.h3.whitetext,
+	.h3.whitetext,
 	h2.whitetext,
 	h1.whitetext,
 	h4.whitetext,
@@ -8,7 +8,7 @@
 	p.whitetext {
 		color: white;
 	}
-
+	
 	.h3.bluetext,
 	h2.bluetext,
 	h1.bluetext,
@@ -18,7 +18,7 @@
 	p.bluetext {
 		color: darkblue;
 	}
-
+	
 	.h3.greytext,
 	h2.greytext,
 	h1.greytext,
@@ -28,12 +28,13 @@
 	p.greytext {
 		color: gray;
 	}
-	  .item .item-content1 {
-  background-color: white;
-  color:black;
-  border:rgb(64, 64, 64);
-  border-color:rgb(64, 64, 64);
-}
+	
+	.item .item-content1 {
+		background-color: white;
+		color: black;
+		border: rgb(64, 64, 64);
+		border-color: rgb(64, 64, 64);
+	}
 	
 	.popup-body {
 		background-color: rgb(40, 80, 120);
@@ -48,10 +49,11 @@
 	.popup-title {
 		color: white;
 	}
-    .headercolor{
-        background-color: rgb(62,83,100);
-        color: white
-    }
+	
+	.headercolor {
+		background-color: rgb(62, 83, 100);
+		color: white
+	}
 </style>
 
 
@@ -79,16 +81,16 @@
 	<ion-content style="background-color:rgb(44,60,73)">
 
 
-<script id="templates/my-popover.html" type="text/ng-template">
-            <ion-popover-view style="height:500px;width:250px">
-                <ion-content>
-                        <div align="center">
-                            <h4 >Search filter</h4>
-                        </div>
+		<script id="templates/my-popover.html" type="text/ng-template">
+			<ion-popover-view style="height:500px;width:250px">
+				<ion-content>
+					<div align="center">
+						<h4>Search filter</h4>
+					</div>
 
-							<div class="list">
+					<div class="list">
 
-							<label class="item item-input item-select">
+						<label class="item item-input item-select">
 								<div class="input-label">
 										Sort By	
 								</div>
@@ -100,36 +102,35 @@
 								</select>
 							</label>
 
-							</div>
-							<div>
-								
-                                <ion-checkbox style="background-color:white"  ng-model="filter.indoor">Indoor</ion-checkbox>
-								<ion-checkbox style="background:white"  ng-model="filter.outdoor">Outdoor</ion-checkbox>
-								<ion-checkbox style="background:white"  ng-model="filter.grass">Grass</ion-checkbox>
-								<ion-checkbox style="background:white"  ng-model="filter.clay">Clay</ion-checkbox>
-								</div>
+					</div>
+					<div>
 
-								<div style="padding-left:20px;padding-right:20px">
-								<rzslider rz-slider-model="filter.money " rz-slider-high="200000" rz-slider-options="slider6.options "
-									style="color:white ">
-									</rzslider>
+						<ion-checkbox style="background-color:white" ng-model="filter.indoor">Indoor</ion-checkbox>
+						<ion-checkbox style="background:white" ng-model="filter.outdoor">Outdoor</ion-checkbox>
+						<ion-checkbox style="background:white" ng-model="filter.grass">Grass</ion-checkbox>
+						<ion-checkbox style="background:white" ng-model="filter.clay">Clay</ion-checkbox>
+					</div>
 
-							  </div>
-								<div class = "row">
-									<div class="col col-33">
-									<h4 class = "bluetext" ng-click="updatefilter()">
-										Apply
-									</h4>
-										</div>
-										<div class="col col-33">
-									<h4 class = "bluetext" ng-click="cancelfilter()">
-										Cancel
-									</h4>
-										</div>
-										</div>
-										
+					<div style="padding-left:20px;padding-right:20px">
+						<rzslider rz-slider-model="filter.money " rz-slider-high="200000" rz-slider-options="slider6.options " style="color:white ">
+						</rzslider>
 
-              <!--          <div style="background-color:rgb(90,90,90);color:white ;vertical-align:middle">
+					</div>
+					<div class="row">
+						<div class="col col-33">
+							<h4 class="bluetext" ng-click="updatefilter()">
+								Apply
+							</h4>
+						</div>
+						<div class="col col-33">
+							<h4 class="bluetext" ng-click="cancelfilter()">
+								Cancel
+							</h4>
+						</div>
+					</div>
+
+
+					<!--          <div style="background-color:rgb(90,90,90);color:white ;vertical-align:middle">
                             <h4 class="title" align="center" style="color:white;vertical-align:bottom">Sort By</h4>
                         </div>
 
@@ -162,101 +163,108 @@
 
 
 
-                        <!--<button class="button button-full button-positive" ng-click="closePopover()">
+					<!--<button class="button button-full button-positive" ng-click="closePopover()">
                             OK
                         </button>-->
-                </ion-content>
-            </ion-popover-view>
-        </script>
+				</ion-content>
+			</ion-popover-view>
+		</script>
 
-<div align="center">
-	<!--<p style="background-color:lightgray">Date</p>-->
-	<label class="item item-input">
+		<div align="center">
+			<!--<p style="background-color:lightgray">Date</p>-->
+			<label class="item item-input">
                     <input type="datetime-local" step="30"  ng-model="search.date" ng-change="checkfree()">
                 </label>
-</div>
+		</div>
 
-<div class="card" ng-repeat="stadiums in allfreestadiums | orderBy:choice.sort:reverse" style="background-color:rgb(62,83,100)">
-<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
+		<div class="card" ng-repeat="stadiums in allfreestadiums | orderBy:choice.sort:reverse" style="background-color:rgb(62,83,100)">
+			<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
-<div align="center">
-	<img src="{{stadiums.photo}}" style="width:100%;height:140px;" ui-sref="app.reservestadiumdetails({stadiumid: stadiums.stadiumkey})">
-</div>
+			<div align="center">
+				<img src="{{stadiums.photo}}" style="width:100%;height:140px;" ui-sref="app.reservestadiumdetails({stadiumid: stadiums.stadiumkey})">
+			</div>
 
-<div class="row ">
-	<div class="col col-66" style="color:white"> {{stadiums.stadiumname}} / {{stadiums.description}}
-</div>
+			<div class="row ">
+				<div class="col col-66" style="color:white"> {{stadiums.stadiumname}} / {{stadiums.description}}
+				</div>
 
-<div class="col" align="right" style="color:lightgray"> Price
-</div>
+				<div class="col" align="right" style="color:lightgray"> Price
+				</div>
 
-</div>
+			</div>
 
-<div class="row">
-	<div class="col col-66" align="left">
-		<rating style="color:gold" readonly="readOnly" ng-model=stadiums.rating max="rating.max" align="left">
+			<div class="row">
+				<div class="col col-66" align="left">
+					<rating style="color:gold" readonly="readOnly" ng-model=stadiums.rating max="rating.max" align="left">
 
-</rating>
+					</rating>
 
-</div>
+				</div>
 
-<div class="col" align="right" style="color:white">
-<b>
+				<div class="col" align="right" style="color:white">
+					<b>
 	
 		{{stadiums.price}} L.L.
 		</b>
-</div>
-</div>
-</br>
-<div class="row ">
-	<div class="col" style="color:lightgray"> {{stadiums.stadiumname}}
-</div>
+				</div>
+			</div>
+			</br>
+			<div class="row ">
+				<div class="col" style="color:lightgray"> {{stadiums.stadiumname}}
+				</div>
 
-<div class="col" style="color:lightgray" align="right"> Type
-</div>
+				<div class="col" style="color:lightgray" align="right"> Type
+				</div>
 
-<div class="col" style="color:lightgray" align="right"> Size
-</div>
+				<div class="col" style="color:lightgray" align="right"> Size
+				</div>
 
-</div>
+			</div>
 
 
-<div class="row ">
-	<div class="col" style="color:white">
-<b>
+			<div class="row ">
+				<div class="col" style="color:white">
+					<b>
 		
 			2.1km
 			</b>
-</div>
+				</div>
 
-<div class="col" align="right" style="color:white">
-<b>
+				<div class="col" align="right" style="color:white">
+					<b>
 			{{stadiums.type}}/{{stadiums.typefloor}}
 			</b>
-</div>
+				</div>
 
-<div class="col" align="right" style="color:white">
-<b>
+				<div class="col" align="right" style="color:white">
+					<b>
 			5vs5
 			</b>
-</div>
+				</div>
 
-</div>
+			</div>
 
-<!--			<h3 class="whitetext"> Number: <b>{{stadiums.description}}</b></h3> -->
+			<!--			<h3 class="whitetext"> Number: <b>{{stadiums.description}}</b></h3> -->
 
-<div class="row">
-	<div class="col">
-		<button class="button button-block button-balanced button-small" type="submit" ng-disabled="verified" ng-click="reserve(search,stadiums)">
+			<div class="row">
+				<div class="col">
+					<button class="button button-block button-balanced button-small" type="submit" ng-disabled="verified" ng-click="reserve(search,stadiums)">
                         Reserve On : {{stadiums.datetime | date:'short'}}
                     </button>
-	</div>
+				</div>
 
-</div>
-
-
-</div>
+			</div>
 
 
-</ion-content>
+		</div>
+
+
+	</ion-content>
+	<ion-footer-bar align-title="left" class="bar-assertive" style="background-color: rgb(30,30,30);border: none" ng-show="nointernet">
+		<div align="left" style="padding-left: 5px">
+			<h6 class="whitetext">
+				Oops. You have no internet connection
+			</h6>
+		</div>
+	</ion-footer-bar>
 </ion-view>

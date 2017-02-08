@@ -23,87 +23,119 @@
     .popup-title {
         color: white;
     }
+    
+    .headercolor {
+        background-color: rgb(62, 83, 100);
+        color: white
+    }
 </style>
 
 <ion-view view-title="Bookings">
-    <div class="bar bar-subheader" style="background-color:rgb(46,62,75);border: none" >
-        <div class="button-bar" >
-            <button class="button button-calm" ng-click="switchscreens(1)" style="background-color: transparent;border:none; border-bottom: {{status.Current}};border-color: green">Current Bookings</button>
-            <button class="button button-calm"  ng-click="switchscreens(2)" style="background-color: transparent;border:none; border-bottom: {{status.Previous}};border-color: green">Previous Bookings</button>
+
+
+    <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+    </ion-nav-buttons>
+
+    <ion-nav-back-button>
+    </ion-nav-back-button>
+
+
+    <ion-nav-bar class="headercolor">
+        <ion-nav-back-button>
+
+        </ion-nav-back-button>
+    </ion-nav-bar>
+
+    <div class="bar bar-subheader" style="background-color:rgb(46,62,75);border: none">
+        <div class="button-bar">
+            <button class="button button-calm" ng-click="switchscreens(1)" style="background-color: transparent;border:none; border-bottom: {{status.Current}};border-color: green;border-right:1px solid grey">
+                CURRENT BOOKINGS
+                </button>
+            <button class="button button-calm" ng-click="switchscreens(2)" style="background-color: transparent;border:none; border-bottom: {{status.Previous}};border-color: green">
+                PREVIOUS BOOKINGS
+                </button>
         </div>
     </div>
     <ion-content style="background-color:rgb(46,62,75)">
-<br>
-<br>
+        <br>
+        <br>
 
-<div align="center" style="padding-top: 15px">
-    <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
-</div>
+        <div align="center" style="padding-top: 15px">
+            <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
+        </div>
 
-<div ng-show="tabs.Current" >
-<div class="card" ng-repeat="item in bookings" style="background-color:rgb(62,83,100)">
+        <div ng-show="tabs.Current">
+            <div class="card" ng-repeat="item in bookings" style="background-color:rgb(62,83,100)">
 
-<div align="center">
-	<img src="{{item.photo}}" style="width:100%;height:140px;" ui-sref="app.reservestadiumdetails({stadiumid: stadiums.stadiumkey})">
-</div>
-<div align="center">
-    <h5 class="whitetext" style="color:white"> {{item.date |date:'MMM d, y h:mm a'}}
-</h5>
-</div>
-<div class="row">
+                <div align="center">
+                    <img src="{{item.photo}}" style="width:100%;height:140px;" ui-sref="app.reservestadiumdetails({stadiumid: stadiums.stadiumkey})">
+                </div>
+                <div align="center">
+                    <h5 class="whitetext" style="color:white"> {{item.date |date:'MMM d, y h:mm a'}}
+                    </h5>
+                </div>
+                <div class="row">
 
-<div class="col">
+                    <div class="col">
 
-<h5 class="whitetext">
-    Type: 
-</h5>
+                        <h5 class="whitetext">
+                            Type:
+                        </h5>
 
-<h5 class="whitetext">
-    Captain: 
-</h5>
+                        <h5 class="whitetext">
+                            Captain:
+                        </h5>
 
-<h5 class="whitetext">
-    Price: {{item.price}}
-</h5>
+                        <h5 class="whitetext">
+                            Price: {{item.price}}
+                        </h5>
 
-</div>
+                    </div>
 
-<div class="col">
+                    <div class="col">
 
-<h5 class="whitetext">
-     Stadium: {{item.stadiumdescription}}
-</h5>
+                        <h5 class="whitetext">
+                            Stadium: {{item.stadiumdescription}}
+                        </h5>
 
-<h5 class="whitetext">
-    Number: 
-</h5>
+                        <h5 class="whitetext">
+                            Number:
+                        </h5>
 
-</div>
+                    </div>
 
 
 
-</div>
+                </div>
 
-<div class="row row-top">
-    <div class="col">
-        <button class="button button-block button-full button-energized button-small" style="color:white;border-radius: 10px" ng-click="acceptteaminvitation(upmatches,1)"> Pending
+                <div class="row row-top">
+                    <div class="col">
+                        <button class="button button-block button-full button-energized button-small" style="color:white;border-radius: 10px" ng-click="acceptteaminvitation(upmatches,1)"> Pending
 </button>
-</div>
-<div class="col">
+                    </div>
+                    <div class="col">
 
-    <button class="button button-block button-full button-assertive button-small" style="color:white;border-radius: 10px" ng-click="acceptteaminvitation(upmatches,2)"> Decline
+                        <button class="button button-block button-full button-assertive button-small" style="color:white;border-radius: 10px" ng-click="acceptteaminvitation(upmatches,2)"> Decline
 </button>
-</div>
-</div>
+                    </div>
+                </div>
 
-</div>
-</div>
+            </div>
+        </div>
 
-<div ng-show="tabs.Previous">
-
-
-</div>
+        <div ng-show="tabs.Previous">
 
 
-</ion-content>
+        </div>
+
+
+    </ion-content>
+    <ion-footer-bar align-title="left" class="bar-assertive" style="background-color: rgb(30,30,30);border: none" ng-show="nointernet">
+        <div align="left" style="padding-left: 5px">
+            <h6 class="whitetext">
+                Oops. You have no internet connection
+            </h6>
+        </div>
+    </ion-footer-bar>
 </ion-view>

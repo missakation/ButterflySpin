@@ -9,6 +9,7 @@ angular.module('football.controllers')
         $scope.showteaminvite = false;
         $scope.showpendingchallenge = false;
         $scope.showupcomingmatches = false;
+        $scope.showupcomingsinglematches = false;
 
         $scope.teaminvitationoperation = true;
 
@@ -22,22 +23,48 @@ angular.module('football.controllers')
 
             $timeout(function () {
                 //Get My Profile
+
                 HomeStore.GetProfileInfo(function (leagues) {
-                    $scope.profile = leagues;
-                    $scope.notloaded = false;
 
-                    $scope.showpendingchallenge = $scope.profile.challenges.length == 0?false:true;
-                    $scope.showupcomingmatches = $scope.profile.upcominteamgmatches.length == 0?false:true;
-                    $scope.showteaminvite = $scope.profile.teaminvitations.length == 0?false:true;
+                    var todaydate = new Date();
+                    var oldchallenges = [];
+                    var newchallenges = [];
 
-                    //Get the first 4 ranked teams
-                    HomeStore.GetFirstFour(function(leagues)
-                    {
-                        $scope.rankedteams = leagues;
-                    })
-                    //JSON.stringify()
+                    if (leagues.challenges.length > 0) {
+                        for (var i = 0; i < leagues.challenges.length; i++) {
+                            if (Math.abs(todaydate - leagues.challenges[i].date) / 36e5 > 24) {
+                                oldchallenges.push(leagues.challenges[i]);
+                            }
+                            else {
+                                newchallenges.push(leagues.challenges[i]);
+                            }
+                        }
+                    }
 
-                    $scope.$apply();
+                    HomeStore.DeleteOldChalleges(oldchallenges).then(function () {
+
+                        $scope.profile = leagues;
+                        $scope.challenges = newchallenges;
+                        $scope.notloaded = false;
+                        $scope.$apply();
+
+                        $scope.showpendingchallenge = $scope.profile.challenges.length == 0 ? false : true;
+                        $scope.showupcomingmatches = $scope.profile.upcominteamgmatches.length == 0 ? false : true;
+                        $scope.showteaminvite = $scope.profile.teaminvitations.length == 0 ? false : true;
+                        $scope.showupcomingsinglematches = $scope.profile.upcomingmatches.length == 0 ? false : true;
+
+                        //Get the first 4 ranked teams
+                        HomeStore.GetFirstFour(function (leagues) {
+                            $scope.rankedteams = leagues;
+                        })
+                        //JSON.stringify()
+
+                        $scope.$apply();
+                    }, function (error) {
+                            alert(error.message);
+                        })
+
+
                 })
             }, 2000);
         } catch (error) {
@@ -138,8 +165,8 @@ angular.module('football.controllers')
                             }).then(function () {
                                 $state.go("app.teammanagement");
                             }, function (error) {
-                                    alert(error.message);
-                                })
+                                alert(error.message);
+                            })
 
 
                         });
@@ -149,12 +176,12 @@ angular.module('football.controllers')
 
                             $scope.profile.teaminvitations = $scope.profile.teaminvitations.filter(function (el) {
                                 return el.key !== invitation.key;
-                                
+
                             });
-                            
+
                         }, function (error) {
-                                alert(error.message);
-                            })
+                            alert(error.message);
+                        })
                         break;
 
                     default:
@@ -165,7 +192,7 @@ angular.module('football.controllers')
             } catch (error) {
                 alert(error.message);
             }
-             
+
 
         }
 
@@ -184,12 +211,12 @@ angular.module('football.controllers')
 
                             $scope.profile.requestednumbers = $scope.profile.requestednumbers.filter(function (el) {
                                 return el.key !== request.key;
-                                
+
                             });
-                            
+
                         }, function (error) {
-                                alert(error.message);
-                            })
+                            alert(error.message);
+                        })
                         break;
 
                     default:
@@ -200,31 +227,28 @@ angular.module('football.controllers')
             } catch (error) {
                 alert(error.message);
             }
-             
+
 
         }
 
 
 
 
-        $scope.acceptgameinvitation = function(type,gameinvitation)
-        {
-            try
-            {
-             
-             switch(type)
-                {
+        $scope.acceptgameinvitation = function (type, gameinvitation) {
+            try {
+
+                switch (type) {
                     case 1:
-                       HomeStore.AccepGameInvitation(angular.copy(gameinvitation)).then(function () {
+                        HomeStore.AccepGameInvitation(angular.copy(gameinvitation)).then(function () {
 
                             $scope.profile.gameinvitations = $scope.profile.gameinvitations.filter(function (el) {
-                                return el.key !== gameinvitation.key;      
+                                return el.key !== gameinvitation.key;
                             });
                             $scope.$apply();
                         }, function (error) {
-                                alert(error.message);
-                            })
-                    break;
+                            alert(error.message);
+                        })
+                        break;
 
                     case 2:
                         HomeStore.DeleteGameInvitation(gameinvitation).then(function () {
@@ -234,17 +258,16 @@ angular.module('football.controllers')
                             });
                             $scope.$apply();
                         }, function (error) {
-                                alert(error.message);
-                            })
-                    break;
+                            alert(error.message);
+                        })
+                        break;
 
                     default:
-                    break;
+                        break;
                 }
                 $scope.$apply();
             }
-            catch(error)
-            {
+            catch (error) {
                 alert(error.message);
             }
 
@@ -260,10 +283,10 @@ angular.module('football.controllers')
 
                 HomeStore.GetProfileInfo(function (leagues) {
                     $scope.profile = leagues;
-                    
-                    $scope.showpendingchallenge = $scope.profile.challenges.length == 0?false:true;
-                    $scope.showupcomingmatches = $scope.profile.upcominteamgmatches.length == 0?false:true;
-                    $scope.showteaminvite = $scope.profile.teaminvitations.length == 0?false:true;
+
+                    $scope.showpendingchallenge = $scope.profile.challenges.length == 0 ? false : true;
+                    $scope.showupcomingmatches = $scope.profile.upcominteamgmatches.length == 0 ? false : true;
+                    $scope.showteaminvite = $scope.profile.teaminvitations.length == 0 ? false : true;
 
                     $scope.$apply();
                     $scope.$broadcast('scroll.refreshComplete');
@@ -297,26 +320,47 @@ angular.module('football.controllers')
                 })
         }
 
-                $scope.showSearch = false;
+        $scope.showSearch = false;
         $scope.toggleSearch = function () {
             $scope.showSearch = !$scope.showSearch;
         };
 
+        $scope.InviteFacebook = function () {
+            facebookConnectPlugin.appInvite(
+                {
+                    url: "http://example.com",
+                    picture: "http://example.com/image.png"
+                },
+                function (obj) {
+                    if (obj) {
+                        if (obj.completionGesture == "cancel") {
+                            // user canceled, bad guy
+                        } else {
+                            // user really invited someone :)
+                        }
+                    } else {
+                        // user just pressed done, bad guy
+                    }
+                },
+                function (obj) {
+                    // error
+                    console.log(obj);
+                }
+            );
+        }
 
-        
+
+
         var connectedRef = firebase.database().ref(".info/connected");
-            connectedRef.on("value", function(snap)
-             {
-                 if (snap.val() === true) 
-                 {
-                     $scope.nointernet = false;
-                 } 
-                else
-                 {
-                   $ionicLoading.hide();
-                   $scope.nointernet = true;
-                 }
-            });
+        connectedRef.on("value", function (snap) {
+            if (snap.val() === true) {
+                $scope.nointernet = false;
+            }
+            else {
+                $ionicLoading.hide();
+                $scope.nointernet = true;
+            }
+        });
 
 
     })

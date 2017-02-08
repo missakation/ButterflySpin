@@ -121,7 +121,8 @@ angular.module('football.controllers')
                             "startsunday": snapshot.child("startsunday").val(),
                             "startsundayend": snapshot.child("startsundayend").val(),
                             "comments": snapshot.child("comments").val(),
-                            "myteams":myteams
+                            "myteams":myteams,
+                            "photo":snapshot.child("photoURL").val(),
 
                         };
 

@@ -10,15 +10,14 @@
                 var user = firebase.auth().currentUser;
                 var id = user.uid;
 
-                if(id !== null || id == '' || id === undefined)
-                {
+                if (id !== null || id == '' || id === undefined) {
 
-                
-                firebase.database().ref('/players/' + id + '/teams').on('value', function (snapshot) {
-                    MyTeams = [];
-                    snapshot.forEach(function (childSnapshot) {
 
-                        var datecreated = new Date();
+                    firebase.database().ref('/players/' + id + '/teams').on('value', function (snapshot) {
+                        MyTeams = [];
+                        snapshot.forEach(function (childSnapshot) {
+
+                            var datecreated = new Date();
 
 
                             datecreated.setMinutes(childSnapshot.child("dateminute").val());
@@ -28,23 +27,23 @@
                             datecreated.setDate(childSnapshot.child("dateday").val());
 
 
-                        var Items = {
-                            "key": childSnapshot.key,
-                            "teamname": childSnapshot.child("teamname").val(),
-                            'teamphoto': childSnapshot.child("teamphoto").val(),
-                            'datecreated': datecreated,
-                            'badge': childSnapshot.child("badge").val(),
-                            'members': childSnapshot.child("players").numChildren()
+                            var Items = {
+                                "key": childSnapshot.key,
+                                "teamname": childSnapshot.child("teamname").val(),
+                                'teamphoto': childSnapshot.child("teamphoto").val(),
+                                'datecreated': datecreated,
+                                'badge': childSnapshot.child("badge").val(),
+                                'members': childSnapshot.child("players").numChildren(),
+                                "teamadmin": childSnapshot.child("teamadmin").val()
 
-                        };
+                            };
 
-                        MyTeams.push(Items);
+                            MyTeams.push(Items);
+                        });
+                        callback(MyTeams);
                     });
-                    callback(MyTeams);
-                });
                 }
-                else
-                {
+                else {
                     callback(MyTeams);
                 }
 
@@ -54,7 +53,7 @@
                 firebase.database().ref('/teams').once('value').then(function (snapshot) {
                     var firstName = snapshot.child("barca/teamphoto").val(); // "Ada"
                     //alert(firstName);
-                    var members = 0 ;
+                    var members = 0;
 
                     snapshot.forEach(function (childSnapshot) {
 
@@ -75,23 +74,23 @@
                 return TempItems;
             },
 
-            AddNewTeam: function (newteam , profile) {
+            AddNewTeam: function (newteam, profile) {
                 //alert(user.teamname);
                 // Get a key for a new Post.
                 var user = firebase.auth().currentUser;
                 var id = user.uid;
-                
-                
 
-                 var today = new Date();
 
-                    var year = today.getFullYear();
-                    var month = today.getMonth();
-                    var day = today.getDate();
 
-                    var hour = today.getHours();
-                    var minute = today.getMinutes();
-                
+                var today = new Date();
+
+                var year = today.getFullYear();
+                var month = today.getMonth();
+                var day = today.getDate();
+
+                var hour = today.getHours();
+                var minute = today.getMinutes();
+
                 try {
                     var contact = {
                         //badge:team.badge,
@@ -133,20 +132,20 @@
                         teamoften: newteam.ten,
                         teamofeleven: newteam.eleven,
 
-                        dateyear : year,
-                        datemonth : month,
-                        dateday : day,
+                        dateyear: year,
+                        datemonth: month,
+                        dateday: day,
 
-                        datehour : hour,
-                        dateminute : minute,
-                        players:{
-                            firstone:true,
-                            },
-                        captain:{
-                            firstone:true,
-                            },
+                        datehour: hour,
+                        dateminute: minute,
+                        players: {
+                            firstone: true,
+                        },
+                        captain: {
+                            firstone: true,
+                        },
 
-                        comments:""
+                        comments: ""
 
                     };
 
@@ -154,7 +153,7 @@
                         name: profile.displayname,
                         isadmin: true
                     };
-                    
+
                     contact.captain[id] =
                         {
                             name: profile.displayname,
@@ -169,15 +168,16 @@
                         badge: newteam.badge,
                         rank: 1500,
 
-                        dateyear : year,
-                        datemonth : month,
-                        dateday : day,
+                        dateyear: year,
+                        datemonth: month,
+                        dateday: day,
 
-                        datehour : hour,
-                        dateminute : minute,
-                        players:{
-                            firstone:true,
-                            },
+                        datehour: hour,
+                        dateminute: minute,
+                        players: {
+                            firstone: true,
+                        },
+                        teamadmin: id
 
                     };
 
@@ -188,8 +188,8 @@
                         };
 
 
-                        
-                        
+
+
                     var newPostKey = firebase.database().ref().child('teams').push().key;
                     var teamstats = {
                         rank: 1500,
@@ -199,22 +199,21 @@
                         name: newteam.teamname
                     }
 
-                    
+
                     var updates = {};
-                    
-                    if(id !== null || id == '' || id === undefined)
-                    {
 
-                    
-                    updates['/teams/' + newPostKey] = contact;
+                    if (id !== null || id == '' || id === undefined) {
 
 
-                    updates['/players/' + id + '/teams/' + newPostKey] = playerside;
+                        updates['/teams/' + newPostKey] = contact;
 
 
-                    updates['/teampoints/' + newPostKey] = teamstats;
+                        updates['/players/' + id + '/teams/' + newPostKey] = playerside;
 
-                    updates['/teaminfo/' + newPostKey] = contact;
+
+                        updates['/teampoints/' + newPostKey] = teamstats;
+
+                        updates['/teaminfo/' + newPostKey] = contact;
 
                     }
                     return firebase.database().ref().update(updates);
@@ -232,6 +231,7 @@
 
                     firebase.database().ref('/teams/' + key).once('value').then(function (snapshot) {
                         TeamProfile = {};
+                        var upcomingmatches = [];
                         if (snapshot.exists()) {
 
                             var players = [];
@@ -251,8 +251,8 @@
 
                                     var data = {
 
-                                        key : pl.key,
-                                        name : pl.child("name").val()
+                                        key: pl.key,
+                                        name: pl.child("name").val()
 
                                     }
                                     admins.push(data);
@@ -262,21 +262,25 @@
 
                             //get all the players name with ID and Name
                             if (snapshot.child("players").exists()) {
+                                if (snapshot.child("players/" + id).exists()) {
+                                    if (snapshot.child("players/" + id + "/isadmin").val()) {
+                                        amiadmin = true;
+                                    }
+                                }
                                 snapshot.child("players").forEach(function (pl) {
 
-                                    if(pl.key != "firstone")
-                                    {
-                                    var data = {
+                                    if (pl.key != "firstone") {
+                                        var data = {
 
-                                        key : pl.key,
-                                        name : pl.child("name").val(),
-                                        isadmin : pl.child("isadmin").val(),
-                                        itsme:pl.key==id,
-                                        //for game details
-                                        status : 0  
+                                            key: pl.key,
+                                            name: pl.child("name").val(),
+                                            isadmin: pl.child("isadmin").val(),
+                                            itsme: pl.key == id,
+                                            //for game details
+                                            status: 0
 
-                                    }
-                                    players.push(data);
+                                        }
+                                        players.push(data);
                                     }
 
 
@@ -290,49 +294,97 @@
                             teamcreateddate.setHours(snapshot.child("datehour").val());
                             teamcreateddate.setDate(snapshot.child("dateday").val());
 
-                                var Items = {
-                                    "key": snapshot.key,
-                                    "teamname": snapshot.child("teamname").val(),
-                                    'badge': snapshot.child("badge").val(),
-                                    'homejersey': snapshot.child("homejersey").val(),
-                                    'awayjersey': snapshot.child("awayjersey").val(),
-                                    // 'datecreated': childSnapshot.child("datecreated").val(),
+                            if (snapshot.child("upcominteamgmatches").exists()) {
+                                snapshot.child("upcominteamgmatches").forEach(function (challenges) {
 
-                                    "startmonday": snapshot.child("startmonday").val(),
-                                    "startmondayend": snapshot.child("startmondayend").val(),
-                                    "starttuesday": snapshot.child("starttuesday").val(),
-                                    "starttuesdayend": snapshot.child("starttuesdayend").val(),
-                                    "startwednesday": snapshot.child("startwednesday").val(),
-                                    "startwednesdayend": snapshot.child("startwednesdayend").val(),
-                                    "startthursday": snapshot.child("startthursday").val(),
-                                    "startthursdayend": snapshot.child("startthursdayend").val(),
-                                    "startfriday": snapshot.child("startfriday").val(),
-                                    "startfridayend": snapshot.child("startfridayend").val(),
-                                    "startsaturday": snapshot.child("startsaturday").val(),
-                                    "startsaturdayend": snapshot.child("startsaturdayend").val(),
-                                    "startsunday": snapshot.child("startsunday").val(),
-                                    "startsundayend": snapshot.child("startsundayend").val(),
-                                    "rank": 1500,
-                                    "numberofgames": 0,
-                                    "wins": 0,
-                                    "amiadmin": amiadmin,
-                                    "players": players,
-                                    "captain":admins,
-                                    "teamadmin":snapshot.child("teamadmin").val(),
-                                    "accepted":false,
-                                    "pending":false,
-                                    "invite":false,
-                                    
-                                    "comments":snapshot.child("comments").val(),
-                                    "datecreated":teamcreateddate
-                                };
-                                TeamProfile = Items;
 
+                                    var matchdate = new Date();
+
+
+                                    matchdate.setMinutes(challenges.child("minute").val());
+                                    matchdate.setFullYear(challenges.child("year").val());
+                                    matchdate.setMonth(challenges.child("month").val());
+                                    matchdate.setHours(challenges.child("hour").val());
+                                    matchdate.setDate(challenges.child("day").val());
+
+                                    var matchdata = {
+
+                                        key: challenges.key,
+
+                                        accepted: challenges.child("accepted").val(),
+                                        day: challenges.child("day").val(),
+                                        hour: challenges.child("hour").val(),
+                                        minute: challenges.child("minute").val(),
+                                        month: challenges.child("month").val(),
+
+                                        team1adminid: challenges.child("team1adminid").val(),
+                                        team1key: challenges.child("team1key").val(),
+                                        team1logo: challenges.child("team1logo").val(),
+                                        team1name: challenges.child("team1name").val(),
+                                        team1rank: challenges.child("team1rank").val(),
+                                        team2adminid: challenges.child("team2adminid").val(),
+                                        team2key: challenges.child("team2key").val(),
+                                        team2logo: challenges.child("team2logo").val(),
+                                        team2name: challenges.child("team2name").val(),
+                                        team2rank: challenges.child("team2rank").val(),
+                                        year: challenges.child("year").val(),
+                                        date: matchdate,
+
+                                        stadiumkey: challenges.child("stadiumkey").val(),
+                                        ministadiumkey: challenges.child("ministadiumkey").val(),
+                                        photo: challenges.child("photo").val(),
+                                        price: challenges.child("price").val(),
+                                        stadiumdescription: challenges.child("stadiumdescription").val()
+                                    }
+                                    upcomingmatches.push(matchdata);
+
+                                })
                             }
-                            callback(TeamProfile);
+
+                            var Items = {
+                                "key": snapshot.key,
+                                "teamname": snapshot.child("teamname").val(),
+                                'badge': snapshot.child("badge").val(),
+                                'homejersey': snapshot.child("homejersey").val(),
+                                'awayjersey': snapshot.child("awayjersey").val(),
+                                // 'datecreated': childSnapshot.child("datecreated").val(),
+
+                                "startmonday": snapshot.child("startmonday").val(),
+                                "startmondayend": snapshot.child("startmondayend").val(),
+                                "starttuesday": snapshot.child("starttuesday").val(),
+                                "starttuesdayend": snapshot.child("starttuesdayend").val(),
+                                "startwednesday": snapshot.child("startwednesday").val(),
+                                "startwednesdayend": snapshot.child("startwednesdayend").val(),
+                                "startthursday": snapshot.child("startthursday").val(),
+                                "startthursdayend": snapshot.child("startthursdayend").val(),
+                                "startfriday": snapshot.child("startfriday").val(),
+                                "startfridayend": snapshot.child("startfridayend").val(),
+                                "startsaturday": snapshot.child("startsaturday").val(),
+                                "startsaturdayend": snapshot.child("startsaturdayend").val(),
+                                "startsunday": snapshot.child("startsunday").val(),
+                                "startsundayend": snapshot.child("startsundayend").val(),
+                                "rank": 1500,
+                                "numberofgames": 0,
+                                "wins": 0,
+                                "amiadmin": amiadmin,
+                                "players": players,
+                                "captain": admins,
+                                "teamadmin": snapshot.child("teamadmin").val(),
+                                "accepted": false,
+                                "pending": false,
+                                "invite": false,
+
+                                "comments": snapshot.child("comments").val(),
+                                "datecreated": teamcreateddate,
+                                "upcomingmatches": upcomingmatches
+                            };
+                            TeamProfile = Items;
+
+                        }
+                        callback(TeamProfile);
 
 
-                        });
+                    });
                 }
                 catch (error) {
                     alert(error.message);
@@ -350,10 +402,10 @@
                     var updates = {};
                     updates['/teams/' + team.key] = null;
                     updates['/teampoints/' + team.key] = null;
+                    updates['/teaminfo/' + team.key] = null;
 
-                    for(var i = 0 ;i<members.length; i++)
-                    {
-                        updates['/players/' + members[i].key + '/teams/'+team.key] = null;
+                    for (var i = 0; i < members.length; i++) {
+                        updates['/players/' + members[i].key + '/teams/' + team.key] = null;
                     }
 
 
@@ -372,53 +424,51 @@
             },
 
             UpdateTeamByKey: function (profile) {
-            try
-            {
-             var updates = {};
-             var id = profile.key;
+                try {
+                    var updates = {};
+                    var id = profile.key;
 
-              //updates['teams/' + id + '/enableinvitations'] = profile.enableinvitations;
-              updates['teams/' + id + '/startmonday'] = profile.startmonday;
-              updates['teams/' + id + '/startmondayend'] = profile.startmondayend;
-              updates['teams/' + id + '/starttuesday'] = profile.starttuesday;
-              updates['teams/' + id + '/starttuesdayend'] = profile.starttuesdayend;
-              updates['teams/' + id + '/startwednesday'] = profile.startwednesday;
-              updates['teams/' + id + '/startwednesdayend'] = profile.startwednesdayend;
-              updates['teams/' + id + '/startthursday'] = profile.startthursday;
-              updates['teams/' + id + '/startthursdayend'] = profile.startthursdayend;
-              updates['teams/' + id + '/startfriday'] = profile.startfriday;
-              updates['teams/' + id + '/startfridayend'] = profile.startfridayend;
-              updates['teams/' + id + '/startsaturday'] = profile.startsaturday;
-              updates['teams/' + id + '/startsaturdayend'] = profile.startsaturdayend;
-              updates['teams/' + id + '/startsunday'] = profile.startsunday;
-              updates['teams/' + id + '/startsundayend'] = profile.startsundayend;
-              updates['teams/' + id + '/comments'] = profile.comments;
-
-
-              updates['teaminfo/' + id + '/startmonday'] = profile.startmonday;
-              updates['teaminfo/' + id + '/startmondayend'] = profile.startmondayend;
-              updates['teaminfo/' + id + '/starttuesday'] = profile.starttuesday;
-              updates['teaminfo/' + id + '/starttuesdayend'] = profile.starttuesdayend;
-              updates['teaminfo/' + id + '/startwednesday'] = profile.startwednesday;
-              updates['teaminfo/' + id + '/startwednesdayend'] = profile.startwednesdayend;
-              updates['teaminfo/' + id + '/startthursday'] = profile.startthursday;
-              updates['teaminfo/' + id + '/startthursdayend'] = profile.startthursdayend;
-              updates['teaminfo/' + id + '/startfriday'] = profile.startfriday;
-              updates['teaminfo/' + id + '/startfridayend'] = profile.startfridayend;
-              updates['teaminfo/' + id + '/startsaturday'] = profile.startsaturday;
-              updates['teaminfo/' + id + '/startsaturdayend'] = profile.startsaturdayend;
-              updates['teaminfo/' + id + '/startsunday'] = profile.startsunday;
-              updates['teaminfo/' + id + '/startsundayend'] = profile.startsundayend;
-              updates['teaminfo/' + id + '/comments'] = profile.comments;
+                    //updates['teams/' + id + '/enableinvitations'] = profile.enableinvitations;
+                    updates['teams/' + id + '/startmonday'] = profile.startmonday;
+                    updates['teams/' + id + '/startmondayend'] = profile.startmondayend;
+                    updates['teams/' + id + '/starttuesday'] = profile.starttuesday;
+                    updates['teams/' + id + '/starttuesdayend'] = profile.starttuesdayend;
+                    updates['teams/' + id + '/startwednesday'] = profile.startwednesday;
+                    updates['teams/' + id + '/startwednesdayend'] = profile.startwednesdayend;
+                    updates['teams/' + id + '/startthursday'] = profile.startthursday;
+                    updates['teams/' + id + '/startthursdayend'] = profile.startthursdayend;
+                    updates['teams/' + id + '/startfriday'] = profile.startfriday;
+                    updates['teams/' + id + '/startfridayend'] = profile.startfridayend;
+                    updates['teams/' + id + '/startsaturday'] = profile.startsaturday;
+                    updates['teams/' + id + '/startsaturdayend'] = profile.startsaturdayend;
+                    updates['teams/' + id + '/startsunday'] = profile.startsunday;
+                    updates['teams/' + id + '/startsundayend'] = profile.startsundayend;
+                    updates['teams/' + id + '/comments'] = profile.comments;
 
 
+                    updates['teaminfo/' + id + '/startmonday'] = profile.startmonday;
+                    updates['teaminfo/' + id + '/startmondayend'] = profile.startmondayend;
+                    updates['teaminfo/' + id + '/starttuesday'] = profile.starttuesday;
+                    updates['teaminfo/' + id + '/starttuesdayend'] = profile.starttuesdayend;
+                    updates['teaminfo/' + id + '/startwednesday'] = profile.startwednesday;
+                    updates['teaminfo/' + id + '/startwednesdayend'] = profile.startwednesdayend;
+                    updates['teaminfo/' + id + '/startthursday'] = profile.startthursday;
+                    updates['teaminfo/' + id + '/startthursdayend'] = profile.startthursdayend;
+                    updates['teaminfo/' + id + '/startfriday'] = profile.startfriday;
+                    updates['teaminfo/' + id + '/startfridayend'] = profile.startfridayend;
+                    updates['teaminfo/' + id + '/startsaturday'] = profile.startsaturday;
+                    updates['teaminfo/' + id + '/startsaturdayend'] = profile.startsaturdayend;
+                    updates['teaminfo/' + id + '/startsunday'] = profile.startsunday;
+                    updates['teaminfo/' + id + '/startsundayend'] = profile.startsundayend;
+                    updates['teaminfo/' + id + '/comments'] = profile.comments;
 
-                return firebase.database().ref().update(updates);
-            }
-            catch(error)
-            {
-                alert(error.message)
-            }
+
+
+                    return firebase.database().ref().update(updates);
+                }
+                catch (error) {
+                    alert(error.message)
+                }
 
             },
 
@@ -426,54 +476,59 @@
 
 
                 try {
-                var updates = {};
+                    var updates = {};
 
-                switch (operation) {
-                    case 1: //promote
-                        updates['/teams/' + team.key + '/players/' + player.key +'/isadmin'] = true;
-                        break;
-                    case 2: //demote
-                        updates['/teams/' + team.key + '/players/' + player.key +'/isadmin'] = false;
-                        break;
-                    case 3: //remove
-                        updates['/teams/' + team.key + '/players/' + player.key] = null;
-                        updates['/teams/' + team.key + '/admins/' + player.key] = null;
-                        updates['/players/' + player.key + '/teams/' + team.key] = null;
-                        break;
-                    case 4: //add
-                        updates['/teams/' + team.key + '/players/' + player.key] = player;
-                        break;
+                    switch (operation) {
+                        case 1: //promote
+                            updates['/teams/' + team.key + '/players/' + player.key + '/isadmin'] = true;
+                            break;
+                        case 2: //demote
+                            updates['/teams/' + team.key + '/players/' + player.key + '/isadmin'] = false;
+                            break;
+                        case 3: //remove
+                            updates['/teams/' + team.key + '/players/' + player.key] = null;
+                            updates['/teams/' + team.key + '/admins/' + player.key] = null;
+                            updates['/players/' + player.key + '/teams/' + team.key] = null;
+                            break;
+                        case 4: //add
+                            updates['/teams/' + team.key + '/players/' + player.key] = player;
+                            break;
 
-                    default:
-                        break;
-                }
+                        default:
+                            break;
+                    }
 
-                return firebase.database().ref().update(updates);
-                    
+                    return firebase.database().ref().update(updates);
+
                 } catch (error) {
                     alert(error.message);
                 }
 
             },
 
-             LeaveTeam: function (team) {
+            LeaveTeam: function (team) {
 
+                var user = firebase.auth().currentUser;
+                var id = user.uid;
 
-                try {
-                var updates = {};
+                if (id !== null || id == '' || id === undefined) {
+                    try {
+                        var updates = {};
 
-                updates['/teams/' + team.key + '/players/' + player.key +'/isadmin'] = true;
-                updates['/teams/' + team.key + '/players/' + player.key +'/isadmin'] = false;
-                
-                return firebase.database().ref().update(updates);
-                    
-                } catch (error) {
-                    alert(error.message);
+                        updates['/teams/' + team.key + '/players/' + id] = null;
+                        updates['/teams/' + team.key + '/captain/' + id] = null;
+                        updates['/players/' + id + '/teams/' + team.key] = null;
+
+                        return firebase.database().ref().update(updates);
+
+                    } catch (error) {
+                        alert(error.message);
+                    }
+
                 }
-
             },
 
-            InvitePlayerToTeam: function (team, player,admindetails) {
+            InvitePlayerToTeam: function (team, player, admindetails) {
 
                 try {
 
@@ -506,12 +561,12 @@
 
                         "status": 0,
 
-                        "dateyear" : year,
-                        "datemonth" : month,
-                        "dateday" : day,
+                        "dateyear": year,
+                        "datemonth": month,
+                        "dateday": day,
 
-                        "datehour" : hour,
-                        "dateminute" : minute,
+                        "datehour": hour,
+                        "dateminute": minute,
 
                         "adminkey": admindetails.key,
                         "admindisplayname": admindetails.displayname,
