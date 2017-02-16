@@ -61,8 +61,8 @@ angular.module('football.controllers')
 
                         $scope.$apply();
                     }, function (error) {
-                            alert(error.message);
-                        })
+                        alert(error.message);
+                    })
 
 
                 })
@@ -74,10 +74,12 @@ angular.module('football.controllers')
         $scope.acceptinvitation = function (challenge) {
             try {
 
+                if (challenge !== null || challenge == '' || challenge === undefined) {
+                    $state.go('app.choosechallengestadium', {
+                        challenge: challenge
+                    });
+                }
 
-                $state.go('app.choosechallengestadium', {
-                    challenge: challenge
-                });
 
             } catch (error) {
                 alert(error.message);
@@ -105,9 +107,9 @@ angular.module('football.controllers')
                             //remove the challenge from homepage
                             $scope.profile.challenges = $scope.profile.challenges.filter(function (el) {
                                 return el.key !== challenge.key;
-                                $scope.$digest();
+                                
                             })
-
+                            $scope.$apply();
                         }, function (error) {
                             alert(error.message);
                         })
@@ -137,9 +139,9 @@ angular.module('football.controllers')
                             })
                             $scope.profile.challenges = $scope.profile.challenges.filter(function (el) {
                                 return el.key !== challenge.key;
-                                $scope.$digest();
+                                
                             })
-
+                            $scope.$apply();
                         }, function (error) {
                             alert(error.message);
                         })
@@ -161,7 +163,7 @@ angular.module('football.controllers')
 
                             var alertPopup = $ionicPopup.alert({
                                 title: 'New Team',
-                                template: 'You know below to team ' + invitation.teamname
+                                template: 'You now below to team ' + invitation.teamname
                             }).then(function () {
                                 $state.go("app.teammanagement");
                             }, function (error) {
@@ -349,6 +351,15 @@ angular.module('football.controllers')
             );
         }
 
+        $scope.goteamprofile = function (id) {
+            if (id !== null || id == '' || id === undefined) {
+                $state.go("app.teamprofile",
+                    {
+                        teamid: id
+                    })
+            }
+
+        }
 
 
         var connectedRef = firebase.database().ref(".info/connected");

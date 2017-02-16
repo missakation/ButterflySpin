@@ -42,7 +42,7 @@
     }
 </style>
 
-<ion-view title="Home">
+<ion-view title='<img src="img/loggo.png" style="width:80px;height:40px;padding-top:4px ">'>
 
     <ion-nav-buttons side="right">
         <button class="button button-icon" ng-click="toggleSearch()" style="color:white">{{showSearch && 'Hide' || 'Search'}}
@@ -55,12 +55,14 @@
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
     </ion-nav-buttons>
 
+
+
     <ion-nav-bar class="headercolor">
         <ion-nav-back-button>
 
         </ion-nav-back-button>
     </ion-nav-bar>
-
+    
 
     <ion-content class="has-footer" style="background-color:rgb(45,62,75)">
 
@@ -132,7 +134,7 @@
             <div class="row" style="background-color:rgb(62,83,100)">
 
                 <div class="col" align="center">
-                    <img src="img/Badges/{{rankedteams[0].badge}}.png" style="width:50px;height:50px ">
+                    <img src="img/Badges/{{rankedteams[0].badge}}.png" style="width:50px;height:50px " ng-click="goteamprofile(profile.myteams[0].key)">
                     <h6 class="whitetext">
                         {{rankedteams[0].teamname}}
                     </h6>
@@ -141,7 +143,7 @@
                 </div>
 
                 <div class="col" align="center">
-                    <img src="img/Badges/{{rankedteams[1].badge}}.png" style="width:50px;height:50px ">
+                    <img src="img/Badges/{{rankedteams[1].badge}}.png" style="width:50px;height:50px " ng-click="goteamprofile(profile.myteams[0].key)">
                     <h5 class="whitetext">
                         {{rankedteams[1].teamname}}
                     </h5>
@@ -151,7 +153,7 @@
 
 
                 <div class="col" align="center">
-                    <img src="img/Badges/{{profile.myteams[0].badge}}.png" style="width:50px;height:50px ">
+                    <img src="img/Badges/{{profile.myteams[0].badge}}.png" style="width:50px;height:50px " ng-click="goteamprofile(profile.myteams[0].key)">
                     <h5 class="whitetext">
                         {{rankedteams[2].teamname}}
                     </h5>
@@ -320,13 +322,12 @@
                         <h5 class="whitetext">
                             VS
                         </h5>
-                        <img src="https://bossip.files.wordpress.com/2015/03/nba-face-6.png?w=700" style="border-radius:50% ; height:80px ; width:80px"
-                            align="right" height="50" />
-
+                        <img src="{{challenges.adminphoto}}" style="border-radius:50% ; height:60px ; width:60px"/>
+                           <h5 class="whitetext">
+                                {{challenges.admintelephon}}
+                            </h5>
 
                     </div>
-
-
                 </div>
                 <div class="col">
                     <div align="center">
