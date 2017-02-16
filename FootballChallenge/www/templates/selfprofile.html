@@ -134,17 +134,17 @@
 </div>
 </div>
 -->
-<div class="card">
+<div class="card" style="border: none">
 <ion-item>
 	<div class="row row-center">
-		<div class="col" style="border-bottom:{{status.Available}};border-color: green">
+		<div class="col" style="border-bottom:{{status.Available}};border-color: green;border-right:1px solid white">
 			<h3 class="whitetext" ng-click="switchscreens(1)">
 				AVAILABILITY
 			</h3>
 			
 		</div>
 
-		<div class='col ' style="border-bottom:{{status.Statistics}};border-color: green">
+		<div class='col ' style="border-bottom:{{status.Statistics}};border-color: green;border-right:1px solid white">
 			<h3 class="whitetext" ng-click="switchscreens(2)">
 				STATISTICS
 			</h3>
@@ -166,7 +166,7 @@
 
 
 
-<ion-item ng-show="tabs.Statistics">
+<ion-item ng-show="tabs.Statistics" style="border: none">
 
 
 	<div class="row row-center">
@@ -213,7 +213,7 @@
 
 </ion-item>
 
-<ion-item ng-show="tabs.Available">
+<ion-item ng-show="tabs.Available" style="border: none">
 
 
 	<div class="row row-center">
@@ -315,7 +315,7 @@
 </ion-list>
 
 
-<ion-item ng-show="tabs.Members">
+<ion-item ng-show="tabs.Members" style="border: none">
 
 	<div class="row row-center" ng-repeat="upmatches in currentprofile.upcomingmatches" style="background-color:rgb(62,83,100)">
 <div class="col col-75">

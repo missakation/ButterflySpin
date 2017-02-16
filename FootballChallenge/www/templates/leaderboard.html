@@ -1,6 +1,6 @@
 <style>
-    .headercolor{
-        background-color: rgb(62,83,100);
+    .headercolor {
+        background-color: rgb(62, 83, 100);
         color: white
     }
 </style>
@@ -21,11 +21,86 @@
         </ion-nav-back-button>
     </ion-nav-bar>
     <ion-content style="background-color:rgb(45,62,75)">
+        <div align="center">
+            <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
+        </div>
 
 
-        
+        <div class="card" ng-show="!notloaded" style="border: none">
+            <div class="row" style="background-color:rgb(62,83,100);border: none">
+
+                <div class="col" align="center" ng-click="goteamprofile(rankedteams[0].key)">
+                    <img src="img/Badges/{{rankedteams[0].badge}}.png" style="width:50px;height:50px ">
+                    <h6 class="whitetext">
+                        {{rankedteams[0].teamname}}
+                    </h6>
+                    <h6 style="color: DarkTurquoise "> <b>1st</b>
+                    </h6>
+                </div>
+
+                <div class="col" align="center" ng-click="goteamprofile(rankedteams[1].key)">
+                    <img src="img/Badges/{{rankedteams[1].badge}}.png" style="width:50px;height:50px ">
+                    <h5 class="whitetext">
+                        {{rankedteams[1].teamname}}
+                    </h5>
+                    <h6 style="color: DarkTurquoise "> <b>2nd</b>
+                    </h6>
+                </div>
 
 
+                <div class="col" align="center" ng-click="goteamprofile(rankedteams[2].key)">
+                    <img src="img/Badges/{{profile.myteams[0].badge}}.png" style="width:50px;height:50px ">
+                    <h5 class="whitetext">
+                        {{rankedteams[2].teamname}}
+                    </h5>
+                    <h6 style="color: DarkTurquoise "> <b>3rd</b>
+                    </h6>
+                </div>
 
-    </ion-content >
+            </div>
+        </div>
+        <div class="card" style="border-color:rgb(45,62,75);background-color: rgb(45,62,75) " ng-show="!notloaded">
+            <div class="row" style="border: none" ng-show="!notloaded">
+
+                <div class="col" align="center">
+                    <h5 class="whitetext">
+                        Team
+                    </h5>
+                </div>
+
+                <div class="col" align="center">
+                    <h5 class="whitetext">
+                        Rating
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card" ng-show="!notloaded" style="border: none" >
+            <div class="row row-center" ng-repeat="item in rankedteams" style="background-color:rgb(62,83,100)" ng-hide="{{$index<3}}" ng-click="goteamprofile(item.key)">
+                <div class="col col-10">
+                    <h5 class="whitetext">
+                        {{$index}}.
+                    </h5>
+
+                </div>
+                <div class="col">
+                    <h5 class="whitetext">
+                        {{item.teamname}}
+                    </h5>
+
+                </div>
+                <div class="col">
+                    <h5 class="whitetext" style="color: DarkTurquoise ">
+                        {{item.ranking}}
+                    </h5>
+
+                </div>
+            </div>
+        </div>
+
+    </ion-content>
+
+
 </ion-view>
