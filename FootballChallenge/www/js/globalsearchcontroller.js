@@ -1,7 +1,7 @@
 ﻿
 angular.module('football.controllers')
 
-    .controller('GlobalSearchController', function ($scope, SearchStore, $ionicPopup, $ionicLoading, $stateParams, $timeout) {
+    .controller('GlobalSearchController', function ($scope, SearchStore, ReservationFact, $ionicPopup, $ionicLoading, $stateParams, $timeout) {
         
 
         $scope.query = $stateParams.searchCriteria.toString();
@@ -40,7 +40,7 @@ angular.module('football.controllers')
             })) {
                // callback();
             };
-            if(SearchStore.SearchAllByField("stadiums", "name", crit, function (allStadiums) {
+            /*if(SearchStore.SearchAllByField("stadiums", "name", crit, function (allStadiums) {
                 if (allStadiums.length > 0)
                 {
                     $scope.stadiums = allStadiums;
@@ -50,7 +50,17 @@ angular.module('football.controllers')
                 //$scope.$apply();
             })){
                 //callback();
-            };
+            };*/
+
+            ReservationFact.GetAllMiniStadiumsByStadName(crit,function (allStadiums) {
+                if (allStadiums.length > 0) {
+                    $scope.stadiums = allStadiums;
+                    //alert("Stadiums: " + $scope.stadiums.length);
+                }
+                //alert("hellO");
+                //$scope.$apply();
+            });
+
             if(SearchStore.SearchAllByField("teams", "teamname", crit, function (allTeams) {
                 if (allTeams.length > 0)
                 {

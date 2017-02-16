@@ -36,9 +36,14 @@
         color: black;
     }
     
-    .headercolor {
-        background-color: rgb(62, 83, 100);
+    .headercolor{
+        background-color: rgb(62,83,100);
         color: white
+    }
+
+    .bodyColor{
+        background-color:rgb(45,62,75);
+        color: white;
     }
 </style>
 
@@ -47,7 +52,7 @@
     <ion-nav-buttons side="right">
         <button class="button button-icon" ng-click="toggleSearch()" style="color:white">{{showSearch && 'Hide' || 'Search'}}
 </button>
-    </ion-nav-buttons>
+    </ion-nav-buttons >
 
     <ion-nav-back-button>
     </ion-nav-back-button>
@@ -64,18 +69,18 @@
     </ion-nav-bar>
     
 
-    <ion-content class="has-footer" style="background-color:rgb(45,62,75)">
+    <ion-content class="has-footer bodyColor">
 
         <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
         </ion-refresher>
-        <div class="list" ng-show="showSearch">
+        <div class="list headercolor" ng-show="showSearch">
 
-            <div class="item item-input-inset">
+            <div class="item item-input-inset headercolor">
                 <label class="item-input-wrapper">
                 <i class="icon ion-search placeholder-icon"></i>
               <input type="text" placeholder="Search players, teams, stadiums" ng-model="query">
             </label>
-                <button ui-sref="app.searchAll({searchCriteria: query})" class="button button-small button-balanced">
+                <button ui-sref="app.searchAll({searchCriteria: query})" class="button button-small button-balanced" ng-disabled="!query">
               Search
             </button>
             </div>

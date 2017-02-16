@@ -371,7 +371,58 @@ angular.module('football.controllers')
                 catch (error) {
                     alert(error);
                 }
+            },
+            GetAllMiniStadiums: function (callback) {
+                //var q = $q.defer();
+                try {
+                    //firebase.database().ref('/stadiums/ministadiums').on('value',function (snapshot) {  
+
+                    firebase.database().ref('/stadiumsinfo').once('value', function (snapshot) {
+                        AllStadiums = [];
+                        snapshot.forEach(function (stadiumSnapshot) {
+                            ministadiums = stadiumSnapshot.child("ministadiums");
+
+                            ministadiums.forEach(function(minisnapshot)
+                            {
+                                AllStadiums.push(minisnapshot.val());
+                            })
+                        })
+                        callback(AllStadiums);
+
+                    });
+                }
+                catch (error) {
+                    alert(error);
+                }
+            },
+            GetAllMiniStadiumsByStadName: function (stdName, callback) {
+                //var q = $q.defer();
+                try {
+                    //firebase.database().ref('/stadiums/ministadiums').on('value',function (snapshot) {  
+
+                    firebase.database().ref('/stadiumsinfo').orderByChild("name").startAt(stdName).endAt(stdName).once('value', function (snapshot) {
+                        AllStadiums = [];
+                        snapshot.forEach(function (stadiumSnapshot) {
+                            if (stadiumSnapshot != null && stadiumSnapshot.child("name").val() == stdName)
+                            {
+                                ministadiums = stadiumSnapshot.child("ministadiums");
+
+                                ministadiums.forEach(function (minisnapshot) {
+                                    minStd = minisnapshot.val();
+                                    minStd.name = stadiumSnapshot.child("name").val();
+                                    AllStadiums.push(minStd);
+                                })
+                           
+                                callback(AllStadiums);
+                            }
+                        })
+                    });
+                }
+                catch (error) {
+                    alert(error);
+                }
             }
+
         }
 
     })
