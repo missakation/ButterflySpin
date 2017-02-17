@@ -29,9 +29,8 @@
                                 
                                 <div class="col">
                                     <div class="item item-avatar-center" style="background-color:#3E5364;color:white" >
-                                        <img class="item-image" src="https://bossip.files.wordpress.com/2015/03/nba-face-6.png" style="width:75px;margin: 10px auto;border-radius:35px;" />
-                                        </br>
-                                        <div>{{player.displayname}}</div>
+                                        <img class="item-image player-image" src="https://bossip.files.wordpress.com/2015/03/nba-face-6.png"/>
+                                        <div style="margin-top:5px;text-align:center;" >{{player.displayname}}</div><div style="font-size:9px;">ID: {{player.uid}}</div>
                                     </div>
                                 </div>
                                 
@@ -115,11 +114,11 @@
                                 
                                 <div class="col">
                                     <a ng-href="#/app/teamprofile/{{team.id}}">
-                                    <div class="item item-avatar-center" style="background-color:#3E5364;" >
+                                    <div class="item item-avatar-center" style="background-color:#3E5364;color:white;text-align:center;" >
                                         
-                                        <img class="item-image" src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="width:75px;margin: 10px auto;border-radius:35px;" />
-                                        </br>
+                                        <img class="item-image player-image" src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg"  />
                                         <div>{{team.teamname}}</div>
+                                        <div style="color: DarkTurquoise;font-size:9px;">Ranking: {{team.rank}}</div>
                                             
                                     </div></a>
                                 </div>
