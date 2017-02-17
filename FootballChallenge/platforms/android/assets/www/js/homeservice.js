@@ -60,7 +60,13 @@ angular.module('football.controllers')
                                     team2rank: challenges.child("team2rank").val(),
                                     year: challenges.child("year").val(),
                                     date: challengedate,
-                                    isadmin: isadmin
+                                    isadmin: isadmin,
+
+
+                                    adminphoto: challenges.child("adminphoto").val(),
+                                    admintelephon: challenges.child("admintelephon").val(),
+                                    adminname: challenges.child("adminname").val()
+
                                 }
                                 totchallenges.push(challengedata);
 

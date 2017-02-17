@@ -17,6 +17,8 @@
                         MyTeams = [];
                         snapshot.forEach(function (childSnapshot) {
 
+                            //firebase.database().ref('/teams/' + childSnapshot.key+'/players').once('value').then(function (teamdata) {
+
                             var datecreated = new Date();
 
 
@@ -33,12 +35,16 @@
                                 'teamphoto': childSnapshot.child("teamphoto").val(),
                                 'datecreated': datecreated,
                                 'badge': childSnapshot.child("badge").val(),
-                                'members': childSnapshot.child("players").numChildren(),
+                                //'members': teamdata.numChildren()-1,
+                                "members":1,
                                 "teamadmin": childSnapshot.child("teamadmin").val()
 
                             };
 
                             MyTeams.push(Items);
+                         //   })
+
+
                         });
                         callback(MyTeams);
                     });

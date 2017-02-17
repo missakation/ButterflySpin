@@ -2,7 +2,7 @@
 angular.module('football.controllers')
 
 
-    .controller('profilecontroller', function ($scope, ProfileStore, $ionicPopup,$state, $stateParams, $ionicLoading, $timeout) {
+    .controller('profilecontroller', function ($scope, ProfileStore, $ionicPopup, $state, $stateParams, $ionicLoading, $timeout) {
 
         $scope.currentprofile = {};
 
@@ -54,11 +54,11 @@ angular.module('football.controllers')
                     $scope.tabs.Statistics = false;
                     $scope.tabs.Available = true;
 
-                    $scope.status.Available= "none";
-                    $scope.status.Members= "none";
-                    $scope.status.Statistics= "none";
+                    $scope.status.Available = "none";
+                    $scope.status.Members = "none";
+                    $scope.status.Statistics = "none";
 
-                    $scope.status.Available= "solid";
+                    $scope.status.Available = "solid";
 
                     break;
 
@@ -68,11 +68,11 @@ angular.module('football.controllers')
                     $scope.tabs.Statistics = false;
                     $scope.tabs.Statistics = true;
 
-                    $scope.status.Available= "none";
-                    $scope.status.Members= "none";
-                    $scope.status.Statistics= "none";
+                    $scope.status.Available = "none";
+                    $scope.status.Members = "none";
+                    $scope.status.Statistics = "none";
 
-                    $scope.status.Statistics= "solid";
+                    $scope.status.Statistics = "solid";
 
                     break;
 
@@ -82,10 +82,10 @@ angular.module('football.controllers')
                     $scope.tabs.Statistics = false;
                     $scope.tabs.Members = true;
 
-                    $scope.status.Available= "none";
-                    $scope.status.Members= "none";
-                    $scope.status.Statistics= "none";
-                    $scope.status.Members= "solid";
+                    $scope.status.Available = "none";
+                    $scope.status.Members = "none";
+                    $scope.status.Statistics = "none";
+                    $scope.status.Members = "solid";
 
                     break;
             }
@@ -100,7 +100,7 @@ angular.module('football.controllers')
                 });
         }
 
-                $scope.gogamedetails = function (gameid) {
+        $scope.gogamedetails = function (gameid) {
             $state.go('app.gamedetails',
                 {
                     gameid: gameid
@@ -109,11 +109,11 @@ angular.module('football.controllers')
 
 
     })
-    .controller('ProfileEditController', function ($cordovaImagePicker,$scope,$ionicHistory,ProfileStore1, $ionicLoading,$state, $stateParams, $timeout, $ionicPopup, $stateParams, $state, TeamStores) {
+    .controller('ProfileEditController', function ($cordovaImagePicker, $scope, $ionicHistory, ProfileStore1, $ionicLoading, $state, $stateParams, $timeout, $ionicPopup, $stateParams, $state, TeamStores) {
 
         $scope.currentprofile = $state.params.myprofile;
 
-        
+
 
 
         $scope.slider1 = {
@@ -313,72 +313,71 @@ angular.module('football.controllers')
         $scope.progress = 0;
         $scope.uploading = false;
 
-        $scope.ChangePicture = function()
-        {
-              var options = {
+        $scope.ChangePicture = function () {
+            var options = {
                 maximumImagesCount: 1,
                 width: 800,
                 height: 800,
                 quality: 80
-                };
+            };
 
-                $cordovaImagePicker.getPictures(options)
-                    .then(function (results) {
-                        //console.log('Image URI: ' + results[0]);
+            $cordovaImagePicker.getPictures(options)
+                .then(function (results) {
+                    //console.log('Image URI: ' + results[0]);
 
-                            // File or Blob named mountains.jpg
-                            var file = results[0];
+                    // File or Blob named mountains.jpg
+                    var file = results[0];
 
-                            // Create the file metadata
-                            var metadata = {
-                            contentType: 'image/jpeg'
-                            };
+                    // Create the file metadata
+                    var metadata = {
+                        contentType: 'image/jpeg'
+                    };
 
-                            var user = firebase.auth().currentUser;
-                            var id = user.uid;
+                    var user = firebase.auth().currentUser;
+                    var id = user.uid;
 
-                            $scope.uploading = true;
+                    $scope.uploading = true;
 
-                            // Upload file and metadata to the object 'images/mountains.jpg'
-                            var uploadTask = storageRef.child('playerimages/' +'/'+id+'/'+ file.name).put(file, metadata);
+                    // Upload file and metadata to the object 'images/mountains.jpg'
+                    var uploadTask = storageRef.child('playerimages/' + '/' + id + '/' + file.name).put(file, metadata);
 
-                            // Listen for state changes, errors, and completion of the upload.
-                            uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-                            function(snapshot) {
-                                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                                $scope.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                                //console.log('Upload is ' + progress + '% done');
-                                switch (snapshot.state) {
+                    // Listen for state changes, errors, and completion of the upload.
+                    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+                        function (snapshot) {
+                            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                            $scope.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            //console.log('Upload is ' + progress + '% done');
+                            switch (snapshot.state) {
                                 case firebase.storage.TaskState.PAUSED: // or 'paused'
                                     console.log('Upload is paused');
                                     break;
                                 case firebase.storage.TaskState.RUNNING: // or 'running'
                                     console.log('Upload is running');
                                     break;
-                                }
-                            }, function(error) {
+                            }
+                        }, function (error) {
                             switch (error.code) {
                                 case 'storage/unauthorized':
-                                // User doesn't have permission to access the object
-                                break;
+                                    // User doesn't have permission to access the object
+                                    break;
 
                                 case 'storage/canceled':
-                                // User canceled the upload
-                                break;
+                                    // User canceled the upload
+                                    break;
 
                                 case 'storage/unknown':
-                                // Unknown error occurred, inspect error.serverResponse
-                                break;
+                                    // Unknown error occurred, inspect error.serverResponse
+                                    break;
                             }
                             $scope.$apply();
-                            }, function() {
-                                // Upload completed successfully, now we can get the download URL
-                                var downloadURL = uploadTask.snapshot.downloadURL;
-                            });
+                        }, function () {
+                            // Upload completed successfully, now we can get the download URL
+                            var downloadURL = uploadTask.snapshot.downloadURL;
+                        });
 
-                    }, function(error) {
+                }, function (error) {
                     // error getting photos
-                    });
+                });
         }
 
     })
