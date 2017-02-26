@@ -74,23 +74,23 @@
 	{{search.date| date: "yyyy-MM-dd H:mm"}}
 </div>
 
-<div  align="center" >
-	<h4 class="whitetext">
-		Choose Up to 3 Teams
-	</h4>
+<div align="left" >
+	<h5 class="whitetext" style="font-size:12px;text-indent:20px; color:#5f7485; margin-bottom:-5px">
+		CHOOSE MAX 3 OPPONENTS
+	</h5>
 </div>
 
 <ion-list>
 	<div class="card" style="background-color:rgb(62,83,100)" ng-repeat="team in test">
 
 <div class="row ">
-	<div class="col" align="center">
-		<img src="img/Badges/{{team.badge}}.png" style="width:80px;height:80px;">
+	<div class="col" style="color:lightgray;border-right:1px solid #5f7485" align="center">
+		<img src="img/Badges/{{team.badge}}.png" style="width:100%;height:80px;">
 <h5 class="whitetext"> {{team.teamname}} </h5>
 <h5 class="whitetext"> {{team.ranking}} </h5>
 </div>
 
-<div class="col" align="center">
+<div class="col"  style="color:lightgray;border-right:1px solid #5f7485" align="center">
 	<img src={{team.favstadiumphoto}} style="width:100%;height:80px;">
 <h5 class="whitetext"> Fav. Stadium </h5>
 </div>
@@ -101,22 +101,18 @@
 </div>
 
 </div>
-
+<hr style="height:1px; visibility:hidden;" />
 
 <div class="row row-top">
-	<div class="col" align="center" style="color:white"> Matches
+	<div class="col" style="color:lightgray;border-right:1px solid #5f7485" align="center" style="color:white"> Matches
 
 </div>
 
-<div class="col " style="color:white" align="center"> Difficulty
+<div class="col " style="color:lightgray;border-right:1px solid #5f7485" style="color:white" align="center"> Difficulty
 
 </div>
 
-<div class="col " style="color:white" align="center"> Rating
-
-</div>
-
-<div class="col " align="right" style="color:white"> Av. Res
+<div class="col " style="color:lightgray" align="center"> Rating
 
 </div>
 
@@ -134,15 +130,10 @@
 <div class="col" style="color:white"> {{item.nummatches}}
 
 </div>
-
-<div class="col" align="right" align="center">
-
-</div>
-
 </div>
 
 <p class="whitetext">
-	I am the best
+		I am the best
 </p>
 
 <div class="row">
@@ -161,16 +152,12 @@
 
 
 </ion-list>
-</br>
-</br>
-</br>
-</br>
 
 </ion-content>
 
-<div class="bar bar-footer " style="background-color:rgb(30,30,30)">
+<div class="bar bar-footer " style="background-color:#2d3e4b">
 
-<button class="button button-calm button-small " style="width:100%" ng-click="choosestadium()"> Choose Stadium
+<button class="button button-small " style="width:100%; background-color:#28b041; color:white; border-radius:20px" ng-click="choosestadium()"> Choose Stadium
 </button>
 </div>
 

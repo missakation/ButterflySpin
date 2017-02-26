@@ -157,7 +157,7 @@ angular.module('football.controllers')
                 .then(function () 
                  {
 
-                     player.status = 0;
+                     player.status = 1;
                  }
                   , 
                  function (error) 

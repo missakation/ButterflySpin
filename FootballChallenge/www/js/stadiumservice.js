@@ -357,6 +357,9 @@ angular.module('football.controllers')
                             "stadiumkey": minisnapshot.key,
                             "name": minisnapshot.child("name").val(),
                             "photo":minisnapshot.child("photo").val(),
+                            "area":minisnapshot.child("locationarea").val(),
+                            "city":minisnapshot.child("locationcity").val()
+                            
 
                         };
                         AllStadiums.push(Data);

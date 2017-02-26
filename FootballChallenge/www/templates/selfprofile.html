@@ -1,3 +1,4 @@
+<!--Ari-->
 <ion-view view-title="My Profile">
 	<style>
 		img {
@@ -63,43 +64,44 @@
 	<ion-item>
 
 		<div class="row ">
-			<div class="col" align="center">
-				<img src="{{currentprofile.photo}}" style="width:80px;height:80px;">
-<h2 class="whitetext"> {{currentprofile.teamname}} </h2>
-<h4 class="whitetext"> {{currentprofile.ranking}} </h4>
+			<div class="col"  align="center">
+				<img src="{{currentprofile.photo}}" style="width:80px;height:80px;border-radius:50px">
+				<h4 class="whitetext">404 Not found</h4>
+				<h4 Put the 5 digit user ID>
+					 </h4>
 </div>
 
-<div class="col" align="center">
+<div class="col" style="border-left-style: solid;border-width: thin;border-color: #5f7485;" align="center">
 	<img src="img/Badges/{{currentprofile.myteams[0].badge}}.png" style="width:80px;height:80px ">
-<h4 class="whitetext"> {{currentprofile.myteams[0].teamname}} </h4>
+<h3 class="whitetext"> {{currentprofile.myteams[0].teamname}} </h3>
+<h4 class="whitetext" style="color:darkturquoise"> 404 Not Found! </h4>
 </div>
 
 </div>
 
 
 <div class="row row-top">
-	<div class="col" align="center">
-		<h4 style="color:lightgray"> Position
-		<h4 style="color: white"> {{currentprofile.playposition}}
+	<div class="col" style="padding-top:20px" align="center">
+	<h4 style="color:lightgray; padding-top:10px"> Position
+		<h4 style="color: white; padding-top:5px"> {{currentprofile.playposition}}
 </h4>
 
 
 </div>
 
-<div class="col " style="color:lightgray" align="center">
-
-<h4 style="color:lightgray"> Age
+<div class="col " style="color:lightgray; padding-top:20px" align="center">
+<h4 style="color:lightgray;border-right:1px solid #5f7485;border-left:1px solid #5f7485;margin:0px;padding-top:10px">  Age
 </h4>
-<h4 style="color: white"> {{currentprofile.Age}}
+<h4 style="color: white;border-right:1px solid #5f7485;border-left:1px solid #5f7485;margin:0px;padding-top:10px"> missakchange
 </h4>
 </div>
 
-<div class="col " style="color:lightgray" align="center">
+<div class="col " style="color:lightgray;padding-top:20px" align="center">
 
 
-<h4 style="color:lightgray"> Fav Stadium
+<h4 style="color:lightgray;margin:0px;padding-top:10px"> Fav Stadium
 </h4>
-<h4 style="color: white"> {{currentprofile.Age}}
+<h4 style="color: white;margin:0px;padding-top:10px"> missakchange
 </h4>
 </div>
 
@@ -134,179 +136,175 @@
 </div>
 </div>
 -->
-<div class="card" style="border: none">
-<ion-item>
-	<div class="row row-center">
-		<div class="col" style="border-bottom:{{status.Available}};border-color: green;border-right:1px solid white">
-			<h3 class="whitetext" ng-click="switchscreens(1)">
-				AVAILABILITY
-			</h3>
-			
-		</div>
+	<div class="card" style="background-color: rgb(62, 83, 100)">
+			<ion-item style="border: none;padding:0px">
+				<div class="row row-center" align="center" style="padding:0px">
+					<div class="col" align="center" style="border-bottom:{{status.Available}};border-color: green;padding:10px; border-right:1px solid #5f7485">
+						<h3 class="whitetext" ng-click="switchscreens(1)">
+							<b>AVAILABILITY</b>
+						</h3>
 
-		<div class='col ' style="border-bottom:{{status.Statistics}};border-color: green;border-right:1px solid white">
-			<h3 class="whitetext" ng-click="switchscreens(2)">
-				STATISTICS
-			</h3>
-			
-		</div>
-		<div class="col" style="border-bottom:{{status.Members}};border-color: green">
+					</div>
 
-			<h3 class="whitetext" ng-click="switchscreens(3)">
-				UPCOMING GAMES
-			</h3>
-			
-		</div>
+					<div class="col" style="border-bottom: {{status.Statistics}};border-color:green;padding:10px; border-right:1px solid #5f7485">
+						<h3 class="whitetext" ng-click="switchscreens(2)">
+							<b>STATISTICS</b>
+						</h3>
 
-	</div>
+					</div>
+					<div class="col" style="border-bottom: {{status.Members}};padding:10px;border-color: green;margin:10px,0">
 
+						<h3 class="whitetext" ng-click="switchscreens(3)">
+							<b>MY GAMES</b>
+						</h3>
 
+					</div>
 
-</ion-item>
+				</div>
 
 
 
-<ion-item ng-show="tabs.Statistics" style="border: none">
+			</ion-item>
 
 
-	<div class="row row-center">
-		<div class='col col-75'>
-
-			<h3 class="whitetext">Games On Arina</h3>
-		</div>
-
-		<div class="col">
-
-			<h3 class="whitetext">1</h3>
-		</div>
-
-	</div>
-
-	<div class="row row-center">
-		<div class='col col-75'>
-
-			<h3 class="whitetext">Wins</h3>
-		</div>
-
-		<div class="col">
-
-			<h3 class="whitetext">1</h3>
-		</div>
-
-	</div>
-
-	<div class="row row-center">
-		<div class='col col-75'>
-
-			<h3 class="whitetext">Win Streak</h3>
-		</div>
-
-		<div class="col">
-
-			<h3 class="whitetext">1</h3>
-		</div>
-
-	</div>
+		<ion-item ng-show="tabs.Statistics" style="border: none;padding:0px">
 
 
+			<div class="row row-center" style="border-bottom:1px solid #5f7485; padding-top:5px; margin:5px 0 0 0;margin-top:15px">
+					<div class='col col-75' >
 
+						<h3 class="whitetext">Games On Arina</h3>
+					</div>
+
+					<div class="col">
+
+						<h3 class="whitetext" align="right">1</h3>
+					</div>
+
+				</div>
+
+				<div class="row row-center" style="border-bottom:1px solid #5f7485; padding-top:5px; margin:0px">
+					<div class='col col-75' >
+
+						<h3 class="whitetext">Wins</h3>
+					</div>
+
+					<div class="col">
+
+				<h3 class="whitetext" align="right">1</h3>
+					</div>
+
+				</div>
+
+				<div class="row row-center" style="border-bottom:1px solid #5f7485; padding-top:5px; margin:0px">
+					<div class='col col-75' >
+
+						<h3 class="whitetext">Win Streak</h3>
+					</div>
+
+					<div class="col">
+
+					<h3 class="whitetext" align="right">1</h3>
+					</div>
+
+				</div>
+
+			</ion-item>
 
 </ion-item>
 
-<ion-item ng-show="tabs.Available" style="border: none">
+<ion-item ng-show="tabs.Available" style="border: none;padding:0px">
 
+				<div class="row row-center"style="border-bottom:1px solid #5f7485;margin-top:15px">
+					<div class="col"style="margin-top:5px">
 
-	<div class="row row-center">
-		<div class="col col-33">
+						<h3 class="whitetext">Monday</h3>
+					</div>
 
-			<h3 class="whitetext">Monday</h3>
+					<div class="col"style="margin-top:5px">
+
+						<h3 class="whitetext" align="right">  <b>{{currentprofile.startmonday}}:00</b> till <b>{{currentprofile.startmondayend}}:00</b> </h3>
+					</div>
+
+				</div>
+
+				<div class="row row-center"style="border-bottom:1px solid #5f7485;padding-top:3px">
+					<div class="col"style="margin-top:5px">
+
+						<h3 class="whitetext">Tuesday</h3>
+					</div>
+
+					<div class="col"style="margin-top:5px">
+
+						<h3 class="whitetext" align="right">  <b>{{currentprofile.starttuesday}}:00</b> till <b>{{currentprofile.starttuesdayend}}:00</b> </h3>
+					</div>
+
+				</div>
+
+				<div class="row row-center"style="border-bottom:1px solid #5f7485">
+					<div class="col"style="margin-top:5px">
+
+					<h3 class="whitetext">Wednesday</h3>
 		</div>
 
-		<div class="col">
+		<div class="col"style="margin-top:5px">
 
-			<h3 class="whitetext">From <b>{{currentprofile.startmonday}}:00</b> till <b>{{currentprofile.startmondayend}}:00</b> </h3>
-		</div>
-
-	</div>
-
-	<div class="row row-center">
-		<div class="col col-33">
-
-			<h3 class="whitetext">Tuesday</h3>
-		</div>
-
-		<div class="col">
-
-			<h3 class="whitetext">From <b>{{currentprofile.starttuesday}}:00</b> till <b>{{currentprofile.starttuesdayend}}:00</b> </h3>
-		</div>
-
-	</div>
-
-	<div class="row row-center">
-		<div class="col col-33">
-
-			<h3 class="whitetext">Wednesday</h3>
-		</div>
-
-		<div class="col">
-
-			<h3 class="whitetext">From <b>{{currentprofile.startwednesday}}:00</b> till <b>{{currentprofile.startwednesdayend}}:00</b> </h3>
-		</div>
-
-	</div>
-
-	<div class="row row-center">
-		<div class="col col-33">
-
-			<h3 class="whitetext">Thursday</h3>
-		</div>
-
-		<div class="col">
-
-			<h3 class="whitetext">From <b>{{currentprofile.startthursday}}:00</b> till <b>{{currentprofile.startthursdayend}}:00</b> </h3>
+			<h3 class="whitetext" align="right">  <b>{{currentprofile.startwednesday}}:00</b> till <b>{{currentprofile.startwednesdayend}}:00</b> </h3>
 		</div>
 
 	</div>
 
-	<div class="row row-center">
-		<div class="col col-33">
+		<div class="row row-center"style="border-bottom:1px solid #5f7485; padding-top:3px">
+			<div class="col"style="margin-top:5px">
 
-			<h3 class="whitetext">Friday</h3>
-		</div>
+						<h3 class="whitetext">Thursday</h3>
+					</div>
 
-		<div class="col">
+					<div class="col"style="margin-top:5px">
 
-			<h3 class="whitetext">From <b>{{currentprofile.startfriday}}:00</b> till <b>{{currentprofile.startfridayend}}:00</b> </h3>
-		</div>
+						<h3 class="whitetext" align="right">  <b>{{currentprofile.startthursday}}:00</b> till <b>{{currentprofile.startthursdayend}}:00</b> </h3>
+					</div>
 
-	</div>
+				</div>
 
-	<div class="row row-center">
-		<div class="col col-33">
+				<div class="row row-center"style="border-bottom:1px solid #5f7485">
+				<div class="col"style="margin-top:5px">
 
-			<h3 class="whitetext">Saturday</h3>
-		</div>
+						<h3 class="whitetext">Friday</h3>
+					</div>
 
-		<div class="col">
+					<div class="col"style="margin-top:5px">
 
-			<h3 class="whitetext">From <b>{{currentprofile.startsaturday}}:00</b> till <b>{{currentprofile.startsaturdayend}}:00</b> </h3>
-		</div>
+						<h3 class="whitetext" align="right">  <b>{{currentprofile.startfriday}}:00</b> till <b>{{currentprofile.startfridayend}}:00</b> </h3>
+					</div>
 
-	</div>
+				</div>
 
-	<div class="row row-center">
-		<div class="col col-33">
+				<div class="row row-center"style="border-bottom:1px solid #5f7485">
+					<div class="col"style="margin-top:5px">
 
-			<h3 class="whitetext">Sunday</h3>
-		</div>
+						<h3 class="whitetext">Saturday</h3>
+					</div>
 
-		<div class="col">
+					<div class="col"style="margin-top:5px">
 
-			<h3 class="whitetext">From <b>{{currentprofile.startsunday}}:00</b> till <b>{{currentprofile.startsundayend}}:00</b> </h3>
-		</div>
+						<h3 class="whitetext" align="right">  <b>{{currentprofile.startsaturday}}:00</b> till <b>{{currentprofile.startsaturdayend}}:00</b> </h3>
+					</div>
 
-	</div>
+				</div>
 
+				<div class="row row-center"style="border-bottom:1px solid #5f7485">
+					<div class="col"style="margin-top:5px">
+
+						<h3 class="whitetext">Sunday</h3>
+					</div>
+
+					<div class="col"style="margin-top:5px">
+
+						<h3 class="whitetext" align="right">  <b>{{currentprofile.startsunday}}:00</b> till <b>{{currentprofile.startsundayend}}:00</b> </h3>
+					</div>
+
+				</div>
 
 
 
@@ -315,7 +313,7 @@
 </ion-list>
 
 
-<ion-item ng-show="tabs.Members" style="border: none">
+<ion-item ng-show="tabs.Members" style="border: none;padding:0px;margin-top:15px">
 
 	<div class="row row-center" ng-repeat="upmatches in currentprofile.upcomingmatches" style="background-color:rgb(62,83,100)">
 <div class="col col-75">
@@ -325,10 +323,10 @@
 
 <div class="col">
 
-	<button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="width:60px" ng-click="gogamedetails(upmatches.key)"> Manage
+	<button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="width:60px;font-size:12px" ng-click="gogamedetails(upmatches.key)"> Manage
 </button>
 
-<button ng-show="!(upmatches.isadmin)" class="button button-balanced button-small" style="width:60px" ng-click="gogamedetails(upmatches.key)"> View
+<button ng-show="!(upmatches.isadmin)" class="button button-balanced button-small" style="width:60px;font-size:12px" ng-click="gogamedetails(upmatches.key)"> View
 </button>
 </div>
 
