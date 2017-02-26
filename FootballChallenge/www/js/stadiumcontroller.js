@@ -1,8 +1,43 @@
 ﻿
 angular.module('football.controllers')
+    .controller('stadiumcontroller', function ($scope, $ionicPopover, ReservationFact, $ionicPopup, $ionicLoading, $timeout, $state, $cordovaDatePicker, pickerView) {
+        
 
-    .controller('stadiumcontroller', function ($scope, $ionicPopover, ReservationFact, $ionicPopup, $ionicLoading, $timeout, $state, $cordovaDatePicker) {
+        $scope.openPickerView = function openPickerView() {
 
+            var picker = pickerView.show({
+                titleText: '', // default empty string
+                doneButtonText: 'Search', // dafault 'Done'
+                cancelButtonText: 'Close', // default 'Cancel'
+                items: [{
+                    values: dateArrayThingy,
+                    defaultIndex: 1
+                }, {
+                    values: [' 7:00 AM ', ' 7:30 AM ', ' 8:00 AM ', ' 8:30 AM ', ' 9:00 AM ', '9:30 AM ', ' 10:00 AM ', ' 10:30 AM', ' 11:00 AM ', ' 11:30 AM ', ' Noon ', ' 1:00 PM ', ' 1:30 PM ', ' 2:00 PM ', ' 2:30 PM ', ' 3:00 PM ', ' 3:30 PM ', ' 4:00 PM ', ' 4:30 PM ', ' 5:00 PM ', ' 5:30 PM ', ' 6:00 PM ', ' 6:30 PM ', ' 7:00 PM ', ' 7:30 PM ', ' 8:00 PM', ' 8:30 PM ', ' 9:00 PM ', ' 9:30 PM ', ' 10:00 PM ', ' 10:30 PM ', ' 11:00 PM', '11:30 PM ', ' Midnight ', ],
+                    defaultIndex: 25
+                }, {
+                    values: [" 5 Vs 5", " 6 Vs 6", " 7 Vs 7", " 8 Vs 8", " 9 Vs 9", " 10 Vs 10", " 11 Vs 11"],
+                    defaultIndex: 0
+                }]
+            });
+
+            
+            if (picker) {
+                picker.then(function pickerViewFinish(output)
+                {
+                    if (output)
+                    {
+                        // output is Array type
+
+                        $scope.search.date = new Date(output[0] + " " + output[1] + ", " +  (new Date()).getFullYear() );
+                        console.log($scope.search.date);
+                        $scope.search.text = output.join(" -");
+                        $scope.checkfree();
+                        //$scope.$digest();
+                    }
+                });
+            }
+        };
 
         $scope.notverified = false;
 
@@ -118,6 +153,7 @@ angular.module('football.controllers')
 
         $scope.search = {
             date: new Date(),
+            text: "Tomorrow, 9:00PM - 5 Vs 5 "
         };
         $scope.search.date.setDate($scope.search.date.getDate() + 1);
         $scope.search.date.setHours(21);
@@ -125,12 +161,12 @@ angular.module('football.controllers')
         $scope.search.date.setMilliseconds(0);
         $scope.search.date.setSeconds(0);
         //alert($scope.search.date);
-
         $scope.allfreestadiums = [];
 
 
         $scope.checkfree = function () {
 
+            console.log("ourish discks");
             //here
             $ionicLoading.show({
                 content: 'Loading',
@@ -212,7 +248,7 @@ angular.module('football.controllers')
 
         }
 
-        $scope.checkfree();
+        //$scope.checkfree();
 
 
         try {
@@ -373,4 +409,33 @@ angular.module('football.controllers')
         }
 
         $scope.doRefresh();
+
+        // onSuccess Callback
+        // This method accepts a Position object, which contains the
+        // current GPS coordinates
+        //
+
+        /*
+        var onSuccess = function(position) {
+            alert('Latitude: '          + position.coords.latitude          + '\n' +
+                  'Longitude: '         + position.coords.longitude         + '\n' +
+                  'Altitude: '          + position.coords.altitude          + '\n' +
+                  'Accuracy: '          + position.coords.accuracy          + '\n' +
+                  'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+                  'Heading: '           + position.coords.heading           + '\n' +
+                  'Speed: '             + position.coords.speed             + '\n' +
+                  'Timestamp: '         + position.timestamp                + '\n');
+        };
+    
+        // onError Callback receives a PositionError object
+        //
+        function onError(error) {
+            alert('code: '    + error.code    + '\n' +
+                  'message: ' + error.message + '\n');
+        }
+    
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);*/
+
+
+
     })

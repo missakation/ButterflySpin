@@ -12,6 +12,7 @@ angular.module('football.controllers')
 
 
             FindFreeStadiums: function (search, callback) {
+                console.log("hasa hos");
                 //var q = $q.defer();
                 try {
 
