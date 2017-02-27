@@ -2,6 +2,22 @@
 angular.module('football.controllers')
     .controller('stadiumcontroller', function ($scope, $ionicPopover, ReservationFact, $ionicPopup, $ionicLoading, $timeout, $state, $cordovaDatePicker, pickerView) {
         
+        function getDateFromDayName(selectedDay)
+        {
+            var selectedDate = new Date();
+            if (selectedDay == "Tomorrow")
+            {
+                selectedDate.setDate(selectedDate.getDate() + 1);
+                alert(selectedDate);
+                return weekday[selectedDate.getDay()] + monthChar[selectedDate.getMonth()] + " " +selectedDate.getDate();
+            }
+            for(var i = 0; i <6;i++)
+            {
+                if (weekdayFull[selectedDate.getDay()] == selectedDay)
+                    return weekday[selectedDate.getDay()] + monthChar[selectedDate.getMonth()] + " " + selectedDate.getDate();
+                selectedDate.setDate(selectedDate.getDate() + 1);
+            }
+        }
 
         $scope.openPickerView = function openPickerView() {
 
@@ -28,8 +44,16 @@ angular.module('football.controllers')
                     if (output)
                     {
                         // output is Array type
-
-                        $scope.search.date = new Date(output[0] + " " + output[1] + ", " +  (new Date()).getFullYear() );
+                        var correctDate;
+                        var selectedDate = output[0];
+                        var selectedTime = output[1];
+                        if (!Date.parse(selectedDate))
+                        {
+                            selectedDate = getDateFromDayName(selectedDate);
+                            console.log(selectedDate);
+                        }
+                        $scope.search.date = new Date(selectedDate + " " + selectedTime + ", " + (new Date()).getFullYear());
+                        $scope.search.players = (output[2].split(" "))[1];
                         console.log($scope.search.date);
                         $scope.search.text = output.join(" -");
                         $scope.checkfree();
@@ -150,9 +174,11 @@ angular.module('football.controllers')
         var freestadiums = [];
 
         //$scope.search.date = "2013-01-08";
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
 
         $scope.search = {
-            date: new Date(),
+            date: tomorrow,
             text: "Tomorrow, 9:00PM - 5 Vs 5 "
         };
         $scope.search.date.setDate($scope.search.date.getDate() + 1);
@@ -186,7 +212,7 @@ angular.module('football.controllers')
 
                 if (leagues.length == 0) {
                     var alertPopup = $ionicPopup.alert({
-                        title: 'Error',
+                        title: 'No results',
                         template: 'No Available Stadiums'
                     });
                 }
@@ -200,7 +226,7 @@ angular.module('football.controllers')
 
         }
 
-        //$scope.checkfree();
+        $scope.checkfree();
 
 
         try {
