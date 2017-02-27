@@ -50,10 +50,10 @@
 
 	</style>
 	<ion-nav-buttons side="primary">
-		<h5 ng-show="currentprofile.amiadmin" ng-click="goupdate(currentprofile)" class="whitetext">
-			<u>
+	    <h5 ng-show="currentprofile.amiadmin" ng-click="goupdate(currentprofile)" class="whitetext">
+			
 				Edit
-			</u>
+			
 		</h5>
 	</ion-nav-buttons>
 
@@ -97,30 +97,29 @@
 
 				<div class="row row-top">
 					<div class="col" align="center">
-						<h4 style="color:lightgray"> Matches
+						<h4 style="color:lightgray;border-right:1px solid #5f7485;margin:0px"> Matches
 						</h4>
-
-
+						<h4 style="color:darkturquoise;border-right:1px solid #5f7485"> Edit 404
+						</h4>
 					</div>
 
 					<div class="col " style="color:lightgray" align="center">
 
-						<h4 style="color:lightgray"> Difficulty
+                    <h4 style="color:lightgray;border-right:1px solid #5f7485;margin:0px"> Difficulty
 						</h4>
-
+							<h4 style="color:darkturquoise;border-right:1px solid #5f7485"> Edit 404
+						</h4>
 					</div>
 
 					<div class="col " style="color:lightgray" align="center">
 
 
-						<h4 style="color:lightgray"> Rating
+						<h4 style="color:lightgray;margin:0px"> Rating
+						</h4>
+								<h4 style="color:darkturquoise;margin:0px"> Edit 404
 						</h4>
 					</div>
-
-					<div class="col " align="right">
-						<h4 style="color:lightgray"> Av. Res
-						</h4>
-					</div>
+					
 
 				</div>
 
@@ -162,9 +161,9 @@
 </div> -->
 
 
-		<div class="row row-top" style="background-color:rgb(46,62,75);height: 70px;padding-top: 0px">
+		<div class="row row-top" style="background-color:rgb(46,62,75);padding-top: 0px;margin-bottom:-25px;margin-top:-20px">
 			<div class="col" align="center">
-				<button class="button  button-balanced button-full" style="border-radius:15px" ng-click="Invite()">
+				<button class="button  button-balanced button-full" style="border-radius:45px" ng-click="Invite()">
 					<h5 class="whitetext">
 						Invite Member			
 					</h5>
@@ -172,7 +171,7 @@
 				</button>
 			</div>
 			<div class="col" align="center">
-				<button class="button  button-balanced button-full" style="border-radius:15px" ng-click="Challengeteam()">
+				<button class="button  button-balanced button-full" style="border-radius:45px" ng-click="Challengeteam()">
 					<h5 class="whitetext">
 						Challenge
 					</h5>
@@ -182,8 +181,8 @@
 			</div>
 		</div>
 
-		<div class="card" ng-hide="currentprofile.upcomingmatches.length === 0">
-			<ion-item style="border:none">
+		<div class="card" style="padding-bottom:0px" ng-hide="currentprofile.upcomingmatches.length === 0">
+			<ion-item style="border:none;padding:10px 0 10 0">
 				<div align="center">
 					<h2 class="whitetext">
 						UPCOMING GAMES
@@ -192,40 +191,40 @@
 				</div>
 			</ion-item>
 
-			<div class="row row-center" ng-repeat="upmatches in currentprofile.upcomingmatches" style="background-color:rgb(62,83,100)">
-				<div class="col col-75">
+			<div class="row row-center" ng-repeat="upmatches in currentprofile.upcomingmatches" style="background-color:rgb(62,83,100); padding-right:0px;padding-left:0px">
+				<div class="col col-75" style="border-bottom:1px solid #5f7485;padding:0 0 0 5px">
 
 					<h5 class="whitetext" >{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h5>
 				</div>
 
 				<div class="col">
-					<button ng-show="!(upmatches.isadmin)" class="button button-balanced button-small" style="width:60px" ng-click="gogamedetails(upmatches.key)"> View
+					<button ng-show="!(upmatches.isadmin)" class="button button-balanced button-small" style="width:60px;font-size:12px" ng-click="gogamedetails(upmatches.key)"> View
 					</button>
 				</div>
 
 			</div>
 		</div>
 
-		<div class="card">
-			<ion-item style="border: none">
-				<div class="row row-center">
-					<div class="col" style="border-bottom:{{status.Available}};border-color: green;border-right:1px solid white">
+	<div class="card" style="background-color: rgb(62, 83, 100);margin-top:-5px">
+			<ion-item style="border: none;padding:0px">
+				<div class="row row-center" align="center" style="padding:0px">
+					<div class="col" align="center" style="border-bottom:{{status.Available}};border-color: green;padding:10px; border-right:1px solid #5f7485">
 						<h3 class="whitetext" ng-click="switchscreens(1)">
-							AVAILABILITY
+							<b>AVAILABILITY</b>
 						</h3>
 
 					</div>
 
-					<div class="col" style="border-bottom: {{status.Statistics}};border-color: green;border-right:1px solid white">
+					<div class="col" style="border-bottom: {{status.Statistics}};border-color:green;padding:10px; border-right:1px solid #5f7485">
 						<h3 class="whitetext" ng-click="switchscreens(2)">
-							STATISTICS
+							<b>STATISTICS</b>
 						</h3>
 
 					</div>
-					<div class="col" style="border-bottom: {{status.Members}};border-color: green">
+					<div class="col" style="border-bottom: {{status.Members}};padding:10px;border-color: green;margin:10px,0">
 
 						<h3 class="whitetext" ng-click="switchscreens(3)">
-							MEMBERS
+							<b>MEMBERS</b>
 						</h3>
 
 					</div>
@@ -237,24 +236,24 @@
 			</ion-item>
 
 
-			<ion-item ng-show="tabs.Members" style="border: none">
+			<ion-item ng-show="tabs.Members" style="border: none;padding:0px">
 
 
-				<div class="row row-center" ng-repeat="item in currentprofile.players">
-					<div class="col col-50">
+				<div class="row row-center" style="border-bottom:1px solid #5f7485;margin-top:15px" ng-repeat="item in currentprofile.players">
+					<div class="col col-50" >
 
 						<h3 class="whitetext">{{item.name}}</h3>
 					</div>
 
-					<div class="col" ng-show="currentprofile.amiadmin">
+					<div class="col" style="padding:0px" align="center" ng-show="currentprofile.amiadmin">
 
-						<button ng-show="item.isadmin && !(item.itsme)" class="button button-balanced button-small" style="width:60px" ng-click="playeroperations(2,item)"> Demote
+						<button ng-show="item.isadmin && !(item.itsme)" class="button button-small" style="font-size:13px; background-color:white; color:#2ab041" ng-click="playeroperations(2,item)"> Demote
 </button>
 
-						<button ng-show="!(item.isadmin) && !(item.itsme)" class="button button-balanced button-small" style="width:60px" ng-click="playeroperations(1,item)"> Promote
+						<button ng-show="!(item.isadmin) && !(item.itsme)" class="button button-small" style="font-size:13px; background-color:#2ab041; color:white" ng-click="playeroperations(1,item)"> Promote
 </button>
 
-						<button ng-show=" !(item.itsme)" class="button button-assertive button-small" ng-click="playeroperations(3,item)">
+						<button ng-show=" !(item.itsme)" class="button button-small" style="font-size:13px; background-color:#ef473a; color:white" ng-click="playeroperations(3,item)">
 						Remove
 					</button>
 
@@ -262,50 +261,50 @@
 					</div>
 
 				</div>
-				<button class="button button-full button-calm" style="background-color: white;color: Red" ng-click="LeaveTeam()">
-		Leave Team		
+				<button class="button button-full button-calm" style="background-color: white;color: red" ng-click="LeaveTeam()">
+     Move leave under remove	
 </button>
 
 			</ion-item>
 
-			<ion-item ng-show="tabs.Statistics" style="border: none">
+			<ion-item ng-show="tabs.Statistics" style="border: none;padding:0px">
 
 
-				<div class="row row-center">
-					<div class='col col-75'>
+			<div class="row row-center" style="border-bottom:1px solid #5f7485; padding-top:5px; margin:5px 0 0 0;margin-top:15px">
+					<div class='col col-75' >
 
 						<h3 class="whitetext">Games On Arina</h3>
 					</div>
 
 					<div class="col">
 
-						<h3 class="whitetext">1</h3>
+						<h3 class="whitetext" align="right">1</h3>
 					</div>
 
 				</div>
 
-				<div class="row row-center">
-					<div class='col col-75'>
+				<div class="row row-center" style="border-bottom:1px solid #5f7485; padding-top:5px; margin:0px">
+					<div class='col col-75' >
 
 						<h3 class="whitetext">Wins</h3>
 					</div>
 
 					<div class="col">
 
-						<h3 class="whitetext">1</h3>
+				<h3 class="whitetext" align="right">1</h3>
 					</div>
 
 				</div>
 
-				<div class="row row-center">
-					<div class='col col-75'>
+				<div class="row row-center" style="border-bottom:1px solid #5f7485; padding-top:5px; margin:0px">
+					<div class='col col-75' >
 
 						<h3 class="whitetext">Win Streak</h3>
 					</div>
 
 					<div class="col">
 
-						<h3 class="whitetext">1</h3>
+					<h3 class="whitetext" align="right">1</h3>
 					</div>
 
 				</div>
@@ -315,109 +314,96 @@
 
 			</ion-item>
 
-			<ion-item ng-show="tabs.Available" style="border: none">
+			<ion-item ng-show="tabs.Available" style="border: none;padding:0px">
 
 
-				<div class="row row-center">
-					<div class="col">
+				<div class="row row-center" style="border-bottom:1px solid #5f7485;margin-top:15px">
+					<div class="col" style="margin-top:5px">
 
 						<h3 class="whitetext">Monday</h3>
 					</div>
 
-					<div class="col">
+					<div class="col" style="margin-top:5px">
 
-						<h3 class="whitetext">From <b>{{currentprofile.startmonday}}:00</b> till <b>{{currentprofile.startmondayend}}:00</b> </h3>
+						<h3 class="whitetext" align="right">  <b>{{currentprofile.startmonday}}:00</b> till <b>{{currentprofile.startmondayend}}:00</b> </h3>
 					</div>
 
 				</div>
 
-				<div class="row row-center">
-					<div class="col">
+				<div class="row row-center" style="border-bottom:1px solid #5f7485;padding-top:3px">
+					<div class="col" style="margin-top:5px">
 
 						<h3 class="whitetext">Tuesday</h3>
 					</div>
 
-					<div class="col">
+					<div class="col" style="margin-top:5px">
 
-						<h3 class="whitetext">From <b>{{currentprofile.starttuesday}}:00</b> till <b>{{currentprofile.starttuesdayend}}:00</b> </h3>
+						<h3 class="whitetext" align="right">  <b>{{currentprofile.starttuesday}}:00</b> till <b>{{currentprofile.starttuesdayend}}:00</b> </h3>
 					</div>
 
 				</div>
 
-				<div class="row row-center">
-					<div class="col">
+				<div class="row row-center" style="border-bottom:1px solid #5f7485">
+					<div class="col" style="margin-top:5px">
 
 						<h3 class="whitetext">Wednesday</h3>
 					</div>
 
-					<div class="col">
+					<div class="col" style="margin-top:5px">
 
-						<h3 class="whitetext">From <b>{{currentprofile.startwednesday}}:00</b> till <b>{{currentprofile.startwednesdayend}}:00</b> </h3>
+						<h3 class="whitetext" align="right">  <b>{{currentprofile.startwednesday}}:00</b> till <b>{{currentprofile.startwednesdayend}}:00</b> </h3>
 					</div>
 
 				</div>
 
-				<div class="row row-center">
-					<div class="col">
-
-						<h3 class="whitetext">Wednesday</h3>
-					</div>
-
-					<div class="col">
-
-						<h3 class="whitetext">From <b>{{currentprofile.startthursday}}:00</b> till <b>{{currentprofile.startthursdayend}}:00</b> </h3>
-					</div>
-
-				</div>
-
-				<div class="row row-center">
-					<div class="col">
+		<div class="row row-center" style="border-bottom:1px solid #5f7485; padding-top:3px">
+					<div class="col" style="margin-top:5px">
 
 						<h3 class="whitetext">Thursday</h3>
 					</div>
 
-					<div class="col">
+					<div class="col" style="margin-top:5px">
 
-						<h3 class="whitetext">From <b>{{currentprofile.startthursday}}:00</b> till <b>{{currentprofile.startthursdayend}}:00</b> </h3>
+						<h3 class="whitetext" align="right">  <b>{{currentprofile.startthursday}}:00</b> till <b>{{currentprofile.startthursdayend}}:00</b> </h3>
 					</div>
 
 				</div>
 
-				<div class="row row-center">
-					<div class="col">
+				<div class="row row-center" style="border-bottom:1px solid #5f7485">
+					<div class="col" style="margin-top:5px">
 
 						<h3 class="whitetext">Friday</h3>
 					</div>
 
-					<div class="col">
+					<div class="col" style="margin-top:5px">
 
-						<h3 class="whitetext">From <b>{{currentprofile.startfriday}}:00</b> till <b>{{currentprofile.startfridayend}}:00</b> </h3>
+						<h3 class="whitetext" align="right">  <b>{{currentprofile.startfriday}}:00</b> till <b>{{currentprofile.startfridayend}}:00</b> </h3>
 					</div>
 
 				</div>
 
-				<div class="row row-center">
-					<div class="col">
+				<div class="row row-center" style="border-bottom:1px solid #5f7485">
+					<div class="col" style="margin-top:5px">
 
 						<h3 class="whitetext">Saturday</h3>
 					</div>
 
-					<div class="col">
+					<div class="col" style="margin-top:5px">
 
-						<h3 class="whitetext">From <b>{{currentprofile.startsaturday}}:00</b> till <b>{{currentprofile.startsaturdayend}}:00</b> </h3>
+						<h3 class="whitetext" align="right">  <b>{{currentprofile.startsaturday}}:00</b> till <b>{{currentprofile.startsaturdayend}}:00</b> </h3>
 					</div>
 
 				</div>
 
-				<div class="row row-center">
-					<div class="col">
+				<div class="row row-center" style="border-bottom:1px solid #5f7485">
+					<div class="col" style="margin-top:5px">
 
 						<h3 class="whitetext">Sunday</h3>
 					</div>
 
-					<div class="col">
+					<div class="col" style="margin-top:5px">
 
-						<h3 class="whitetext">From <b>{{currentprofile.startsunday}}:00</b> till <b>{{currentprofile.startsundayend}}:00</b> </h3>
+						<h3 class="whitetext" align="right">  <b>{{currentprofile.startsunday}}:00</b> till <b>{{currentprofile.startsundayend}}:00</b> </h3>
 					</div>
 
 				</div>

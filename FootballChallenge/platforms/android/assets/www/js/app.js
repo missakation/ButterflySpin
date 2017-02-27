@@ -71,7 +71,7 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                     }
                 }
             })
-           .state('app.searchAll', {
+            .state('app.searchAll', {
                 url: '/searchAll/:searchCriteria',
                 views: {
                     'menuContent': {
@@ -213,6 +213,19 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                 }
             })
 
+            .state('app.choosestadium', {
+                url: '/choosestadium',
+                params: {
+                    myteam: null
+                },
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/choosestadium.html',
+                        controller: 'ChooseStadiumController'
+                    }
+                }
+            })
+
             .state('app.bookings', {
                 url: '/bookings',
                 views: {
@@ -245,7 +258,7 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
             })
             .state('app.selfprofileedit', {
                 url: '/selfprofileedit',
-                    params: {
+                params: {
                     myprofile: null
                 },
                 views: {
@@ -280,7 +293,7 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/settings.html',
-                        controller:'SettingsController'
+                        controller: 'SettingsController'
 
                     }
                 }
@@ -291,19 +304,19 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/leaderboard.html',
-                        controller:'LeaderboardController'
+                        controller: 'LeaderboardController'
 
                     }
                 }
             })
 
 
-             .state('app.settingssms', {
+            .state('app.settingssms', {
                 url: '/settingssms',
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/settingssms.html',
-                        controller:'SettingsSmsController'
+                        controller: 'SettingsSmsController'
 
                     }
                 }

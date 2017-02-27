@@ -56,3 +56,6 @@ h3 {
   width: 100vw;
   margin-left: -10px;
 }
+#myprofile {
+  padding: 0px !important;
+}

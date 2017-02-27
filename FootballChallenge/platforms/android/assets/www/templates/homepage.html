@@ -54,7 +54,7 @@
     }
 </style>
 
-<ion-view title='<img src="img/loggo.png" style="width:80px;height:40px;padding-top:4px ">'>
+<ion-view title='<img src="img/loggo.png" style="width:70px;height:35px;padding-top:5px; top 3px">'>
 
     <ion-nav-buttons side="right">
         <button class="button button-icon" ng-click="toggleSearch()" style="color:white">{{showSearch && 'Hide' || 'Search'}}
@@ -108,7 +108,7 @@
                         <a href="#/app/selfprofile">
                             <img src="{{profile.photo}}" style="border-radius:50% ; height:60px ; width:60px" height="50" />
                         </a>
-                        <h5 class="whitetext">Hello {{profile.displayname}}</h5>
+                        <h5 class="whitetext">Hello {{profile.displayname}} !</h5>
 
                     </div>
 
@@ -116,7 +116,7 @@
 
                 </div>
 
-                <div class="col" align="center" style="border-radius: 10px;">
+                <div class="col" align="center" style="border-left-style: solid;border-width: thin;border-color: #5f7485;">
 
                     <div>
                         <a href="#/app/teamprofile/{{profile.myteams[0].key}}">
@@ -125,7 +125,7 @@
                     </div>
                     <div align="center">
                         <h5 class="whitetext">{{profile.myteams[0].teamname}}</h5>
-                        <p style="color:white">{{profile.ranking}} AR</p>
+                        <p style="color:darkturquoise">{{profile.ranking}}th</p>
                     </div>
 
 
@@ -137,16 +137,16 @@
         </div>
 
 
-        <div class="card" style="background-color:rgb(62,83,100)">
+        <div class="card" style="background-color:rgb(62,83,100);margin-bottom:0px">
 
             <div align="center">
 
-                <h4 class="whitetext" align="middle"><b>RANKING</b></h4>
+                <h4 class="whitetext" align="middle"><b>Leaderboard</b></h4>
             </div>
             <div class="row" style="background-color:rgb(62,83,100)">
 
                 <div class="col" align="center">
-                    <img src="img/Badges/{{rankedteams[0].badge}}.png" style="width:50px;height:50px " ng-click="goteamprofile(profile.myteams[0].key)">
+                    <img src="img/Badges/{{rankedteams[0].badge}}.png" style="width:50px;height:50px " ng-click="goteamprofile(rankedteams[0].key)">
                     <h6 class="whitetext">
                         {{rankedteams[0].teamname}}
                     </h6>
@@ -155,29 +155,29 @@
                 </div>
 
                 <div class="col" align="center">
-                    <img src="img/Badges/{{rankedteams[1].badge}}.png" style="width:50px;height:50px " ng-click="goteamprofile(profile.myteams[0].key)">
-                    <h5 class="whitetext">
+                    <img src="img/Badges/{{rankedteams[1].badge}}.png" style="width:50px;height:50px " ng-click="goteamprofile(rankedteams[1].key)">
+                    <h6 class="whitetext">
                         {{rankedteams[1].teamname}}
-                    </h5>
+                    </h6>
                     <h6 style="color: DarkTurquoise "> <b>2nd</b>
                     </h6>
                 </div>
 
 
                 <div class="col" align="center">
-                    <img src="img/Badges/{{profile.myteams[0].badge}}.png" style="width:50px;height:50px " ng-click="goteamprofile(profile.myteams[0].key)">
-                    <h5 class="whitetext">
+                    <img src="img/Badges/{{rankedteams[2].badge}}.png" style="width:50px;height:50px " ng-click="goteamprofile(rankedteams[2].key)">
+                    <h6 class="whitetext">
                         {{rankedteams[2].teamname}}
-                    </h5>
+                    </h6>
                     <h6 style="color: DarkTurquoise "> <b>3rd</b>
                     </h6>
                 </div>
 
             </div>
             <div align="center">
-                <h6 class="whitetext">
-                    Season Ends June 1 2016 - Price Pool 500$
-                </h6>
+                <h5 class="whitetext">
+                    Season Ends June 1 2016 - Prize Pool 500$
+                </h5>
             </div>
         </div>
 
@@ -186,21 +186,21 @@
                 <div class="col">
 
 
-                    <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(1)"> Reserve Stadium
+                    <button class="button button-block button-balanced button-small" style="height:80px;width=33%;font-size:18px;background-color:rgb(40,176,65)" type="submit" ng-click="homepagedirect(2)"> Find Players
 </button>
 
                 </div>
 
                 <div class="col">
 
-                    <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(2)"> Player Finder
+          <button class="button button-block button-balanced button-small" style="height:80px;width=33%;font-size:18px;background-color:rgb(40,176,65)" type="submit" ng-click="homepagedirect(1)"> Reserve Stadium
 </button>
 
                 </div>
 
                 <div class="col">
 
-                    <button class="button button-block button-balanced button-small" style="height:80px" type="submit" ng-click="homepagedirect(3)"> Match Making
+                    <button class="button button-block button-balanced button-small" style="height:80px;width=33%;font-size:18px;background-color:rgb(40,176,65)" type="submit" ng-click="homepagedirect(3)"> Challenge A Team
 </button>
 
                 </div>
@@ -210,7 +210,7 @@
 
 
 
-        <div class="card" style="background-color:rgb(62,83,100)" ng-show="showupcomingmatches">
+        <div class="card" style="background-color:rgb(62,83,100);margin-top:0px" ng-show="showupcomingmatches">
             <div style="background-color:rgb(62,83,100)">
                 <div align="center">
                     <h4 class="whitetext" align="middle"><b>UPCOMING MATCHES</b></h4>
@@ -227,10 +227,10 @@
 
                     <div class="col">
 
-                        <button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="width:60px" ng-click="gogamedetails(upmatches.key)"> Manage
+                        <button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="width:60px;font:12px;background-color:#28b041;color:white" ng-click="gogamedetails(upmatches.key)"> Manage
 </button>
 
-                        <button ng-show="!(upmatches.isadmin)" class="button button-balanced button-small" style="width:60px" ng-click="gogamedetails(upmatches.key)"> View
+                        <button ng-show="!(upmatches.isadmin)" class="button button-small" style="width:60px;font:12px;background-color:#28b041;color:white" ng-click="gogamedetails(upmatches.key)"> View
 </button>
                     </div>
 
@@ -757,13 +757,13 @@
 
                 <div class="row">
                     <div class="col">
-                        <img src="img/whats.png" style="border-radius:50% ; height:60px ; width:60px" height="50" />
+                        <img src="img/whats.png" style="border-radius:50% ; height:60px ; width:60px" height="50" ng-click="ShareSMS()"/>
                     </div>
                     <div class="col">
                         <img src="img/fb.png" style="border-radius:50% ; height:60px ; width:60px" height="50" ng-click="InviteFacebook()" />
                     </div>
                     <div class="col">
-                        <img src="img/sms.png" style="border-radius:50% ; height:60px ; width:60px" height="50" />
+                        <img src="img/sms.png" style="border-radius:50% ; height:60px ; width:60px" height="50" ng-click="ShareWhatsapp()"/>
                     </div>
 
                 </div>

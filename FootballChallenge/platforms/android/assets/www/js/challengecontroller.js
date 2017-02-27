@@ -149,10 +149,11 @@ angular.module('football.controllers')
 
     })
 
-    .controller('challengestadiumcontroller', function ($scope, ChallengeStore,HomeStore, ReservationFact, $state, $stateParams, $ionicPopup, $ionicLoading, $ionicPopover) {
+    .controller('challengestadiumcontroller', function ($scope, ChallengeStore, HomeStore, ReservationFact, $state, $stateParams, $ionicPopup, $ionicLoading, $ionicPopover) {
 
         $scope.selectedstadiums = [];
         $scope.profile = [];
+        $scope.challengestatus = false;
         $scope.selecteddate =
             {
                 date: $state.params.date
@@ -162,7 +163,7 @@ angular.module('football.controllers')
 
         ReservationFact.FindFreeStadiums($state.params, function (leagues) {
 
-            
+
             $scope.allfreestadiums = leagues;
 
             if (leagues.length == 0) {
@@ -175,7 +176,7 @@ angular.module('football.controllers')
                 $ionicLoading.hide();
                 $scope.profile = myprofile;
             })
-            
+
         })
         $scope.updateselectedteams = function (stadiums) {
 
@@ -215,7 +216,7 @@ angular.module('football.controllers')
 
             try {
 
-
+                $scope.challengestatus = true;
                 if ($scope.selectedstadiums == 0) {
                     $ionicPopup.alert({
                         title: 'Select a Stadium',
@@ -231,7 +232,7 @@ angular.module('football.controllers')
 
                     confirmPopup.then(function (res) {
                         if (res) {
-                            
+
                             ChallengeStore.ChallengeTeams($state.params.date, $state.params.teams, $scope.selectedstadiums, $scope.myteam, $scope.profile)
                                 .then(function (value) {
 
@@ -253,6 +254,7 @@ angular.module('football.controllers')
 
 
                 }
+                $scope.challengestatus = false;
             }
             catch (error) {
                 alert(error.message);
@@ -265,6 +267,40 @@ angular.module('football.controllers')
     .controller('ChooseYourTeamController', function ($scope, $ionicPopup, $ionicLoading, $state, $stateParams, ChallengeStore, $timeout) {
 
 
+
+        $scope.$on("$ionicView.beforeEnter", function (event, data) {
+            // handle event
+            //works
+            $timeout(function () {
+
+                try {
+
+                    ChallengeStore.GetMyTeams(function (myteams) {
+
+                        $ionicLoading.hide();
+                        $scope.test = myteams;
+
+                        if (myteams.length == 0) {
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Empty',
+                                template: 'You do not below to any team right now'
+                            });
+                        }
+
+                        if (myteams.length == 4) {
+                            $scope.gochallengeteams($scope.test[0]);
+                        }
+
+                    })
+
+                }
+                catch (error) {
+                    alert(error.message);
+                }
+            }, 1000)
+        });
+
+
         $ionicLoading.show({
             content: 'Loading',
             animation: 'fade-in',
@@ -273,30 +309,7 @@ angular.module('football.controllers')
             showDelay: 0
         });
 
-        //works
-        $timeout(function () {
 
-            try {
-
-                ChallengeStore.GetMyTeams(function (leagues) {
-
-                    $ionicLoading.hide();
-                    $scope.test = leagues;
-
-                    if (leagues.length == 0) {
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Empty',
-                            template: 'You do not below to any team right now'
-                        });
-                    }
-
-                })
-
-            }
-            catch (error) {
-                alert(error.message);
-            }
-        }, 2000)
 
         $scope.gochallengeteams = function (team) {
             try {

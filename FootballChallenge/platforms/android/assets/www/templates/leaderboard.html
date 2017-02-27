@@ -6,13 +6,11 @@
 </style>
 <ion-view view-title="Leaderboard">
 
-
-    <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-    </ion-nav-buttons>
-
-    <ion-nav-back-button>
-    </ion-nav-back-button>
+	<ion-nav-back-button>
+	</ion-nav-back-button>
+	<ion-nav-buttons side="left">
+		<button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+	</ion-nav-buttons>
 
 
     <ion-nav-bar class="headercolor">
@@ -27,49 +25,50 @@
 
 
         <div class="card" ng-show="!notloaded" style="border: none">
-            <div class="row" style="background-color:rgb(62,83,100);border: none">
+            <div class="row" style="background-color:rgb(62,83,100);border: none;margin-bottom:-10px">
 
                 <div class="col" align="center" ng-click="goteamprofile(rankedteams[0].key)">
-                    <img src="img/Badges/{{rankedteams[0].badge}}.png" style="width:50px;height:50px ">
-                    <h6 class="whitetext">
+                    <h4 class="whitetext" style="color:white;font-weight:bold">1st</h4>
+                    <img src="img/Badges/{{rankedteams[0].badge}}.png" style="width:57px;height:62px">
+                    <h5 class="whitetext" style="color:white">
                         {{rankedteams[0].teamname}}
-                    </h6>
-                    <h6 style="color: DarkTurquoise "> <b>1st</b>
+                    </h5>
+                    <h6 style="color: DarkTurquoise "> <b>2300AR</b>
                     </h6>
                 </div>
 
                 <div class="col" align="center" ng-click="goteamprofile(rankedteams[1].key)">
-                    <img src="img/Badges/{{rankedteams[1].badge}}.png" style="width:50px;height:50px ">
-                    <h5 class="whitetext">
+                    <h4 class="whitetext" style="color:white;font-weight:bold">2nd</h4>
+                    <img src="img/Badges/{{rankedteams[2].badge}}.png" style="width:57px;height:62px">
+                    <h5 class="whitetext" style="color:white; font-weight:bold">
                         {{rankedteams[1].teamname}}
                     </h5>
-                    <h6 style="color: DarkTurquoise "> <b>2nd</b>
+                    <h6 style="color: DarkTurquoise "> <b>2250AR</b>
                     </h6>
                 </div>
 
-
-                <div class="col" align="center" ng-click="goteamprofile(rankedteams[2].key)">
-                    <img src="img/Badges/{{profile.myteams[0].badge}}.png" style="width:50px;height:50px ">
-                    <h5 class="whitetext">
+                <div class="col" align="center" ng-click="goteamprofile(rankedteams[3].key)">
+                    <h4 class="whitetext" style="color:white;font-weight:bold">3rd</h4>
+                    <img src="img/Badges/{{rankedteams[3].badge}}.png" style="width:57px;height:62px">
+                    <h5 class="whitetext" style="color:white; font-weight:bold">
                         {{rankedteams[2].teamname}}
                     </h5>
-                    <h6 style="color: DarkTurquoise "> <b>3rd</b>
+                    <h6 style="color: DarkTurquoise "> <b>2220AR</b>
                     </h6>
                 </div>
-
             </div>
         </div>
-        <div class="card" style="border-color:rgb(45,62,75);background-color: rgb(45,62,75) " ng-show="!notloaded">
-            <div class="row" style="border: none" ng-show="!notloaded">
+        <div class="card" style="border-color:rgb(45,62,75);background-color: rgb(45,62,75);box-shadow:none " ng-show="!notloaded">
+            <div class="row" style="border:none" ng-show="!notloaded">
 
                 <div class="col" align="center">
-                    <h5 class="whitetext">
-                        Team
+                    <h5 class="whitetext" style="color:white;font-weight:bold; text-align:left;padding-left:30px;padding-top:10px;margin:-10px">
+                        Teams
                     </h5>
                 </div>
 
                 <div class="col" align="center">
-                    <h5 class="whitetext">
+                    <h5 class="whitetext" style="font-weight:bold;color:white; text-align:right;margin:-10px;padding-top:10px;padding-right:10px">
                         Rating
                     </h5>
                 </div>
@@ -77,27 +76,27 @@
         </div>
 
 
-        <div class="card" ng-show="!notloaded" style="border: none" >
-            <div class="row row-center" ng-repeat="item in rankedteams" style="background-color:rgb(62,83,100)" ng-hide="{{$index<3}}" ng-click="goteamprofile(item.key)">
-                <div class="col col-10">
-                    <h5 class="whitetext">
-                        {{$index}}.
+        <div class="card" ng-show="!notloaded" style="background-color:rgb(62, 83, 100) " >
+            <div class="row row-center"  style="border-bottom:1px solid #5f7485;padding:0px;background-color:rgb(62,83,100)" ng-repeat="item in rankedteams" ng-hide="{{$index<3}}"  ng-click="goteamprofile(item.key)">
+                <div class="col col-10" style="margin-right:-2px">
+                    <h5 class="whitetext" style="color:white;margin:0px -2px 0px 0px">
+                        {{$index+1}}.
                     </h5>
 
                 </div>
                 <div class="col">
-                    <h5 class="whitetext">
+                    <h5 class="whitetext" style="color:white;font-weight:bold; margin:10px 0px 10px 0px">
                         {{item.teamname}}
                     </h5>
 
                 </div>
                 <div class="col">
-                    <h5 class="whitetext" style="color: DarkTurquoise ">
-                        {{item.ranking}}
+                    <h5 class="whitetext" align="right" style="color: DarkTurquoise; font-weight:bold">
+                        2100AR
                     </h5>
 
                 </div>
-            </div>
+        </div>
         </div>
 
     </ion-content>
