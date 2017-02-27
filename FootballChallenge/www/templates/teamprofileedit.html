@@ -6,15 +6,6 @@
 			width: 100px;
 		}
 		
-		h5,
-		h2,
-		h1,
-		h4,
-		h5,
-		p {
-			color: white;
-		}
-		
 		.item-input {
 			padding: 0 0 0 0;
 		}
@@ -33,144 +24,157 @@
 		}
 	</style>
 
-</style>
-
-<ion-content style="background-color:rgb(45,62,75)">
+	<ion-content style="background-color:rgb(45,62,75)">
 
 
-<div class="card" style="background-color:rgb(62,83,100)" align="center">
-	<img src="img/Badges/{{currentprofile.badge}}.png" style="width:70px;height:70px ">
+		<div class="card" style="background-color:rgb(62,83,100)" align="center">
+			<img src="img/Badges/{{currentprofile.badge}}.png" style="width:70px;height:70px ">
 
 
-	<div class="row row-center">
-		<div class='col'>
+			<div class="row row-center">
+				<div class="col">
 
-	 <h5>Date Created</h5>
+					<h5 class="whitetext">Date Created</h5>
+				</div>
+
+				<div class="col">
+
+					<h5>{{currentprofile.datecreated | date:'MMM d, y'}}</h5>
+				</div>
+
+			</div>
+
 		</div>
 
-		<div class="col">
 
-			<h5>{{currentprofile.datecreated | date:'MMM d, y'}}</h5>
-		</div>
-
-	</div>
-
-</div>
-
-
-<h5 class="whitetext">
-	Comments
-</h5>
-<div class="card" style="background-color:rgb(62,83,100)">
-	<label class="item item-input">
+		<h5 class="whitetext">
+			Comments
+		</h5>
+		<div class="card" style="background-color:rgb(62,83,100)">
+			<label class="item item-input">
     <textarea ng-maxlength="300" ng-model="currentprofile.comments" placeholder="Comments" style="color: white;background-color:rgb(62,83,100);padding-top: 10px;padding-left: 10px;height:50px "></textarea>
 </label>
-</div>
+		</div>
+
+		<div class="card" style="background-color:rgb(62,83,100)">
+			<div class="row" ng-click="gochoosestadium(currentprofile)">
+				<div class="col" align="left" style="color: white" >
+					<h5 class="whitetext">
+						 Favorite Stadium
+					</h5>
+						<h4 style="color:darkturquoise;border-right:1px solid #5f7485"> {{currentprofile.favstadium}}
+						</h4>
+				</div>
+			</div>
+			<div class="row">
+				<h6 class="whitetext">
+					Note : We will use this stadium as your team's location
+				</h6>
+			</div>
+		</div>
 
 
+		<div class="card" style="background-color:rgb(62,83,100)" align="center">
+			<div align="center">
+				<h5 class="whitetext">
+					Availability
+
+				</h5>
+			</div>
+			<div class="row row-center">
+				<div class="col col-20">
+					<h5 class="whitetext">
+						Mon
+					</h5>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startmonday" rz-slider-high="currentprofile.startmondayend " rz-slider-options="slider1.options "
+						style="color:white "></rzslider>
+				</div>
+			</div>
+
+			<div class="row row-center">
+				<div class="col col-20">
+					<h5 class="whitetext">
+						Tue
+					</h5>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.starttuesday " rz-slider-high="currentprofile.starttuesdayend " rz-slider-options="slider2.options "
+						style="color:white "></rzslider>
+				</div>
+			</div>
+
+			<div class="row row-center">
+				<div class="col col-20">
+					<h5 class="whitetext">
+						Wed
+					</h5>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startwednesday " rz-slider-high="currentprofile.startwednesdayend " rz-slider-options="slider3.options "
+						style="color:white "></rzslider>
+				</div>
+			</div>
+
+			<div class="row row-center">
+				<div class="col col-20">
+					<h5 class="whitetext">
+						Thu
+					</h5>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startthursday " rz-slider-high="currentprofile.startthursdayend " rz-slider-options="slider4.options "
+						style="color:white "></rzslider>
+				</div>
+			</div>
+
+			<div class="row row-center">
+				<div class="col col-20">
+					<h5 class="whitetext">
+						Fri
+					</h5>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startfriday " rz-slider-high="currentprofile.startfridayend " rz-slider-options="slider5.options "
+						style="color:white "></rzslider>
+				</div>
+			</div>
+
+			<div class="row row-center">
+				<div class="col col-20">
+					<h5 class="whitetext">
+						Sat
+					</h5>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startsaturday " rz-slider-high="currentprofile.startsaturdayend " rz-slider-options="slider6.options "
+						style="color:white "></rzslider>
+				</div>
+			</div>
+
+			<div class="row row-center">
+				<div class="col col-20">
+					<h5 class="whitetext">
+						Sun
+					</h5>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startsunday " rz-slider-high="currentprofile.startsundayend " rz-slider-options="slider7.options "
+						style="color:white " ng-readonly="currentprofile.amiadmin"></rzslider>
+				</div>
+			</div>
+		</div>
 
 
-<div class="card" style="background-color:rgb(62,83,100)" align="center">
-	<div align="center">
-		<h5>
-			Availability
-
-		</h5>
-	</div>
-	<div class="row row-center">
-	<div class="col col-20">
-		<h5>
-			Mon
-		</h5>
-	</div>
-	<div class="col">
-		<rzslider rz-slider-model="currentprofile.startmonday" rz-slider-high="currentprofile.startmondayend " rz-slider-options="slider1.options "
-			style="color:white "></rzslider>
-</div>
-</div>
-
-<div class="row row-center">
-	<div class="col col-20">
-		<h5>
-			Tue
-		</h5>
-	</div>
-	<div class="col">
-		<rzslider rz-slider-model="currentprofile.starttuesday " rz-slider-high="currentprofile.starttuesdayend " rz-slider-options="slider2.options "
-			style="color:white "></rzslider>
-</div>
-</div>
-
-<div class="row row-center">
-	<div class="col col-20">
-		<h5>
-			Wed
-		</h5>
-	</div>
-	<div class="col">
-		<rzslider rz-slider-model="currentprofile.startwednesday " rz-slider-high="currentprofile.startwednesdayend " rz-slider-options="slider3.options "
-			style="color:white "></rzslider>
-</div>
-</div>
-
-<div class="row row-center">
-	<div class="col col-20">
-		<h5>
-			Thu
-		</h5>
-	</div>
-	<div class="col">
-		<rzslider rz-slider-model="currentprofile.startthursday " rz-slider-high="currentprofile.startthursdayend " rz-slider-options="slider4.options "
-			style="color:white "></rzslider>
-</div>
-</div>
-
-<div class="row row-center">
-	<div class="col col-20">
-		<h5>
-			Fri
-		</h5>
-	</div>
-	<div class="col">
-		<rzslider rz-slider-model="currentprofile.startfriday " rz-slider-high="currentprofile.startfridayend " rz-slider-options="slider5.options "
-			style="color:white "></rzslider>
-</div>
-</div>
-
-<div class="row row-center">
-	<div class="col col-20">
-		<h5>
-			Sat
-		</h5>
-	</div>
-	<div class="col">
-		<rzslider rz-slider-model="currentprofile.startsaturday " rz-slider-high="currentprofile.startsaturdayend " rz-slider-options="slider6.options "
-			style="color:white "></rzslider>
-</div>
-</div>
-
-<div class="row row-center">
-	<div class="col col-20">
-		<h5>
-			Sun
-		</h5>
-	</div>
-	<div class="col">
-		<rzslider rz-slider-model="currentprofile.startsunday " rz-slider-high="currentprofile.startsundayend " rz-slider-options="slider7.options "
-			style="color:white " ng-readonly="currentprofile.amiadmin"></rzslider>
-</div>
-</div>
-</div>
-
-
-	<button class="button button-block button-calm button-full" ng-click="UpdateTeam(currentprofile)" ng-show="currentprofile.amiadmin">
+		<button class="button button-block button-calm button-full" ng-click="UpdateTeam(currentprofile)" ng-show="currentprofile.amiadmin">
                                 Save
            </button>
 
-	<button class="button button-block button-assertive button-full" ng-click="deleteteam(currentprofile)" ng-show="currentprofile.amiadmin">
+		<button class="button button-block button-assertive button-full" ng-click="deleteteam(currentprofile)" ng-show="currentprofile.amiadmin">
                                 Delete
            </button>
 
-</ion-content>
+	</ion-content>
 
 </ion-view>

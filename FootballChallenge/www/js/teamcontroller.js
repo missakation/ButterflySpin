@@ -450,6 +450,7 @@ angular.module('football.controllers')
 
     .controller('TeamProfileController', function ($scope, $ionicLoading, $timeout, $ionicPopup, $stateParams, $state, TeamStores) {
 
+        $scope.doibelong = false;
 
         $scope.currentprofile = {};
 
@@ -538,9 +539,30 @@ angular.module('football.controllers')
                 TeamStores.GetTeamByKey($stateParams.teamid, function (myprofile) {
 
                     $ionicLoading.hide();
-                    $scope.currentprofile = myprofile;
+                    if (myprofile !== null || myprofile !== undefiend || myprofile !== "") {
+
+                        $scope.currentprofile = myprofile;
+
+                        var user = firebase.auth().currentUser;
+                        if (!(user === null || user == '' || user === undefined)) {
+                            var id = user.uid;
+                            if (!(id === null || id == '' || id === undefined)) {
+
+                                for (var j = 0; j < $scope.currentprofile.players.length; j++) {
+                                    if ($scope.currentprofile.players[i].key == id) {
+                                        $scope.doibelong = true;
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+
+
+
+
                 })
-            }, 2000);
+            }, 1000);
 
         }
         catch (error) {
@@ -976,6 +998,11 @@ angular.module('football.controllers')
             $scope.currentprofile.badge = col;
 
         }
+        $scope.gochoosestadium = function (team) {
+            $state.go("app.choosestadium", {
+                myteam: team
+            })
+        }
 
 
 
@@ -1013,11 +1040,27 @@ angular.module('football.controllers')
             })
         }
 
-
-
-
-
     })
+
+    .controller('ChooseStadiumController', function ($scope, $ionicHistory, $ionicPopover, $ionicLoading, $timeout, $stateParams, $state, TeamStores, ReservationFact) {
+
+        $scope.notloaded = true;
+        ReservationFact.GetAllStadiums(function (result) {
+            $scope.stadiums = result;
+            $scope.notloaded = false;
+
+        }, function (error) {
+
+        })
+
+
+        $scope.goback = function (stadium) {
+            $state.params.myteam.favstadium = stadium.name;
+            $state.params.myteam.favstadiumphoto = stadium.photo;
+            $ionicHistory.goBack();
+        }
+    })
+
 
 
 

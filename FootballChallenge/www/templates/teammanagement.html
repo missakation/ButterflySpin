@@ -1,12 +1,13 @@
 <style>
+<style>
     .headercolor {
-        background-color: rgb(62, 83, 100);
+        background-color: rgb(62,83,100);
         color: white
     }
 </style>
-<ion-view view-title="My Teams">
+<ion-view view-title="MY TEAMS">
 
-    <ion-floating-button ng-show="showadd" ng-click="gotoadd()" has-footer="false" button-color="#2AC9AA" icon="ion-plus" icon-color="#fff">
+    <ion-floating-button ng-show="showadd" ng-click="gotoadd()" has-footer="false" button-color="#2ab041" icon="ion-plus" icon-color="#fff">
     </ion-floating-button>
 
 
@@ -28,25 +29,26 @@
         <div align="center">
             <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
         </div>
-
         <div ng-repeat="team in test">
-            <a class="item item-thumbnail-left" href="#/app/teamprofile/{{team.key}}" style="background-color:rgb(100,120,140)">
-                <img src="img/Badges/{{team.badge}}.png" style="width:60px;height:60px ">
+            <a class="item item-thumbnail-left" href="#/app/teamprofile/{{team.key}}" style="background-color:rgb(62,83,100);margin-top:10px;border:hidden">
+                <img src="img/Badges/{{team.badge}}.png" style="width:65px;height:65px; margin-top:10px;margin-left:15px ">
 
-                <div align="center">
-                    <h3 style="color:white">
-                        <b>{{team.teamname}}1600 AR</b></h3>
-                        
-                    <h4 style="color:lightgrey"> Members:
+                <div align="center" style="padding-right:0px;margin-top:-5px">
+                    <h2 style="color:white;font-size:16px;font-weight:bold">
+                        <b>{{team.teamname}}</b></h2>
+                        </div>
+                      <div align="center" style="padding-right:0px; color:darkturquoise; font-size:12px; font-weight:bold"> Rank 49th
+                        </div>
+                        <hr style="height:1px; visibility:hidden;" />
+                    <h4 style="color: lightgray;float:left; width:50%; padding-left:25px;margin:0px"> MEMBERS
                     </h4>
-                    <h4 style="color:white"> <b>{{team.members}}</b>
+                     <h4 style="color: lightgray;float:left; width:40%;margin-left:-15px;border-left:solid;margin:0px; border-width:thin; border-color: #5f7485;padding-left:25px"> RATING
                     </h4>
-
-                    <h4 style="color:lightgrey"> Created On:
+                   <h4 style="color:white;float:left; width:50%;padding-left:48px;top:0px;margin:0px"> <b>{{team.members}}</b>
                     </h4>
-                    <h4 style="color:white"> Created On: <b>{{team.datecreated |date:'MMM d, y'}}</b>
+                    <h4 style="color:darkturquoise;float:left; width:50%;margin:0px;border-left:solid; border-width:thin; border-color: #5f7485;padding-left:29px"> 1500</b>
                     </h4>
-                </div>
+                
             </a>
 
         </div>

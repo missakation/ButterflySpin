@@ -8,8 +8,7 @@
 
             GetLeaderboard: function (callback) {
                 
-                var user = firebase.auth().currentUser;
-                var id = user.uid;
+
 
                 firebase.database().ref('/teampoints').orderByChild("rank").once('value').then(function (snapshot) {
                     RankedTeams = [];

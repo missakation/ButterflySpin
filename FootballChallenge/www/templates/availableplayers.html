@@ -39,15 +39,6 @@
 </ion-nav-bar>
 	<ion-content ng-controller="SearchController" style="background-color:rgb(46,62,75)">
 
-<div class="bar bar-header item-input-inset" >
-	<label class="item-input-wrapper" style="background-color: white">
-    <i class="icon ion-ios-search placeholder-icon"></i>
-    <input type="search" placeholder="Search">
-  </label>
-	<button class="button button-clear">
-    Cancel
-  </button>
-</div>
 
 <div class="item item-dark" ion-datetime-picker ng-model="search.date" minute-step="15" ng-change="checkfree()">
 	{{search.date| date: "yyyy-MM-dd H:mm"}}
