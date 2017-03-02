@@ -373,9 +373,10 @@
 
 		<div align="center">
 			<!--<p style="background-color:lightgray">Date</p>-->
-			<label class="item item-input">
-                    <input type="datetime-local" step="30"  ng-model="search.date" ng-change="checkfree()">
-                </label>
+            <!--<label class="item item-input">-->
+            <i class="icon ion-calendar"></i><input class="button open-button" on-tap="openPickerView()" ng-model="search.text">
+            <!--<input type="datetime-local" step="30"  ng-model="search.date" ng-change="checkfree()">-->
+            <!--</label>-->
 		</div>
 
 		<div class="card" ng-repeat="stadiums in allfreestadiums | orderBy:choice.sort:reverse" style="background-color:rgb(62,83,100);margin:10px 5px 10px 5px">

@@ -8,7 +8,6 @@ angular.module('football.controllers')
             if (selectedDay == "Tomorrow")
             {
                 selectedDate.setDate(selectedDate.getDate() + 1);
-                alert(selectedDate);
                 return weekday[selectedDate.getDay()] + monthChar[selectedDate.getMonth()] + " " +selectedDate.getDate();
             }
             for(var i = 0; i <6;i++)
@@ -57,7 +56,6 @@ angular.module('football.controllers')
                         console.log($scope.search.date);
                         $scope.search.text = output.join(" -");
                         $scope.checkfree();
-                        //$scope.$digest();
                     }
                 });
             }
@@ -191,8 +189,6 @@ angular.module('football.controllers')
 
 
         $scope.checkfree = function () {
-
-            console.log("ourish discks");
             //here
             $ionicLoading.show({
                 content: 'Loading',
