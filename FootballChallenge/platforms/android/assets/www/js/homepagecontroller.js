@@ -2,8 +2,39 @@
 angular.module('football.controllers')
 
 
-    .controller('HomeController', function ($scope, $state, HomeStore, $timeout, $ionicPopup, $ionicLoading) {
+    .controller('HomeController', function ($scope, $state, HomeStore, $timeout, $ionicPopup, $ionicLoading, $cordovaSocialSharing) {
 
+        $scope.nointernet = false;
+        $scope.$on("$ionicView.beforeEnter", function (event, data) {
+            // handle event
+            //works
+            $timeout(function () {
+
+                try {
+                    if ($scope.nointernet = false) {
+                        var user = firebase.auth().currentUser;
+                        if (!(user === null || user == '' || user === undefined)) {
+                            var id = user.uid;
+                            if (!(id === null || id == '' || id === undefined)) {
+
+                                if (!($scope.profile === null || $scope.profile == '' || $scope.profile === undefined)) {
+                                    if ($scope.profile.id !== id) {
+                                        $scope.profile = [];
+                                        $scope.$apply();
+                                        $scope.doRefresh();
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+                catch (error) {
+                    alert(error.message);
+                }
+            }, 2000)
+        });
 
         //Section Visibility Variables
         $scope.showteaminvite = false;
@@ -13,7 +44,7 @@ angular.module('football.controllers')
 
         $scope.teaminvitationoperation = true;
 
-        $scope.nointernet = false;
+
 
 
 
@@ -107,7 +138,7 @@ angular.module('football.controllers')
                             //remove the challenge from homepage
                             $scope.profile.challenges = $scope.profile.challenges.filter(function (el) {
                                 return el.key !== challenge.key;
-                                
+
                             })
                             $scope.$apply();
                         }, function (error) {
@@ -139,7 +170,7 @@ angular.module('football.controllers')
                             })
                             $scope.profile.challenges = $scope.profile.challenges.filter(function (el) {
                                 return el.key !== challenge.key;
-                                
+
                             })
                             $scope.$apply();
                         }, function (error) {
@@ -163,7 +194,7 @@ angular.module('football.controllers')
 
                             var alertPopup = $ionicPopup.alert({
                                 title: 'New Team',
-                                template: 'You now below to team ' + invitation.teamname
+                                template: 'You now belong to team ' + invitation.teamname
                             }).then(function () {
                                 $state.go("app.teammanagement");
                             }, function (error) {
@@ -327,6 +358,19 @@ angular.module('football.controllers')
             $scope.showSearch = !$scope.showSearch;
         };
 
+
+        $scope.goteamprofile = function (id) {
+            if (id !== null || id == '' || id === undefined) {
+                $state.go("app.teamprofile",
+                    {
+                        teamid: id
+                    })
+            }
+
+        }
+
+
+
         $scope.InviteFacebook = function () {
             facebookConnectPlugin.appInvite(
                 {
@@ -351,15 +395,27 @@ angular.module('football.controllers')
             );
         }
 
-        $scope.goteamprofile = function (id) {
-            if (id !== null || id == '' || id === undefined) {
-                $state.go("app.teamprofile",
-                    {
-                        teamid: id
-                    })
-            }
-
+        $scope.ShareWhatsapp = function () {
+            $cordovaSocialSharing
+                .shareViaWhatsApp("TRY THE APP", "www.google.com", "applink")
+                .then(function (result) {
+                    // Success!
+                }, function (err) {
+                    // An error occurred. Show a message to the user
+                });
         }
+
+        $scope.ShareSMS = function () {
+        // access multiple numbers in a string like: '0612345678,0687654321'
+        $cordovaSocialSharing
+            .shareViaSMS(message, number)
+            .then(function (result) {
+                // Success!
+            }, function (err) {
+                // An error occurred. Show a message to the user
+            });
+        }
+
 
 
         var connectedRef = firebase.database().ref(".info/connected");

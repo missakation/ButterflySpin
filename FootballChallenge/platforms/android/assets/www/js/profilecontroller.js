@@ -118,43 +118,46 @@ angular.module('football.controllers')
 
         $scope.slider1 = {
             minValue: 1,
-            maxValue: 23,
+            maxValue: 24,
 
             options: {
                 floor: 0,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
+                hideLimitLabels: true,
+                autoHideLimitLabels: true,
                 getSelectionBarColor: function (value) {
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'Green';
+                    return 'rgb(38,175,61)';
 
                 },
-                ceil: 23,
-                draggableRange: true
+                ceil: 24,
+                draggableRange: false
 
             }
         };
 
         $scope.slider2 = {
             minValue: 1,
-            maxValue: 23,
+            maxValue: 24,
             options: {
                 floor: 0,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
+                hideLimitLabels: true,
+                autoHideLimitLabels: true,
                 getSelectionBarColor: function (value) {
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'Green';
-
+                    return 'rgb(38,175,61)';
                 },
-                ceil: 23,
-                draggableRange: true
+                ceil: 24,
+                draggableRange: false
 
             }
         };
@@ -162,21 +165,23 @@ angular.module('football.controllers')
 
         $scope.slider3 = {
             minValue: 1,
-            maxValue: 23,
+            maxValue: 24,
             options: {
                 floor: 0,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
+                hideLimitLabels: true,
+                autoHideLimitLabels: true,
                 getSelectionBarColor: function (value) {
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'Green';
+                    return 'rgb(38,175,61)';
 
                 },
-                ceil: 23,
-                draggableRange: true
+                ceil: 24,
+                draggableRange: false
 
             }
         };
@@ -184,21 +189,23 @@ angular.module('football.controllers')
 
         $scope.slider4 = {
             minValue: 1,
-            maxValue: 23,
+            maxValue: 24,
             options: {
                 floor: 0,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
+                hideLimitLabels: true,
+                autoHideLimitLabels: true,
                 getSelectionBarColor: function (value) {
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'Green';
+                    return 'rgb(38,175,61)';
 
                 },
-                ceil: 23,
-                draggableRange: true
+                ceil: 24,
+                draggableRange: false
 
             }
         };
@@ -206,64 +213,70 @@ angular.module('football.controllers')
 
         $scope.slider5 = {
             minValue: 1,
-            maxValue: 23,
+            maxValue: 24,
             options: {
                 floor: 0,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
+                hideLimitLabels: true,
+                autoHideLimitLabels: true,
                 getSelectionBarColor: function (value) {
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'Green';
+                    return 'rgb(38,175,61)';
 
                 },
-                ceil: 23,
-                draggableRange: true
+                ceil: 24,
+                draggableRange: false
 
             }
         };
 
         $scope.slider6 = {
             minValue: 1,
-            maxValue: 23,
+            maxValue: 24,
             options: {
                 floor: 0,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
+                hideLimitLabels: true,
+                autoHideLimitLabels: true,
                 getSelectionBarColor: function (value) {
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'Green';
+                    return 'rgb(38,175,61)';
 
                 },
-                ceil: 23,
-                draggableRange: true
+                ceil: 24,
+                draggableRange: false
 
             }
         };
 
         $scope.slider7 = {
             minValue: 1,
-            maxValue: 23,
+            maxValue: 24,
 
             options: {
                 floor: 0,
                 showSelectionBar: true,
                 readOnly: true,
+                hideLimitLabels: true,
+                autoHideLimitLabels: true,
                 disabled: true,
                 getSelectionBarColor: function (value) {
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'Green';
+                    return 'rgb(38,175,61)';
 
                 },
-                ceil: 23,
-                draggableRange: true
+                ceil: 24,
+                draggableRange: false
 
             }
         };

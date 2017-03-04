@@ -50,8 +50,8 @@
     </ion-nav-back-button>
 </ion-nav-bar>
 
-<div class="bar bar-subheader" style="color:rgb(46,62,75)" ng-show="!notloaded">
-  <h3 class="title">{{challenge.date |date:'MMM d, y h:mm a'}}</h3>
+<div class="bar bar-subheader" align="left" style="height:6%;margin-bottom:5px;background-color:darkturquoise" ng-show="!notloaded">
+  <h3 class="title" align="left" style="font-size:15px">{{challenge.date |date:'MMM d, y h:mm a'}}</h3>
 </div>
 
 <ion-content style="background-color:rgb(46,62,75)">
@@ -62,37 +62,37 @@
 </div>
 
 
-<div class="card" style="background-color:rgb(62,83,100)" ng-show="!notloaded">
+<div class="card" style="background-color:rgb(62,83,100);margin:10px 5px 0px 5px" ng-show="!notloaded">
 <!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
 
 <div class="row ">
 	<div class="col">
 		<div align="center">
-			<img src="img/Badges/{{challenge.team1logo}}.png" style="width:50px;height:50px ">
+			<img src="img/Badges/{{challenge.team1logo}}.png" style="width:60px;height:65px ">
 </div>
 <div align="center">
-	<h5 class="whitetext">
+	<h5 class="whitetext" style="font-weight:bold;margin-bottom:0px">
 		{{challenge.team1name}}
 	</h5>
-	<h6 class="whitetext">
-		{{challenge.team1rank}}
+	<h6 class="whitetext" style="color:darkturquoise;font-weight:bold;margin-top:0px">
+		Rank 55th
 	</h6>
 	<img src="img/Jerseys/{{challenge.team1badge}}.png" style="width:35px;height:35px ">
 </div>
 </div>
 <div class="col">
 	<div align="center">
-		<h4 class="whitetext">
+		<h4 class="whitetext" style="font-size:30px;font-weight:bold">
 			VS
 		</h4>
-		<h5 class="whitetext">
+		<h5 class="whitetext" style="color:lightgray;fontsize:14px;margin:0px;color:130,147,163">
 			Stadium
 		</h5>
-		<h5 class="whitetext">
+		<h5 class="whitetext" style="color:white;fontsize:14px;margin:0px">
 			{{challenge.stadiums.stadiumname}}
 		</h5>
-		<img src="{{challenge.adminphoto}}" style="border-radius:50% ; height:80px ; width:80px;border: none" align="right" height="50" />
+		<img src="{{challenge.adminphoto}}" style="border-radius:50% ; height:55px ; width:55px; margin-top:15px;border: none" align="center" height="50" />
 
 
 </div>
@@ -100,13 +100,13 @@
 
 <div class="col">
 	<div align="center">
-		<img src="img/Badges/{{challenge.team2logo}}.png" style="width:50px;height:50px ">
+		<img src="img/Badges/{{challenge.team2logo}}.png" style="width:60px;height:65px">
 </div>
 <div align="center">
-	<h5 class="whitetext">
+	<h5 class="whitetext" style="font-weight:bold;margin-bottom:0px">
 		{{challenge.team2name}}
 	</h5>
-	<h6 class="whitetext">
+	<h6 class="whitetext" style="color:darkturquoise; font-weight:bold;margin-top:0px">
 		Rank:{{challenge.team1rank}}
 	</h6>
 	<img src="img/Jerseys/{{challenge.team2badge}}.png" style="width:35px;height:35px ">
@@ -124,7 +124,7 @@
 </div>
 
 
-<div class="card" style="background-color:rgb(62,83,100)" ng-show="!notloaded">
+<div class="card" style="background-color:rgb(62,83,100);margin:10px 5px 0px 5px" ng-show="!notloaded">
 <!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
 <div align="center">
@@ -149,7 +149,7 @@
 			<button ng-show="item.status == 0 && !item.isadmin" class="button button-block button-balanced button-small" style="color:white" type="submit" ng-click="InvitePlayer(challenge,item)"> Invite
 </button>
 
-<button ng-show="item.status == 1 && !item.isadmin" class="button button-block button-balanced button-small" style="color:white" type="submit" > Pending
+<button ng-show="item.status == 1 && !item.isadmin" class="button button-block button-energized button-small" style="color:white" type="submit" > Pending
 </button>
 
 <button ng-show="item.status == 5 && !item.isadmin" class="button button-block button-balanced button-small" style="color:white" type="submit" > Accepted

@@ -36,13 +36,14 @@
                                 'datecreated': datecreated,
                                 'badge': childSnapshot.child("badge").val(),
                                 //'members': teamdata.numChildren()-1,
-                                "members":1,
-                                "teamadmin": childSnapshot.child("teamadmin").val()
+                                "members": 1,
+                                "teamadmin": childSnapshot.child("teamadmin").val(),
+                                "favstadium": childSnapshot.child("favstadium").val()
 
                             };
 
                             MyTeams.push(Items);
-                         //   })
+                            //   })
 
 
                         });
@@ -122,7 +123,6 @@
                         startsundayend: 23,
                         favstadium: newteam.favstadium,
                         favstadiumphoto: newteam.photo,
-                        favstadium: newteam.favstadium,
                         homejersey: newteam.homejersey,
                         awayjersey: newteam.awayjersey,
                         badge: newteam.badge,
@@ -341,6 +341,8 @@
                                         photo: challenges.child("photo").val(),
                                         price: challenges.child("price").val(),
                                         stadiumdescription: challenges.child("stadiumdescription").val()
+
+                                        
                                     }
                                     upcomingmatches.push(matchdata);
 
@@ -382,7 +384,9 @@
 
                                 "comments": snapshot.child("comments").val(),
                                 "datecreated": teamcreateddate,
-                                "upcomingmatches": upcomingmatches
+                                "upcomingmatches": upcomingmatches,
+                                "favstadium":snapshot.child("favstadium").val(),
+                                "favstadiumphoto":snapshot.child("favstadiumphoto").val()
                             };
                             TeamProfile = Items;
 
@@ -450,6 +454,10 @@
                     updates['teams/' + id + '/startsunday'] = profile.startsunday;
                     updates['teams/' + id + '/startsundayend'] = profile.startsundayend;
                     updates['teams/' + id + '/comments'] = profile.comments;
+                    updates['teams/' + id + '/favstadium'] = profile.favstadium;
+                    updates['teams/' + id + '/favstadiumphoto'] = profile.favstadiumphoto;
+
+
 
 
                     updates['teaminfo/' + id + '/startmonday'] = profile.startmonday;
@@ -467,7 +475,8 @@
                     updates['teaminfo/' + id + '/startsunday'] = profile.startsunday;
                     updates['teaminfo/' + id + '/startsundayend'] = profile.startsundayend;
                     updates['teaminfo/' + id + '/comments'] = profile.comments;
-
+                    updates['teaminfo/' + id + '/favstadium'] = profile.favstadium;
+                    updates['teaminfo/' + id + '/favstadiumphoto'] = profile.favstadiumphoto;
 
 
                     return firebase.database().ref().update(updates);
