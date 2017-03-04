@@ -12,7 +12,7 @@ angular.module('football.controllers')
 
 
             FindFreeStadiums: function (search, callback) {
-                console.log("hasa hos");
+                //console.log("hasa hos");
                 //var q = $q.defer();
                 try {
 
@@ -42,8 +42,13 @@ angular.module('football.controllers')
 
                                 var endhour = stadiumsnapshot.child("endhour").val();
                                 var endminute = stadiumsnapshot.child("endminute").val();
+                                var players = stadiumsnapshot.child("numplayers").val();
 
-                                if (stadiumsnapshot.child('schedules/' + year + '/' + month + '/' + day).exists()) {
+
+                                //console.log(players);
+                                //console.log(search.players);
+                                if (stadiumsnapshot.child('schedules/' + year + '/' + month + '/' + day).exists() )
+                                {
 
                                     stadiumsnapshot.child('schedules/' + year + '/' + month + '/' + day).forEach(function (minisnapshot) {
 
@@ -51,8 +56,8 @@ angular.module('football.controllers')
                                         var temphour = minisnapshot.child("hour").val();
                                         var tempminute = minisnapshot.child("minute").val();
 
-
-                                        if (temphour < starthour || temphour > (endhour - 2) || (Math.abs(temphour - hour) < 1.5)) {
+                                        if (temphour < starthour || temphour > (endhour - 2) || (Math.abs(temphour - hour) < 1.5 ))
+                                        {
                                             available = false;
                                         }
 
@@ -71,7 +76,7 @@ angular.module('football.controllers')
                                     startdate.setDate(day);
 
                                 }
-                                if (available == true) {
+                                if (available == true && players == search.players) {
                                     var Data = {
                                         "admin": mainstadiumSnapshot.child("admin").val(),
                                         "stadiumkey": mainstadiumSnapshot.key,
@@ -88,7 +93,7 @@ angular.module('football.controllers')
                                         "year": year,
                                         "month": month,
                                         "day": day,
-
+                                        "players": stadiumsnapshot.child("numplayers").val(),
                                         "hour": hour,
                                         "minute": minute,
                                         "selected": "select",
