@@ -6,11 +6,11 @@
         var TeamProfile = {};
         return {
 
-            GetLeaderboard: function (callback) {
+            GetLeaderboard: function (limit,callback) {
+                
                 
 
-
-                firebase.database().ref('/teampoints').orderByChild("rank").once('value').then(function (snapshot) {
+                firebase.database().ref('/teampoints').orderByChild("rank").limitToFirst(limit).once('value').then(function (snapshot) {
                     RankedTeams = [];
                     snapshot.forEach(function (childSnapshot) {
 

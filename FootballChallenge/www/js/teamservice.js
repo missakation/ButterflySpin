@@ -180,6 +180,12 @@
 
                         datehour: hour,
                         dateminute: minute,
+                        
+                        favstadium: newteam.favstadium,
+                        favstadiumphoto: newteam.photo,
+                        homejersey: newteam.homejersey,
+                        awayjersey: newteam.awayjersey,
+
                         players: {
                             firstone: true,
                         },
@@ -342,7 +348,7 @@
                                         price: challenges.child("price").val(),
                                         stadiumdescription: challenges.child("stadiumdescription").val()
 
-                                        
+
                                     }
                                     upcomingmatches.push(matchdata);
 
@@ -385,8 +391,8 @@
                                 "comments": snapshot.child("comments").val(),
                                 "datecreated": teamcreateddate,
                                 "upcomingmatches": upcomingmatches,
-                                "favstadium":snapshot.child("favstadium").val(),
-                                "favstadiumphoto":snapshot.child("favstadiumphoto").val()
+                                "favstadium": snapshot.child("favstadium").val(),
+                                "favstadiumphoto": snapshot.child("favstadiumphoto").val()
                             };
                             TeamProfile = Items;
 

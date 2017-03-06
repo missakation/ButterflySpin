@@ -3,7 +3,7 @@ angular.module('football.controllers')
 
 
 
-    .controller('ChallengeController', function ($scope, ChallengeStore, $state, $ionicPopup, $ionicLoading, $ionicPopover, pickerView) {
+    .controller('ChallengeController', function ($scope, ChallengeStore, $state, $ionicPopup, $ionicLoading, $ionicPopover) {
 
 
         $scope.selectedteams = [];
@@ -38,7 +38,7 @@ angular.module('football.controllers')
 
         $scope.search = {
             date: new Date(),
-            text: "Tomorrow, 9:00PM - 5 Vs 5 "
+
 
         };
         $scope.search.date.setDate($scope.search.date.getDate() + 1);
@@ -46,103 +46,37 @@ angular.module('football.controllers')
         $scope.search.date.setMinutes(00);
         $scope.search.date.setMilliseconds(0);
         $scope.search.date.setSeconds(0);
-        
-        function getDateFromDayName(selectedDay) {
-            var selectedDate = new Date();
-            if (selectedDay == "Today") {
-                selectedDate.setDate(selectedDate.getDate());
-                return weekday[selectedDate.getDay()] + monthChar[selectedDate.getMonth()] + " " + selectedDate.getDate();
-            }
-            else if (selectedDay == "Tomorrow") {
-                selectedDate.setDate(selectedDate.getDate() + 1);
-                return weekday[selectedDate.getDay()] + monthChar[selectedDate.getMonth()] + " " + selectedDate.getDate();
-            }
-            else {
-                selectedDate.setDate(selectedDate.getDate() + 2);
-                for (var i = 0; i <= 6; i++) {
-                    if (weekdayFull[selectedDate.getDay()] == selectedDay)
-                        return weekday[selectedDate.getDay()] + monthChar[selectedDate.getMonth()] + " " + selectedDate.getDate();
-                    selectedDate.setDate(selectedDate.getDate() + 1);
+
+
+        $ionicLoading.show({
+            content: 'Loading',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+
+
+
+
+        try {
+            //works
+            ChallengeStore.GetAllTeams(function (leagues) {
+                $ionicLoading.hide();
+                $scope.test = leagues;
+
+                if (leagues.length == 0) {
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Error',
+                        template: 'No Team Found'
+                    });
                 }
-            }
+
+            })
         }
-
-        $scope.openPickerView = function openPickerView() {
-
-            var picker = pickerView.show({
-                titleText: '', // default empty string
-                doneButtonText: 'Search', // dafault 'Done'
-                cancelButtonText: 'Close', // default 'Cancel'
-                items: [{
-                    values: dateArrayThingy,
-                    defaultIndex: 1
-                }, {
-                    values: [' 7:00 AM ', ' 7:30 AM ', ' 8:00 AM ', ' 8:30 AM ', ' 9:00 AM ', '9:30 AM ', ' 10:00 AM ', ' 10:30 AM', ' 11:00 AM ', ' 11:30 AM ', ' Noon ', ' 1:00 PM ', ' 1:30 PM ', ' 2:00 PM ', ' 2:30 PM ', ' 3:00 PM ', ' 3:30 PM ', ' 4:00 PM ', ' 4:30 PM ', ' 5:00 PM ', ' 5:30 PM ', ' 6:00 PM ', ' 6:30 PM ', ' 7:00 PM ', ' 7:30 PM ', ' 8:00 PM', ' 8:30 PM ', ' 9:00 PM ', ' 9:30 PM ', ' 10:00 PM ', ' 10:30 PM ', ' 11:00 PM', '11:30 PM ', ' Midnight ', ],
-                    defaultIndex: 25
-                }, {
-                    values: [" 5 Vs 5", " 6 Vs 6", " 7 Vs 7", " 8 Vs 8", " 9 Vs 9", " 10 Vs 10", " 11 Vs 11"],
-                    defaultIndex: 0
-                }]
-            });
-
-
-            if (picker) {
-                picker.then(function pickerViewFinish(output) {
-                    if (output) {
-                        // output is Array type
-                        var correctDate;
-                        var selectedDate = output[0];
-                        var selectedTime = output[1];
-                        if (!Date.parse(selectedDate)) {
-                            selectedDate = getDateFromDayName(selectedDate);
-                            console.log(selectedDate);
-                        }
-                        $scope.search.date = new Date(selectedDate + " " + selectedTime + ", " + (new Date()).getFullYear());
-                        $scope.search.players = (output[2].split(" "))[1];
-                        console.log($scope.search.date);
-                        $scope.search.text = output.join(" -");
-                        $scope.checkTeams();
-                    }
-                });
-            }
-        };
-
-
-        
-
-
-
-
-        
-        $scope.checkTeams = function () {
-            $ionicLoading.show({
-                content: 'Loading',
-                animation: 'fade-in',
-                showBackdrop: true,
-                maxWidth: 200,
-                showDelay: 0
-            });
-            try {
-                //works
-                ChallengeStore.GetAllTeams(function (leagues) {
-                    $ionicLoading.hide();
-                    $scope.test = leagues;
-
-                    if (leagues.length == 0) {
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Error',
-                            template: 'No Team Found'
-                        });
-                    }
-
-                })
-            }
-            catch (error) {
-                alert(error.message);
-            }
-        };
-
-        $scope.checkTeams();
+        catch (error) {
+            alert(error.message);
+        }
 
         $scope.updateselectedteams = function (team) {
 
@@ -393,59 +327,3 @@ angular.module('football.controllers')
 
 
     })
-//day stuff
-var weekday = new Array(7);
-weekday[0] = "Sun,";
-weekday[1] = "Mon,";
-weekday[2] = "Tue,";
-weekday[3] = "Wed,";
-weekday[4] = "Thu,";
-weekday[5] = "Fri,";
-weekday[6] = "Sat,";
-
-var weekdayFull = new Array(7);
-weekdayFull[0] = "Sunday";
-weekdayFull[1] = "Monday";
-weekdayFull[2] = "Tuesday";
-weekdayFull[3] = "Wednesday";
-weekdayFull[4] = "Thursday";
-weekdayFull[5] = "Friday";
-weekdayFull[6] = "Saturday";
-
-
-monthChar = new Array(12);
-monthChar[0] = "Jan";
-monthChar[1] = "Feb";
-monthChar[2] = "Mar";
-monthChar[3] = "Apr";
-monthChar[4] = "May";
-monthChar[5] = "Jun";
-monthChar[6] = "Jul";
-monthChar[7] = "Aug";
-monthChar[8] = "Sep";
-monthChar[9] = "Oct";
-monthChar[10] = "Nov";
-monthChar[11] = "Dec";
-
-var nesheDate = new Date();
-var dateArrayThingy = new Array();
-dateArrayThingy.push("Today");
-dateArrayThingy.push("Tomorrow");
-//alert(nesheDate.getDay());
-nesheDate.setDate(nesheDate.getDate() + 1);
-for (i = 0; i < 7; i++) {
-    nesheDate.setDate(nesheDate.getDate() + 1);
-    dateArrayThingy.push(weekdayFull[nesheDate.getDay()]);
-}
-for (i = 0 ; i < 100 ; i++) {
-    nesheDate.setDate(nesheDate.getDate() + 1);
-    //alert(weekday[nesheDate.getDay()]);
-    var day = weekday[nesheDate.getDay()];
-    var month = monthChar[nesheDate.getMonth()];
-    var dayInMonth = nesheDate.getDate();
-    dateArrayThingy.push(day + " " + month + " " + dayInMonth);
-}
-
-
-//end of day stufff----------------
-
