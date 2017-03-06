@@ -6,11 +6,11 @@
 </style>
 <ion-view view-title="Leaderboard">
 
-	<ion-nav-back-button>
-	</ion-nav-back-button>
-	<ion-nav-buttons side="left">
-		<button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-	</ion-nav-buttons>
+    <ion-nav-back-button>
+    </ion-nav-back-button>
+    <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+    </ion-nav-buttons>
 
 
     <ion-nav-bar class="headercolor">
@@ -76,8 +76,9 @@
         </div>
 
 
-        <div class="card" ng-show="!notloaded" style="background-color:rgb(62, 83, 100) " >
-            <div class="row row-center"  style="border-bottom:1px solid #5f7485;padding:0px;background-color:rgb(62,83,100)" ng-repeat="item in rankedteams" ng-hide="{{$index<3}}"  ng-click="goteamprofile(item.key)">
+        <div class="card" ng-show="!notloaded" style="background-color:rgb(62, 83, 100) ">
+            <div class="row row-center" style="border-bottom:1px solid #5f7485;padding:0px;background-color:rgb(62,83,100)" ng-repeat="item in rankedteams"
+                ng-hide="{{$index<3}}" ng-click="goteamprofile(item.key)">
                 <div class="col col-10" style="margin-right:-2px">
                     <h5 class="whitetext" style="color:white;margin:0px -2px 0px 0px">
                         {{$index+1}}.
@@ -98,7 +99,8 @@
                 </div>
         </div>
         </div>
-
+        <ion-infinite-scroll on-infinite="loadMore()" distance="1%">
+        </ion-infinite-scroll>
     </ion-content>
 
 

@@ -1,0 +1,14 @@
+[
+  {
+    "outputFileName": "www/js/teamservice.min.js",
+    "inputFiles": [
+      "www/js/teamservice.js"
+    ]
+  },
+  {
+    "outputFileName": "www/js/profilecontroller.min.js",
+    "inputFiles": [
+      "www/js/profilecontroller.js"
+    ]
+  }
+]

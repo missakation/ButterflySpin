@@ -61,11 +61,11 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"ImagePicker\"><param name=\"android-package\" value=\"com.synconset.ImagePicker\" /></feature>",
+                            "xml": "<feature name=\"SocialSharing\"><param name=\"android-package\" value=\"nl.xservices.plugins.SocialSharing\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"SocialSharing\"><param name=\"android-package\" value=\"nl.xservices.plugins.SocialSharing\" /></feature>",
+                            "xml": "<feature name=\"ImagePicker\"><param name=\"android-package\" value=\"com.synconset.ImagePicker\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -103,17 +103,25 @@
                     ],
                     "/manifest/application": [
                         {
+                            "xml": "<provider android:authorities=\"${applicationId}.sharing.provider\" android:exported=\"false\" android:grantUriPermissions=\"true\" android:name=\"nl.xservices.plugins.FileProvider\"><meta-data android:name=\"android.support.FILE_PROVIDER_PATHS\" android:resource=\"@xml/sharing_paths\" /></provider>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<activity android:label=\"@string/multi_app_name\" android:name=\"com.synconset.MultiImageChooserActivity\" android:theme=\"@android:style/Theme.Holo.Light\"></activity>",
                             "count": 1
                         },
                         {
-                            "xml": "<provider android:authorities=\"${applicationId}.sharing.provider\" android:exported=\"false\" android:grantUriPermissions=\"true\" android:name=\"nl.xservices.plugins.FileProvider\"><meta-data android:name=\"android.support.FILE_PROVIDER_PATHS\" android:resource=\"@xml/sharing_paths\" /></provider>",
+                            "xml": "<activity android:name=\"com.synconset.GettingPermissionsActivity\" />",
                             "count": 1
                         }
                     ],
                     "/manifest": [
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />",
                             "count": 1
                         }
                     ],
@@ -154,10 +162,10 @@
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.Arina"
         },
-        "cordova-plugin-image-picker": {
+        "cordova-plugin-x-socialsharing": {
             "PACKAGE_NAME": "com.ionicframework.Arina"
         },
-        "cordova-plugin-x-socialsharing": {
+        "cordova-plugin-image-picker": {
             "PACKAGE_NAME": "com.ionicframework.Arina"
         }
     },
@@ -214,19 +222,19 @@
             "runs": true
         },
         {
-            "id": "cordova-plugin-image-picker.ImagePicker",
-            "file": "plugins/cordova-plugin-image-picker/www/imagepicker.js",
-            "pluginId": "cordova-plugin-image-picker",
-            "clobbers": [
-                "plugins.imagePicker"
-            ]
-        },
-        {
             "id": "cordova-plugin-x-socialsharing.SocialSharing",
             "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
             "pluginId": "cordova-plugin-x-socialsharing",
             "clobbers": [
                 "window.plugins.socialsharing"
+            ]
+        },
+        {
+            "id": "cordova-plugin-image-picker.ImagePicker",
+            "file": "plugins/cordova-plugin-image-picker/www/imagepicker.js",
+            "pluginId": "cordova-plugin-image-picker",
+            "clobbers": [
+                "plugins.imagePicker"
             ]
         }
     ],
@@ -239,7 +247,7 @@
         "cordova-plugin-statusbar": "2.1.3",
         "cordova-plugin-whitelist": "1.2.2",
         "ionic-plugin-keyboard": "1.0.9",
-        "cordova-plugin-image-picker": "1.1.1",
-        "cordova-plugin-x-socialsharing": "5.1.6"
+        "cordova-plugin-x-socialsharing": "5.1.6",
+        "cordova-plugin-image-picker": "1.1.1"
     }
 }

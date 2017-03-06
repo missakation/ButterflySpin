@@ -51,19 +51,19 @@ module.exports = [
         "runs": true
     },
     {
-        "id": "cordova-plugin-image-picker.ImagePicker",
-        "file": "plugins/cordova-plugin-image-picker/www/imagepicker.js",
-        "pluginId": "cordova-plugin-image-picker",
-        "clobbers": [
-            "plugins.imagePicker"
-        ]
-    },
-    {
         "id": "cordova-plugin-x-socialsharing.SocialSharing",
         "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
         "pluginId": "cordova-plugin-x-socialsharing",
         "clobbers": [
             "window.plugins.socialsharing"
+        ]
+    },
+    {
+        "id": "cordova-plugin-image-picker.ImagePicker",
+        "file": "plugins/cordova-plugin-image-picker/www/imagepicker.js",
+        "pluginId": "cordova-plugin-image-picker",
+        "clobbers": [
+            "plugins.imagePicker"
         ]
     }
 ];
@@ -78,8 +78,8 @@ module.exports.metadata =
     "cordova-plugin-statusbar": "2.1.3",
     "cordova-plugin-whitelist": "1.2.2",
     "ionic-plugin-keyboard": "1.0.9",
-    "cordova-plugin-image-picker": "1.1.1",
-    "cordova-plugin-x-socialsharing": "5.1.6"
+    "cordova-plugin-x-socialsharing": "5.1.6",
+    "cordova-plugin-image-picker": "1.1.1"
 };
 // BOTTOM OF METADATA
 });

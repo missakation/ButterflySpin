@@ -156,16 +156,15 @@ angular.module('football.controllers')
                             team1name: teams[i].teamname, //
                             team1logo: teams[i].badge, //
                             team1rank: teams[i].rank, //
-                            
-                            //team1jersey: teams[i].jersey, //
+                            team1jersey: teams[i].awayjersey, //
 
                             team2key: myteam.key,
                             team2name: myteam.teamname,
                             team2logo: myteam.badge,
                             team2rank: myteam.rank,
-                            //team2jersey: myteam.jersey,
-
+                            team2jersey: myteam.homejersey,
                             team2adminid: myteam.teamadmin,
+
                             //team2adminname: myteam.adminname,
                             //team2adminmobile: myteam.adminmobile,
                             accepted: false,
@@ -197,14 +196,14 @@ angular.module('football.controllers')
                             team2logo: teams[i].badge,
                             team2rank: teams[i].rank,
                             team2adminid: teams[i].teamadmin,
-                            //team2jersey: myteam.jersey,
+                            team2jersey: teams[i].awayjersey,
 
                             team1key : myteam.key,
                             team1name: myteam.teamname, //
                             team1logo: myteam.badge, //
                             team1rank: myteam.rank, //
                             team1adminid: myteam.teamadmin,
-                            //team1jersey: teams[i].jersey, //
+                            team1jersey: myteam.homejersey, //
                             //team2adminid: myteam.admin,
                             //team2adminname: myteam.adminname,
                             //team2adminmobile: myteam.adminmobile,
@@ -314,11 +313,15 @@ angular.module('football.controllers')
                                 team1logo: challenges.child("team1logo").val(),
                                 team1name: challenges.child("team1name").val(),
                                 team1rank: challenges.child("team1rank").val(),
+                                team1jersey: challenges.child("team1jersey"),
+
                                 team2adminid: challenges.child("team2adminid").val(),
                                 team2key: challenges.child("team2key").val(),
                                 team2logo: challenges.child("team2logo").val(),
                                 team2name: challenges.child("team2name").val(),
                                 team2rank: challenges.child("team2rank").val(),
+                                team2jersey: challenges.child("team2jersey"),
+
                                 challengeradmin: challenges.child("challengeradmin").val(),
                                 year: challenges.child("year").val(),
                                 date: challengedate,

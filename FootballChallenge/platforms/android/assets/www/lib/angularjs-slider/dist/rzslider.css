@@ -16,7 +16,7 @@
 }
 
 .rzslider.with-legend {
-  margin-bottom: 40px;
+  margin-bottom: 0px;
 }
 
 .rzslider[disabled] {
@@ -44,7 +44,7 @@
   left: 0;
   z-index: 1;
   width: 100%;
-  height: 32px;
+  height: 2px;
   padding-top: 16px;
   margin-top: -16px;
   box-sizing: border-box;
@@ -59,7 +59,7 @@
   z-index: 1;
   width: 100%;
   height: 4px;
-  background:green;
+  background:rgb(155,167,181);
   -webkit-border-radius: 2px;
      -moz-border-radius: 2px;
           border-radius: 2px;
@@ -67,19 +67,19 @@
 
 .rzslider .rz-bar.rz-selection {
   z-index: 2;
-  background: #0db9f0;
+  background: red;
   -webkit-border-radius: 2px;
      -moz-border-radius: 2px;
           border-radius: 2px;
 }
 
 .rzslider .rz-pointer {
-  top: -14px;
+  top: -9px;
   z-index: 3;
-  width: 32px;
-  height: 32px;
+  width: 22px;
+  height: 22px;
   cursor: pointer;
-  background-color: #0db9f0;
+  background-color: red;
   -webkit-border-radius: 16px;
      -moz-border-radius: 16px;
           border-radius: 16px;
@@ -87,11 +87,11 @@
 
 .rzslider .rz-pointer:after {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 7px;
+  left: 7px;
   width: 8px;
   height: 8px;
-  background: #ffffff;
+  background: rgb(147,221,162);
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
           border-radius: 4px;
@@ -107,7 +107,7 @@
 }
 
 .rzslider .rz-pointer.rz-active:after {
-  background-color: #451aff;
+  background-color: rgb(40,172,60);
 }
 
 .rzslider .rz-bubble {

@@ -5567,7 +5567,8 @@ ion-tabs.tabs-color-active-dark .tab-item {
   -ms-flex-direction: row;
   flex-direction: row;
   padding: 10px;
-  min-height: 65px; }
+  min-height: 65px; 
+  }
   .popup-buttons .button {
     -webkit-box-flex: 1;
     -webkit-flex: 1;
@@ -5579,7 +5580,8 @@ ion-tabs.tabs-color-active-dark .tab-item {
     min-height: 45px;
     border-radius: 2px;
     line-height: 20px;
-    margin-right: 5px; }
+    margin-right: 5px;
+     }
     .popup-buttons .button:last-child {
       margin-right: 0px; }
 
@@ -5588,6 +5590,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
   .popup-open.modal-open .modal {
     pointer-events: none; }
   .popup-open .popup-backdrop, .popup-open .popup {
+    background-color: rgb(40, 80, 120);
     pointer-events: auto; }
 
 /**

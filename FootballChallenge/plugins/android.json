@@ -33,10 +33,10 @@
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.Arina"
         },
-        "cordova-plugin-image-picker": {
+        "cordova-plugin-x-socialsharing": {
             "PACKAGE_NAME": "com.ionicframework.Arina"
         },
-        "cordova-plugin-x-socialsharing": {
+        "cordova-plugin-image-picker": {
             "PACKAGE_NAME": "com.ionicframework.Arina"
         }
     },

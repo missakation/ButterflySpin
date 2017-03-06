@@ -323,6 +323,32 @@ angular.module('football.controllers')
 
         }
 
+        $scope.encodeImageUri = function(imageUri)
+        {
+            // convert base64 to raw binary data held in a string
+            // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+            var byteString = atob(dataURI.split(',')[1]);
+
+            // separate out the mime component
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+            // write the bytes of the string to an ArrayBuffer
+            var ab = new ArrayBuffer(byteString.length);
+            var ia = new Uint8Array(ab);
+            for (var i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+
+            // write the ArrayBuffer to a blob, and you're done
+            var blob = new Blob([ab], { type: mimeString });
+            return blob;
+
+            // Old code
+            // var bb = new BlobBuilder();
+            // bb.append(ab);
+            // return bb.getBlob(mimeString);
+        }
+
         $scope.progress = 0;
         $scope.uploading = false;
 
@@ -334,14 +360,13 @@ angular.module('football.controllers')
                 quality: 80
             };
 
-            $cordovaImagePicker.getPictures(options)
-                .then(function (results) {
+            window.imagePicker.getPictures(function (results) {
                     //console.log('Image URI: ' + results[0]);
 
                     // File or Blob named mountains.jpg
                     var file = results[0];
+                // Create the file metadata
 
-                    // Create the file metadata
                     var metadata = {
                         contentType: 'image/jpeg'
                     };
@@ -350,6 +375,10 @@ angular.module('football.controllers')
                     var id = user.uid;
 
                     $scope.uploading = true;
+
+                try {
+
+                    var storageRef = firebase.storage().ref();
 
                     // Upload file and metadata to the object 'images/mountains.jpg'
                     var uploadTask = storageRef.child('playerimages/' + '/' + id + '/' + file.name).put(file, metadata);
@@ -387,6 +416,9 @@ angular.module('football.controllers')
                             // Upload completed successfully, now we can get the download URL
                             var downloadURL = uploadTask.snapshot.downloadURL;
                         });
+                } catch (error) {
+                    alert(error.message);
+                }
 
                 }, function (error) {
                     // error getting photos

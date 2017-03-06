@@ -44,14 +44,14 @@
     h5.greytext,
     h6.greytext,
     p.greytext {
-        color: lightgray;
+        color: rgb(153,167,180);
     }
     </style>
 
 	<ion-nav-back-button>
 </ion-nav-back-button>
 <ion-nav-buttons side="left">
-    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+    <button class="button button-icon button-clear <ion-></ion->navicon" menu-toggle="left"></button>
 </ion-nav-buttons>
 
 <ion-nav-bar class="headercolor">
@@ -62,7 +62,7 @@
 
 <ion-content style="background-color:rgb(46,62,75)">
 
-	<div class="card" style="background-color:rgb(62,83,100) ">
+	<div class="card" style="background-color:rgb(46,62,75);box-shadow:0 0px 0px">
 
 		<div align="center">
 			<a href="#/app/selfprofile">
@@ -78,43 +78,35 @@
 </div>
 	</div>
 
-<div class="card" style="background-color:rgb(62,83,100) ">
-<div align="center" style="padding-left: 10px;padding-right:10px ">
-<h5 style="color:lightgray"> First Name
-</h5>
-
-<label class="item item-input" style="background-color:transparent;border-color:white;border-bottom: solid;border-color: white;border-top: none;border-width: 1px">
-<input type="text" ng-model="currentprofile.firstname" style="color:white" >
-
+<div class="list" align="center" style="width:95%;padding-left:10px">
+				<label class="item item-input" style="background-color:transparent; color:[#ffffff]; border-radius:5px; border-color:#97a7b4">
+                <input type="text" ng-model="currentprofile.firstname" placeholder="First name"  style="color:white;background-color:transparent;padding-left:2px">
+				</div>
+				
+</label>
+<div class="list" align="center" style="width:95%;padding-left:10px">
+				<label class="item item-input"style="background-color:transparent; color:[#ffffff]; border-radius:5px; border-color:#97a7b4">
+                <input type="text"  ng-model="currentprofile.lastname" placeholder="Last Name" style="color:white;background-color:transparent;padding-left:2px">
+				</div>
 </label>
 </div>
 
-<div align="center" style="padding-left: 10px;padding-right:10px ">
-<h5 style="color:lightgray"> Last Name
-</h5>
-
-<label class="item item-input" style="background-color:transparent;border-color:white;border-bottom: solid;border-color: white;border-top: none;border-width: 1px">
-<input type="text" ng-model="currentprofile.lastname" style="color:white" >
-
-</label>
 </div>
 
-<div align="center" style="padding-left: 10px;padding-right:10px ">
-<h5 style="color:lightgray"> Age
-</h5>
+<h5 style="color:rgb(153,167,180);background-color:transparent;padding-left:10px"> BIRTHDAY </h5>
 
-<label class="item item-input" style="background-color:transparent;border-color:white;border-bottom: solid;border-color: white;border-top: none;border-width: 1px">
-<input type="date" ng-model="currentprofile.age" style="color:white" >
+<label class="item item-input" style="width:95%;margin-left:10px;background-color:transparent;border-radius:5px; border-color:#97a7b4">
+<input type="date" ng-model="currentprofile.age" style="color:rgb(153,167,180)" >
 
 </label>
 </div>
 
 
-<div align="center" style="padding-left: 10px;padding-right:10px ">
-<h5 style="color:lightgray"> About Me
+<div align="left" style="padding-left: 10px;padding-right:10px ">
+<h5 style="color:rgb(153,167,180)"> ABOUT ME
 </h5>
 
-<label class="item item-input" style="background-color:white">
+<label class="item item-input" style="background-color:rgb(46,62,75)">
 <textarea ng-maxlength="300" style="background-color:transparent;border-color:white;border-radius:5px;color: white" type="text" ng-model="currentprofile.comments" >
 
 </textarea>
@@ -124,18 +116,18 @@
 </div>
 </div>
 
-<div class="card" style="background-color:rgb(62,83,100) ">
-	<div align="center">
-		<h5 class="whitetext">
-			Availability
+<div class="card" style="background-color:rgb(46,62,75);box-shadow:0 0px 0px">
+	<div align="left">
+		<h5 class="whitetext" style="font-size:14px;padding-left:5px;color:rgb(153,167,180)">
+			AVAILABILITY
 
 		</h5>
 	</div>
 
-<div class="row row-center">
+<div class="row row-center" style="padding:0px"align="left">
 	<div class="col col-20">
-		<h5 class="whitetext">
-			Mon
+		<h5 class="whitetext"style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
+			MON
 		</h5>
 	</div>
 	<div class="col">
@@ -144,10 +136,10 @@
 </div>
 </div>
 
-<div class="row row-center">
+<div class="row row-center" style="padding:0px"align="left">
 	<div class="col col-20">
-		<h5 class="whitetext">
-			Tue
+		<h5 class="whitetext" style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
+			TUE
 		</h5>
 	</div>
 	<div class="col">
@@ -156,10 +148,10 @@
 </div>
 </div>
 
-<div class="row row-center">
+<div class="row row-center" style="padding:0px"align="left">
 	<div class="col col-20">
-		<h5 class="whitetext">
-			Wed
+		<h5 class="whitetext"style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
+			WED
 		</h5>
 	</div>
 	<div class="col">
@@ -168,10 +160,10 @@
 </div>
 </div>
 
-<div class="row row-center">
+<div class="row row-center" style="padding:0px"align="left">
 	<div class="col col-20">
-		<h5 class="whitetext">
-			Thu
+		<h5 class="whitetext"style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
+			THU
 		</h5>
 	</div>
 	<div class="col">
@@ -180,10 +172,10 @@
 </div>
 </div>
 
-<div class="row row-center">
+<div class="row row-center" style="padding:0px"align="left">
 	<div class="col col-20">
-		<h5 class="whitetext">
-			Fri
+		<h5 class="whitetext"style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
+			FRI
 		</h5>
 	</div>
 	<div class="col">
@@ -192,10 +184,10 @@
 </div>
 </div>
 
-<div class="row row-center">
+<div class="row row-center" style="padding:0px"align="left">
 	<div class="col col-20">
-		<h5 class="whitetext">
-			Sat
+		<h5 class="whitetext"style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
+			SAT
 		</h5>
 	</div>
 	<div class="col">
@@ -204,10 +196,10 @@
 </div>
 </div>
 
-<div class="row row-center">
+<div class="row row-center" style="padding:0px"align="left">
 	<div class="col col-20">
-		<h5 class="whitetext">
-			Sun
+		<h5 class="whitetext"style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
+			SUN
 		</h5>
 	</div>
 	<div class="col">

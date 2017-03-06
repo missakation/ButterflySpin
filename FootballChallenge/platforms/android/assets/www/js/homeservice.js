@@ -53,11 +53,15 @@ angular.module('football.controllers')
                                     team1logo: challenges.child("team1logo").val(),
                                     team1name: challenges.child("team1name").val(),
                                     team1rank: challenges.child("team1rank").val(),
+                                    team1jersey: challenges.child("team1jersey").val(),
+
                                     team2adminid: challenges.child("team2adminid").val(),
                                     team2key: challenges.child("team2key").val(),
                                     team2logo: challenges.child("team2logo").val(),
                                     team2name: challenges.child("team2name").val(),
                                     team2rank: challenges.child("team2rank").val(),
+                                    team2jersey: challenges.child("team2jersey").val(),
+
                                     year: challenges.child("year").val(),
                                     date: challengedate,
                                     isadmin: isadmin,

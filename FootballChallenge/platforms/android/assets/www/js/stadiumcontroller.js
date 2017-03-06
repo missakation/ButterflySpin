@@ -5,22 +5,16 @@ angular.module('football.controllers')
         function getDateFromDayName(selectedDay)
         {
             var selectedDate = new Date();
-            if (selectedDay == "Today") {
-                selectedDate.setDate(selectedDate.getDate());
-                return weekday[selectedDate.getDay()] + monthChar[selectedDate.getMonth()] + " " + selectedDate.getDate();
-            }
-            else if (selectedDay == "Tomorrow") {
-                selectedDate.setDate(selectedDate.getDate() + 1);
-                return weekday[selectedDate.getDay()] + monthChar[selectedDate.getMonth()] + " " + selectedDate.getDate();
-            }
-            else
+            if (selectedDay == "Tomorrow")
             {
-                selectedDate.setDate(selectedDate.getDate()+2);
-                for (var i = 0; i <= 6; i++) {
-                    if (weekdayFull[selectedDate.getDay()] == selectedDay)
-                        return weekday[selectedDate.getDay()] + monthChar[selectedDate.getMonth()] + " " + selectedDate.getDate();
-                    selectedDate.setDate(selectedDate.getDate() + 1);
-                }
+                selectedDate.setDate(selectedDate.getDate() + 1);
+                return weekday[selectedDate.getDay()] + monthChar[selectedDate.getMonth()] + " " +selectedDate.getDate();
+            }
+            for(var i = 0; i <6;i++)
+            {
+                if (weekdayFull[selectedDate.getDay()] == selectedDay)
+                    return weekday[selectedDate.getDay()] + monthChar[selectedDate.getMonth()] + " " + selectedDate.getDate();
+                selectedDate.setDate(selectedDate.getDate() + 1);
             }
         }
 
@@ -180,7 +174,7 @@ angular.module('football.controllers')
         //$scope.search.date = "2013-01-08";
         var tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
-        
+
         $scope.search = {
             date: tomorrow,
             text: "Tomorrow, 9:00PM - 5 Vs 5 "
@@ -190,7 +184,6 @@ angular.module('football.controllers')
         $scope.search.date.setMinutes(0);
         $scope.search.date.setMilliseconds(0);
         $scope.search.date.setSeconds(0);
-        $scope.search.players = 5;
         //alert($scope.search.date);
         $scope.allfreestadiums = [];
 
@@ -442,7 +435,7 @@ angular.module('football.controllers')
 
     }).factory('pickerView', ['$compile', '$rootScope', '$timeout', '$q', '$ionicScrollDelegate', '$ionicBackdrop',
 function ($compile, $rootScope, $timeout, $q, $ionicScrollDelegate, $ionicBackdrop) {
-    
+
     var i, j, k, tmpVar;
 
     var domBody, pickerCtnr, pickerInfo;
@@ -732,8 +725,6 @@ function ($compile, $rootScope, $timeout, $q, $ionicScrollDelegate, $ionicBackdr
 
     ionic.Platform.ready(init); // when DOM Ready, init Picker View
 
-
-
     return {
         init: init,
         dispose: dispose,
@@ -743,10 +734,8 @@ function ($compile, $rootScope, $timeout, $q, $ionicScrollDelegate, $ionicBackdr
         isInit: getIsInit,
         isShowing: getIsShowing
     };
-
 }]);
 
-//day stuff
 var weekday = new Array(7);
 weekday[0] = "Sun,";
 weekday[1] = "Mon,";
@@ -798,7 +787,3 @@ for (i = 0 ; i < 100 ; i++) {
     var dayInMonth = nesheDate.getDate();
     dateArrayThingy.push(day + " " + month + " " + dayInMonth);
 }
-
-
-//end of day stufff----------------
-
