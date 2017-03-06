@@ -1,5 +1,5 @@
 <!--Ari-->
-<ion-view view-title="My Profile">
+<ion-view view-title="MY PROFILE" align="center">
 	<style>
 		img {
 			height: 100px;
@@ -25,16 +25,17 @@
 
 		.headercolor{
 			background-color: rgb(62,83,100);
-			color: white
+			color: white;
+			border-bottom:2px solid rgb(62, 83, 100);
 		}
 
 
 	</style>
-<ion-nav-buttons side="primary">
-	<h5 ng-click="goupdate(currentprofile)" style="color:white">
-<u>
-	Edit
-</u>
+<ion-nav-buttons side="right">
+	<h5 style="padding-right:10px;color:white" ng-click="goupdate(currentprofile)">
+
+	EDIT
+
 </h5>
 </ion-nav-buttons>
 
@@ -82,34 +83,31 @@
 
 <div class="row row-top">
 	<div class="col" style="padding-top:20px" align="center">
-	<h4 style="color:lightgray; padding-top:10px"> Position
-		<h4 style="color: white; padding-top:5px"> {{currentprofile.playposition}}
-</h4>
-
-
-</div>
-
-<div class="col " style="color:lightgray; padding-top:20px" align="center">
-<h4 style="color:lightgray;border-right:1px solid #5f7485;border-left:1px solid #5f7485;margin:0px;padding-top:10px">  Age
-</h4>
-<h4 style="color: white;border-right:1px solid #5f7485;border-left:1px solid #5f7485;margin:0px;padding-top:10px"> missakchange
+	<h3 style="color:#5f7485; padding-top:10px"> Position
+		<h3 style="color: white; padding-top:5px"> {{currentprofile.playposition}}
 </h4>
 </div>
 
-<div class="col " style="color:lightgray;padding-top:20px" align="center">
+<div class="col " style="color:#5f7485; padding-top:20px" align="center">
+<h4 style="color:#5f7485;border-right:1px solid #5f7485;border-left:1px solid #5f7485;margin:0px;padding-top:10px">  Age
+</h4>
+<h3 style="color: white;border-right:1px solid #5f7485;border-left:1px solid #5f7485;margin:0px;padding-top:10px"> 404
+</h3>
+</div>
 
 
-<h4 style="color:lightgray;margin:0px;padding-top:10px"> Fav Stadium
-</h4>
-<h4 style="color: white;margin:0px;padding-top:10px"> missakchange
-</h4>
+<div class="col " style="color:#5f7485;padding-top:20px" align="center">
+		<h4 style="color:#5f7485;margin:0px;padding-top:10px"> Fav Stadium
+			</h4>
+		<h3 style="color: white;margin:0px;padding-top:10px"> 404
+		</h3>
 </div>
 
 </div>
-
-<h4 class="whitetext">
+<br>
+<h3 class="whitetext">
 	{{currentprofile.comments}}
-</h4>
+</h3>
 
 </ion-item>
 </div>
@@ -136,24 +134,23 @@
 </div>
 </div>
 -->
-	<div class="card" style="background-color: rgb(62, 83, 100)">
+	<div class="card" style="background-color: rgb(62, 83, 100);margin-top:15px">
 			<ion-item style="border: none;padding:0px">
 				<div class="row row-center" align="center" style="padding:0px">
-					<div class="col" align="center" style="border-bottom:{{status.Available}};border-color: green;padding:10px; border-right:1px solid #5f7485">
+					<div class="col" align="center" style="border-bottom:{{status.Available}};border-color: #2ab041;padding:10px 0px; border-right:2px solid #5f7485">
 						<h3 class="whitetext" ng-click="switchscreens(1)">
 							<b>AVAILABILITY</b>
 						</h3>
 
 					</div>
 
-					<div class="col" style="border-bottom: {{status.Statistics}};border-color:green;padding:10px; border-right:1px solid #5f7485">
+					<div class="col" style="border-bottom: {{status.Statistics}};border-color:#2ab041;padding:10px 0px; border-right:2px solid #5f7485">
 						<h3 class="whitetext" ng-click="switchscreens(2)">
 							<b>STATISTICS</b>
 						</h3>
 
 					</div>
-					<div class="col" style="border-bottom: {{status.Members}};padding:10px;border-color: green;margin:10px,0">
-
+					<div class="col" style="border-bottom: {{status.Members}};padding:10px 0px;border-color:#2ab041">
 						<h3 class="whitetext" ng-click="switchscreens(3)">
 							<b>MY GAMES</b>
 						</h3>
@@ -167,10 +164,10 @@
 			</ion-item>
 
 
-		<ion-item ng-show="tabs.Statistics" style="border: none;padding:0px">
+		<ion-item ng-show="tabs.Statistics" align="left" style="border: none;padding:0px">
 
 
-			<div class="row row-center" style="border-bottom:1px solid #5f7485; padding-top:5px; margin:5px 0 0 0;margin-top:15px">
+			<div class="row row-center" style="border-bottom:1px solid #5f7485;margin-top:15px">
 					<div class='col col-75' >
 
 						<h3 class="whitetext">Games On Arina</h3>
@@ -213,7 +210,7 @@
 
 </ion-item>
 
-<ion-item ng-show="tabs.Available" style="border: none;padding:0px">
+<ion-item ng-show="tabs.Available" align="left" style="border: none;padding:0px">
 
 				<div class="row row-center"style="border-bottom:1px solid #5f7485;margin-top:15px">
 					<div class="col"style="margin-top:5px">
@@ -313,20 +310,20 @@
 </ion-list>
 
 
-<ion-item ng-show="tabs.Members" style="border: none;padding:0px;margin-top:15px">
+<ion-item ng-show="tabs.Members" style="border: none;padding:0px">
 
-	<div class="row row-center" ng-repeat="upmatches in currentprofile.upcomingmatches" style="background-color:rgb(62,83,100)">
+	<div class="row row-center" align="right" ng-repeat="upmatches in currentprofile.upcomingmatches" style="padding-top:15px;background-color:rgb(62,83,100)">
 <div class="col col-75">
 
-	<h4 class="whitetext">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h4>
+	<h4 class="whitetext" align="left">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h4>
 </div>
 
 <div class="col">
 
-	<button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="width:60px;font-size:12px" ng-click="gogamedetails(upmatches.key)"> Manage
+	<button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="width:60px;font-size:12px;padding:0 20px 0 15px;border-radius:50px" ng-click="gogamedetails(upmatches.key)"> Manage
 </button>
 
-<button ng-show="!(upmatches.isadmin)" class="button button-balanced button-small" style="width:60px;font-size:12px" ng-click="gogamedetails(upmatches.key)"> View
+<button ng-show="!(upmatches.isadmin)" align="right" class="button button-balanced button-small" style="width:60px;font-size:12px;padding:0 20px 0 15px;border-radius:50px" ng-click="gogamedetails(upmatches.key)"> View
 </button>
 </div>
 

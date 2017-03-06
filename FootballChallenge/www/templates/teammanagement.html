@@ -29,8 +29,9 @@
         <div align="center">
             <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
         </div>
-        <div ng-repeat="team in test">
-            <a class="item item-thumbnail-left" href="#/app/teamprofile/{{team.key}}" style="background-color:rgb(62,83,100);margin-top:10px;border:hidden">
+        
+        <div ng-repeat="team in test" style="padding:0 10px">
+            <a class="item item-thumbnail-left" href="#/app/teamprofile/{{team.key}}" style="border-radius:10px;background-color:rgb(62,83,100);margin-top:10px;border:hidden">
                 <img src="img/Badges/{{team.badge}}.png" style="width:65px;height:65px; margin-top:10px;margin-left:15px ">
 
                 <div align="center" style="padding-right:0px;margin-top:-5px">
@@ -40,9 +41,9 @@
                       <div align="center" style="padding-right:0px; color:darkturquoise; font-size:12px; font-weight:bold"> Rank 49th
                         </div>
                         <hr style="height:1px; visibility:hidden;" />
-                    <h4 style="color: lightgray;float:left; width:50%; padding-left:25px;margin:0px"> MEMBERS
+                    <h4 style="color: #5f7485;float:left; width:50%; padding-left:25px;margin:0px"> MEMBERS
                     </h4>
-                     <h4 style="color: lightgray;float:left; width:40%;margin-left:-15px;border-left:solid;margin:0px; border-width:thin; border-color: #5f7485;padding-left:25px"> RATING
+                     <h4 style="color: #5f7485;float:left; width:40%;margin-left:-15px;border-left:solid;margin:0px; border-width:thin; border-color: #5f7485;padding-left:25px"> RATING
                     </h4>
                    <h4 style="color:white;float:left; width:50%;padding-left:48px;top:0px;margin:0px"> <b>{{team.members}}</b>
                     </h4>

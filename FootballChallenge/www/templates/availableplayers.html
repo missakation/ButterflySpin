@@ -47,62 +47,55 @@
 <div class="card" style="background-color:rgb(62,83,100)" ng-repeat="item in allfreeplayers">
 <!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
-<div class="row ">
+<div class="row" style="padding:0px">
 	<div class="col" align="center">
 		<img src="{{item.photo}}" style="width:100%;height:80px;">
-<h5 class="whitetext"> {{item.displayname}} </h5>
+<h5 class="whitetext" style="text-decoration-style: ca"> {{item.displayname}} </h5>
 <h5 class="whitetext"> {{item.ranking}} </h5>
 </div>
 
 <div class="col" align="center">
 	<img src="https://leafii.com/images/defaultProfilePic.png" style="width:100%;height:80px;">
-<h5 class="whitetext"> Fav. Stadium </h5>
+<h5 style="color:#5f7485;font-size:14px"> FAV. STADIUM </h5>
 <h5 class="whitetext"> {{item.favstadium}} </h5>
 </div>
 
 <div class="col" align="center">
 	<img src="https://leafii.com/images/defaultProfilePic.png" style="width:100%;height:80px;">
 <h5 class="whitetext"> Beirut Eagle</h5>
-<h5 class="whitetext"> Rank 49 </h5>
+<h5 style="color:darkturquoise"> Rank 49 </h5>
 </div>
 
 </div>
 
 
 <div class="row row-top">
-	<div class="col" align="right" style="color:lightgray"> Position
+	<div class="col" align="center" style="color:#5f7485"> Position
 
 </div>
 
 <!--	<div class="col " style="border-right: 0.2px solid;border-color:grey;color:white" align="right">-->
-<div class="col " style="color:lightgray" align="right"> Age
+
+<div class="col "align="center" style="color:#5f7485;border-right:1px solid #5f7485;border-left:1px solid #5f7485" align="right"> Age
 
 </div>
 
-<div class="col " style="color:lightgray" align="right" > Matches
-
-</div>
-
-<div class="col " align="right" style="color:lightgray" > Av. Res
+<div class="col " align="center" style="color:#5f7485"> Matches
 
 </div>
 
 </div>
 
 <div class="row ">
-	<div class="col" align="right" style="color:white"> {{item.playposition}}
+	<div class="col" align="center" style="border-right:1px solid #5f7485;padding-top:0px; color:white"> {{item.playposition}}
 
 </div>
 
-<div class="col" style="color:white" align="right"> {{item.age}}
+<div class="col" style="color:white;border-right:1px solid #5f7485;padding-top:0px" align="center"> 27{{item.age}}
 
 </div>
 
-<div class="col" align="right" style="color:white"> {{item.nummatches}}
-
-</div>
-
-<div class="col" align="right" align="center" style="color:white">
+<div class="col" align="center" style="color:white;padding-top:0px"> 18{{item.nummatches}}
 
 </div>
 

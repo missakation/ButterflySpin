@@ -2,7 +2,23 @@
 angular.module('football.controllers')
     .controller('stadiumcontroller', function ($scope, $ionicPopover, ReservationFact, $ionicPopup, $ionicLoading, $timeout, $state, $cordovaDatePicker, pickerView) {
         
+        function getDateFromDayName(selectedDay)
+        {
+            var selectedDate = new Date();
+            if (selectedDay == "Tomorrow")
+            {
+                selectedDate.setDate(selectedDate.getDate() + 1);
+                return weekday[selectedDate.getDay()] + monthChar[selectedDate.getMonth()] + " " +selectedDate.getDate();
+            }
+            for(var i = 0; i <6;i++)
+            {
+                if (weekdayFull[selectedDate.getDay()] == selectedDay)
+                    return weekday[selectedDate.getDay()] + monthChar[selectedDate.getMonth()] + " " + selectedDate.getDate();
+                selectedDate.setDate(selectedDate.getDate() + 1);
+            }
+        }
 
+        $scope.openPickerView = function openPickerView() {
 
             var picker = pickerView.show({
                 titleText: '', // default empty string
@@ -27,12 +43,19 @@ angular.module('football.controllers')
                     if (output)
                     {
                         // output is Array type
-
-                        $scope.search.date = new Date(output[0] + " " + output[1] + ", " +  (new Date()).getFullYear() );
+                        var correctDate;
+                        var selectedDate = output[0];
+                        var selectedTime = output[1];
+                        if (!Date.parse(selectedDate))
+                        {
+                            selectedDate = getDateFromDayName(selectedDate);
+                            console.log(selectedDate);
+                        }
+                        $scope.search.date = new Date(selectedDate + " " + selectedTime + ", " + (new Date()).getFullYear());
+                        $scope.search.players = (output[2].split(" "))[1];
                         console.log($scope.search.date);
                         $scope.search.text = output.join(" -");
                         $scope.checkfree();
-                        //$scope.$digest();
                     }
                 });
             }
@@ -153,7 +176,7 @@ angular.module('football.controllers')
         tomorrow.setDate(tomorrow.getDate() + 1);
 
         $scope.search = {
-            date: new Date(),
+            date: tomorrow,
             text: "Tomorrow, 9:00PM - 5 Vs 5 "
         };
         $scope.search.date.setDate($scope.search.date.getDate() + 1);
@@ -162,13 +185,10 @@ angular.module('football.controllers')
         $scope.search.date.setMilliseconds(0);
         $scope.search.date.setSeconds(0);
         //alert($scope.search.date);
-
         $scope.allfreestadiums = [];
 
 
         $scope.checkfree = function () {
-
-            console.log("ourish discks");
             //here
             $ionicLoading.show({
                 content: 'Loading',
@@ -411,33 +431,6 @@ angular.module('football.controllers')
         }
 
         $scope.doRefresh();
-
-        // onSuccess Callback
-        // This method accepts a Position object, which contains the
-        // current GPS coordinates
-        //
-
-        /*
-        var onSuccess = function(position) {
-            alert('Latitude: '          + position.coords.latitude          + '\n' +
-                  'Longitude: '         + position.coords.longitude         + '\n' +
-                  'Altitude: '          + position.coords.altitude          + '\n' +
-                  'Accuracy: '          + position.coords.accuracy          + '\n' +
-                  'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-                  'Heading: '           + position.coords.heading           + '\n' +
-                  'Speed: '             + position.coords.speed             + '\n' +
-                  'Timestamp: '         + position.timestamp                + '\n');
-        };
-    
-        // onError Callback receives a PositionError object
-        //
-        function onError(error) {
-            alert('code: '    + error.code    + '\n' +
-                  'message: ' + error.message + '\n');
-        }
-    
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);*/
-
 
 
     }).factory('pickerView', ['$compile', '$rootScope', '$timeout', '$q', '$ionicScrollDelegate', '$ionicBackdrop',
@@ -743,56 +736,54 @@ function ($compile, $rootScope, $timeout, $q, $ionicScrollDelegate, $ionicBackdr
     };
 }]);
 
-    var weekday = new Array(7);
-    weekday[0]=  "Sun,";
-    weekday[1] = "Mon,";
-    weekday[2] = "Tue,";
-    weekday[3] = "Wed,";
-    weekday[4] = "Thu,";
-    weekday[5] = "Fri,";
-    weekday[6] = "Sat,";
-		
-    var weekdayFull = new Array(7);
-    weekdayFull[0]=  "Sunday";
-    weekdayFull[1] = "Monday";
-    weekdayFull[2] = "Tuesday";
-    weekdayFull[3] = "Wednesday";
-    weekdayFull[4] = "Thursday";
-    weekdayFull[5] = "Friday";
-    weekdayFull[6] = "Saturday";
-  
-  
-    monthChar = new Array(12);
-    monthChar[0]=  "Jan";
-    monthChar[1] = "Feb";
-    monthChar[2] = "Mar";
-    monthChar[3] = "Apr";
-    monthChar[4] = "May";
-    monthChar[5] = "Jun";
-    monthChar[6] = "Jul";
-    monthChar[7] = "Aug";
-    monthChar[8] = "Sep";
-    monthChar[9] = "Oct";
-    monthChar[10] = "Nov";
-    monthChar[11] = "Dec";
+var weekday = new Array(7);
+weekday[0] = "Sun,";
+weekday[1] = "Mon,";
+weekday[2] = "Tue,";
+weekday[3] = "Wed,";
+weekday[4] = "Thu,";
+weekday[5] = "Fri,";
+weekday[6] = "Sat,";
 
-    var nesheDate = new Date();
-    var dateArrayThingy = new Array();
-    dateArrayThingy.push("Today");
-    dateArrayThingy.push("Tomorrow");
-    //alert(nesheDate.getDay());
+var weekdayFull = new Array(7);
+weekdayFull[0] = "Sunday";
+weekdayFull[1] = "Monday";
+weekdayFull[2] = "Tuesday";
+weekdayFull[3] = "Wednesday";
+weekdayFull[4] = "Thursday";
+weekdayFull[5] = "Friday";
+weekdayFull[6] = "Saturday";
+
+
+monthChar = new Array(12);
+monthChar[0] = "Jan";
+monthChar[1] = "Feb";
+monthChar[2] = "Mar";
+monthChar[3] = "Apr";
+monthChar[4] = "May";
+monthChar[5] = "Jun";
+monthChar[6] = "Jul";
+monthChar[7] = "Aug";
+monthChar[8] = "Sep";
+monthChar[9] = "Oct";
+monthChar[10] = "Nov";
+monthChar[11] = "Dec";
+
+var nesheDate = new Date();
+var dateArrayThingy = new Array();
+dateArrayThingy.push("Today");
+dateArrayThingy.push("Tomorrow");
+//alert(nesheDate.getDay());
+nesheDate.setDate(nesheDate.getDate() + 1);
+for (i = 0; i < 7; i++) {
     nesheDate.setDate(nesheDate.getDate() + 1);
-    for(i=0;i <7;i++)
-    { 
-        nesheDate.setDate(nesheDate.getDate() + 1);   
-        dateArrayThingy.push(weekdayFull[nesheDate.getDay()]);    
-    }
-    for(i =0 ; i < 100 ; i++)
-    {
-        nesheDate.setDate(nesheDate.getDate() + 1);
-        //alert(weekday[nesheDate.getDay()]);
-        var day = weekday[nesheDate.getDay()];
-        var month = monthChar[nesheDate.getMonth()];
-        var dayInMonth = nesheDate.getDate();
-        dateArrayThingy.push(day + " "+ month + " " + dayInMonth); 
-    }
+    dateArrayThingy.push(weekdayFull[nesheDate.getDay()]);
+}
+for (i = 0 ; i < 100 ; i++) {
+    nesheDate.setDate(nesheDate.getDate() + 1);
+    //alert(weekday[nesheDate.getDay()]);
+    var day = weekday[nesheDate.getDay()];
+    var month = monthChar[nesheDate.getMonth()];
+    var dayInMonth = nesheDate.getDate();
+    dateArrayThingy.push(day + " " + month + " " + dayInMonth);
+}
