@@ -5,59 +5,48 @@
         margin: 5px auto;
         border-radius: 35px;
     }
-
-
+    
     .col-50 {
         border: thick;
         border-color: black;
     }
-
-
-
+    
     .ion-item {
         background-color: rgb(30, 30, 30);
     }
-
-
-
+    
     .div {
         background-color: rgb(30, 30, 30);
     }
-
-
+    
     #onboard {
         width: 100%;
         height: 100%;
         background: url(img/recommended.png) 50% 0 no-repeat;
         background-size: 200% 100%;
     }
-
-
-
+    
     #specialoffer1 {
         width: 100%;
         height: 100%;
         background: url(img/recommended.png) 50% 0 no-repeat;
         background-size: 200% 100%;
     }
-
-
+    
     #specialoffer2 {
         width: 100%;
         height: 100%;
         background: url(img/recommended.png) 50% 0 no-repeat;
         background-size: 200% 100%;
     }
-
-
+    
     #specialoffer3 {
         width: 100%;
         height: 100%;
         background: url(img/recommended.png) 50% 0 no-repeat;
         background-size: 200% 100%;
     }
-
-
+    
     .h3.whitetext,
     h2.whitetext,
     h1.whitetext,
@@ -67,9 +56,7 @@
     p.whitetext {
         color: white;
     }
-
-
-
+    
     .h3.greytext,
     h2.greytext,
     h1.greytext,
@@ -79,30 +66,24 @@
     p.greytext {
         color: #5f7485;
     }
-
-
-
+    
     .button {
         color: black;
     }
-
-
-
+    
     .headercolor {
         background-color: rgb(62, 83, 100);
         color: white;
         border-bottom: 2px solid rgb(62, 83, 100);
     }
-
-
-
+    
     .bodyColor {
         background-color: rgb(45, 62, 75);
         color: white;
     }
 </style>
 
-<ion-view title='<img src="img/loggo.png" align="center" style="width:70px;height:35px;padding-top:5px; top 3px">'>
+<ion-view title='<img src="img/loggo.png" align="center" style="width:70px;height:35px;padding-top:5px">'>
 
     <ion-nav-buttons side="right">
         <button class="button button-icon" ng-click="toggleSearch()" style="color:white">{{showSearch && 'Hide' || 'Search'}}
@@ -277,29 +258,30 @@
                     <div class="col">
 
                         <button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="width:60px;font:12px;background-color:#28b041;color:white"
-                            ng-click="gogamedetails(upmatches.key)"> Manage
+                            ng-click="gogamedetails(upmatches)"> Manage
 </button>
 
                         <button ng-show="!(upmatches.isadmin)" class="button button-small" style="width:60px;font:12px;background-color:#28b041;color:white"
-                            ng-click="gogamedetails(upmatches.key)"> View
+                            ng-click="gogamedetails(upmatches)"> View
 </button>
                     </div>
 
                 </div>
-            </div>
-        </div>
-
-        <div class="card" style="background-color:rgb(62,83,100)" ng-show="showupcomingsinglematches">
-            <div style="background-color:rgb(62,83,100)">
-                <div align="center">
-                    <h4 class="whitetext" align="middle"><b>UPCOMING MATCHES</b></h4>
-
-                </div>
-
-
-
                 <div class="row row-center" ng-repeat="upmatches in profile.upcomingmatches" style="background-color:rgb(62,83,100)">
-                    <h6 class="whitetext">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h6>
+                    <div class="col col-75">
+                        <h6 class="whitetext">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h6>
+                    </div>
+                    <div class="col">
+
+                        <button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="width:60px;font:12px;background-color:#28b041;color:white"
+                            ng-click="gogamedetails(upmatches)"> Manage
+</button>
+
+                        <button ng-show="!(upmatches.isadmin)" class="button button-small" style="width:60px;font:12px;background-color:#28b041;color:white"
+                            ng-click="gogamedetails(upmatches)"> View
+</button>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -341,19 +323,18 @@
 
             <div class="row row-top" style="background-color:rgb(62,83,100)">
                 <div class="col">
-                    <button class="button button-block button-full button-balanced button-small" style="color:white" ng-click="acceptteaminvitation(upmatches,1)"> Accept
+
+                    <button class="button button-block button-full button-assertive button-small" style="border-radius:50px;color:white" ng-click="acceptteaminvitation(upmatches,2)"> DECLINE
 </button>
                 </div>
                 <div class="col">
-
-                    <button class="button button-block button-full button-assertive button-small" style="color:white" ng-click="acceptteaminvitation(upmatches,2)"> Decline
+                    <button class="button button-block button-full button-balanced button-small" style="border-radius:50px;color:white;font-weight:bold" ng-click="acceptteaminvitation(upmatches,1)"> ACCEPT
 </button>
                 </div>
+
             </div>
 
-
-        </div>
-
+        </div
         <div class="card" style="background-color:rgb(62,83,100)" ng-repeat="challenges in profile.challenges">
             <div align="center">
                 <h4 class="whitetext" align="middle"><b> {{challenges.team2name}} CHALLENGED YOU</b></h4>
@@ -441,26 +422,25 @@
 
             <div class="row" ng-show="!challenges.isadmin">
                 <div class="col">
-                    <button class="button button-block button-balanced button-small" style="color:white" ng-click="acceptinvitation(challenges)"> Accept
+                    <button class="button button-block button-assertive button-small" style="border-radius:50px;color:white" ng-click="declineinvitation(challenges)"> DECLINE
 </button>
                 </div>
 
-
-                <div class="col">
-                    <button class="button button-block button-assertive button-small" style="color:white" ng-click="declineinvitation(challenges)"> Decline
+                   <div class="col">
+                    <button class="button button-block button-balanced button-small" style="font-weight:bold;border-radius:50px;color:white" ng-click="acceptinvitation(challenges)"> ACCEPT
 </button>
                 </div>
             </div>
 
             <div class="row" ng-show="challenges.isadmin">
                 <div class="col">
-                    <button class="button button-block button-balanced button-small" style="background-color:white;color: green" ng-click="cancelinvitation(challenges)"> Cancel
+                    <button class="button button-block button-balanced button-small" style="border-radius:50px;background-color:white;color: green" ng-click="cancelinvitation(challenges)"> CANCEL
 </button>
                 </div>
 
 
                 <div class="col">
-                    <button class="button button-block button-energized button-small" style="color:white"> Pending
+                    <button class="button button-block button-energized button-small" style="border-radius:50px;width:bold;color:white"> PENDING
 </button>
                 </div>
             </div>
@@ -525,13 +505,12 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <button class="button button-block button-balanced button-small" style="color:white" ng-click="acceptgameinvitation(1,challenges)"> Accept
+                    <button class="button button-block button-assertive button-small" style="color:white;border-radius:50px" ng-click="acceptgameinvitation(2,challenges)"> DECLINE
 </button>
                 </div>
 
-
-                <div class="col">
-                    <button class="button button-block button-assertive button-small" style="color:white" ng-click="acceptgameinvitation(2,challenges)"> Decline
+                   <div class="col">
+                    <button class="button button-block button-balanced button-small" style="font-weight:bold;border-radius:50px;width:bold;color:white" ng-click="acceptgameinvitation(1,challenges)"> ACCEPT
 </button>
                 </div>
             </div>
@@ -550,7 +529,7 @@
             <div class="row ">
 
                 <div class="col col-25">
-                    <img src="{{requests.photo}}" style="height: 50px;width: 50px;border-radius: 50px">
+                    <img src="{{requests.photo}}" style="width:70px;height:70px">
                 </div>
 
                 <div class="col">
@@ -563,25 +542,25 @@
 
             <div class="row row-top">
                 <div class="col">
-                    <button class="button button-block button-full button-balanced button-small" style="color:white" ng-click="acceptrequest(requests,1)"> Accept
+
+                    <button class="button button-block button-full button-assertive button-small" style="border-radius:50px;color:white" ng-click="acceptrequest(requests,2)"> DECLINE
 </button>
                 </div>
-                <div class="col">
-
-                    <button class="button button-block button-full button-assertive button-small" style="color:white" ng-click="acceptrequest(requests,2)"> Decline
+                    <div class="col">
+                    <button class="button button-block button-full button-balanced button-small" style="border-radius:50px;color:white;font-weight:bold" ng-click="acceptrequest(requests,1)"> ACCEPT
 </button>
                 </div>
             </div>
 
             <div class="row" ng-show="challenges.isadmin">
                 <div class="col">
-                    <button class="button button-block button-balanced button-small" style="background-color:white;color: green" ng-click="cancelinvitation(challenges)"> Cancel
+                    <button class="button button-block button-balanced button-small" style="border-radius:50px;background-color:white;color: #2ab041" ng-click="cancelinvitation(challenges)"> CANCEL
 </button>
                 </div>
 
 
                 <div class="col">
-                    <button class="button button-block button-energized button-small" style="color:white"> Pending
+                    <button class="button button-block button-energized button-small" style="border-radius:50px;color:white"> PENDING
 </button>
                 </div>
             </div>
@@ -685,7 +664,7 @@
                                     <div align="center" class="col col-50">
 
                                         <a href="#/app/selfprofile">
-                                            <img src="img/Badges/{{rankedteams[0].badge}}.png" style="height:70px ; width:70px" height="50" />
+                                            <img src="img/Badges/{{rankedteams[0].badge}}.png" style="height:70px ; width:70px"/>
                                         </a>
                                         <div>
                                             <h4 align="center" style="font-weight:bold;color:white">Barcelona</h4>
@@ -894,7 +873,7 @@
                                         <div class="col" align="center">
 
                                             <a href="#/app/selfprofile">
-                                                <img src="img/Badges/{{rankedteams[0].badge}}.png" style="height:70px ; width:70px" height="50" />
+                                                <img src="img/Badges/{{rankedteams[0].badge}}.png" style="height:70px ; width:70px"/>
                                             </a>
                                             <div align="center">
                                                 <h4 align="center" style="font-weight:bold;color:white">{{rankedteams[2].teamname}}</h4>

@@ -117,8 +117,8 @@ angular.module('football.controllers')
 
 
         $scope.slider1 = {
-            minValue: 1,
-            maxValue: 24,
+            minValue: 7,
+            maxValue: 23,
 
             options: {
                 floor: 0,
@@ -141,8 +141,8 @@ angular.module('football.controllers')
         };
 
         $scope.slider2 = {
-            minValue: 1,
-            maxValue: 24,
+            minValue: 7,
+            maxValue: 23,
             options: {
                 floor: 0,
                 showSelectionBar: true,
@@ -164,8 +164,8 @@ angular.module('football.controllers')
 
 
         $scope.slider3 = {
-            minValue: 1,
-            maxValue: 24,
+            minValue: 7,
+            maxValue: 23,
             options: {
                 floor: 0,
                 showSelectionBar: true,
@@ -188,8 +188,8 @@ angular.module('football.controllers')
 
 
         $scope.slider4 = {
-            minValue: 1,
-            maxValue: 24,
+            minValue: 7,
+            maxValue: 23,
             options: {
                 floor: 0,
                 showSelectionBar: true,
@@ -212,8 +212,8 @@ angular.module('football.controllers')
 
 
         $scope.slider5 = {
-            minValue: 1,
-            maxValue: 24,
+            minValue: 7,
+            maxValue: 23,
             options: {
                 floor: 0,
                 showSelectionBar: true,
@@ -235,8 +235,8 @@ angular.module('football.controllers')
         };
 
         $scope.slider6 = {
-            minValue: 1,
-            maxValue: 24,
+            minValue: 7,
+            maxValue: 23,
             options: {
                 floor: 0,
                 showSelectionBar: true,
@@ -258,8 +258,8 @@ angular.module('football.controllers')
         };
 
         $scope.slider7 = {
-            minValue: 1,
-            maxValue: 24,
+            minValue: 7,
+            maxValue: 23,
 
             options: {
                 floor: 0,
@@ -323,32 +323,6 @@ angular.module('football.controllers')
 
         }
 
-        $scope.encodeImageUri = function(imageUri)
-        {
-            // convert base64 to raw binary data held in a string
-            // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-            var byteString = atob(dataURI.split(',')[1]);
-
-            // separate out the mime component
-            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-
-            // write the bytes of the string to an ArrayBuffer
-            var ab = new ArrayBuffer(byteString.length);
-            var ia = new Uint8Array(ab);
-            for (var i = 0; i < byteString.length; i++) {
-                ia[i] = byteString.charCodeAt(i);
-            }
-
-            // write the ArrayBuffer to a blob, and you're done
-            var blob = new Blob([ab], { type: mimeString });
-            return blob;
-
-            // Old code
-            // var bb = new BlobBuilder();
-            // bb.append(ab);
-            // return bb.getBlob(mimeString);
-        }
-
         $scope.progress = 0;
         $scope.uploading = false;
 
@@ -360,13 +334,41 @@ angular.module('football.controllers')
                 quality: 80
             };
 
-            window.imagePicker.getPictures(function (results) {
+
+            /*var getFileBlob = function (url, cb) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", url);
+                xhr.responseType = "blob";
+                xhr.addEventListener('load', function() {
+                    cb(xhr.response);
+                });
+                xhr.send();
+            };
+
+            var blobToFile = function (blob, name) {
+                    blob.lastModifiedDate = new Date();
+                    blob.name = name;
+                    return blob;
+            };
+
+            var getFileObject = function(filePathOrUrl, cb) {
+                getFileBlob(filePathOrUrl, function (blob) {
+                    cb(blobToFile(blob, 'test.jpg'));
+                });
+            };
+
+            getFileObject('img/test.jpg', function (fileObject) {
+                console.log(fileObject);
+            })*/
+
+            window.imagePicker.getPictures(options)
+                .then(function (results) {
                     //console.log('Image URI: ' + results[0]);
 
                     // File or Blob named mountains.jpg
                     var file = results[0];
-                // Create the file metadata
 
+                    // Create the file metadata
                     var metadata = {
                         contentType: 'image/jpeg'
                     };
@@ -375,10 +377,6 @@ angular.module('football.controllers')
                     var id = user.uid;
 
                     $scope.uploading = true;
-
-                try {
-
-                    var storageRef = firebase.storage().ref();
 
                     // Upload file and metadata to the object 'images/mountains.jpg'
                     var uploadTask = storageRef.child('playerimages/' + '/' + id + '/' + file.name).put(file, metadata);
@@ -416,9 +414,6 @@ angular.module('football.controllers')
                             // Upload completed successfully, now we can get the download URL
                             var downloadURL = uploadTask.snapshot.downloadURL;
                         });
-                } catch (error) {
-                    alert(error.message);
-                }
 
                 }, function (error) {
                     // error getting photos

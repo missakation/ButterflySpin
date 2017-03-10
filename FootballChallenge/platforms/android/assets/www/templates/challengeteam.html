@@ -70,17 +70,9 @@
           </ion-popover-view>
       </script>
 
-<div class="item item-dark" ion-datetime-picker ng-model="search.date" minute-step="30">
+<div class="item item-dark" style="background-color:darkturquoise" ion-datetime-picker ng-model="search.date" minute-step="30">
 	{{search.date| date: "yyyy-MM-dd H:mm"}}
-</div>-->
-
-    <div align="center">
-        <!--<p style="background-color:lightgray">Date</p>-->
-        <!--<label class="item item-input">-->
-        <i class="icon ion-calendar"></i><input class="button open-button" on-tap="openPickerView()" ng-model="search.text">
-        <!--<input type="datetime-local" step="30"  ng-model="search.date" ng-change="checkfree()">-->
-        <!--</label>-->
-    </div>
+</div>
 
 <div align="left" >
 	<h5 class="whitetext" style="font-size:12px;text-indent:20px; color:#5f7485; margin-bottom:-5px">

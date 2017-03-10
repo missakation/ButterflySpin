@@ -100,29 +100,127 @@ angular.module('football.controllers')
         }
 
 
-        // .fromTemplate() method
-        var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
 
-        $scope.popover = $ionicPopover.fromTemplate(template, {
-            scope: $scope
+        $scope.$on("$ionicView.afterEnter", function (event, data) {
+            // handle event
+            $scope.disabledbutton = false;
         });
 
-        // .fromTemplateUrl() method
-        $ionicPopover.fromTemplateUrl('my-popover.html', {
-            scope: $scope
-        }).then(function (popover) {
-            $scope.popover = popover;
+        $scope.adduser =
+            {
+                teamname: "",
+                pteamsize: "5",
+                favstadium: "",
+                favstadiumphoto: "",
+                homejersey: "Blue",
+                awayjersey: "White",
+                badge: "01",
+                five: false,
+                six: false,
+                seven: false,
+                eight: false,
+                nine: false,
+                ten: false,
+                eleven: false
+            }
+
+
+        $scope.next = function () {
+            $scope.validate.teamsize = false;
+            $scope.validate.team = false;
+            var error = false;
+            $scope.disabledbutton = true;
+            try {
+                var team = {
+                    teamname: $scope.adduser.teamname,
+                    teamadmin: "",
+                    rating: 0,
+                    pteamsize: $scope.adduser.pteamsize,
+                    favstadium: $scope.adduser.favstadium,
+                    homejersey: "",
+                    awayjersey: "",
+                    badge: false,
+                    five: false,
+                    six: false,
+                    seven: false,
+                    eight: false,
+                    nine: false,
+                    ten: false,
+                    eleven: false,
+                    photo: ""
+
+                };
+
+                for (var i = 0; i < $scope.allstadiums.length; i++) {
+                    if ($scope.adduser.favstadium == $scope.allstadiums[i].name) {
+                        team.photo = $scope.allstadiums[i].photo
+                    }
+                }
+
+                if (!error) {
+                    $scope.validate.teamsize = false;
+                    $scope.validate.team = false;
+
+                    $state.go("app.teamadd1", {
+                        team1: team
+                    });
+                }
+            }
+
+            catch (error) {
+                alert(error.message);
+                $scope.disabledbutton = false;
+            }
+
+
+
+        };
+
+    })
+    .controller('TeamAdd1Controller', function ($scope, SearchStore, $cordovaToast, $ionicPopover, ReservationFact, $state, $ionicLoading, $ionicPopup, TeamStores) {
+
+        $scope.validate =
+            {
+                team: false,
+                teamsize: false
+            }
+
+
+        $scope.$on("$ionicView.afterEnter", function (event, data) {
+            // handle event
+            $scope.disabledbutton = false;
         });
 
 
-        $scope.openPopover = function ($event) {
-            $scope.popover.show($event);
-        };
-        $scope.closePopover = function () {
-            $scope.popover.hide();
-        };
+        $scope.badge = "";
+
+        $scope.RefreshBadge = function (col) {
+            $scope.badge = col;
+        }
+
+        $scope.next = function () {
+           
+            var team = $state.params.team1;
+            team.badge = $scope.badge;
 
 
+            $state.go("app.teamadd2", {
+                team2: team
+            });
+
+        }
+
+
+
+    })
+    .controller('TeamAdd2Controller', function ($scope, SearchStore, $cordovaToast, $ionicPopover, ReservationFact, $state, $ionicLoading, $ionicPopup, TeamStores) {
+
+
+        $scope.validate =
+            {
+                team: false,
+                teamsize: false
+            }
 
         $scope.$on("$ionicView.afterEnter", function (event, data) {
             // handle event
@@ -186,37 +284,16 @@ angular.module('football.controllers')
                 }
             }
 
+
+        
         $scope.add = function () {
             $scope.validate.teamsize = false;
             $scope.validate.team = false;
             var error = false;
             $scope.disabledbutton = true;
             try {
-                var team = {
-                    teamname: $scope.adduser.teamname,
-                    teamadmin: "",
-                    rating: 0,
-                    pteamsize: $scope.adduser.pteamsize,
-                    favstadium: $scope.adduser.favstadium,
-                    homejersey: $scope.adduser.homejersey,
-                    awayjersey: $scope.adduser.awayjersey,
-                    badge: $scope.adduser.badge,
-                    five: $scope.adduser.five,
-                    six: $scope.adduser.six,
-                    seven: $scope.adduser.seven,
-                    eight: $scope.adduser.eight,
-                    nine: $scope.adduser.nine,
-                    ten: $scope.adduser.ten,
-                    eleven: $scope.adduser.eleven,
-                    photo: ""
 
-                };
-
-                for (var i = 0; i < $scope.allstadiums.length; i++) {
-                    if ($scope.adduser.favstadium == $scope.allstadiums[i].name) {
-                        team.photo = $scope.allstadiums[i].photo
-                    }
-                }
+                var team = $state.params.team2;
 
                 if (team.homejersey == team.awayjersey) {
 
@@ -765,7 +842,7 @@ angular.module('football.controllers')
 
 
         $scope.slider1 = {
-            minValue: 1,
+            minValue: 7,
             maxValue: 23,
 
             options: {
@@ -777,17 +854,17 @@ angular.module('football.controllers')
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'Green';
+                    return 'rgb(38, 175, 61)';
 
                 },
                 ceil: 23,
-                draggableRange: true
+                draggableRange: false
 
             }
         };
 
         $scope.slider2 = {
-            minValue: 1,
+            minValue: 7,
             maxValue: 23,
             options: {
                 floor: 0,
@@ -798,18 +875,18 @@ angular.module('football.controllers')
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'Green';
+                    return 'rgb(38, 175, 61)';
 
                 },
                 ceil: 23,
-                draggableRange: true
+                draggableRange: false
 
             }
         };
 
 
         $scope.slider3 = {
-            minValue: 1,
+            minValue: 7,
             maxValue: 23,
             options: {
                 floor: 0,
@@ -820,18 +897,18 @@ angular.module('football.controllers')
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'Green';
+                    return 'rgb(38, 175, 61)';
 
                 },
                 ceil: 23,
-                draggableRange: true
+                draggableRange: false
 
             }
         };
 
 
         $scope.slider4 = {
-            minValue: 1,
+            minValue: 7,
             maxValue: 23,
             options: {
                 floor: 0,
@@ -842,18 +919,18 @@ angular.module('football.controllers')
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'Green';
+                    return 'rgb(38, 175, 61)';
 
                 },
                 ceil: 23,
-                draggableRange: true
+                draggableRange: false
 
             }
         };
 
 
         $scope.slider5 = {
-            minValue: 1,
+            minValue: 7,
             maxValue: 23,
             options: {
                 floor: 0,
@@ -864,17 +941,17 @@ angular.module('football.controllers')
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'Green';
+                    return 'rgb(38, 175, 61)';
 
                 },
                 ceil: 23,
-                draggableRange: true
+                draggableRange: false
 
             }
         };
 
         $scope.slider6 = {
-            minValue: 1,
+            minValue: 7,
             maxValue: 23,
             options: {
                 floor: 0,
@@ -885,17 +962,17 @@ angular.module('football.controllers')
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'Green';
+                    return 'rgb(38, 175, 61)';
 
                 },
                 ceil: 23,
-                draggableRange: true
+                draggableRange: false
 
             }
         };
 
         $scope.slider7 = {
-            minValue: 1,
+            minValue: 7,
             maxValue: 23,
 
             options: {
@@ -907,11 +984,11 @@ angular.module('football.controllers')
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'Green';
+                    return 'rgb(38, 175, 61)';
 
                 },
                 ceil: 23,
-                draggableRange: true
+                draggableRange: false
 
             }
         };

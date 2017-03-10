@@ -1,9 +1,28 @@
-<ion-view view-title="Team Profile">
-
+<ion-view view-title="Edit Team Profile" align="center">
 	<style>
 		img {
 			height: 100px;
 			width: 100px;
+		}
+		
+		h3.whitetext,
+		h2.whitetext,
+		h1.whitetext,
+		h4.whitetext,
+		h5.whitetext,
+		h6.whitetext,
+		p.whitetext {
+			color: white;
+		}
+		
+		.h3.greytext,
+		h2.greytext,
+		h1.greytext,
+		h4.greytext,
+		h5.greytext,
+		h6.greytext,
+		p.greytext {
+			color: #5f7485;
 		}
 		
 		.item-input {
@@ -11,7 +30,7 @@
 		}
 		
 		.item {
-			background-color: rgb(46, 62, 75);
+			background-color: rgb(62, 83, 100);
 		}
 		
 		hr {
@@ -22,157 +41,180 @@
 			margin: 1em 0;
 			padding: 0;
 		}
+		
+		.headercolor {
+			background-color: rgb(62, 83, 100);
+			color: white;
+			border-bottom: 1px solid rgb(62, 83, 100);
+		}
 	</style>
+
+
+	<ion-nav-back-button>
+	</ion-nav-back-button>
+	<ion-nav-buttons side="right">
+		<h5 style="padding-right:10px;font-weight:bold" ng-show="currentprofile.amiadmin" ng-click="UpdateTeam(currentprofile)" class="whitetext">
+
+			SAVE
+
+		</h5>
+	</ion-nav-buttons>
+
+	<ion-nav-bar class="headercolor">
+		<ion-nav-back-button>
+
+		</ion-nav-back-button>
+	</ion-nav-bar>
 
 	<ion-content style="background-color:rgb(45,62,75)">
 
 
-		<div class="card" style="background-color:rgb(62,83,100)" align="center">
-			<img src="img/Badges/{{currentprofile.badge}}.png" style="width:70px;height:70px ">
+		<div align="center" style="padding-top:10px">
+			<img src="img/Badges/{{currentprofile.badge}}.png" style="width:80px;height:80px ">
+			<h4 class="whitetext" style="margin:0px"> {{currentprofile.teamname | uppercase }} </h4>
+		</div>
 
+		<div class="row row-center" style="padding-bottom:0px">
+			<div class="col">
 
-			<div class="row row-center">
-				<div class="col">
+				<h5 align="left" style="color:#5f7485"> DATE CREATED</h5>
+			</div>
 
-					<h5 class="whitetext">Date Created</h5>
-				</div>
+			<div align="right" class="col">
 
-				<div class="col">
-
-					<h5>{{currentprofile.datecreated | date:'MMM d, y'}}</h5>
-				</div>
-
+				<h5 style="color:white;padding-bottom:0px"> {{currentprofile.datecreated | date:'MMMM d, y'}}</h5>
 			</div>
 
 		</div>
 
+		</div>
 
-		<h5 class="whitetext">
-			Comments
+		<h5 align="left" style="padding-left:10px;color:#5f7485">
+			ABOUT {{currentprofile.teamname | uppercase }}
 		</h5>
-		<div class="card" style="background-color:rgb(62,83,100)">
-			<label class="item item-input">
-    <textarea ng-maxlength="300" ng-model="currentprofile.comments" placeholder="Comments" style="color: white;background-color:rgb(62,83,100);padding-top: 10px;padding-left: 10px;height:50px "></textarea>
-</label>
-		</div>
+		<div class="list" style="width:100%; padding-left:10px;padding-right:10px;padding-bottom:15px;border-bottom:1px solid #5f7485">
+			<label class="item item-input" style="padding:2px 20px 20px 10px;background-color:transparent; color:#ffffff; border-radius:5px; border-color:#97a7b4">
+                <textarea ng-maxlength="300" type="text" placeholder="Write something cool about your team!" ng-model="currentprofile.comments" style="color:white;background-color:transparent;padding-left:2px">
+                	 </textarea>
+					 	</div>
 
-		<div class="card" style="background-color:rgb(62,83,100)">
-			<div class="row" ng-click="gochoosestadium(currentprofile)">
-				<div class="col" align="left" style="color: white" >
-					<h5 class="whitetext">
-						 Favorite Stadium
+			<div class="row" style="padding-bottom:0px;margin-top:-20px" ng-click="gochoosestadium(currentprofile)">
+				<div class="col col-50" ng-click="gochoosestadium(currentprofile)" align="left" style="padding-bottom:0px;color: white" >
+					<h5 align=left style="padding-bottom:0px;color:#5f7485">
+						 FAVORITE STADIUM
 					</h5>
-						<h4 style="color:darkturquoise;border-right:1px solid #5f7485"> {{currentprofile.favstadium}}
-						</h4>
-				</div>
+				<div>					
+						</div>
+				
 			</div>
-			<div class="row">
-				<h6 class="whitetext">
-					Note : We will use this stadium as your team's location
-				</h6>
+			
+				<h5 class="col col-50" ng-click="gochoosestadium(currentprofile)" align="right" style="padding-top:5px;color:white">
+					{{currentprofile.favstadium| uppercase }}
+				</h5>
+				
+				
 			</div>
+			<h6 align="left" style="padding-top:0px;padding-bottom:10px;border-bottom:1px solid #5f7485;padding-left:10px;color:white">Note: We will use your favorite stadium as your current location</h6>
 		</div>
 
 
-		<div class="card" style="background-color:rgb(62,83,100)" align="center">
-			<div align="center">
-				<h5 class="whitetext">
-					Availability
+
+
+		<div align="left" style="padding-left:10px">
+				<h5 align="left" style="padding-top:5px;color:#5f7485;margin-bottom:-10px">
+					AVAILABILITY
 
 				</h5>
 			</div>
-			<div class="row row-center">
+						<div class="row row-center" style="margin-bottom:-12px">
 				<div class="col col-20">
-					<h5 class="whitetext">
-						Mon
+					<h5 align="left" style="color:#5f7485;margin-bottom:-10px">
+						MON
 					</h5>
 				</div>
-				<div class="col">
-					<rzslider rz-slider-model="currentprofile.startmonday" rz-slider-high="currentprofile.startmondayend " rz-slider-options="slider1.options "
+				<div class="col col-80">
+					<rzslider rz-slider-model="currentprofile.startmonday" rz-slider-high="currentprofile.startmonday" rz-slider-options="slider1.options "
 						style="color:white "></rzslider>
 				</div>
 			</div>
 
-			<div class="row row-center">
+			<div class="row row-center" style="margin-bottom:-12px">
 				<div class="col col-20">
-					<h5 class="whitetext">
-						Tue
+					<h5 align="left" style="color:#5f7485;margin-bottom:-10px">
+						TUE
 					</h5>
 				</div>
 				<div class="col">
-					<rzslider rz-slider-model="currentprofile.starttuesday " rz-slider-high="currentprofile.starttuesdayend " rz-slider-options="slider2.options "
+					<rzslider rz-slider-model="currentprofile.starttuesday " rz-slider-high="currentprofile.starttuesday " rz-slider-options="slider2.options "
 						style="color:white "></rzslider>
 				</div>
 			</div>
 
-			<div class="row row-center">
+			<div class="row row-center" style="margin-bottom:-12px">
 				<div class="col col-20">
-					<h5 class="whitetext">
-						Wed
+						<h5 align="left" style="color:#5f7485;margin-bottom:-10px">
+						WED
 					</h5>
 				</div>
 				<div class="col">
-					<rzslider rz-slider-model="currentprofile.startwednesday " rz-slider-high="currentprofile.startwednesdayend " rz-slider-options="slider3.options "
+					<rzslider rz-slider-model="currentprofile.startwednesday " rz-slider-high="currentprofile.startwednesday " rz-slider-options="slider3.options "
 						style="color:white "></rzslider>
 				</div>
 			</div>
 
-			<div class="row row-center">
+			<div class="row row-center" style="margin-bottom:-12px">
 				<div class="col col-20">
-					<h5 class="whitetext">
-						Thu
+					<h5 align="left" style="color:#5f7485;margin-bottom:-10px">
+						THU
 					</h5>
 				</div>
 				<div class="col">
-					<rzslider rz-slider-model="currentprofile.startthursday " rz-slider-high="currentprofile.startthursdayend " rz-slider-options="slider4.options "
+					<rzslider rz-slider-model="currentprofile.startthursday " rz-slider-high="currentprofile.startthursday " rz-slider-options="slider4.options "
 						style="color:white "></rzslider>
 				</div>
 			</div>
 
-			<div class="row row-center">
+			<div class="row row-center" style="margin-bottom:-12px">
 				<div class="col col-20">
-					<h5 class="whitetext">
-						Fri
+					<h5 align="left" style="color:#5f7485;margin-bottom:-10px">
+						FRI
 					</h5>
 				</div>
 				<div class="col">
-					<rzslider rz-slider-model="currentprofile.startfriday " rz-slider-high="currentprofile.startfridayend " rz-slider-options="slider5.options "
+					<rzslider rz-slider-model="currentprofile.startfriday " rz-slider-high="currentprofile.startfriday " rz-slider-options="slider5.options "
 						style="color:white "></rzslider>
 				</div>
 			</div>
 
-			<div class="row row-center">
+			<div class="row row-center" style="margin-bottom:-12px">
 				<div class="col col-20">
-					<h5 class="whitetext">
-						Sat
+					<h5 align="left" style="color:#5f7485;margin-bottom:-10px">
+						SAT
 					</h5>
 				</div>
 				<div class="col">
-					<rzslider rz-slider-model="currentprofile.startsaturday " rz-slider-high="currentprofile.startsaturdayend " rz-slider-options="slider6.options "
+					<rzslider rz-slider-model="currentprofile.startsaturday " rz-slider-high="currentprofile.startsaturday " rz-slider-options="slider6.options "
 						style="color:white "></rzslider>
 				</div>
 			</div>
 
-			<div class="row row-center">
+			<div class="row row-center" style="margin-bottom:-12px">
 				<div class="col col-20">
-					<h5 class="whitetext">
-						Sun
+					<h5 align="left" style="color:#5f7485;margin-bottom:-10px">
+						SUN
 					</h5>
 				</div>
 				<div class="col">
-					<rzslider rz-slider-model="currentprofile.startsunday " rz-slider-high="currentprofile.startsundayend " rz-slider-options="slider7.options "
+					<rzslider rz-slider-model="currentprofile.startsunday " rz-slider-high="currentprofile.startsunday " rz-slider-options="slider7.options "
 						style="color:white " ng-readonly="currentprofile.amiadmin"></rzslider>
 				</div>
 			</div>
 		</div>
 
-
-		<button class="button button-block button-calm button-full" ng-click="UpdateTeam(currentprofile)" ng-show="currentprofile.amiadmin">
-                                Save
-           </button>
-
-		<button class="button button-block button-assertive button-full" ng-click="deleteteam(currentprofile)" ng-show="currentprofile.amiadmin">
-                                Delete
+<br>
+	
+		<button align="center" <button style="min-height:10px;line-height:40px;width:100%;border-radius: 20px" class="button button-assertive small_button" ng-click="deleteteam(currentprofile)" ng-show="currentprofile.amiadmin">
+                                Delete Team
            </button>
 
 	</ion-content>

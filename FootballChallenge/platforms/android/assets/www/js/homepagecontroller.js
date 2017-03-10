@@ -276,6 +276,8 @@ angular.module('football.controllers')
                     var todaydate = new Date();
                     var oldchallenges = [];
                     var newchallenges = [];
+                    $scope.profile = leagues;
+                    //$scope.profile.upcominteamgmatches.push($scope.profile.upcomingmatches);
 
                     if (leagues.challenges.length > 0) {
                         for (var i = 0; i < leagues.challenges.length; i++) {
@@ -290,7 +292,7 @@ angular.module('football.controllers')
 
                     HomeStore.DeleteOldChalleges(oldchallenges).then(function () {
 
-                        $scope.profile = leagues;
+
                         $scope.challenges = newchallenges;
                         $scope.notloaded = false;
                         $scope.$apply();
@@ -337,10 +339,18 @@ angular.module('football.controllers')
         }
 
         $scope.gogamedetails = function (gameid) {
-            $state.go('app.gamedetails',
-                {
-                    gameid: gameid
-                })
+
+            alert(gameid.gamestyle);
+            if (gameid.gamestyle == "alonematch") {
+                $state.go('app.bookings');
+            }
+            if (gameid.gamestyle == "teammatch") {
+                $state.go('app.gamedetails',
+                    {
+                        gameid: gameid.key
+                    })
+            }
+
         }
 
         $scope.showSearch = false;

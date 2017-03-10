@@ -45,7 +45,7 @@
 						</div>
 
 						<br />
-						<br />
+
 
 						<ion-radio style="background-color:darkorange" ng-model="choice.sort" value="rating"><b>Rating</b></ion-radio>
 						<ion-radio ng-model="choice.sort" value="players"><b>Players</b></ion-radio>
@@ -58,7 +58,6 @@
 				</ion-content>
 			</ion-popover-view>
 		</script>
-
 		<div class="item item-dark" ion-datetime-picker ng-model="selecteddate.date" minute-step="30">
 			{{search.date| date: "yyyy-MM-dd H:mm"}}
 		</div>
@@ -74,73 +73,68 @@
           <input type="datetime-local" ng-model="search.date" style="color:white">
       </label>-->
 
-		<div class="card" ng-repeat="stadiums in allfreestadiums | orderBy:choice.sort:reverse" style="background-color:rgb(62,83,100)">
+				<div class="card" ng-repeat="stadiums in allfreestadiums | orderBy:choice.sort:reverse" style="background-color:rgb(62,83,100);margin:10px 5px 10px 5px">
 			<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
-			<div align="center">
-				<img src="{{stadiums.photo}}" style="width:100%;height:140px;">
+			<div align="center" style="padding-bottom:0px">
+				<img src="{{stadiums.photo}}" style="width:100%;height:140px;" ui-sref="app.reservestadiumdetails({stadiumid: stadiums.stadiumkey})">
 			</div>
 
 			<div class="row ">
-				<div class="col col-66" style="color:white"> {{stadiums.stadiumname}} / {{stadiums.description}}
+				<div class="col col-66" style="padding-top:0px;color:white; font-weight:bold;font-size:12px"> {{stadiums.stadiumname}} / {{stadiums.description}}
 				</div>
 
-				<div class="col" align="right" style="color:lightgray"> Price
+				<div class="col" align="right" style="padding-top:0px;font-size:11px;color:#5f7485"> PRICE
 				</div>
 
 			</div>
 
 			<div class="row">
 				<div class="col col-66" align="left">
-					<rating style="color:gold" readonly="readOnly" ng-model=stadiums.rating max="rating.max" align="left">
+					<rating style="color:rgb(255,152,18);margin-top:-8px;padding-top:0px" readonly="readOnly" ng-model=stadiums.rating max="rating.max" align="left">
 
 					</rating>
 
 				</div>
 
-				<div class="col" align="right" style="color:white">
+				<div class="col" align="right" style="color:white;margin-top:-8px;font-size:15px">
 					<b>
 	
-		{{stadiums.price}} L.L.
+		{{stadiums.price}} LL
 		</b>
 				</div>
 			</div>
-			</br>
 			<div class="row ">
-				<div class="col" style="color:lightgray"> {{stadiums.stadiumname}}
+				<div class="col" style="font-weight:100;color:#5f7485;font-size:12px;padding-bottom:0px;padding-top:0px" align="left"> 2.1km
 				</div>
 
-				<div class="col" style="color:lightgray" align="right"> Type
+				<div class="col" style="font-weight:100;color:#5f7485;border-right:1px #5f7485 solid;border-left:1px #5f7485 solid;padding-top:0px;font-size:12px;padding-bottom:0px" align="center"> TYPE
 				</div>
 
-				<div class="col" style="color:lightgray" align="right"> Size
+				<div class="col" style="font-weight:100;color:#5f7485;font-size:12px;padding-bottom:0px;padding-top:0px" align="center"> STADIUM SIZE
 				</div>
 
 			</div>
 
 
 			<div class="row ">
-				<div class="col" style="color:white">
+				<div class="col" align="left" style="font-weight:bold;color:white;padding-top:0px">
+					Anthelias
+				</div>
+
+				<div class="col" align="center" style="color:white;padding-top:0px;border-right:1px #5f7485 solid;border-left:1px #5f7485 solid">
 					<b>
-		
-			2.1km
+			{{stadiums.type}}  &#8226 {{stadiums.typefloor}}
 			</b>
 				</div>
 
-				<div class="col" align="right" style="color:white">
+				<div class="col" align="center" style="color:white;padding-top:0px">
 					<b>
-			{{stadiums.typefloor}}/{{stadiums.typefloor}}
-			</b>
-				</div>
-
-				<div class="col" align="right" style="color:white">
-					<b>
-			5vs5
+			Max {{stadiums.players}} v {{stadiums.players}}
 			</b>
 				</div>
 
 			</div>
-
 			<!--			<h3 class="whitetext"> Number: <b>{{stadiums.description}}</b></h3> -->
 
 			<div class="row">
@@ -151,19 +145,17 @@
 
 </button>
 				</div>
-
 			</div>
 		</div>
 
 		</br>
 		</br>
-		</br>
-		</br>
+
 
 	</ion-content>
-	<div class="bar bar-footer " style="background-color:rgb(30,30,30)">
+<div class="bar bar-footer " style="background-color:#2d3e4b">
 
-		<button class="button button-calm button-small " style="width:100%" ng-disabled="challengestatus" ng-click="sendchallenge()"> Send Challenge
+<button class="button button-small " style="width:100%; background-color:#28b041; color:white; border-radius:20px" ng-disabled="challengestatus" ng-click="sendchallenge()"> Send Challenge
 </button>
-	</div>
+</div>
 </ion-view>

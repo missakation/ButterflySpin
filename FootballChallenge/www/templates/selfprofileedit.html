@@ -1,216 +1,218 @@
 <ion-view view-title="My Profile">
 	<style>
-        body {
-            background-color: lightgrey;
-        }
-
-        h5, h2 {
-            
-        }
-
-        img {
-            height: 150px;
-            width: 150px;
-        }
-        		
+		body {
+			background-color: lightgrey;
+		}
+		
+		h5,
+		h2 {}
+		
+		img {
+			height: 150px;
+			width: 150px;
+		}
+		
 		.item-input {
 			padding: 0 0 0 0;
 		}
 		
 		.item {
-			background-color: rgb(46,62,75);
+			background-color: rgb(46, 62, 75);
 		}
-
-		.headercolor{
-        background-color: rgb(62,83,100);
-        color: white;
+		
+		.headercolor {
+			background-color: rgb(62, 83, 100);
+			color: white;
 		}
-
-		    
-    .h3.whitetext,
-    h2.whitetext,
-    h1.whitetext,
-    h4.whitetext,
-    h5.whitetext,
-    h6.whitetext,
-    p.whitetext {
-        color: white;
-    }
-
-    .h3.greytext,
-    h2.greytext,
-    h1.greytext,
-    h4.greytext,
-    h5.greytext,
-    h6.greytext,
-    p.greytext {
-        color: rgb(153,167,180);
-    }
-    </style>
+		
+		.h3.whitetext,
+		h2.whitetext,
+		h1.whitetext,
+		h4.whitetext,
+		h5.whitetext,
+		h6.whitetext,
+		p.whitetext {
+			color: white;
+		}
+		
+		.h3.greytext,
+		h2.greytext,
+		h1.greytext,
+		h4.greytext,
+		h5.greytext,
+		h6.greytext,
+		p.greytext {
+			color: rgb(153, 167, 180);
+		}
+	</style>
 
 	<ion-nav-back-button>
-</ion-nav-back-button>
-<ion-nav-buttons side="left">
-    <button class="button button-icon button-clear <ion-></ion->navicon" menu-toggle="left"></button>
-</ion-nav-buttons>
+	</ion-nav-back-button>
+	<ion-nav-buttons side="left">
+		<button class="button button-icon button-clear <ion-></ion->navicon" menu-toggle="left"></button>
+	</ion-nav-buttons>
 
-<ion-nav-bar class="headercolor">
-    <ion-nav-back-button>
+	<ion-nav-bar class="headercolor">
+		<ion-nav-buttons side="right">
+			<h5 style="padding-right:10px;color:white;font-weight:bold" ng-click="UpdateUser(currentprofile)">
 
-    </ion-nav-back-button>
-</ion-nav-bar>
+				Save
 
-<ion-content style="background-color:rgb(46,62,75)">
+			</h5>
+		</ion-nav-buttons>
+		<ion-nav-back-button>
 
-	<div class="card" style="background-color:rgb(46,62,75);box-shadow:0 0px 0px">
+		</ion-nav-back-button>
+	</ion-nav-bar>
 
-		<div align="center">
-			<a href="#/app/selfprofile">
-		<img src="{{profile.photo}}" style="border-radius:50% ; height:60px ; width:60px" height="50" />
-		</a>
-		<h5 class="whitetext">{{profile.displayname}}</h5>
-			<button class="button button-block button-calm button-small" ng-click="ChangePicture()">
+	<ion-content style="background-color:rgb(46,62,75)">
+
+		<div class="card" style="background-color:rgb(46,62,75);box-shadow:0 0px 0px">
+
+			<div align="center">
+				<a href="#/app/selfprofile">
+					<img src="{{currentprofile.photo}}" style="border-radius:50% ; height:80px ; width:80px" height="50" />
+				</a>
+				<h5 class="whitetext">{{profile.displayname}}</h5>
+				<button class="button button-block button-balanced button-small" ng-click="ChangePicture()" style="padding:0 20px 0 20px;border-radius:50px">
                  Change Picture
            </button>
-		<h5 class="whitetext" ng-show="uploading">Uploading {{progress}} %</h5>
+				<h5 class="whitetext" ng-show="uploading">Uploading {{progress}} %</h5>
 
 
-</div>
-	</div>
+			</div>
+		</div>
 
-<div class="list" align="center" style="width:95%;padding-left:10px">
-				<label class="item item-input" style="background-color:transparent; color:[#ffffff]; border-radius:5px; border-color:#97a7b4">
+		<div class="list" align="center" style="width:95%;padding-left:10px">
+			<label class="item item-input" style="background-color:transparent; color:[#ffffff]; border-radius:5px; border-color:#97a7b4">
                 <input type="text" ng-model="currentprofile.firstname" placeholder="First name"  style="color:white;background-color:transparent;padding-left:2px">
 				</div>
 				
 </label>
-<div class="list" align="center" style="width:95%;padding-left:10px">
-				<label class="item item-input"style="background-color:transparent; color:[#ffffff]; border-radius:5px; border-color:#97a7b4">
+			<div class="list" align="center" style="width:95%;padding-left:10px">
+				<label class="item item-input" style="background-color:transparent; color:[#ffffff]; border-radius:5px; border-color:#97a7b4">
                 <input type="text"  ng-model="currentprofile.lastname" placeholder="Last Name" style="color:white;background-color:transparent;padding-left:2px">
 				</div>
 </label>
-</div>
+			</div>
 
-</div>
+		</div>
 
-<h5 style="color:rgb(153,167,180);background-color:transparent;padding-left:10px"> BIRTHDAY </h5>
+		<h5 style="color:rgb(153,167,180);background-color:transparent;padding-left:10px"> BIRTHDAY </h5>
 
-<label class="item item-input" style="width:95%;margin-left:10px;background-color:transparent;border-radius:5px; border-color:#97a7b4">
+		<label class="item item-input" style="width:95%;margin-left:10px;background-color:transparent;border-radius:5px; border-color:#97a7b4">
 <input type="date" ng-model="currentprofile.age" style="color:rgb(153,167,180)" >
 
 </label>
-</div>
+		</div>
 
 
-<div align="left" style="padding-left: 10px;padding-right:10px ">
-<h5 style="color:rgb(153,167,180)"> ABOUT ME
-</h5>
+		<div align="left" style="padding-left: 10px;padding-right:10px ">
+			<h5 style="color:rgb(153,167,180)"> ABOUT ME
+			</h5>
 
-<label class="item item-input" style="background-color:rgb(46,62,75)">
-<textarea ng-maxlength="300" style="background-color:transparent;border-color:white;border-radius:5px;color: white" type="text" ng-model="currentprofile.comments" >
-
-</textarea>
+			<div class="list" style="width:100%">
+				<label class="item item-input" style="padding:2px 20px 20px 10px;background-color:transparent; color:#ffffff; border-radius:5px; border-color:#97a7b4">
+                <textarea ng-maxlength="300" type="text" placeholder="Write something cool about yourself!" ng-model="currentprofile.comments" style="color:white;background-color:transparent;padding-left:2px">
+                	 </textarea>
+					 	</div>
 
 </label>
-<br>
-</div>
-</div>
+				<br>
+			</div>
+		</div>
 
-<div class="card" style="background-color:rgb(46,62,75);box-shadow:0 0px 0px">
-	<div align="left">
-		<h5 class="whitetext" style="font-size:14px;padding-left:5px;color:rgb(153,167,180)">
-			AVAILABILITY
+		<div class="card" style="margin-top:-10px;background-color:rgb(46,62,75);box-shadow:0 0px 0px">
+			<div align="left">
+				<h5 class="whitetext" style="font-size:14px;padding-left:5px;color:rgb(153,167,180)">
+					AVAILABILITY
 
-		</h5>
-	</div>
+				</h5>
+			</div>
 
-<div class="row row-center" style="padding:0px"align="left">
-	<div class="col col-20">
-		<h5 class="whitetext"style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
-			MON
-		</h5>
-	</div>
-	<div class="col">
-		<rzslider rz-slider-model="currentprofile.startmonday" rz-slider-high="currentprofile.startmondayend " rz-slider-options="slider1.options "
-			style="color:white "></rzslider>
-</div>
-</div>
+			<div class="row row-center" style="padding:0px" align="left">
+				<div class="col col-20">
+					<h5 class="whitetext" style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
+						MON
+					</h5>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startmonday" rz-slider-high="currentprofile.startmondayend " rz-slider-options="slider1.options "
+					 style="color:white "></rzslider>
+				</div>
+			</div>
 
-<div class="row row-center" style="padding:0px"align="left">
-	<div class="col col-20">
-		<h5 class="whitetext" style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
-			TUE
-		</h5>
-	</div>
-	<div class="col">
-		<rzslider rz-slider-model="currentprofile.starttuesday " rz-slider-high="currentprofile.starttuesdayend " rz-slider-options="slider2.options "
-			style="color:white "></rzslider>
-</div>
-</div>
+			<div class="row row-center" style="padding:0px" align="left">
+				<div class="col col-20">
+					<h5 class="whitetext" style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
+						TUE
+					</h5>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.starttuesday " rz-slider-high="currentprofile.starttuesdayend " rz-slider-options="slider2.options "
+					 style="color:white "></rzslider>
+				</div>
+			</div>
 
-<div class="row row-center" style="padding:0px"align="left">
-	<div class="col col-20">
-		<h5 class="whitetext"style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
-			WED
-		</h5>
-	</div>
-	<div class="col">
-		<rzslider rz-slider-model="currentprofile.startwednesday " rz-slider-high="currentprofile.startwednesdayend " rz-slider-options="slider3.options "
-			style="color:white "></rzslider>
-</div>
-</div>
+			<div class="row row-center" style="padding:0px" align="left">
+				<div class="col col-20">
+					<h5 class="whitetext" style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
+						WED
+					</h5>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startwednesday " rz-slider-high="currentprofile.startwednesdayend " rz-slider-options="slider3.options "
+					 style="color:white "></rzslider>
+				</div>
+			</div>
 
-<div class="row row-center" style="padding:0px"align="left">
-	<div class="col col-20">
-		<h5 class="whitetext"style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
-			THU
-		</h5>
-	</div>
-	<div class="col">
-		<rzslider rz-slider-model="currentprofile.startthursday " rz-slider-high="currentprofile.startthursdayend " rz-slider-options="slider4.options "
-			style="color:white "></rzslider>
-</div>
-</div>
+			<div class="row row-center" style="padding:0px" align="left">
+				<div class="col col-20">
+					<h5 class="whitetext" style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
+						THU
+					</h5>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startthursday " rz-slider-high="currentprofile.startthursdayend " rz-slider-options="slider4.options "
+					 style="color:white "></rzslider>
+				</div>
+			</div>
 
-<div class="row row-center" style="padding:0px"align="left">
-	<div class="col col-20">
-		<h5 class="whitetext"style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
-			FRI
-		</h5>
-	</div>
-	<div class="col">
-		<rzslider rz-slider-model="currentprofile.startfriday " rz-slider-high="currentprofile.startfridayend " rz-slider-options="slider5.options "
-			style="color:white "></rzslider>
-</div>
-</div>
+			<div class="row row-center" style="padding:0px" align="left">
+				<div class="col col-20">
+					<h5 class="whitetext" style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
+						FRI
+					</h5>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startfriday " rz-slider-high="currentprofile.startfridayend " rz-slider-options="slider5.options "
+					 style="color:white "></rzslider>
+				</div>
+			</div>
 
-<div class="row row-center" style="padding:0px"align="left">
-	<div class="col col-20">
-		<h5 class="whitetext"style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
-			SAT
-		</h5>
-	</div>
-	<div class="col">
-		<rzslider rz-slider-model="currentprofile.startsaturday " rz-slider-high="currentprofile.startsaturdayend " rz-slider-options="slider6.options "
-			style="color:white "></rzslider>
-</div>
-</div>
+			<div class="row row-center" style="padding:0px" align="left">
+				<div class="col col-20">
+					<h5 class="whitetext" style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
+						SAT
+					</h5>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startsaturday " rz-slider-high="currentprofile.startsaturdayend " rz-slider-options="slider6.options "
+					 style="color:white "></rzslider>
+				</div>
+			</div>
 
-<div class="row row-center" style="padding:0px"align="left">
-	<div class="col col-20">
-		<h5 class="whitetext"style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
-			SUN
-		</h5>
-	</div>
-	<div class="col">
-		<rzslider rz-slider-model="currentprofile.startsunday " rz-slider-high="currentprofile.startsundayend " rz-slider-options="slider7.options "
-			style="color:white " ng-readonly="currentprofile.amiadmin"></rzslider>
-</div>
-</div>
+			<div class="row row-center" style="padding:0px" align="left">
+				<div class="col col-20">
+					<h5 class="whitetext" style="color:rgb(153,167,180);font-size:14px;padding-top:15px">
+						SUN
+					</h5>
+				</div>
+				<div class="col">
+					<rzslider rz-slider-model="currentprofile.startsunday " rz-slider-high="currentprofile.startsundayend " rz-slider-options="slider7.options "
+					 style="color:white " ng-readonly="currentprofile.amiadmin"></rzslider>
+				</div>
+			</div>
+		</div>
 
-
-</div>
-	<button class="button button-block button-calm button-full" ng-click="UpdateUser(currentprofile)">
-                                Save
-           </button>
 </ion-view>

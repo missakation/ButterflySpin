@@ -46,13 +46,13 @@
 		.headercolor {
 			background-color: rgb(62, 83, 100);
 			color: white;
-			border-bottom:2px solid rgb(62, 83, 100);
+			border-bottom:1px solid rgb(62, 83, 100);
 		}
 	</style>
 
 	</style>
 	<ion-nav-buttons side="right">
-		<h5 style="padding-right:10px" ng-show="currentprofile.amiadmin"  ng-click="goupdate(currentprofile)" class="whitetext">
+		<h5 style="padding-right:10px;font-weight:bold" ng-show="currentprofile.amiadmin"  ng-click="goupdate(currentprofile)" class="whitetext">
 			
 				EDIT
 			
@@ -82,7 +82,7 @@
 			<ion-item style="padding:0px">
 
 				<div class="row">
-					<div class="col" align="center" style="padding-right:0px; padding-left:0px;border-right:1px solid #5f7485">
+					<div class="col" align="center" style="padding:0px;border-right:1px solid #5f7485">
 						<img src="img/Badges/{{currentprofile.badge}}.png" style="width:80px;height:80px">
 						<h3 class="whitetext" style="font-weight:bolder"> {{currentprofile.teamname}} </h3>
 						<h4 style="color:darkturquoise"> Not Found </h5>
@@ -99,14 +99,14 @@
 
 
 				<div class="row row-top">
-					<div class="col" align="center">
+					<div class="col" style="padding-top:10px" align="center">
 						<h4 style="color:#5f7485;border-right:1px solid #5f7485;margin:0px"> MATCHES
 						</h4>
 						<h4 style="color:darkturquoise;border-right:1px solid #5f7485"> Edit 404
 						</h4>
 					</div>
 
-					<div class="col " style="color:#5f7485" align="center">
+					<div class="col " style="padding-top:10px;color:#5f7485" align="center">
 
                     <h4 style="color:#5f7485;border-right:1px solid #5f7485;margin:0px"> DIFFICULTY
 						</h4>
@@ -114,7 +114,7 @@
 						</h4>
 					</div>
 
-					<div class="col " style="color:#5f7485" align="center">
+					<div class="col "style="padding-top:10px;color:#5f7485" align="center">
 
 
 						<h4 style="color:#5f7485;margin:0px"> RATING
@@ -145,9 +145,9 @@
 
 				</div>
 
-				<h4 class="whitetext">
+				<h3 class="whitetext" style="padding:0 0 10px 10px" align="left">
 					{{currentprofile.comments}}
-				</h4>
+				</h3>
 
 			</ion-item>
 		</div>
@@ -195,13 +195,13 @@
 			</ion-item>
 
 			<div class="row row-center" ng-repeat="upmatches in currentprofile.upcomingmatches" style="border-bottom:0px;background-color:rgb(62,83,100); padding:0px">
-				<div class="col col-75" style="border-bottom:1px solid #5f7485;padding:5px 0 4px 5px">
+				<div class="col col-75" align="left" style="border-bottom:1px solid #5f7485;padding:5px 0 4px 5px">
 
 					<h5 class="whitetext" >{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h5>
 				</div>
 
-				<div class="col"  style="padding-bottom:0px;padding-top:10px;border-bottom:1px solid #5f7485">
-					<button ng-show="!(upmatches.isadmin)" class="button button-balanced button-small" style="margin-bottom:5px;width:60px;font-size:12px" ng-click="gogamedetails(upmatches.key)"> View
+				<div class="col col-25"  style="padding-bottom:0px;padding-top:10px;border-bottom:1px solid #5f7485">
+					<button ng-show="!(upmatches.isadmin)" class="button button-balanced button-small" style="border-bottom:1px solid #5f7485;margin-bottom:5px;width:60px;font-size:12px;border-radius:50px" ng-click="gogamedetails(upmatches.key)"> View
 					</button>
 				</div>
 
@@ -211,7 +211,7 @@
 	<div class="card" style="background-color: rgb(62, 83, 100);margin-top:15px">
 			<ion-item style="border: none;padding:0px">
 				<div class="row row-center" align="center" style="padding:0px">
-					<div class="col" align="center" style="border-bottom:{{status.Available}};border-color: green;padding:10px 0px; border-right:2px solid #5f7485">
+					<div class="col" align="center" style="border-bottom:{{status.Available}};border-color:green;padding:10px 0px; border-right:2px solid #5f7485">
 						<h3 class="whitetext" ng-click="switchscreens(1)">
 							<b>AVAILABILITY</b>
 						</h3>
@@ -249,16 +249,16 @@
 
 					<div class="col" style="padding:0px" align="right" ng-show="currentprofile.amiadmin">
 
-						<button ng-show="item.isadmin && !(item.itsme)" class="button button-small" style="font-size:13px; background-color:white; color:#2ab041" ng-click="playeroperations(2,item)"> Demote
+						<button ng-show="item.isadmin && !(item.itsme)" class="button button-small" style="font-size:13px;border-radius:50px; background-color:white; color:#2ab041" ng-click="playeroperations(2,item)"> Demote
 </button>
 
-						<button ng-show="!(item.isadmin) && !(item.itsme)" class="button button-small" style="font-size:13px; background-color:#2ab041; color:white" ng-click="playeroperations(1,item)"> Promote
+						<button ng-show="!(item.isadmin) && !(item.itsme)" class="button button-small" style="font-size:13px;border-radius:50px; background-color:#2ab041; color:white" ng-click="playeroperations(1,item)"> Promote
 </button>
 
-						<button ng-show=" !(item.itsme)" class="button button-small" style="font-size:13px; background-color:#ef473a; color:white" ng-click="playeroperations(3,item)">
+						<button ng-show=" !(item.itsme)" class="button button-small" style="font-size:13px; background-color:#ef473a;border-radius:50px; color:white" ng-click="playeroperations(3,item)">
 						Remove
 					</button>
-                       <button ng-show="item.itsme" class="button button-small"  style="padding:0 10px 0 10px;font-size:13px; background-color:#ef473a; color:white" ng-click="LeaveTeam()">
+                       <button ng-show="item.itsme" class="button button-small"  style="padding:0 10px 0 10px;font-size:13px;border-radius:50px; background-color:#ef473a; color:white" ng-click="LeaveTeam()">
 						Leave
 					</button>
 
@@ -415,8 +415,8 @@
 
 			</ion-item>
 		</div>
-
-
+<div>
+	 <hr style="height:15px; visibility:hidden;" />
 
 	</ion-content>
 

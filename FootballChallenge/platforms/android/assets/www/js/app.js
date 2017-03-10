@@ -203,6 +203,35 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                 }
             })
 
+            .state('app.teamadd1', {
+                url: '/teamadd1',
+                params: {
+                    team1: null
+                },
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/teamadd1.html',
+                        controller: 'TeamAdd1Controller'
+
+                    }
+                }
+            })
+
+            .state('app.teamadd2', {
+                url: '/teamadd2',
+                params: {
+                    team2: null
+                },
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/teamadd2.html',
+                        controller: 'TeamAdd2Controller'
+
+                    }
+                }
+            })
+
+
             .state('app.teamprofile', {
                 url: '/teamprofile/:teamid',
                 views: {

@@ -213,6 +213,14 @@ angular.module('football.controllers')
                     });
                 }
 
+                for(var  i = 0 ; i<$scope.allfreestadiums.length;i++)
+                {
+                    for (var i = 0; i < $scope.allfreestadiums[i].freetimes.length; i++) {
+                        
+                        
+                    }
+                }
+
 
                 /*get current location 
 

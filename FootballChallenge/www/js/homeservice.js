@@ -116,7 +116,8 @@ angular.module('football.controllers')
                                     ministadiumkey: challenges.child("ministadiumkey").val(),
                                     photo: challenges.child("photo").val(),
                                     price: challenges.child("price").val(),
-                                    stadiumdescription: challenges.child("stadiumdescription").val()
+                                    stadiumdescription: challenges.child("stadiumdescription").val(),
+                                    gamestyle:"teammatch"
                                 }
                                 upcomingmatches.push(matchdata);
 
@@ -155,7 +156,8 @@ angular.module('football.controllers')
                                     ministadiumkey: game.child("ministadiumkey").val(),
                                     photo: game.child("photo").val(),
                                     price: game.child("price").val(),
-                                    stadiumdescription: game.child("stadiumdescription").val()
+                                    stadiumdescription: game.child("stadiumdescription").val(),
+                                    gamestyle:"alonematch"
                                 }
                                 upcomingsinglematches.push(matchdata);
 
