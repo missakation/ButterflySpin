@@ -378,8 +378,14 @@ angular.module('football.controllers')
 
                     $scope.uploading = true;
 
+
+
+
+
+
+
                     // Upload file and metadata to the object 'images/mountains.jpg'
-                    var uploadTask = storageRef.child('playerimages/' + '/' + id + '/' + file.name).put(file, metadata);
+                    var uploadTask = storageRef.child('playerimages/' + '/' + id + '/' + file.name).put(new Blob(file, { type: 'file' }), metadata);
 
                     // Listen for state changes, errors, and completion of the upload.
                     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
