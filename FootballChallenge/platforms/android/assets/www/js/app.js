@@ -206,7 +206,8 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
             .state('app.teamadd1', {
                 url: '/teamadd1',
                 params: {
-                    team1: null
+                    team1: null,
+                    myprofile:null
                 },
                 views: {
                     'menuContent': {
@@ -220,7 +221,8 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
             .state('app.teamadd2', {
                 url: '/teamadd2',
                 params: {
-                    team2: null
+                    team2: null,
+                    myprofile:null
                 },
                 views: {
                     'menuContent': {

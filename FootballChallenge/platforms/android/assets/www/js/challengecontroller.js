@@ -160,7 +160,7 @@ angular.module('football.controllers')
             };
 
         $scope.myteam = $state.params.myteam;
-
+        alert($state.params.date);
         ReservationFact.FindFreeStadiums($state.params, function (leagues) {
 
 

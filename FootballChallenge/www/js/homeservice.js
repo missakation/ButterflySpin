@@ -7,7 +7,7 @@ angular.module('football.controllers')
         var TempItems = [];
         var RankedTeams = [];
         return {
-            GetProfileInfo: function (callback) {
+            GetProfileInfo: function (currentdate, callback) {
                 TempItems = [];
                 var user = firebase.auth().currentUser;
                 //alert("test");
@@ -88,38 +88,39 @@ angular.module('football.controllers')
                                 matchdate.setMonth(challenges.child("month").val());
                                 matchdate.setHours(challenges.child("hour").val());
                                 matchdate.setDate(challenges.child("day").val());
+                                if (date <= matchdate) {
+                                    var matchdata = {
 
-                                var matchdata = {
+                                        key: challenges.key,
 
-                                    key: challenges.key,
+                                        accepted: challenges.child("accepted").val(),
+                                        day: challenges.child("day").val(),
+                                        hour: challenges.child("hour").val(),
+                                        minute: challenges.child("minute").val(),
+                                        month: challenges.child("month").val(),
 
-                                    accepted: challenges.child("accepted").val(),
-                                    day: challenges.child("day").val(),
-                                    hour: challenges.child("hour").val(),
-                                    minute: challenges.child("minute").val(),
-                                    month: challenges.child("month").val(),
+                                        team1adminid: challenges.child("team1adminid").val(),
+                                        team1key: challenges.child("team1key").val(),
+                                        team1logo: challenges.child("team1logo").val(),
+                                        team1name: challenges.child("team1name").val(),
+                                        team1rank: challenges.child("team1rank").val(),
+                                        team2adminid: challenges.child("team2adminid").val(),
+                                        team2key: challenges.child("team2key").val(),
+                                        team2logo: challenges.child("team2logo").val(),
+                                        team2name: challenges.child("team2name").val(),
+                                        team2rank: challenges.child("team2rank").val(),
+                                        year: challenges.child("year").val(),
+                                        date: matchdate,
 
-                                    team1adminid: challenges.child("team1adminid").val(),
-                                    team1key: challenges.child("team1key").val(),
-                                    team1logo: challenges.child("team1logo").val(),
-                                    team1name: challenges.child("team1name").val(),
-                                    team1rank: challenges.child("team1rank").val(),
-                                    team2adminid: challenges.child("team2adminid").val(),
-                                    team2key: challenges.child("team2key").val(),
-                                    team2logo: challenges.child("team2logo").val(),
-                                    team2name: challenges.child("team2name").val(),
-                                    team2rank: challenges.child("team2rank").val(),
-                                    year: challenges.child("year").val(),
-                                    date: matchdate,
-
-                                    stadiumkey: challenges.child("stadiumkey").val(),
-                                    ministadiumkey: challenges.child("ministadiumkey").val(),
-                                    photo: challenges.child("photo").val(),
-                                    price: challenges.child("price").val(),
-                                    stadiumdescription: challenges.child("stadiumdescription").val(),
-                                    gamestyle:"teammatch"
+                                        stadiumkey: challenges.child("stadiumkey").val(),
+                                        ministadiumkey: challenges.child("ministadiumkey").val(),
+                                        photo: challenges.child("photo").val(),
+                                        price: challenges.child("price").val(),
+                                        stadiumdescription: challenges.child("stadiumdescription").val(),
+                                        gamestyle: "teammatch"
+                                    }
+                                    upcomingmatches.push(matchdata);
                                 }
-                                upcomingmatches.push(matchdata);
 
                             })
 
@@ -139,28 +140,28 @@ angular.module('football.controllers')
                                 matchdate.setMonth(game.child("month").val());
                                 matchdate.setHours(game.child("hour").val());
                                 matchdate.setDate(game.child("day").val());
+                                if (currentdate <= matchdate) {
+                                    var matchdata = {
 
-                                var matchdata = {
+                                        key: game.key,
 
-                                    key: game.key,
+                                        day: game.child("day").val(),
+                                        hour: game.child("hour").val(),
+                                        minute: game.child("minute").val(),
+                                        month: game.child("month").val(),
 
-                                    day: game.child("day").val(),
-                                    hour: game.child("hour").val(),
-                                    minute: game.child("minute").val(),
-                                    month: game.child("month").val(),
+                                        year: game.child("year").val(),
+                                        date: matchdate,
 
-                                    year: game.child("year").val(),
-                                    date: matchdate,
-
-                                    stadiumkey: game.child("stadiumkey").val(),
-                                    ministadiumkey: game.child("ministadiumkey").val(),
-                                    photo: game.child("photo").val(),
-                                    price: game.child("price").val(),
-                                    stadiumdescription: game.child("stadiumdescription").val(),
-                                    gamestyle:"alonematch"
+                                        stadiumkey: game.child("stadiumkey").val(),
+                                        ministadiumkey: game.child("ministadiumkey").val(),
+                                        photo: game.child("photo").val(),
+                                        price: game.child("price").val(),
+                                        stadiumdescription: game.child("stadiumdescription").val(),
+                                        gamestyle: "alonematch"
+                                    }
+                                    upcomingsinglematches.push(matchdata);
                                 }
-                                upcomingsinglematches.push(matchdata);
-
                             })
 
 

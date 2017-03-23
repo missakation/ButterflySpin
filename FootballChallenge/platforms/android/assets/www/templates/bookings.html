@@ -26,11 +26,13 @@
     
     .headercolor {
         background-color: rgb(62, 83, 100);
-        color: white
+        color: white;
+        border-bottom: 2px solid rgb(62, 83, 100);
+        border-top:1px;
     }
 </style>
 
-<ion-view view-title="Bookings">
+<ion-view view-title="My Bookings">
 
 
     <ion-nav-buttons side="left">
@@ -47,12 +49,12 @@
         </ion-nav-back-button>
     </ion-nav-bar>
 
-    <div class="bar bar-subheader" style="background-color:rgb(46,62,75);border: none">
+    <div class="bar bar-subheader" style="padding:0px;background-color:rgb(46,62,75);border: none">
         <div class="button-bar">
-            <button class="button button-calm" ng-click="switchscreens(1)" style="background-color: transparent;border:none; border-bottom: {{status.Current}};border-color: green;border-right:1px solid grey">
+            <button class="button button-calm" ng-click="switchscreens(1)" style="font-weight:bold;background-color: transparent;border:none; border-bottom: {{status.Current}};border-color: green;border-right:1px solid grey">
                 CURRENT BOOKINGS
                 </button>
-            <button class="button button-calm" ng-click="switchscreens(2)" style="background-color: transparent;border:none; border-bottom: {{status.Previous}};border-color: green">
+            <button class="button button-calm" ng-click="switchscreens(2)" style="font-weight:bold;background-color: transparent;border:none; border-bottom: {{status.Previous}};border-color: green">
                 PREVIOUS BOOKINGS
                 </button>
         </div>

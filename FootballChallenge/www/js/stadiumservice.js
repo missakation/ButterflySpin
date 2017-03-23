@@ -26,7 +26,6 @@ angular.module('football.controllers')
                     var hour = search.date.getHours();
                     var minute = search.date.getMinutes();
 
-
                     //firebase.database().ref('/stadiums/ministadiums').on('value',function (snapshot) {  
 
                     firebase.database().ref('/stadiums').once('value', function (snapshot) {
@@ -52,16 +51,7 @@ angular.module('football.controllers')
 
                                     stadiumsnapshot.child('schedules/' + year + '/' + month + '/' + day).forEach(function (minisnapshot) {
 
-                                        if (minisnapshot.child("maindata").val()) {
-                                            freetimes.push(
-                                                {
-                                                    starthour: child("starthour").val(),
-                                                    startminute: child("startminute").val(),
-                                                    endhour: child("endhour").val(),
-                                                    endminute: child("endminute").val()
-                                                }
-                                            )
-                                        }
+
                                         var temphour = minisnapshot.child("hour").val();
                                         var tempminute = minisnapshot.child("minute").val();
 
@@ -84,7 +74,7 @@ angular.module('football.controllers')
                                     startdate.setDate(day);
 
                                 }
-                                if (available == true && players == search.players) {
+                                if (available == true /*&& players == search.players*/) {
                                     var Data = {
                                         "admin": mainstadiumSnapshot.child("admin").val(),
                                         "stadiumkey": mainstadiumSnapshot.key,
@@ -108,7 +98,10 @@ angular.module('football.controllers')
                                         "color": "green",
                                         "backcolor": "white",
                                         "rating": 1,
-                                        "freetimes" : freetimes
+                                        //"freetimes": freetimes,
+                                        "SortPoints": 0,
+                                        "latitude":mainstadiumSnapshot.child("cordovalatitude").val(),
+                                        "longitude":mainstadiumSnapshot.child("cordovalongitude").val()
                                         //"freedates":
                                         //{
                                         //    date : startdate
@@ -152,7 +145,7 @@ angular.module('football.controllers')
 
 
                 //add duration
-                
+
 
                 var enddate = search.date;
                 enddate.setMinutes(enddate.getMinutes() + 90);
@@ -231,6 +224,8 @@ angular.module('football.controllers')
                     }
                     references.push(refdata);
                     updates['/stadiums/' + key + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = extraslots;
+                    updates['/stadiumshistory/' + key + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = extraslots;
+
 
                 }
                 postData.references = references;
@@ -285,6 +280,8 @@ angular.module('football.controllers')
                 var newPostKey = firebase.database().ref().child('posts').push().key;
 
                 updates['/stadiums/' + key + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = postData;
+                updates['/stadiumshistory/' + key + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = postData;
+
 
                 updates['/players/' + id + '/upcomingmatches/' + mainkey] = postDataPlayer;
 

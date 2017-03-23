@@ -12,6 +12,10 @@
 			height: 25px;
 			border-radius: 20px;
 		}
+		
+		i.ion-social-facebook {
+			font-size: 30px;
+		}
 	</style>
 
 
@@ -23,6 +27,8 @@
 	</body>
 	<ion-content style="background-image:url(img/LoginBack.jpg); background-size:100% 100%;" ng-controller="LoginController">
 
+		<hr style="height:15vh;border:hidden">
+		</hr>
 
 		<!--
           Below we include the Login Button social plugin. This button uses
@@ -30,78 +36,98 @@
           the FB.login() function when clicked.
         -->
 
-			<hr style="height:83px; visibility:hidden;" />
-			
-		
-	
 
-		
 		<!--  <div style="padding-left:20px">
             <img src="img/Logo.png" style="height:30%; width:40%">
         </div>
 -->
 		<div align="center">
 
-			<img src="img/loggo.png" style="width:145x;height:75px ">
-			
-		</div>
-		<hr style="height:10px; visibility:hidden;" />
-		<br />
-		
-		<div align=center>
- 
+			<img src="img/loggo.png" style="width:43%;height:13vh">
 
-			
-			<div class="list" style="width:90%; padding-left:0px">
-				<label class="item item-input madzoun" style="padding:2px 2px 2px 10px;background-color:transparent; color:#ffffff; border-radius:5px; border-color:#97a7b4">
+		</div>
+				<hr style="height:3vh; visibility:hidden;" />
+		<br />
+
+		<div align=center>
+
+
+
+	<div style="width:100%;padding:5px 10px 5px 10px" align="center">
+			<button class="button small_button" style="min-height:2.5vh;line-height:6.5vh;background-color:#3b5998;width:100%;color:white;border-radius: 20px"
+			 ng-click="FacebookLogin()">
+             <div class=row style="padding:0px">
+				 <div class="col col-10" style="padding:0px">
+					 <i class = "ion-social-facebook larger" style="margin-right:50px"> </i> 
+					 </div>
+				 <div class="col col-80" align="center" style="padding:0px">
+					 Sign in with Facebook 
+				 </div>
+				  <div class="col col-20">
+					 
+					 </div>
+					 </div>
+				 </div>
+            </button>
+
+		</div>
+
+		</div>
+
+		<div class="padding" style="width:100%;" align="center" ng-show="!toggle">
+			<button style="min-height:10px;line-height:7.5vh;width:100%;border-radius: 20px" class="button button-balanced small_button"
+			 ng-click="Switch()">
+                Already have an account? Log in
+            </button>
+
+		</div>
+
+		<div class="list w3-container" style="width:100%; padding:10px" ng-show="toggle">
+			<label class="item item-input w3-animate-top" style="padding: 0.3vh 0.3vh 0.3vh 2.5vh;background-color:transparent; color:#ffffff; border-radius:5px; border-color:#97a7b4">
                 <input placeholder="Email" type="text" ng-model="registerusername" style="color:white;background-color:transparent;padding-left:2px">
 
             </label>
 				<br>
-				<label class="item item-input" style="padding:2px 2px 2px 10px;background-color:transparent; color:white; border-radius:5px; border-color:#97a7b4">
+				<label class="item item-input" style="padding: 0.3vh 0.3vh 0.3vh 2.5vh;background-color:transparent; color:white; border-radius:5px; border-color:#97a7b4">
                 <input placeholder="Password" type="password" ng-model="registerpassword" style="color:white;padding-left:2px">
-
             </label>
-			</div>
-		</div>
 
 		<div class="padding" style="width:100%;" align="center">
-			<button style="min-height:10px;line-height:40px;width:100%;border-radius: 20px" class="button button-balanced small_button" ng-click="LogIn(user)">
+				<button style="padding-bottom:0px;min-height:10px;line-height:6.5vh;width:100%;border-radius: 20px" class="button button-balanced small_button"
+			 ng-click="LogIn(user)">
                 Sign in
             </button>
 
+			</div>
 		</div>
+
+
 
 		<!--	<div style= "padding-left: 20px" align="center" >
 
 			<img src="img/facebook2.png" style="width:230px; " ng-click="FacebookLogin()">
 		</div> -->
 
-		<div  align="center" style="padding:0 10px 0 10px">
-			<button class="button small_button" style="min-height:10px;line-height:40px;background-color:#3b5998;width:100%;color:white;border-radius: 20px" ng-click="FacebookLogin()">
-                Sign in with Facebook
-            </button>
-
-		</div>
 
 		<div align="center">
 			<h4 style="padding-top:0px;font-weight:bold;color:white; font-size:15px">
 				or
 			</h4>
-		
-		<div class="padding" align="center" style="margin-top:-10px">
-			<button class="button button-balanced small_button" style="min-height:10px;line-height:40px;width:100%;color:#2ab041;background-color:white;border-radius: 20px;border-top:-5px" ng-click="GoToRegister()">
+
+			<div class="padding" align="center" style="margin-top:-10px">
+				<button class="button button-balanced small_button" style="min-height:10px;line-height:6.5vh;width:100%;color:#2ab041;background-color:white;border-radius: 20px;border-top:-5px"
+				 ng-click="GoToRegister()">
                 Register with Email
             </button>
 
-		</div>
-		<hr style="height:0px; visibility:hidden;" />
+			</div>
+			<hr style="height:0px; visibility:hidden;" />
 
-		<div align="center">
-			<h6 style="color:white" ng-click="GoToForgetPass()">
-				Forgot your password?
-			</h6>
-		</div>
+			<div align="center">
+				<h6 style="color:white" ng-click="GoToForgetPass()">
+					Forgot your password?
+				</h6>
+			</div>
 
 		</div>
 

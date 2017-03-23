@@ -221,6 +221,12 @@ angular.module('football.controllers')
                     }
                 }
 
+                for(var  i = 0 ; i<$scope.allfreestadiums.length;i++)
+                {
+
+                    
+                }
+
 
                 /*get current location 
 
@@ -690,7 +696,7 @@ function ($compile, $rootScope, $timeout, $q, $ionicScrollDelegate, $ionicBackdr
                             sView.__container.style.paddingTop = (pickerInfo[prIdx].eachItemHeight * 1.5) + 'px';
 
                             // scroll to default index (no animation)
-                            sDele.scrollTo(0, pickerInfo[prIdx].eachItemHeight * options.items[prIdx].defaultIndex, false);
+                            sDele.scrollTo(0, pickerInfo[prIdx].eachItemHeight * options.items[prIdx].defaultIndex, true);
 
                             // update item states
                             setElementRotate(sView.__content.children,

@@ -8,7 +8,15 @@ angular.module('football.controllers', [])
 
             AddUser: function (newuser, registerdata) {
                 try {
+
                     if (newuser != null) {
+
+                        var date = new Date();
+                        var char = newuser.email.charAt(0).charCodeAt(0);
+                        
+                        var identity = char;
+                        var identity = identity.toString() + date.getDay().toString() + date.getSeconds().toString() + date.getMilliseconds().toString();
+
                         var usertoadd =
                             {
                                 uid: newuser.uid,
@@ -46,7 +54,12 @@ angular.module('football.controllers', [])
                                 favstadium: "",
                                 favstadiumphoto: "",
                                 photoURL: "",
-                                comments : ""
+                                comments: "",
+                                ageset: 0,
+                                ageyear: 1,
+                                agemonth: 1,
+                                ageday: 1990,
+                                identity: identity
 
                             }
                         //alert(newPostKey);
@@ -97,6 +110,9 @@ angular.module('football.controllers', [])
                     var user = firebase.auth().currentUser;
                     var id = user.uid;
                     if (newuser != null) {
+                        var date = new Date();
+                        var identity = "" + String.fromCharCode(newuser.email[0]);
+                        identity = identity + date.getDay() + date.getSeconds() + date.getMilliseconds();
                         var usertoadd =
                             {
                                 uid: id,
@@ -134,7 +150,12 @@ angular.module('football.controllers', [])
                                 favstadium: "",
                                 favstadiumphoto: "",
                                 photoURL: newuser.photoURL == null ? "" : newuser.photoURL,
-                                comments : ""
+                                comments: "",
+                                ageset: 0,
+                                ageyear: 1,
+                                agemonth: 1,
+                                ageday: 1990,
+                                identity:identity
 
                             }
                         //alert(newPostKey);
@@ -306,7 +327,7 @@ angular.module('football.controllers', [])
                 });
         };
 
-        
+
 
         $scope.FacebookLogin = function () {
             try {
@@ -320,43 +341,43 @@ angular.module('football.controllers', [])
                             facebookConnectPlugin.api('me/?fields=email,name,first_name,last_name', ["public_profile"],
                                 function (infoesult) {
 
-                        facebookConnectPlugin.getAccessToken(function (token) {
-                            //alert("Token: " + token);
-                            var credential = firebase.auth.FacebookAuthProvider.credential(token);
-                            firebase.auth().signInWithCredential(credential).then(function (result) {
-                                $scope.myprofile = result;
-                                $timeout(function () {
-                                    var user = firebase.auth().currentUser;
-                                    if (user) {
+                                    facebookConnectPlugin.getAccessToken(function (token) {
+                                        //alert("Token: " + token);
+                                        var credential = firebase.auth.FacebookAuthProvider.credential(token);
+                                        firebase.auth().signInWithCredential(credential).then(function (result) {
+                                            $scope.myprofile = result;
+                                            $timeout(function () {
+                                                var user = firebase.auth().currentUser;
+                                                if (user) {
 
-                                        LoginStore.GetUser(function (data) {
-                                            if (data) {
-                                                $state.go('app.homepage');
-                                            }
-                                            else {
-                                                LoginStore.AddFbUser($scope.myprofile).then(function (result) {
-                                                    $state.go('app.homepage');
-                                                }, function (error) {
-                                                    alert(error.message);
-                                                });
-                                            }
+                                                    LoginStore.GetUser(function (data) {
+                                                        if (data) {
+                                                            $state.go('app.homepage');
+                                                        }
+                                                        else {
+                                                            LoginStore.AddFbUser($scope.myprofile).then(function (result) {
+                                                                $state.go('app.homepage');
+                                                            }, function (error) {
+                                                                alert(error.message);
+                                                            });
+                                                        }
+                                                    });
+
+                                                }
+                                            }, 3000);
+
+
+
+                                        }).catch(function (error) {
+                                            // Handle Errors here.
+                                            alert(error.code);
+                                            alert(error.message);
+                                            // ...
                                         });
-
-                                    }
-                                }, 3000);
-                                
-
-
-                            }).catch(function (error) {
-                                // Handle Errors here.
-                                alert(error.code);
-                                alert(error.message);
-                                // ...
-                            });
-                        });
-                           //         alert(JSON.stringify(infoesult));
-                           //         alert('Good to see you, ' +
-                           //             infoesult.email + infoesult.name + '.');
+                                    });
+                                    //         alert(JSON.stringify(infoesult));
+                                    //         alert('Good to see you, ' +
+                                    //             infoesult.email + infoesult.name + '.');
 
                                 });
 
@@ -399,23 +420,23 @@ angular.module('football.controllers', [])
     .controller('FirstPageController', function ($scope, $ionicPopover, $ionicLoading, $state, $timeout) {
 
 
-            try {
-                $timeout(function () {
-                    var user = firebase.auth().currentUser;
+        try {
+            $timeout(function () {
+                var user = firebase.auth().currentUser;
 
-                    if (user) {
-                        $state.go('app.homepage');
-                    } else {
-                        $state.go('signin');
-                    }
+                if (user) {
+                    $state.go('app.homepage');
+                } else {
+                    $state.go('signin');
+                }
 
-                }, 3000);
+            }, 3000);
 
 
-            }
-            catch (error) {
-                alert(error.message);
-            }
+        }
+        catch (error) {
+            alert(error.message);
+        }
 
 
     })
@@ -449,19 +470,19 @@ angular.module('football.controllers', [])
         };
     }])
 
-    .controller('LoginPassController', function ($scope,$state,$ionicPopup) {
+    .controller('LoginPassController', function ($scope, $state, $ionicPopup) {
 
 
-        $scope.email = 
-        {
-            address : "aa"
-        }
+        $scope.email =
+            {
+                address: "aa"
+            }
 
         $scope.submit = function () {
             alert("test");
             try {
                 var auth = firebase.auth();
-                var emailAddress =  $scope.email.address;
+                var emailAddress = $scope.email.address;
 
                 alert(emailAddress);
 

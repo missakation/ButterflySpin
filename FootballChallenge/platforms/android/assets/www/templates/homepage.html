@@ -75,12 +75,19 @@
         background-color: rgb(62, 83, 100);
         color: white;
         border-bottom: 2px solid rgb(62, 83, 100);
+        border-top:1px;
     }
     
     .bodyColor {
         background-color: rgb(45, 62, 75);
         color: white;
     }
+
+    .icon {
+       font-size: 17px;
+    }
+
+
 </style>
 
 <ion-view title='<img src="img/loggo.png" align="center" style="width:70px;height:35px;padding-top:5px">'>
@@ -240,7 +247,7 @@
 
 
 
-        <div class="card" style="background-color:rgb(62,83,100);margin-top:0px" ng-show="showupcomingmatches">
+        <div class="card" style="background-color:rgb(62,83,100);margin-top:0px" ng-show="showupcomingmatches || showupcomingsinglematches">
             <div style="background-color:rgb(62,83,100)">
                 <div align="center">
                     <h4 class="whitetext" align="middle"><b>UPCOMING MATCHES</b></h4>
@@ -249,7 +256,7 @@
 
 
 
-                <div class="row row-center" ng-repeat="upmatches in profile.upcominteamgmatches" style="background-color:rgb(62,83,100)">
+                <div class="row row-center" ng-repeat="upmatches in profile.upcominteamgmatches" style="border-bottom:1px solid #5f7485;margin-bottom:5px;padding:0 5px 0 5px;background-color:rgb(62,83,100)">
                     <div class="col col-75">
 
                         <h6 class="whitetext">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h6>
@@ -267,7 +274,7 @@
                     </div>
 
                 </div>
-                <div class="row row-center" ng-repeat="upmatches in profile.upcomingmatches" style="background-color:rgb(62,83,100)">
+                <div class="row row-center" ng-repeat="upmatches in profile.upcomingmatches" style="border-bottom:1px solid #5f7485;margin-bottom:5px;padding:0 5px 0 5px;background-color:rgb(62,83,100)">
                     <div class="col col-75">
                         <h6 class="whitetext">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h6>
                     </div>
@@ -328,13 +335,14 @@
 </button>
                 </div>
                 <div class="col">
-                    <button class="button button-block button-full button-balanced button-small" style="border-radius:50px;color:white;font-weight:bold" ng-click="acceptteaminvitation(upmatches,1)"> ACCEPT
+                    <button class="button button-block button-full button-balanced button-small" style="border-radius:50px;color:white;font-weight:bold"
+                        ng-click="acceptteaminvitation(upmatches,1)"> ACCEPT
 </button>
                 </div>
 
             </div>
 
-        </div
+        </div>
         <div class="card" style="background-color:rgb(62,83,100)" ng-repeat="challenges in profile.challenges">
             <div align="center">
                 <h4 class="whitetext" align="middle"><b> {{challenges.team2name}} CHALLENGED YOU</b></h4>
@@ -426,15 +434,17 @@
 </button>
                 </div>
 
-                   <div class="col">
-                    <button class="button button-block button-balanced button-small" style="font-weight:bold;border-radius:50px;color:white" ng-click="acceptinvitation(challenges)"> ACCEPT
+                <div class="col">
+                    <button class="button button-block button-balanced button-small" style="font-weight:bold;border-radius:50px;color:white"
+                        ng-click="acceptinvitation(challenges)"> ACCEPT
 </button>
                 </div>
             </div>
 
             <div class="row" ng-show="challenges.isadmin">
                 <div class="col">
-                    <button class="button button-block button-balanced button-small" style="border-radius:50px;background-color:white;color: green" ng-click="cancelinvitation(challenges)"> CANCEL
+                    <button class="button button-block button-balanced button-small" style="border-radius:50px;background-color:white;color: green"
+                        ng-click="cancelinvitation(challenges)"> CANCEL
 </button>
                 </div>
 
@@ -509,8 +519,9 @@
 </button>
                 </div>
 
-                   <div class="col">
-                    <button class="button button-block button-balanced button-small" style="font-weight:bold;border-radius:50px;width:bold;color:white" ng-click="acceptgameinvitation(1,challenges)"> ACCEPT
+                <div class="col">
+                    <button class="button button-block button-balanced button-small" style="font-weight:bold;border-radius:50px;width:bold;color:white"
+                        ng-click="acceptgameinvitation(1,challenges)"> ACCEPT
 </button>
                 </div>
             </div>
@@ -529,10 +540,10 @@
             <div class="row ">
 
                 <div class="col col-25">
-                    <img src="{{requests.photo}}" style="width:70px;height:70px">
+                    <img src="{{requests.photo}}" style="width:70px;height:70px;border-radius:50px">
                 </div>
 
-                <div class="col">
+                <div class="col" style="padding-left:15px">
                     <h5 class="whitetext" style="color:white"> Hey, My name is {{requests.name}}. I would to Request your mobile number
                     </h5>
                 </div>
@@ -546,15 +557,17 @@
                     <button class="button button-block button-full button-assertive button-small" style="border-radius:50px;color:white" ng-click="acceptrequest(requests,2)"> DECLINE
 </button>
                 </div>
-                    <div class="col">
-                    <button class="button button-block button-full button-balanced button-small" style="border-radius:50px;color:white;font-weight:bold" ng-click="acceptrequest(requests,1)"> ACCEPT
+                <div class="col">
+                    <button class="button button-block button-full button-balanced button-small" style="border-radius:50px;color:white;font-weight:bold"
+                        ng-click="acceptrequest(requests,1)"> ACCEPT
 </button>
                 </div>
             </div>
 
             <div class="row" ng-show="challenges.isadmin">
                 <div class="col">
-                    <button class="button button-block button-balanced button-small" style="border-radius:50px;background-color:white;color: #2ab041" ng-click="cancelinvitation(challenges)"> CANCEL
+                    <button class="button button-block button-balanced button-small" style="border-radius:50px;background-color:white;color: #2ab041"
+                        ng-click="cancelinvitation(challenges)"> CANCEL
 </button>
                 </div>
 
@@ -568,12 +581,12 @@
 
 
 
-        <div class="card" style="background-color:rgb(62,83,100); padding-bottom:0px">
+        <div class="card" style="background-color:rgb(62,83,100); margin:0 10px;padding-bottom:0px">
             <div style="background-color:rgb(62,83,100);margin-bottom:-4px">
                 <h4 class="whitetext" align="middle"><b>Special Offers</b></h4>
 
 
-                <ion-slide-box on-slide-changed="slideHasChanged($index)">
+                <ion-slide-box on-slide-changed="slideHasChanged($index)" style="font-size:12px">
                     <ion-slide id="specialoffer1">
                         <h1 align="center" style="font-size:44; color:white">
                             50% OFF
@@ -631,9 +644,9 @@
                                         <a href="#/app/selfprofile">
                                             <img src="img/Badges/{{rankedteams[2].badge}}.png" style="height:70px ; width:70px" height="50" />
                                         </a>
-                                        <div>
-                                            <h4 align="center" style="padding-bottom:0pxfont-weight:bold;color:white">Barcelona</h4>
-                                            <h5 align="center" style="font-weight:bold;color:darkturquoise">1500 AR</h5>
+                                       <div>
+                                            <h4 align="center" style="padding-bottom:0px;font-weight:bold;color:white">404 Not found</h4>
+                                            <h5 align="center" style="font-weight:bold;color:darkturquoise">404 Not found</h5>
                                         </div>
 
                                     </div>
@@ -667,8 +680,8 @@
                                             <img src="img/Badges/{{rankedteams[0].badge}}.png" style="height:70px ; width:70px"/>
                                         </a>
                                         <div>
-                                            <h4 align="center" style="font-weight:bold;color:white">Barcelona</h4>
-                                            <h5 align="center" style="font-weight:bold;color:darkturquoise">1500 AR</h5>
+                                            <h4 align="center" style="font-weight:bold;color:white">404 not found</h4>
+                                            <h5 align="center" style="font-weight:bold;color:darkturquoise">404 not found</h5>
                                         </div>
 
                                     </div>
@@ -702,8 +715,8 @@
                                             <img src="img/Badges/{{rankedteams[1].badge}}.png" style="height:70px ; width:70px" height="50" />
                                         </a>
                                         <div>
-                                            <h4 align="center" style="font-weight:bold;color:white">Barcelona</h4>
-                                            <h5 align="center" style="font-weight:bold;color:darkturquoise">1500 AR</h5>
+                                            <h4 align="center" style="font-weight:bold;color:white">404 not found</h4>
+                                            <h5 align="center" style="font-weight:bold;color:darkturquoise">404 not found</h5>
                                         </div>
 
                                     </div>
@@ -746,7 +759,7 @@
                                             </a>
                                             <div align="center">
                                                 <h4 align="center" style="font-weight:bold;color:white">{{rankedteams[0].teamname}}</h4>
-                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">1500 AR</h5>
+                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">404 not found</h5>
                                             </div>
 
                                         </div>
@@ -754,7 +767,7 @@
                                         <div class="col" style="padding:0 0 10px 0">
 
                                             <div align="center">
-                                                <h4 style="font-weight:bold;color:white">12-Mar-16</h4>
+                                                <h4 style="font-weight:bold;color:white">404 date</h4>
 
                                                 <h4 style="color:white">
                                                     Loss
@@ -773,7 +786,7 @@
                                             </a>
                                             <div align="center">
                                                 <h4 align="center" style="font-weight:bold;color:white">{{rankedteams[1].teamname}}</h4>
-                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">1500 AR</h5>
+                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">404 not found</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -873,7 +886,7 @@
                                         <div class="col" align="center">
 
                                             <a href="#/app/selfprofile">
-                                                <img src="img/Badges/{{rankedteams[0].badge}}.png" style="height:70px ; width:70px"/>
+                                                <img src="img/Badges/{{rankedteams[0].badge}}.png" style="height:70px ; width:70px" />
                                             </a>
                                             <div align="center">
                                                 <h4 align="center" style="font-weight:bold;color:white">{{rankedteams[2].teamname}}</h4>

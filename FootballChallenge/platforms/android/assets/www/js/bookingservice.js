@@ -17,7 +17,7 @@
                      {
                          
                          Temp = [];
-                    firebase.database().ref('/players/' + id + '/upcominteamgmatches').once('value', function (snapshot) {
+                    firebase.database().ref('/players/' + id + '/upcomingmatches').once('value', function (snapshot) {
 
                         snapshot.forEach(function (childSnapshot) {
 

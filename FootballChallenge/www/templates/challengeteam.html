@@ -16,10 +16,46 @@
 	p.graytext {
 		color: lightgray
 	}
+	    	.popup {
+		border-radius:50px;
+		font-size:15px;
+	}
 
-	    .headercolor{
-        background-color: rgb(62,83,100);
-        color: white
+	.popup-buttons .button:first-child 
+	{
+		border-radius:50px;
+		background-color:#2ab041;
+		margin:5px;
+		padding:0px;
+        width:80%
+			}
+
+	.popup-body {
+		padding: 15px;
+		margin: -5px;
+		background-color: rgb(62, 83, 100);
+		color: white;
+		text-align:center;	
+		border-radius:15px 15px 0 0 ;
+	}
+    .popup-buttons {
+		padding: 10px 5px 5px 5px;
+		margin: -5px;
+		background-color: rgb(62, 83, 100);
+		text-align:center;	
+		border-radius:0 0 15px 15px ;
+	}
+	
+	
+    .popup-head {	
+	    display: none;  
+        	}
+    
+    .headercolor {
+        background-color: rgb(62, 83, 100);
+        color: white;
+        border-bottom: 2px solid rgb(62, 83, 100);
+        border-top:1px;
     }
 </style>
 <ion-view view-title="Choose Opponent">
@@ -86,7 +122,7 @@
 <div class="row ">
 	<div class="col" style="color:lightgray;border-right:1px solid #5f7485" align="center">
 		<img src="img/Badges/{{team.badge}}.png" style="width:100%;height:80px;">
-<h5 class="whitetext"> {{team.teamname}} </h5>
+<h5 class="whitetext" style="text-transform:capitalize"> {{team.teamname}} </h5>
 <h5 class="whitetext"> {{team.ranking}} </h5>
 </div>
 
@@ -97,7 +133,7 @@
 
 <div class="col" align="center">
 	<img src="https://leafii.com/images/defaultProfilePic.png" style="width:100%;height:80px;">
-<h5 class="whitetext"> Beirut Eagle</h5>
+<h5 class="whitetext">404 Team</h5>
 </div>
 
 </div>
@@ -132,8 +168,8 @@
 </div>
 </div>
 
-<p class="whitetext">
-		I am the best
+<p class="whitetext" style="padding-left:10px">
+		404 team info not found.
 </p>
 
 <div class="row">

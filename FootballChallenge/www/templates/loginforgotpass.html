@@ -6,7 +6,7 @@
 		
 		h4.titles {
 			color: white;
-			background-color: mediumseagreen;
+			background-color: mediumsea#28b041;
 			text-align: center;
 			height: 25px;
 			border-radius: 20px;
@@ -39,20 +39,28 @@
         </div>
       -->
 
-      <div align="center">
+		<hr style="height:9vh;border:hidden">
+		</hr>
 
-		<img src="img/logo.jpg" style="width:80px;height:50px " ng-click="FacebookLogin()">
-      </div>
-      <br />
+    <div align="center">
+
+			<img src="img/loggo.png" style="width:43%;height:13vh">
+
+		</div>
+				<hr style="height:2vh; visibility:hidden;" />
+		<br />
+
 		<div align="center">
-			<div class="list" style="width:75%; padding-left:20px">
-				<label class="item item-input" style="background-color:transparent;border-color:white;color:white;border-radius:5px">
-                <input type="text" ng-model="email.address" style="color:white;background-color:transparent;">
+			<div class="list" style="width:95%; padding:10px">
+				<label class="item item-input" style="padding: 0.3vh 0.3vh 0.3vh 2.5vh;background-color:transparent; color:#ffffff; border-radius:5px; border-color:#97a7b4">
+                <input placeholder="Enter Your Email Address" type="email" ng-model="email.address" style="color:white;background-color:transparent;">
 			</div>
 		</div>
+		
 
-		<div class="padding" style="width:100%; padding-left:20px" align="center">
-			<button style="width:75%" class="button button-balanced" ng-click="submit()">
+		<div class="padding" style="width:100%" align="center">
+			<button style="padding-bottom:0px;min-height:10px;line-height:6.5vh;width:100%;border-radius: 20px" class="button button-balanced small_button"
+			 ng-click="submit()">
                 Reset Password
             </button>
 

@@ -1,5 +1,5 @@
 <!--Ari-->
-<ion-view view-title="MY PROFILE" align="center">
+<ion-view view-title="My Profile" align="center">
 	<style>
 		img {
 			height: 100px;
@@ -67,14 +67,14 @@
 		<div class="row ">
 			<div class="col"  align="center">
 				<img src="{{currentprofile.photo}}" style="width:80px;height:80px;border-radius:50%">
-				<h4 class="whitetext">Edit name</h4>
-				<h4 style="color:#5f7485"> Put the 5 digit user ID
+				<h4 class="whitetext">{{currentprofile.firstname}}</h4>
+				<h4 style="color:#5f7485"> {{currentprofile.identity}}
 					 </h4>
 </div>
 
 <div class="col" style="border-left-style: solid;border-width: thin;border-color: #5f7485;" align="center">
 	<img src="img/Badges/{{currentprofile.myteams[0].badge}}.png" style="width:80px;height:80px ">
-<h3 class="whitetext"> {{currentprofile.myteams[0].teamname}} </h3>
+<h3 class="whitetext" style="text-transform:capitalize"> {{currentprofile.myteams[0].teamname}} </h3>
 <h4 class="whitetext" style="color:darkturquoise"> 404 Not Found! </h4>
 </div>
 
@@ -91,7 +91,10 @@
 <div class="col " style="padding-top:10px;color:#5f7485" align="center">
 <h4 style="color:#5f7485;border-right:1px solid #5f7485;border-left:1px solid #5f7485;margin:0px;padding-top:10px">  Age
 </h4>
-<h3 style="color: white;border-right:1px solid #5f7485;border-left:1px solid #5f7485;margin:0px;padding-top:10px"> 404
+<h3 style="color: white;border-right:1px solid #5f7485;border-left:1px solid #5f7485;margin:0px;padding-top:10px" ng-show="!currentprofile.ageset"> 
+</h3>
+<h3 style="color: white;border-right:1px solid #5f7485;border-left:1px solid #5f7485;margin:0px;padding-top:10px" ng-show="currentprofile.ageset">
+	{{currentprofile.agenum}}
 </h3>
 </div>
 
@@ -175,7 +178,7 @@
 
 					<div class="col">
 
-						<h3 class="whitetext" align="right">1</h3>
+						<h3 class="whitetext" align="right">404</h3>
 					</div>
 
 				</div>
@@ -188,7 +191,7 @@
 
 					<div class="col">
 
-				<h3 class="whitetext" align="right">1</h3>
+				<h3 class="whitetext" align="right">404</h3>
 					</div>
 
 				</div>
@@ -201,7 +204,7 @@
 
 					<div class="col">
 
-					<h3 class="whitetext" align="right">1</h3>
+					<h3 class="whitetext" align="right">404</h3>
 					</div>
 
 				</div>

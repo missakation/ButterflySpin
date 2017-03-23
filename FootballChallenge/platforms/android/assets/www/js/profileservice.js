@@ -6,7 +6,7 @@ angular.module('football.controllers')
         var TempItems = {};
         return {
             GetProfileInfo: function (callback) {
-                
+
 
                 var user = firebase.auth().currentUser;
                 var id = user.uid;
@@ -16,95 +16,105 @@ angular.module('football.controllers')
 
                 try {
 
-                        
-                    firebase.database().ref('/players/' +id).once('value').then(function (snapshot) {
-                        
-                    TempItems = {};
-                    if (snapshot.child("upcominteamgmatches").exists()) 
-                    
-                    {
 
-                        snapshot.child("upcominteamgmatches").forEach(function (challenges) {
+                    firebase.database().ref('/players/' + id).once('value').then(function (snapshot) {
 
-                            
-                            var matchdate = new Date();
+                        TempItems = {};
+                        if (snapshot.child("upcominteamgmatches").exists()) {
+
+                            snapshot.child("upcominteamgmatches").forEach(function (challenges) {
 
 
-                            matchdate.setMinutes(challenges.child("minute").val());
-                            matchdate.setFullYear(challenges.child("year").val());
-                            matchdate.setMonth(challenges.child("month").val());
-                            matchdate.setHours(challenges.child("hour").val());
-                            matchdate.setDate(challenges.child("day").val());
-
-                            var matchdata = {
-
-                                key: challenges.key,
-
-                                accepted: challenges.child("accepted").val(),
-                                day: challenges.child("day").val(),
-                                hour: challenges.child("hour").val(),
-                                minute: challenges.child("minute").val(),
-                                month: challenges.child("month").val(),
-                                
-                                team1adminid: challenges.child("team1adminid").val(),
-                                team1key: challenges.child("team1key").val(),
-                                team1logo: challenges.child("team1logo").val(),
-                                team1name: challenges.child("team1name").val(),
-                                team1rank: challenges.child("team1rank").val(),
-                                team2adminid: challenges.child("team2adminid").val(),
-                                team2key: challenges.child("team2key").val(),
-                                team2logo: challenges.child("team2logo").val(),
-                                team2name: challenges.child("team2name").val(),
-                                team2rank: challenges.child("team2rank").val(),
-                                year: challenges.child("year").val(),
-                                date: matchdate,
-
-                                stadiumkey: challenges.child("stadiumkey").val(),
-                                ministadiumkey: challenges.child("ministadiumkey").val(),
-                                photo: challenges.child("photo").val(),
-                                price: challenges.child("price").val(),
-                                stadiumdescription: challenges.child("stadiumdescription").val()
-                            }
-                            upcomingmatches.push(matchdata);
-
-                        }) 
+                                var matchdate = new Date();
 
 
-                    }
+                                matchdate.setMinutes(challenges.child("minute").val());
+                                matchdate.setFullYear(challenges.child("year").val());
+                                matchdate.setMonth(challenges.child("month").val());
+                                matchdate.setHours(challenges.child("hour").val());
+                                matchdate.setDate(challenges.child("day").val());
 
-                    if (snapshot.child("teams").exists()) {
-                        snapshot.child("teams").forEach(function (teams) {                  
+                                var matchdata = {
 
-                            var matchdata = {
-                                key:teams.key,
-                                badge: teams.child("badge").val(),
-                                rank: teams.child("rank").val(),
-                                teamname: teams.child("teamname").val()
-                                             
-                            }
-                            myteams.push(matchdata);
+                                    key: challenges.key,
 
-                        })
+                                    accepted: challenges.child("accepted").val(),
+                                    day: challenges.child("day").val(),
+                                    hour: challenges.child("hour").val(),
+                                    minute: challenges.child("minute").val(),
+                                    month: challenges.child("month").val(),
+
+                                    team1adminid: challenges.child("team1adminid").val(),
+                                    team1key: challenges.child("team1key").val(),
+                                    team1logo: challenges.child("team1logo").val(),
+                                    team1name: challenges.child("team1name").val(),
+                                    team1rank: challenges.child("team1rank").val(),
+                                    team2adminid: challenges.child("team2adminid").val(),
+                                    team2key: challenges.child("team2key").val(),
+                                    team2logo: challenges.child("team2logo").val(),
+                                    team2name: challenges.child("team2name").val(),
+                                    team2rank: challenges.child("team2rank").val(),
+                                    year: challenges.child("year").val(),
+                                    date: matchdate,
+
+                                    stadiumkey: challenges.child("stadiumkey").val(),
+                                    ministadiumkey: challenges.child("ministadiumkey").val(),
+                                    photo: challenges.child("photo").val(),
+                                    price: challenges.child("price").val(),
+                                    stadiumdescription: challenges.child("stadiumdescription").val()
+                                }
+                                upcomingmatches.push(matchdata);
+
+                            })
 
 
-                    }
+                        }
+
+                        if (snapshot.child("teams").exists()) {
+                            snapshot.child("teams").forEach(function (teams) {
+
+                                var matchdata = {
+                                    key: teams.key,
+                                    badge: teams.child("badge").val(),
+                                    rank: teams.child("rank").val(),
+                                    teamname: teams.child("teamname").val()
+
+                                }
+                                myteams.push(matchdata);
+
+                            })
+
+
+                        }
+
+                        var age = new Date();
+
+                        age.setDate(snapshot.child("ageday").val());
+                        age.setFullYear(snapshot.child("ageyear").val());
+                        age.setMonth(snapshot.child("agemonth").val());
+
+
+                        var ageDifMs = Date.now() - age.getTime();
+                        var ageDate = new Date(ageDifMs); // miliseconds from epoch
+                        var num = Math.abs(ageDate.getUTCFullYear() - 1970);
+
 
                         var Items = {
                             "key": snapshot.key,
                             "displayname": snapshot.child("displayname").val(),
                             "enableinvitations": snapshot.child("enableinvitations").val(),
-                         //   "favouritesport": snapshot.child("favouritesport").val(),
+                            //   "favouritesport": snapshot.child("favouritesport").val(),
                             "firstname": snapshot.child("firstname").val(),
-                         //   "highestrating": snapshot.child("highestrating").val(),
+                            //   "highestrating": snapshot.child("highestrating").val(),
                             "lastname": snapshot.child("lastname").val(),
                             "middlename": snapshot.child("middlename").val(),
                             "playposition": snapshot.child("playposition").val(),
                             "ranking": snapshot.child("ranking").val(),
                             "status": snapshot.child("status").val(),
-                         //   "teams": snapshot.child("teams").exists() ? snapshot.child("teams").val() : "",
+                            //   "teams": snapshot.child("teams").exists() ? snapshot.child("teams").val() : "",
                             "telephone": snapshot.child("telephone").val(),
                             "upcomingmatches": upcomingmatches,
-                         //   "winstreak": snapshot.child("winstreak").val(),
+                            //   "winstreak": snapshot.child("winstreak").val(),
 
                             "startmonday": snapshot.child("startmonday").val(),
                             "startmondayend": snapshot.child("startmondayend").val(),
@@ -121,8 +131,17 @@ angular.module('football.controllers')
                             "startsunday": snapshot.child("startsunday").val(),
                             "startsundayend": snapshot.child("startsundayend").val(),
                             "comments": snapshot.child("comments").val(),
-                            "myteams":myteams,
-                            "photo":snapshot.child("photoURL").val(),
+                            "myteams": myteams,
+                            "photo": snapshot.child("photoURL").val(),
+
+                            //Age
+                            "ageyear": snapshot.child("ageyear").val(),
+                            "agemonth": snapshot.child("agemonth").val(),
+                            "ageday": snapshot.child("ageday").val(),
+                            "ageset": snapshot.child("ageset").val(),
+                            "age": age,
+                            "agenum": num,
+                            "identity":snapshot.child("identity").val(),
 
                         };
 
@@ -130,19 +149,24 @@ angular.module('football.controllers')
                         callback(TempItems);
                     });
 
-                    
+
                 }
                 catch (error) {
                     alert(error.message);
                 }
             },
 
-            UpdateProfile: function (profile)
-            {
-                    try
-                    {
-                        var user = firebase.auth().currentUser;
-                        var id = user.uid;
+            UpdateProfile: function (profile) {
+                try {
+                    alert(profile.age);
+                    var ageset = profile.age.getFullYear() == 1900 ? false : true;
+
+                    var year = profile.age.getFullYear();
+                    var month = profile.age.getMonth();
+                    var day = profile.age.getDate();
+
+                    var user = firebase.auth().currentUser;
+                    var id = user.uid;
 
                     var updates = {};
                     updates['players/' + id + '/enableinvitations'] = profile.enableinvitations;
@@ -161,14 +185,42 @@ angular.module('football.controllers')
                     updates['players/' + id + '/startsunday'] = profile.startsunday;
                     updates['players/' + id + '/startsundayend'] = profile.startsundayend;
 
-                        return firebase.database().ref().update(updates);
-                    }
-                    catch(error)
-                    {
-                        alert(error.message);
-                    }
-        }
-            
+                    //Age
+                    updates['players/' + id + '/ageyear'] = year;
+                    updates['players/' + id + '/agemonth'] = month;
+                    updates['players/' + id + '/ageday'] = day;
+                    updates['players/' + id + '/ageset'] = ageset;
+
+
+                    updates['playersinfo/' + id + '/enableinvitations'] = profile.enableinvitations;
+                    updates['playersinfo/' + id + '/startmonday'] = profile.startmonday;
+                    updates['playersinfo/' + id + '/startmondayend'] = profile.startmondayend;
+                    updates['playersinfo/' + id + '/starttuesday'] = profile.starttuesday;
+                    updates['playersinfo/' + id + '/starttuesdayend'] = profile.starttuesdayend;
+                    updates['playersinfo/' + id + '/startwednesday'] = profile.startwednesday;
+                    updates['playersinfo/' + id + '/startwednesdayend'] = profile.startwednesdayend;
+                    updates['playersinfo/' + id + '/startthursday'] = profile.startthursday;
+                    updates['playersinfo/' + id + '/startthursdayend'] = profile.startthursdayend;
+                    updates['playersinfo/' + id + '/startfriday'] = profile.startfriday;
+                    updates['playersinfo/' + id + '/startfridayend'] = profile.startfridayend;
+                    updates['playersinfo/' + id + '/startsaturday'] = profile.startsaturday;
+                    updates['playersinfo/' + id + '/startsaturdayend'] = profile.startsaturdayend;
+                    updates['playersinfo/' + id + '/startsunday'] = profile.startsunday;
+                    updates['playersinfo/' + id + '/startsundayend'] = profile.startsundayend;
+
+                    //Age
+                    updates['playersinfo/' + id + '/ageyear'] = year;
+                    updates['playersinfo/' + id + '/agemonth'] = month;
+                    updates['playersinfo/' + id + '/ageday'] = day;
+                    updates['playersinfo/' + id + '/ageset'] = ageset;
+
+                    return firebase.database().ref().update(updates);
+                }
+                catch (error) {
+                    alert(error.message);
+                }
+            }
+
 
 
         }

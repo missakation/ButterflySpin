@@ -41,7 +41,7 @@
         An Ionic Framework and Cordova project.
     </description>
     <author email="you@example.com" href="http://example.com.com/">Missak Boyajian</author>
-    <content original-src="index.html" src="http://192.168.1.74:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />

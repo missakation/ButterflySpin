@@ -70,8 +70,8 @@ angular.module('football.controllers')
 
                         var status=0;
                         var statusdesc = "Request Number";
-                        var color="white";
-                        var backcolor="LimeGreen ";
+                        var color="#2ab042";
+                        var backcolor="white";
 
                         if (childSnapshot.child(startat).exists()) {
                             if (childSnapshot.child(startat).val() <= hour && childSnapshot.child("enableinvitations").val()) {
@@ -80,8 +80,8 @@ angular.module('football.controllers')
                                 {
                                  status=1;
                                  statusdesc = "Number Requested";
-                                 color="black";
-                                 backcolor="white";
+                                 color="white";
+                                 backcolor="#2ab042";
                                 }
 
                                 var Items = {

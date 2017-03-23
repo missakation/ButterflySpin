@@ -22,6 +22,8 @@ angular.module('football.controllers')
 
         $timeout(function () {
             BookingStore.GetMyUpcomingBookings(function (leagues) {
+
+                alert(leagues.length);
                 
                 $scope.bookings = leagues;
                 $scope.tabs.Current = true;

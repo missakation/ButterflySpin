@@ -91,8 +91,8 @@ angular.module('football.controllers')
 
                       player.status=1;
                       player.statusdesc = "Number Requested";
-                      player.color="black";
-                      player.backcolor="white";
+                      player.color="white";
+                      player.backcolor="#2ab042";
                       $scope.apply();
 
                  }, function (error)

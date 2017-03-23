@@ -312,7 +312,7 @@ angular.module('football.controllers')
         }
 
         $scope.UpdateUser = function (profile) {
-
+            
             ProfileStore1.UpdateProfile(profile).then(function (result) {
 
                 $ionicHistory.goBack();
@@ -378,14 +378,8 @@ angular.module('football.controllers')
 
                     $scope.uploading = true;
 
-
-
-
-
-
-
                     // Upload file and metadata to the object 'images/mountains.jpg'
-                    var uploadTask = storageRef.child('playerimages/' + '/' + id + '/' + file.name).put(new Blob(file, { type: 'file' }), metadata);
+                    var uploadTask = storageRef.child('playerimages/' + '/' + id + '/' + file.name).put(file, metadata);
 
                     // Listen for state changes, errors, and completion of the upload.
                     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
@@ -401,7 +395,7 @@ angular.module('football.controllers')
                                     console.log('Upload is running');
                                     break;
                             }
-                        }, function (error) {
+                        } , function (error) {
                             switch (error.code) {
                                 case 'storage/unauthorized':
                                     // User doesn't have permission to access the object

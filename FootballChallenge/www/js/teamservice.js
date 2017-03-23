@@ -227,11 +227,13 @@
 
                         updates['/teaminfo/' + newPostKey] = contact;
 
+                        updates['/teamnames/' + contact.teamname] = id;
+
                     }
                     return firebase.database().ref().update(updates);
                 }
                 catch (error) {
-                    alert(error.message);
+                    alert(JSON.stringify(error));
                 }
 
 
@@ -306,7 +308,10 @@
                             teamcreateddate.setHours(snapshot.child("datehour").val());
                             teamcreateddate.setDate(snapshot.child("dateday").val());
 
+                            var numberofmatches = 0;
+
                             if (snapshot.child("upcominteamgmatches").exists()) {
+                                numberofmatches = snapshot.child("upcominteamgmatches").numChildren();
                                 snapshot.child("upcominteamgmatches").forEach(function (challenges) {
 
 
@@ -377,7 +382,7 @@
                                 "startsaturdayend": snapshot.child("startsaturdayend").val(),
                                 "startsunday": snapshot.child("startsunday").val(),
                                 "startsundayend": snapshot.child("startsundayend").val(),
-                                "rank": 1500,
+                                "rating": 1500,
                                 "numberofgames": 0,
                                 "wins": 0,
                                 "amiadmin": amiadmin,
@@ -392,7 +397,8 @@
                                 "datecreated": teamcreateddate,
                                 "upcomingmatches": upcomingmatches,
                                 "favstadium": snapshot.child("favstadium").val(),
-                                "favstadiumphoto": snapshot.child("favstadiumphoto").val()
+                                "favstadiumphoto": snapshot.child("favstadiumphoto").val(),
+                                "numChildren" : numberofmatches
                             };
                             TeamProfile = Items;
 
