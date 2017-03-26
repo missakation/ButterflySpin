@@ -134,7 +134,7 @@ angular.module('football.controllers')
                     return 'rgb(38,175,61)';
 
                 },
-                ceil: 24,
+                ceil: 23,
                 draggableRange: false
 
             }
@@ -156,7 +156,7 @@ angular.module('football.controllers')
                 getPointerColor: function (value) {
                     return 'rgb(38,175,61)';
                 },
-                ceil: 24,
+                ceil: 23,
                 draggableRange: false
 
             }
@@ -180,7 +180,7 @@ angular.module('football.controllers')
                     return 'rgb(38,175,61)';
 
                 },
-                ceil: 24,
+                ceil: 23,
                 draggableRange: false
 
             }
@@ -204,7 +204,7 @@ angular.module('football.controllers')
                     return 'rgb(38,175,61)';
 
                 },
-                ceil: 24,
+                ceil: 23,
                 draggableRange: false
 
             }
@@ -228,7 +228,7 @@ angular.module('football.controllers')
                     return 'rgb(38,175,61)';
 
                 },
-                ceil: 24,
+                ceil: 23,
                 draggableRange: false
 
             }
@@ -251,7 +251,7 @@ angular.module('football.controllers')
                     return 'rgb(38,175,61)';
 
                 },
-                ceil: 24,
+                ceil: 23,
                 draggableRange: false
 
             }
@@ -275,7 +275,7 @@ angular.module('football.controllers')
                     return 'rgb(38,175,61)';
 
                 },
-                ceil: 24,
+                ceil: 23,
                 draggableRange: false
 
             }

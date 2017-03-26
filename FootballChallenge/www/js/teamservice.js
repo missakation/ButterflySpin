@@ -180,7 +180,7 @@
 
                         datehour: hour,
                         dateminute: minute,
-                        
+
                         favstadium: newteam.favstadium,
                         favstadiumphoto: newteam.photo,
                         homejersey: newteam.homejersey,
@@ -398,12 +398,54 @@
                                 "upcomingmatches": upcomingmatches,
                                 "favstadium": snapshot.child("favstadium").val(),
                                 "favstadiumphoto": snapshot.child("favstadiumphoto").val(),
-                                "numChildren" : numberofmatches
+                                "numChildren": numberofmatches
                             };
                             TeamProfile = Items;
 
                         }
                         callback(TeamProfile);
+
+
+                    });
+                }
+                catch (error) {
+                    alert(error.message);
+                }
+            },
+
+            GetPlayersByTeam: function (key, callback) {
+                try {
+
+
+                    firebase.database().ref('/teams/' + key +'/players').once('value').then(function (snapshot) {
+                        var players = [];
+                        if (snapshot.exists()) {
+
+                            var players = [];
+
+                            var user = firebase.auth().currentUser;
+                            var id = user.uid;
+
+                            //get all the players name with ID and Name
+                                snapshot.forEach(function (pl) {
+
+                                    if (pl.key != "firstone") {
+                                        var data = {
+
+                                            key: pl.key,
+                                            name: pl.child("name").val(),
+                                            isadmin: pl.child("isadmin").val(),
+                                            itsme: pl.key == id
+                                        }
+                                        players.push(data);
+                                    }
+
+
+                                })
+                            
+                      }
+                        alert(JSON.stringify(players));
+                        callback(players);
 
 
                     });

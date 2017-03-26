@@ -59,7 +59,8 @@ angular.module('football.controllers', [])
                                 ageyear: 1,
                                 agemonth: 1,
                                 ageday: 1990,
-                                identity: identity
+                                identity: identity,
+                                playerstatus:true
 
                             }
                         //alert(newPostKey);
@@ -155,7 +156,8 @@ angular.module('football.controllers', [])
                                 ageyear: 1,
                                 agemonth: 1,
                                 ageday: 1990,
-                                identity:identity
+                                identity:identity,
+                                playerstatus:true
 
                             }
                         //alert(newPostKey);
@@ -284,7 +286,7 @@ angular.module('football.controllers', [])
 
         };
 
-
+    $scope.toggle = false;
         $scope.LogIn = function (username) {
 
             firebase.auth().signInWithEmailAndPassword($scope.registerusername, $scope.registerpassword).then(function (user) {
@@ -326,6 +328,11 @@ angular.module('football.controllers', [])
                     // ...
                 });
         };
+                $scope.Switch = function () {
+
+            $scope.toggle = !$scope.toggle;
+
+        }
 
 
 

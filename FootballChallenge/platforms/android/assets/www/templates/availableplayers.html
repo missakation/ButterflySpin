@@ -18,11 +18,13 @@
 		color: lightgray
 		
 	}
-	    .headercolor{
-        background-color: rgb(62,83,100);
-        color: white
+	 .headercolor {
+        background-color: rgb(62, 83, 100);
+        color: white;
+        border-bottom: 2px solid rgb(62, 83, 100);
+        border-top:1px;
     }
-}
+
 </style>
 
 <ion-view view-title="Player Finder">
@@ -107,7 +109,7 @@
 
 <div class="row">
 	<div class="col">
-		<button class="button button-block button-balanced button-small" style="background-color: {{item.backcolor}};border-radius:25px" type="submit" ng-click="requestnumber(item)">
+		<button class="button button-block button-light button-small" style="color:#2ab041;background-color: {{item.backcolor}};border-radius:25px" type="submit" ng-click="requestnumber(item)">
 			<h5 style="color:{{item.color}}"> {{item.statusdesc}}
 			</h5>
 		</button>

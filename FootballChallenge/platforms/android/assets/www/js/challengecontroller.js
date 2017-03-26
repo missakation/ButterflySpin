@@ -61,7 +61,7 @@ angular.module('football.controllers')
 
         try {
             //works
-            ChallengeStore.GetAllTeams(function (leagues) {
+            ChallengeStore.GetAllTeamsNotMe(function (leagues) {
                 $ionicLoading.hide();
                 $scope.test = leagues;
 
@@ -89,7 +89,7 @@ angular.module('football.controllers')
                         return el.key !== team.key;
                     });
                     team.selected = "select";
-                    team.color = "green";
+                    team.color = "#28b041";
                     team.backcolor = "white";
 
                 }
@@ -105,7 +105,7 @@ angular.module('football.controllers')
                         $scope.selectedteams.push(angular.copy(team));
                         team.selected = "unselect";
                         team.color = "white";
-                        team.backcolor = "green";
+                        team.backcolor = "#28b041";
 
                     }
                 }
@@ -149,10 +149,9 @@ angular.module('football.controllers')
 
     })
 
-    .controller('challengestadiumcontroller', function ($scope, ChallengeStore, HomeStore, ReservationFact, $state, $stateParams, $ionicPopup, $ionicLoading, $ionicPopover) {
+    .controller('challengestadiumcontroller', function ($http,$scope, ChallengeStore, HomeStore, ReservationFact, $state, $stateParams, $ionicPopup, $ionicLoading, $ionicPopover) {
 
         $scope.selectedstadiums = [];
-        $scope.profile = [];
         $scope.challengestatus = false;
         $scope.selecteddate =
             {
@@ -160,7 +159,7 @@ angular.module('football.controllers')
             };
 
         $scope.myteam = $state.params.myteam;
-        alert($state.params.date);
+
         ReservationFact.FindFreeStadiums($state.params, function (leagues) {
 
 
@@ -172,10 +171,29 @@ angular.module('football.controllers')
                     template: 'No Available Stadiums'
                 });
             }
-            HomeStore.GetProfileInfo(function (myprofile) {
-                $ionicLoading.hide();
-                $scope.profile = myprofile;
-            })
+            alert("test");
+
+
+            // Simple GET request example:
+            $http({
+                method: 'GET',
+                url: 'https://us-central1-project-6346119287623064588.cloudfunctions.net/date'
+            }).then(function successCallback(response) {
+
+                $scope.currentdate = new Date(response.data);
+                HomeStore.GetProfileInfo($scope.currentdate, function (myprofile) {
+
+                    $scope.profile = myprofile;
+                    alert($scope.profile.photo);
+                })
+
+            }, function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+                alert(JSON.stringify(response));
+            });
+
+
 
         })
         $scope.updateselectedteams = function (stadiums) {
@@ -187,7 +205,7 @@ angular.module('football.controllers')
                         return ((el.stadiumkey !== stadiums.stadiumkey) || (el.stadiumkey == stadiums.stadiumkey && el.ministadiumkey !== stadiums.ministadiumkey));
                     });
                     stadiums.selected = "select";
-                    stadiums.color = "green";
+                    stadiums.color = "#28b041";
                     stadiums.backcolor = "white";
 
                 }
@@ -202,7 +220,7 @@ angular.module('football.controllers')
                         $scope.selectedstadiums.push(angular.copy(stadiums));
                         stadiums.selected = "unselect";
                         stadiums.color = "white";
-                        stadiums.backcolor = "green";
+                        stadiums.backcolor = "#28b041";
                     }
                 }
             }

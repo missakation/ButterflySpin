@@ -382,7 +382,7 @@
                                 "startsaturdayend": snapshot.child("startsaturdayend").val(),
                                 "startsunday": snapshot.child("startsunday").val(),
                                 "startsundayend": snapshot.child("startsundayend").val(),
-                                "rank": 1500,
+                                "rating": 1500,
                                 "numberofgames": 0,
                                 "wins": 0,
                                 "amiadmin": amiadmin,

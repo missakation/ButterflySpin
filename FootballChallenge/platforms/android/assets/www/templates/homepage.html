@@ -86,6 +86,13 @@
     .icon {
        font-size: 17px;
     }
+        .spinner svg {
+  width: 38px;
+  height: 38px;
+  stroke: #444;
+  fill: #444;
+  margin-top:30%;
+}
 
 
 </style>
@@ -93,7 +100,7 @@
 <ion-view title='<img src="img/loggo.png" align="center" style="width:70px;height:35px;padding-top:5px">'>
 
     <ion-nav-buttons side="right">
-        <button class="button button-icon" ng-click="toggleSearch()" style="color:white">{{showSearch && 'Hide' || 'Search'}}
+        <button class="ion-search button button-icon" ng-click="toggleSearch()" style="color:white">{{showSearch && 'Hide' || ' '}}
 </button>
     </ion-nav-buttons>
 
@@ -144,7 +151,7 @@
                         <a href="#/app/selfprofile">
                             <img src="{{profile.photo}}" style="border-radius:50% ; height:60px ; width:60px" height="50" />
                         </a>
-                        <h5 class="whitetext">Hello {{profile.displayname}} !</h5>
+                       <h5 class="whitetext" style="text-transform:capitalize">Hello {{profile.displayname}} !</h5>
 
                     </div>
 
@@ -160,7 +167,7 @@
                         </a>
                     </div>
                     <div align="center">
-                        <h5 class="whitetext">{{profile.myteams[0].teamname}}</h5>
+                        <h5 class="whitetext" style="text-transform:capitalize">{{profile.myteams[0].teamname}}</h5>
                         <p style="color:darkturquoise">{{profile.ranking}}th</p>
                     </div>
 
@@ -177,13 +184,13 @@
 
             <div align="center">
 
-                <h4 class="whitetext" align="middle"><b>Leaderboard</b></h4>
+                <h4 class="whitetext" align="middle"><b>LEADERBOARD</b></h4>
             </div>
             <div class="row" style="background-color:rgb(62,83,100)">
 
                 <div class="col" align="center">
-                    <img src="img/Badges/{{rankedteams[0].badge}}.png" style="width:50px;height:50px " ng-click="goteamprofile(rankedteams[0].key)">
-                    <h6 class="whitetext">
+                    <img src="img/Badges/{{rankedteams[0].badge}}.png" style="text-transform:capitalize;width:50px;height:50px " ng-click="goteamprofile(rankedteams[0].key)">
+                    <h6 class="whitetext" style="text-transform:capitalize">
                         {{rankedteams[0].teamname}}
                     </h6>
                     <h6 style="color: DarkTurquoise "> <b>1st</b>
@@ -192,7 +199,7 @@
 
                 <div class="col" align="center">
                     <img src="img/Badges/{{rankedteams[1].badge}}.png" style="width:50px;height:50px " ng-click="goteamprofile(rankedteams[1].key)">
-                    <h6 class="whitetext">
+                    <h6 class="whitetext" style="text-transform:capitalize">
                         {{rankedteams[1].teamname}}
                     </h6>
                     <h6 style="color: DarkTurquoise "> <b>2nd</b>
@@ -202,7 +209,7 @@
 
                 <div class="col" align="center">
                     <img src="img/Badges/{{rankedteams[2].badge}}.png" style="width:50px;height:50px " ng-click="goteamprofile(rankedteams[2].key)">
-                    <h6 class="whitetext">
+                    <h6 class="whitetext" style="text-transform:capitalize">
                         {{rankedteams[2].teamname}}
                     </h6>
                     <h6 style="color: DarkTurquoise "> <b>3rd</b>
@@ -229,7 +236,7 @@
 
                 <div class="col">
                     <button class="button button-block button-balanced button-small" style="height:80px;font-size:18px;background-color:rgb(40,176,65)"
-                        type="submit" ng-click="homepagedirect(1)"> Reserve Stadium
+                        type="submit" ng-click="homepagedirect(1)"> Book Stadiums
 </button>
 
                 </div>
@@ -237,7 +244,7 @@
                 <div class="col">
 
                     <button class="button button-block button-balanced button-small" style="height:80px;font-size:18px;background-color:rgb(40,176,65)"
-                        type="submit" ng-click="homepagedirect(3)"> Challenge A Team
+                        type="submit" ng-click="homepagedirect(3)"> Challenge Teams
 </button>
 
                 </div>
@@ -256,7 +263,7 @@
 
 
 
-                <div class="row row-center" ng-repeat="upmatches in profile.upcominteamgmatches" style="border-bottom:1px solid #5f7485;margin-bottom:5px;padding:0 5px 0 5px;background-color:rgb(62,83,100)">
+                <div class="row row-center" ng-repeat="upmatches in profile.upcominteamgmatches" style="border-bottom:25px solid #5f7485;margin-bottom:5px;padding:0 5px 0 5px;background-color:rgb(62,83,100)">
                     <div class="col col-75">
 
                         <h6 class="whitetext">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h6>
@@ -268,23 +275,23 @@
                             ng-click="gogamedetails(upmatches)"> Manage
 </button>
 
-                        <button ng-show="!(upmatches.isadmin)" class="button button-small" style="width:60px;font:12px;background-color:#28b041;color:white"
+                        <button ng-show="!(upmatches.isadmin)" class="button button-small" style="border-radius:50px;width:60px;font:12px;background-color:#28b041;color:white"
                             ng-click="gogamedetails(upmatches)"> View
 </button>
                     </div>
 
                 </div>
-                <div class="row row-center" ng-repeat="upmatches in profile.upcomingmatches" style="border-bottom:1px solid #5f7485;margin-bottom:5px;padding:0 5px 0 5px;background-color:rgb(62,83,100)">
+                <div class="row row-center" ng-repeat="upmatches in profile.upcomingmatches" style="border-bottom:1px solid #5f7485;margin:0px;padding:0px;background-color:rgb(62,83,100)">
                     <div class="col col-75">
                         <h6 class="whitetext">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h6>
                     </div>
                     <div class="col">
 
-                        <button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="width:60px;font:12px;background-color:#28b041;color:white"
+                        <button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="border-radius:50px;width:60px;font-size:12px;background-color:#28b041;color:white"
                             ng-click="gogamedetails(upmatches)"> Manage
 </button>
 
-                        <button ng-show="!(upmatches.isadmin)" class="button button-small" style="width:60px;font:12px;background-color:#28b041;color:white"
+                        <button ng-show="!(upmatches.isadmin)" class="button button-small" style="border-radius:50px;width:60px;font-size:12px;background-color:#28b041;color:white"
                             ng-click="gogamedetails(upmatches)"> View
 </button>
                     </div>
@@ -420,7 +427,7 @@
                     </h5>
                 </div>
                 <div class="col col-25">
-                    <hr style="height:15px; visibility:hidden;" />
+                    <hr style="height:15px; visibility:hidden;">
                     <h6 style="color:#5f7485" align="center"> DIFFICULTY </h6>
                     <h5 align="center" class="whitetext" style="font-weight:bold">
                         HARD
@@ -443,7 +450,7 @@
 
             <div class="row" ng-show="challenges.isadmin">
                 <div class="col">
-                    <button class="button button-block button-balanced button-small" style="border-radius:50px;background-color:white;color: green"
+                    <button class="button button-block button-balanced button-small" style="border-radius:50px;background-color:white;color: #28b041"
                         ng-click="cancelinvitation(challenges)"> CANCEL
 </button>
                 </div>
@@ -583,7 +590,7 @@
 
         <div class="card" style="background-color:rgb(62,83,100); margin:0 10px;padding-bottom:0px">
             <div style="background-color:rgb(62,83,100);margin-bottom:-4px">
-                <h4 class="whitetext" align="middle"><b>Special Offers</b></h4>
+                <h4 class="whitetext" align="middle"><b>SPECIAL OFFERS</b></h4>
 
 
                 <ion-slide-box on-slide-changed="slideHasChanged($index)" style="font-size:12px">
@@ -800,7 +807,7 @@
                         <div class="row" style="padding:0px">
 
 
-                            <div class="col" style="padding-top:0px;background-color:darkgreen">
+                            <div class="col" style="padding-top:0px;background-color:dark#28b041">
                                 <div class="list">
 
                                     <div class="row">
@@ -1059,6 +1066,25 @@
 
             <h2 align="middle"><b>Invite Friend</b></h2>
         </ion-item> -->
+                 <div class="card" style="background-color:rgb(62,83,100); margin:0 10px;padding-bottom:0px">
+            <div style="background-color:rgb(62,83,100);margin-bottom:-4px">
+                <h4 class="whitetext" align="middle"><b>RECOMMENDED STADIUMS</b></h4>
+
+
+                <ion-slide-box on-slide-changed="slideHasChanged($index)" style="font-size:12px">
+                    <ion-slide>
+                    </ion-slide>
+                     <ion-slide>
+                    </ion-slide>
+                     <ion-slide>
+                    </ion-slide>
+                     <ion-slide>
+                    </ion-slide>
+                     <ion-slide>
+                    </ion-slide>
+ </ion-slide-box>
+ </div>
+ </div>
 
         <div class="card" style="background-color:rgb(62,83,100)">
 

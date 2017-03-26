@@ -2,7 +2,7 @@
 angular.module('football.controllers')
 
 
-    .controller('HomeController', function ($scope, $state, HomeStore, $timeout, $ionicPopup, $ionicLoading, $cordovaSocialSharing) {
+    .controller('HomeController', function ($scope, $http, $state, HomeStore, $timeout, $ionicPopup, $ionicLoading, $cordovaSocialSharing) {
 
         $scope.nointernet = false;
         $scope.$on("$ionicView.afterEnter", function (event, data) {
@@ -23,7 +23,21 @@ angular.module('football.controllers')
                                 if ($scope.profile.id !== id) {
                                     $scope.profile = [];
                                     $scope.$apply();
-                                    $scope.doRefresh();
+                                    // Simple GET request example:
+                                    $http({
+                                        method: 'GET',
+                                        url: 'https://us-central1-project-6346119287623064588.cloudfunctions.net/date'
+                                    }).then(function successCallback(response) {
+
+                                        $scope.currentdate = new Date(response.data);
+                                        $scope.doRefresh($scope.currentdate);
+
+                                    }, function errorCallback(response) {
+                                        // called asynchronously if an error occurs
+                                        // or server returns response with an error status.
+                                        alert(JSON.stringify(response));
+                                    });
+
                                 }
                             }
 
@@ -56,7 +70,20 @@ angular.module('football.controllers')
 
             $timeout(function () {
                 //Get My Profile
-                $scope.doRefresh();
+                // Simple GET request example:
+                $http({
+                    method: 'GET',
+                    url: 'https://us-central1-project-6346119287623064588.cloudfunctions.net/date'
+                }).then(function successCallback(response) {
+
+                    $scope.currentdate = new Date(response.data);
+                    $scope.doRefresh($scope.currentdate);
+
+                }, function errorCallback(response) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    alert(JSON.stringify(response));
+                });
             }, 2000);
         } catch (error) {
             alert(error.message);
@@ -266,12 +293,12 @@ angular.module('football.controllers')
         // });
         //alert($scope.profile.displayname);
 
-        $scope.doRefresh = function () {
+        $scope.doRefresh = function (currentdate) {
 
             try {
                 $scope.profile = {};
 
-                HomeStore.GetProfileInfo(function (leagues) {
+                HomeStore.GetProfileInfo(currentdate,function (leagues) {
 
                     var todaydate = new Date();
                     var oldchallenges = [];
@@ -459,8 +486,8 @@ angular.module('football.controllers')
                         }
                     HomeStore.RegisterTeamMatch($scope.search, "", stadium, $scope.challenge)
                         .then(function (value) {
-                            var alertPopup = $ionicPopup.alert({
-                                title: 'Success',
+                            var alertPopup = $ionicPopup.Alert({
+                                cssClass: 'custom-class',
                                 template: 'Successfully Reserved'
                             });
 
@@ -469,7 +496,7 @@ angular.module('football.controllers')
                                     gameid: $scope.challenge.key
                                 });
                         }, function (error) {
-                            var alertPopup = $ionicPopup.alert({
+                            var alertPopup = $ionicPopup.show({
                                 title: 'Error',
                                 template: 'Stadium Not Available. Please Try Again'
                             });

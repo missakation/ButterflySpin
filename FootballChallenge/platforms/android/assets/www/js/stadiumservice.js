@@ -98,10 +98,10 @@ angular.module('football.controllers')
                                         "color": "green",
                                         "backcolor": "white",
                                         "rating": 1,
-                                        "freetimes": freetimes,
-                                        "SortPoints": 0
-                                        //  "cordovalatitude":mainstadiumSnapshot.child("cordovalatitude").val(),
-                                        //  "cordovalongitude":mainstadiumSnapshot.child("cordovalongitude").val()
+                                        //"freetimes": freetimes,
+                                        "SortPoints": 0,
+                                        "latitude":mainstadiumSnapshot.child("cordovalatitude").val(),
+                                        "longitude":mainstadiumSnapshot.child("cordovalongitude").val()
                                         //"freedates":
                                         //{
                                         //    date : startdate

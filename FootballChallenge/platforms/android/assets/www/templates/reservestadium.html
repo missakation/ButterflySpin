@@ -35,27 +35,62 @@
 		border: rgb(64, 64, 64);
 		border-color: rgb(64, 64, 64);
 	}
-	
+	.popup {
+		border-radius:50px;
+		font-size:15px;
+	}
+	.custom-class .popup-head {	
+	    display: none;  
+	}
+
+	.popup-buttons .button:first-child 
+	{
+     	border-radius:50px;
+		margin:05px;
+		padding:0px;
+		background-color:rgb(153,167,180);
+		color:white;
+	}
+	.popup-buttons .button:last-child 
+	{
+     	border-radius:50px;
+		margin:05px;
+		padding:0px;
+		background-color:#2ab041;
+		color:white;
+	}
 	.popup-body {
-		background-color: rgb(40, 80, 120);
+		padding: 10px;
+		margin: -5px;
+		background-color: rgb(62, 83, 100);
 		color: white;
+		text-align:center;	
+		border-radius:15px 15px 0 0 ;
+	}
+	.popup-buttons {
+		padding: 10px 5px 5px 5px;
+		margin: -5px;
+		background-color: rgb(62, 83, 100);
+		color: white;
+		text-align:center;	
+		border-radius:0 0 15px 15px ;
 	}
 	
 	.popup-head {
-		background-color: rgb(40, 80, 120);
-		color: white;
+				 display: none;  
+
 	}
 	
 	.popup-title {
 		color: white;
 	}
 	
-	.headercolor {
-		background-color: rgb(62, 83, 100);
-		color: white;
-		border-bottom: 2px solid rgb(62, 83, 100);
-		border-top: 1px;
-	}
+    .headercolor {
+        background-color: rgb(62, 83, 100);
+        color: white;
+        border-bottom: 2px solid rgb(62, 83, 100);
+        border-top:3px;
+    }
 	/** from date time picker style css files **/
 	
 	.picker-view {
@@ -66,8 +101,7 @@
 		text-align: center;
 		width: 100%;
 		width: 100vw;
-		height: 25%;
-		height: 25vh;
+		height: 25.75%;
 		background-color: transparent;
 		margin-top: -6px
 	}
@@ -97,7 +131,7 @@
 		-webkit-transform: translate(-50%, -50%);
 		transform: translate(-50%, -50%);
 		margin: 0;
-		font-size: 15px;
+		font-size: 3.75vh;
 		color: rgba(128, 128, 128, 0.8);
 	}
 	
@@ -120,7 +154,7 @@
 	.picker-view .picker-accessory-bar .button:last-of-type {
 		right: 1%;
 		background-color: rgb(42, 62, 82);
-		color: limegreen;
+		color: lime;
 		font-size: 4.5vh;
 	}
 	
@@ -140,7 +174,7 @@
 		width: 100%;
 		height: 100%;
 		margin: auto;
-		font-size: 3vh;
+		font-size: 18px;
 		padding-left: 0px;
 		padding-right: 0px;
 		line-height: normal;
@@ -163,7 +197,7 @@
 	.picker-view .picker-content .picker-scroll .scroll div.selected {
 		opacity: 1;
 		font-weight: bold;
-		color: limegreen;
+		color: lime;
 	}
 	
 	.picker-view .picker-content .picker-scroll .scroll div.pre-select {
@@ -415,12 +449,14 @@
 		<div align="center">
 			<!--<p style="background-color:lightgray">Date</p>-->
 			<!--<label class="item item-input">-->
-            <i class="icon ion-calendar"></i><input class="button open-button" on-tap="openPickerView()" style="border-radius:0px;color:white;width:91%;line-height:30px;padding-bottom:0px;background-color:darkturquoise" ng-model="search.text">
+
+				
+			<input class="button open-button" on-tap="openPickerView()" ng-readonly="true" style="border-radius:0px;color:white;width:100%;line-height:40px;padding-bottom:0px;margin-bottom:0px;background-color:darkturquoise" ng-model="search.text">
 			<!--<input type="datetime-local" step="30"  ng-model="search.date" ng-change="checkfree()">-->
 			<!--</label>-->
 		</div>
 
-		<div class="card" ng-repeat="stadiums in allfreestadiums | orderBy:choice.sort:reverse" style="background-color:rgb(62,83,100);margin:10px 5px 10px 5px">
+		<div class="card" ng-repeat="stadiums in allfreestadiums | orderBy:choice.sort:reverse" style="background-color:rgb(62,83,100);margin:3px 5px 10px 5px">
 			<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
 			<div align="center" style="padding-bottom:0px">
@@ -451,8 +487,8 @@
 		</b>
 				</div>
 			</div>
-			<div class="row ">
-				<div class="col" style="font-weight:100;color:#5f7485;font-size:12px;padding-bottom:0px;padding-top:0px" align="left"> 2.1km
+			<div class="row" align="center">
+				<div class="col" align="center" style="font-weight:100;color:#5f7485;font-size:12px;padding-bottom:0px;padding-top:0px" align="left"> 2.1KM
 				</div>
 
 				<div class="col" style="font-weight:100;color:#5f7485;border-right:1px #5f7485 solid;border-left:1px #5f7485 solid;padding-top:0px;font-size:12px;padding-bottom:0px" align="center"> TYPE
@@ -467,7 +503,7 @@
 
 
 			<div class="row" style="padding-bottom:12px">
-				<div class="col" align="left" style="font-weight:bold;color:white;padding-top:0px">
+				<div class="col" align="center" style="font-weight:bold;color:white;padding-top:0px">
 					Anthelias
 				</div>
 
@@ -489,9 +525,9 @@
 
 			<div class="row" style="padding:0 0px 0 0px">
 				<div class="col" style="width:100%;padding:2px;margin-top:-10px">
-					<button style="border-radius:50px;padding:6px 0 6px 0;font-size:12px;font-weight:600;background-color:rgb(42,176,65)" class="button button-block button-balanced button-small"
+					<button style="border-radius:50px;line-height:26px;padding:6px 0 6px 0;font-size:12px;font-weight:600;background-color:rgb(42,176,65)" class="button button-block button-balanced button-small"
 					 type="submit" ng-disabled="verified" ng-click="reserve(search,stadiums)">
-                        15:00 - 16:30
+                        404 not found
                     </button>
 				</div>
 				<div class="col" style="width:100%;padding:2px;margin-top:-10px">
