@@ -94,13 +94,68 @@
   margin-top:30%;
 }
 
+.popup {
+		border-radius:50px;
+		font-size:15px;
+	}
+	.custom-class .popup-head {	
+	    display: none;  
+	}
 
+	.popup-buttons .button:first-child 
+	{
+     	border-radius:50px;
+		margin:05px;
+		padding:0px;
+		background-color:rgb(153,167,180);
+		color:white;
+	}
+	.popup-buttons .button:last-child 
+	{
+     	border-radius:50px;
+		margin:05px;
+		padding:0px;
+		background-color:#2ab041;
+		color:white;
+	}
+	.popup-body {
+		padding: 10px;
+		margin: -5px;
+		background-color: rgb(62, 83, 100);
+		color: white;
+		text-align:center;	
+		border-radius:15px 15px 0 0 ;
+	}
+	.popup-buttons {
+		padding: 10px 5px 5px 5px;
+		margin: -5px;
+		background-color: rgb(62, 83, 100);
+		color: white;
+		text-align:center;	
+		border-radius:0 0 15px 15px ;
+	}
+	
+	.popup-head {
+				 display: none;  
+
+	}
+	
+	.popup-title {
+		color: white;
+	}
+	
+    .headercolor {
+        background-color: rgb(62, 83, 100);
+        color: white;
+        border-bottom: 2px solid rgb(62, 83, 100);
+        border-top:3px;
+    }
 </style>
 
-<ion-view title='<img src="img/loggo.png" align="center" style="width:70px;height:35px;padding-top:5px">'>
+<ion-view title='<img src="img/loggo.png" style="background-position:center;width:70px;height:35px;padding-top:5px">'
 
     <ion-nav-buttons side="right">
-        <button class="ion-search button button-icon" ng-click="toggleSearch()" style="color:white">{{showSearch && 'Hide' || ' '}}
+        <button class="ion-search button button-icon" ng-click="toggleSearch()" style="color:white">{{showSearch && 'Hide' || ' '}} >
 </button>
     </ion-nav-buttons>
 
@@ -121,14 +176,14 @@
 
     <ion-content class="has-footer bodyColor">
 
-        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh1()">
         </ion-refresher>
         <div class="list headercolor" ng-show="showSearch">
 
             <div class="item item-input-inset headercolor">
                 <label class="item-input-wrapper">
                 <i class="icon ion-search placeholder-icon"></i>
-              <input type="text" placeholder="Search players, teams, stadiums" ng-model="query">
+              <input type="text" placeholder="Players, teams, stadiums" ng-model="query">
             </label>
                 <button ui-sref="app.searchAll({searchCriteria: query})" class="button button-small button-balanced" ng-disabled="!query">
               Search
@@ -142,16 +197,16 @@
         </div>
 
         <div class="card" style="background-color:rgb(62,83,100)">
-            <div class="row" style="height:140px ">
+            <div class="row" style="padding:5px 0;height:140px ">
 
 
-                <div class="col" align="center" style="border-radius: 10px;">
+                <div class="col" align="center" style="padding:5px 0;border-radius: 10px;">
 
                     <div align="center">
                         <a href="#/app/selfprofile">
                             <img src="{{profile.photo}}" style="border-radius:50% ; height:60px ; width:60px" height="50" />
                         </a>
-                       <h5 class="whitetext" style="text-transform:capitalize">Hello {{profile.displayname}} !</h5>
+                       <h5 class="whitetext" style="text-transform:capitalize">Hello {{profile.displayname}}!</h5>
 
                     </div>
 
@@ -168,7 +223,7 @@
                     </div>
                     <div align="center">
                         <h5 class="whitetext" style="text-transform:capitalize">{{profile.myteams[0].teamname}}</h5>
-                        <p style="color:darkturquoise">{{profile.ranking}}th</p>
+                        <p style="margin-top:-5px;color:darkturquoise">{{profile.ranking}}th</p>
                     </div>
 
 
@@ -193,7 +248,7 @@
                     <h6 class="whitetext" style="text-transform:capitalize">
                         {{rankedteams[0].teamname}}
                     </h6>
-                    <h6 style="color: DarkTurquoise "> <b>1st</b>
+                    <h6 style="color: DarkTurquoise;margin-bottom:3px"> <b>1st</b>
                     </h6>
                 </div>
 
@@ -202,7 +257,7 @@
                     <h6 class="whitetext" style="text-transform:capitalize">
                         {{rankedteams[1].teamname}}
                     </h6>
-                    <h6 style="color: DarkTurquoise "> <b>2nd</b>
+                    <h6 style="color: DarkTurquoise;margin-bottom:3px"> <b>2nd</b>
                     </h6>
                 </div>
 
@@ -212,13 +267,13 @@
                     <h6 class="whitetext" style="text-transform:capitalize">
                         {{rankedteams[2].teamname}}
                     </h6>
-                    <h6 style="color: DarkTurquoise "> <b>3rd</b>
+                    <h6 style="color: DarkTurquoise;margin-bottom:3px"> <b>3rd</b>
                     </h6>
                 </div>
 
             </div>
             <div align="center">
-                <h5 class="whitetext">
+                <h5 class="whitetext" style="padding-top:0px;margin-top:0px">
                     Season Ends June 1 2016 - Prize Pool 500$
                 </h5>
             </div>
@@ -283,7 +338,7 @@
                 </div>
                 <div class="row row-center" ng-repeat="upmatches in profile.upcomingmatches" style="border-bottom:1px solid #5f7485;margin:0px;padding:0px;background-color:rgb(62,83,100)">
                     <div class="col col-75">
-                        <h6 class="whitetext">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h6>
+                        <h6 class="whitetext" style="text-transform:capitalize">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h6>
                     </div>
                     <div class="col">
 
@@ -352,7 +407,7 @@
         </div>
         <div class="card" style="background-color:rgb(62,83,100)" ng-repeat="challenges in profile.challenges">
             <div align="center">
-                <h4 class="whitetext" align="middle"><b> {{challenges.team2name}} CHALLENGED YOU</b></h4>
+                <h4 class="whitetext" style="text-transform:capitalize" align="middle"><b> {{challenges.team2name}} Challenged you</b></h4>
             </div>
             <div align="center">
                 <h5 class="whitetext" style="color:white"> {{challenges.date |date:'EEE MMM d, y h:mm a'}}
@@ -364,7 +419,7 @@
                         <img src="img/Badges/{{challenges.team1logo}}.png" style="width:60px;height:60px ">
                     </div>
                     <div align="center">
-                        <h5 class="whitetext" style="font-weight:bold">
+                        <h5 class="whitetext" style="font-weight:bold;text-transform: capitalize">
                             {{challenges.team1name}}
                         </h5>
                         <h6 style="color:darkturquoise">
@@ -394,7 +449,7 @@
                         <img src="img/Badges/{{challenges.team2logo}}.png" style="width:60px;height:60px ">
                     </div>
                     <div align="center">
-                        <h5 class="whitetext" style="font-weight:bold">
+                        <h5 class="whitetext" style="font-weight:bold;text-transform: capitalize">
                             {{challenges.team2name}}
                         </h5>
                         <h6 style="color:darkturquoise">
@@ -405,9 +460,9 @@
                 </div>
 
             </div>
-            <div class="row">
-                <div class="col col-25">
-                    <hr style="height:15px; visibility:hidden;" />
+            <div class="row" style="padding:0px">
+                <div class="col col-center" style="padding:0px">
+                    <hr style="height:3vh; visibility:hidden;" />
                     <h6 align="center" style="color:#5f7485"> PITCH SIZE </h6>
                     <h5 class="whitetext" align="center" style="font-weight:bold">
                         5 V 5
@@ -421,13 +476,13 @@
                         Cpt.{{challenges.adminname}}
                     </h5>
 
-                    <h5 style="color:#5f7485"> CONTACT </h5>
+                    <h6 style="color:#5f7485"> CONTACT </h6>
                     <h5 class="whitetext" style="font-weight:bold">
                         (+961) {{challenges.admintelephon}}
                     </h5>
                 </div>
-                <div class="col col-25">
-                    <hr style="height:15px; visibility:hidden;">
+                <div class="col col-center" style="padding:0px">
+                    <hr style="height:3vh; visibility:hidden;">
                     <h6 style="color:#5f7485" align="center"> DIFFICULTY </h6>
                     <h5 align="center" class="whitetext" style="font-weight:bold">
                         HARD
@@ -755,7 +810,7 @@
                         <div class="row" style="padding:0px">
 
 
-                            <div class="col" style="padding-top:0px;background-color:darkred">
+                            <div class="col" style="padding-top:0px">
                                 <div class="list">
 
                                     <div class="row">
@@ -765,7 +820,7 @@
                                                 <img src="img/Badges/{{rankedteams[0].badge}}.png" style="height:70px ; width:70px" height="50" />
                                             </a>
                                             <div align="center">
-                                                <h4 align="center" style="font-weight:bold;color:white">{{rankedteams[0].teamname}}</h4>
+                                                <h4 align="center" style="text-transform:capitalize;font-weight:bold;color:white">{{rankedteams[0].teamname}}</h4>
                                                 <h5 align="center" style="font-weight:bold;color:darkturquoise">404 not found</h5>
                                             </div>
 
@@ -776,8 +831,8 @@
                                             <div align="center">
                                                 <h4 style="font-weight:bold;color:white">404 date</h4>
 
-                                                <h4 style="color:white">
-                                                    Loss
+                                                <h4 style="color:red">
+                                                    LOSS
                                                 </h4>
                                                 <h3 style="margin:25px 0 0 0;color:white;font-weight:bold">
                                                     VS
@@ -792,7 +847,7 @@
                                                 <img src="img/Badges/{{rankedteams[1].badge}}.png" style="height:70px ; width:70px" height="50" />
                                             </a>
                                             <div align="center">
-                                                <h4 align="center" style="font-weight:bold;color:white">{{rankedteams[1].teamname}}</h4>
+                                                <h4 align="center" style="text-transform:capitalize;font-weight:bold;color:white">{{rankedteams[1].teamname}}</h4>
                                                 <h5 align="center" style="font-weight:bold;color:darkturquoise">404 not found</h5>
                                             </div>
                                         </div>
@@ -807,7 +862,7 @@
                         <div class="row" style="padding:0px">
 
 
-                            <div class="col" style="padding-top:0px;background-color:dark#28b041">
+                            <div class="col" style="padding-top:0px">
                                 <div class="list">
 
                                     <div class="row">
@@ -828,8 +883,8 @@
                                             <div align="center">
                                                 <h4 style="font-weight:bold;color:white">05-Mar-16</h4>
 
-                                                <h4 style="color:white">
-                                                    Win
+                                                <h4 style="color:#2ab041">
+                                                    WIN
                                                 </h4>
                                                 <h3 style="margin:25px 0 0 0;color:white;font-weight:bold">
                                                     VS

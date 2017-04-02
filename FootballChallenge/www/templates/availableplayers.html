@@ -1,127 +1,156 @@
 <style>
-.h3.whitetext,
+	.h3.whitetext,
 	h2.whitetext,
 	h1.whitetext,
 	h4.whitetext,
 	h5.whitetext,
 	p.whitetext {
 		color: white
-		
 	}
-
-   .h3.graytext,
+	
+	.h3.graytext,
 	h2.grayetext,
 	h1.graytext,
 	h4.graytext,
 	h5.graytext,
 	p.graytext {
 		color: lightgray
-		
 	}
-	 .headercolor {
-        background-color: rgb(62, 83, 100);
-        color: white;
-        border-bottom: 2px solid rgb(62, 83, 100);
-        border-top:1px;
-    }
-
+	
+	.headercolor {
+		background-color: rgb(62, 83, 100);
+		color: white;
+		border-bottom: 2px solid rgb(62, 83, 100);
+		border-top: 1px;
+	}
 </style>
 
 <ion-view view-title="Player Finder">
-<ion-nav-back-button>
-</ion-nav-back-button>
-<ion-nav-buttons side="left">
-    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-</ion-nav-buttons>
+		<ion-nav-buttons side="primary">
+		<button class="button button-icon ion-android-funnel" align="right" style="color:white" ng-click="popover.show($event)"></button>
 
-<ion-nav-bar class="headercolor">
-    <ion-nav-back-button>
+	</ion-nav-buttons>
 
-    </ion-nav-back-button>
-</ion-nav-bar>
+	<ion-nav-back-button>
+	</ion-nav-back-button>
+	<ion-nav-buttons side="left">
+		<button class="button button-icon button-clear ion-navicon" menu-toggle="left" style="color:white"></button>
+	</ion-nav-buttons>
+
+	<ion-nav-bar class="headercolor">
+		<ion-nav-back-button>
+
+		</ion-nav-back-button>
+	</ion-nav-bar>
 	<ion-content ng-controller="SearchController" style="background-color:rgb(46,62,75)">
 
+<script id="templates/my-popovers.html" type="text/ng-template">
+			<ion-popover-view style="background-color:rgb(46,62,75);height:100%;width:220px">
+				<ion-content>
+						SSSSSS
+				</ion-content>
+			</ion-popover-view>
+		</script>
 
-<div class="item item-dark" ion-datetime-picker ng-model="search.date" minute-step="15" ng-change="checkfree()">
-	{{search.date| date: "yyyy-MM-dd H:mm"}}
-</div>
+		<div class="item item-dark" ion-datetime-picker ng-model="search.date" minute-step="15" ng-change="checkfree()">
+			{{search.date| date: "yyyy-MM-dd H:mm"}}
+		</div>
 
-<div class="card" style="background-color:rgb(62,83,100)" ng-repeat="item in allfreeplayers">
-<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
+		<div class="card" style="background-color:rgb(62,83,100)" ng-repeat="item in allfreeplayers">
+			<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
-<div class="row" style="padding:0px">
-	<div class="col" align="center">
-		<img src="{{item.photo}}" style="width:100%;height:80px;">
-<h5 class="whitetext" style="text-decoration-style: ca"> {{item.displayname}} </h5>
-<h5 class="whitetext"> {{item.ranking}} </h5>
-</div>
+			<div class="row" style="margin-top:5px;padding:6px 0 0 0">
+				<div class="col col-50" style="border-right:1px solid #5f7485;	padding:0px" align="center">
+					<img src="http://www.atpworldtour.com/-/media/tennis/players/head-shot/vibrant/federer-headshot15.png" style="padding:0px;border-radius:50px;width:80px;height:80px;">
 
-<div class="col" align="center">
-	<img src="https://leafii.com/images/defaultProfilePic.png" style="width:100%;height:80px;">
-<h5 style="color:#5f7485;font-size:14px"> FAV. STADIUM </h5>
-<h5 class="whitetext"> {{item.favstadium}} </h5>
-</div>
+					<h5 class="whitetext" style="margin-bottom:0px;margin-top:5px;text-transform: capitalize;padding:0px;font-weight:bold"> {{item.displayname}} </h5>
 
-<div class="col" align="center">
-	<img src="https://leafii.com/images/defaultProfilePic.png" style="width:100%;height:80px;">
-<h5 class="whitetext"> Beirut Eagle</h5>
-<h5 style="color:darkturquoise"> Rank 49 </h5>
-</div>
-
-</div>
+				</div>
 
 
-<div class="row row-top">
-	<div class="col" align="center" style="color:#5f7485"> Position
+				<div class="col col-50" style="padding:0px" align="center">
+					<img style="width:80px;height:80px" src="img/Badges/d10.png">
+					<h5 class="whitetext" style="margin-bottom:0px;margin-top:5px;text-transform: capitalize;padding:0px;font-weight:bold"> Team 404 </h5>
 
-</div>
+				</div>
 
-<!--	<div class="col " style="border-right: 0.2px solid;border-color:grey;color:white" align="right">-->
+			</div>
 
-<div class="col "align="center" style="color:#5f7485;border-right:1px solid #5f7485;border-left:1px solid #5f7485" align="right"> Age
+			<div class="row" style="margin-bottom:8px;padding:0px">
 
-</div>
+				<div class="col col-50" style="padding:0px" align="center">
+					<h5 align="center" style="margin-top:10px;color:white">
+						<i class="ion-location" style="padding-right:3px;font-size:18px;color:#5f7485"></i> 404 km
+					</h5>
+				</div>
 
-<div class="col " align="center" style="color:#5f7485"> Matches
+				<div class="col col-50" style="margin-top:5px;padding:0px" align="center">
+					<h6 style="color:darkturquoise"> Rank 404th </h6>
+				</div>
+			</div>
 
-</div>
+			<div class="row row-top" style="padding:0px">
 
-</div>
+				<h6 class="col col-25" align="center" style="color:#5f7485;padding:5px">POSITION
 
-<div class="row ">
-	<div class="col" align="center" style="border-right:1px solid #5f7485;padding-top:0px; color:white"> {{item.playposition}}
+				</h6>
 
-</div>
+				<h6 class="col col-25" align="center" style="padding:5px;color:#5f7485;border-right:1px solid #5f7485;border-left:1px solid #5f7485"
+				 align="right"> AGE
 
-<div class="col" style="color:white;border-right:1px solid #5f7485;padding-top:0px" align="center"> {{item.age}}
+				</h6>
 
-</div>
+				<h6 class="col col-25" align="center" style="padding:5px;border-right:1px solid #5f7485;color:#5f7485"> SKILL
 
-<div class="col" align="center" style="color:white;padding-top:0px"> 18{{item.nummatches}}
+				</h6>
 
-</div>
+				<h6 class="col col-25" align="center" style="margin-left:2px;color:#5f7485;padding:5px">LAST SEEN
 
-</div>
+				</h6>
 
-<p class="whitetext">
-	{{item.comments}}
-</p>
+			</div>
 
-<div class="row">
-	<div class="col">
-		<button class="button button-block button-light button-small" style="color:#2ab041;background-color: {{item.backcolor}};border-radius:25px" type="submit" ng-click="requestnumber(item)">
+
+			<div class="row" style="padding:0px;margin-top:-10px">
+				<div class="col col-25" align="center" style="padding:5px 5px 5px 5px;color:white;padding-top:0px"> 404
+
+				</div>
+
+				<div class="col col-25" style="color:white;padding:5px;padding-left:0px;border-right:1px solid #5f7485;border-left:1px solid #5f7485;padding-top:0px"
+				 align="center"> 404{{item.age}}
+
+				</div>
+
+				<div class="col col-25" align="center" style="padding:5px;padding-left:0px;border-right:1px solid #5f7485;color:white;padding-top:0px">
+				404{{item.nummatches}}
+
+				</div>
+
+				<div class="col col-25" align="center" style="margin-left:2px;padding:5px;padding-left:0px;color:white;padding-top:0px">
+				404
+				</div>
+			</div>
+
+			<p class="whitetext" style="margin-top:5px;padding-left:10px">
+				{{item.comments}} I am the best defender out there. I love playing on wednesdays.404
+			</p>
+
+			<div class="row" style="padding-top:0px">
+				<div class="col"  style="padding-top:0px">
+					<button class="button button-block button-light button-small" style="color:#2ab041;background-color: {{item.backcolor}};border-radius:25px"
+					 type="submit" ng-click="requestnumber(item)">
 			<h5 style="color:{{item.color}}"> {{item.statusdesc}}
 			</h5>
 		</button>
-</div>
+				</div>
 
-</div>
-
-
+			</div>
 
 
-</div>
 
 
-</ion-content>
+		</div>
+
+
+	</ion-content>
 </ion-view>

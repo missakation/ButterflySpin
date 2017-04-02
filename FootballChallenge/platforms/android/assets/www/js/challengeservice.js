@@ -50,30 +50,37 @@ angular.module('football.controllers')
 
                 firebase.database().ref('/players/' + id).once('value').then(function (snapshot) {
                     AllMyAdminTeams = [];
-                    snapshot.child("teams").forEach(function (childSnapshot) {
-                        var Items = {
+                    if (snapshot.child("teams").exists()) {
+                        snapshot.child("teams").forEach(function (childSnapshot) {
+                            if (childSnapshot.child("/players/" + id + "/isadmin").val()) {
 
-                            "displayname": snapshot.displayname,
-                            "enableinvitations": snapshot.enableinvitations,
-                            "firstname": snapshot.firstname,
-                            "highestrating": snapshot.highestrating,
-                            "lastname": snapshot.lastname,
-                            "middlename": snapshot.middlename,
 
-                            "key": childSnapshot.key,
-                            "teamname": childSnapshot.child("teamname").val(),
-                            "teamphoto": childSnapshot.child("teamphoto").val(),
-                            "datecreated": childSnapshot.child("datecreated").val(),
-                            "homejersey": childSnapshot.child("homejersey").val(),
-                            "awayjersey": childSnapshot.child("awayjersey").val(),
-                            "badge": childSnapshot.child("badge").val(),
-                            "rank": childSnapshot.child("rank").val(),
-                            "numberofgames": childSnapshot.child("numberofgames").val(),
-                            "wins": childSnapshot.child("wins").val()
-                        };
+                                var Items = {
 
-                        AllMyAdminTeams.push(Items)
-                    });
+                                    "displayname": snapshot.displayname,
+                                    "enableinvitations": snapshot.enableinvitations,
+                                    "firstname": snapshot.firstname,
+                                    "highestrating": snapshot.highestrating,
+                                    "lastname": snapshot.lastname,
+                                    "middlename": snapshot.middlename,
+
+                                    "key": childSnapshot.key,
+                                    "teamname": childSnapshot.child("teamname").val(),
+                                    "teamphoto": childSnapshot.child("teamphoto").val(),
+                                    "datecreated": childSnapshot.child("datecreated").val(),
+                                    "homejersey": childSnapshot.child("homejersey").val(),
+                                    "awayjersey": childSnapshot.child("awayjersey").val(),
+                                    "badge": childSnapshot.child("badge").val(),
+                                    "rank": childSnapshot.child("rank").val(),
+                                    "numberofgames": childSnapshot.child("numberofgames").val(),
+                                    "wins": childSnapshot.child("wins").val()
+                                };
+
+                                AllMyAdminTeams.push(Items)
+                            }
+
+                        });
+                    }
                     callback(AllMyAdminTeams);
                 });
 
@@ -177,103 +184,109 @@ angular.module('football.controllers')
                 try {
                     for (var i = 0; i < teams.length; i++) {
 
-                        var challengedata = {
-                            day: day,
-                            month: month,
-                            year: year,
-                            hour: hour,
-                            minute: minute,
+                        if (teams[i] !== null && teams[i].key !== null && myteam !== null && myteam.key !== null && myprofile !== null && myprofile.key !== null) {
 
-                            admin: myteam.teamadmin,
 
-                            stadiums: stadiums,
+                            if (teams[i].key != myteam.key) {
+                                var challengedata = {
+                                    day: day,
+                                    month: month,
+                                    year: year,
+                                    hour: hour,
+                                    minute: minute,
 
-                            challengeradmin: teams[i].teamadmin,
+                                    admin: myteam.teamadmin,
 
-                            //challengeradminname: adminname,
-                            //challengerteamname: name,
-                            //challengerteamlogo: logo,
-                            team1adminid: teams[i].teamadmin,
-                            team1key: teams[i].key,
-                            team1name: teams[i].teamname, //
-                            team1logo: teams[i].badge, //
-                            team1rank: teams[i].rank, //
-                            team1jersey: teams[i].awayjersey, //
+                                    stadiums: stadiums,
 
-                            team2key: myteam.key,
-                            team2name: myteam.teamname,
-                            team2logo: myteam.badge,
-                            team2rank: myteam.rank,
-                            team2jersey: myteam.homejersey,
-                            team2adminid: myteam.teamadmin,
+                                    challengeradmin: teams[i].teamadmin,
 
-                            //team2adminname: myteam.adminname,
-                            //team2adminmobile: myteam.adminmobile,
-                            accepted: false,
-                            adminphoto: myprofile.photo,
-                            admintelephon: myprofile.telephone,
-                            adminname: myprofile.displayname
+                                    //challengeradminname: adminname,
+                                    //challengerteamname: name,
+                                    //challengerteamlogo: logo,
+                                    team1adminid: teams[i].teamadmin,
+                                    team1key: teams[i].key,
+                                    team1name: teams[i].teamname, //
+                                    team1logo: teams[i].badge, //
+                                    team1rank: teams[i].rank, //
+                                    team1jersey: teams[i].awayjersey, //
 
+                                    team2key: myteam.key,
+                                    team2name: myteam.teamname,
+                                    team2logo: myteam.badge,
+                                    team2rank: myteam.rank,
+                                    team2jersey: myteam.homejersey,
+                                    team2adminid: myteam.teamadmin,
+
+                                    //team2adminname: myteam.adminname,
+                                    //team2adminmobile: myteam.adminmobile,
+                                    accepted: false,
+                                    adminphoto: myprofile.photo,
+                                    admintelephon: myprofile.telephone,
+                                    adminname: myprofile.displayname
+
+
+                                }
+
+                                var mychallengedata = {
+                                    day: day,
+                                    month: month,
+                                    year: year,
+                                    hour: hour,
+                                    minute: minute,
+
+                                    stadiums: stadiums,
+
+                                    admin: myteam.teamadmin,
+
+                                    //challengeradmin: id,
+                                    //challengeradminname: adminname,
+                                    //challengerteamname: name,
+                                    //challengerteamlogo: logo,
+
+                                    team2key: teams[i].key,
+                                    team2name: teams[i].teamname,
+                                    team2logo: teams[i].badge,
+                                    team2rank: teams[i].rank,
+                                    team2adminid: teams[i].teamadmin,
+                                    team2jersey: teams[i].awayjersey,
+
+                                    team1key: myteam.key,
+                                    team1name: myteam.teamname, //
+                                    team1logo: myteam.badge, //
+                                    team1rank: myteam.rank, //
+                                    team1adminid: myteam.teamadmin,
+                                    team1jersey: myteam.homejersey, //
+                                    //team2adminid: myteam.admin,
+                                    //team2adminname: myteam.adminname,
+                                    //team2adminmobile: myteam.adminmobile,
+                                    accepted: false,
+
+                                    adminphoto: myprofile.photo,
+                                    admintelephon: myprofile.telephone,
+                                    adminname: myprofile.displayname
+
+                                }
+
+                                // Get a key for a new Post.
+                                var newPostKey = firebase.database().ref().child('challenges').push().key;
+
+                                updates['/challenges/' + newPostKey] = challengedata;
+
+                                updates['/teams/' + teams[i].key + '/challenges/' + newPostKey] = challengedata;
+
+                                updates['/teams/' + myteam.key + '/challenges/' + newPostKey] = mychallengedata;
+
+                                updates['/players/' + teams[i].teamadmin + '/challenges/' + newPostKey] = challengedata;
+
+                                updates['/players/' + myteam.teamadmin + '/challenges/' + newPostKey] = mychallengedata;
+
+                                updates['/teams/' + myteam.key + '/challenges/' + year + '/' + month + '/' + day + '/' + newPostKey] = mychallengedata;
+
+                                updates['/teams/' + myteam.key + '/challengeyears/' + year + '/' + month + '/' + day + '/' + newPostKey] = true;
+                            }
 
                         }
-
-                        var mychallengedata = {
-                            day: day,
-                            month: month,
-                            year: year,
-                            hour: hour,
-                            minute: minute,
-
-                            stadiums: stadiums,
-
-                            admin: myteam.teamadmin,
-
-                            //challengeradmin: id,
-                            //challengeradminname: adminname,
-                            //challengerteamname: name,
-                            //challengerteamlogo: logo,
-
-                            team2key: teams[i].key,
-                            team2name: teams[i].teamname,
-                            team2logo: teams[i].badge,
-                            team2rank: teams[i].rank,
-                            team2adminid: teams[i].teamadmin,
-                            team2jersey: teams[i].awayjersey,
-
-                            team1key: myteam.key,
-                            team1name: myteam.teamname, //
-                            team1logo: myteam.badge, //
-                            team1rank: myteam.rank, //
-                            team1adminid: myteam.teamadmin,
-                            team1jersey: myteam.homejersey, //
-                            //team2adminid: myteam.admin,
-                            //team2adminname: myteam.adminname,
-                            //team2adminmobile: myteam.adminmobile,
-                            accepted: false,
-
-                            adminphoto: myprofile.photo,
-                            admintelephon: myprofile.telephone,
-                            adminname: myprofile.displayname
-
-                        }
-
-                        // Get a key for a new Post.
-                        var newPostKey = firebase.database().ref().child('challenges').push().key;
-
-                        updates['/challenges/' + newPostKey] = challengedata;
-
-                        updates['/teams/' + teams[i].key + '/challenges/' + newPostKey] = challengedata;
-
-                        updates['/teams/' + myteam.key + '/challenges/' + newPostKey] = mychallengedata;
-
-                        updates['/players/' + teams[i].teamadmin + '/challenges/' + newPostKey] = challengedata;
-
-                        updates['/players/' + myteam.teamadmin + '/challenges/' + newPostKey] = mychallengedata;
-
-                        updates['/teams/' + myteam.key + '/challenges/' + year + '/' + month + '/' + day + '/' + newPostKey] = mychallengedata;
-
-
-
 
                     }
 
@@ -443,7 +456,32 @@ angular.module('football.controllers')
             },
             AcceptGameInvitation: function (player) {
 
-            }
+            },
+            GetNumChallengeByDate: function (date, myteam, callback) {
+
+
+                var year = date.getFullYear();
+                var month = date.getMonth();
+                var day = date.getDate();
+
+                var hour = date.getHours();
+                var minute = date.getMinutes();
+
+                var number = 0;
+                //    firebase.database().ref('/teams').limitToFirst(4).once('value').then(function (snapshot) {
+
+                firebase.database().ref('/teams/' + myteam.key + '/challengeyears/' + year + '/' + month + '/' + day).once('value').then(function (snapshot) {
+
+                    if (snapshot.exists) {
+                        number = snapshot.numChildren();
+                    }
+                    else {
+                        number = 0;
+                    }
+
+                    callback(number);
+                });
+            },
 
 
         }

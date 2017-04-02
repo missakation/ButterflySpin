@@ -77,7 +77,8 @@ angular.module('football.controllers')
         $scope.validate =
             {
                 team: false,
-                teamsize: false
+                teamsize: false,
+                teamsizemax: false
             }
 
         $scope.managecolors =
@@ -210,14 +211,32 @@ angular.module('football.controllers')
                     error = true;
                 }
 
+                var counter = 0;
+                counter = $scope.adduser.five ? counter + 1 : counter;
+                counter = $scope.adduser.six ? counter + 1 : counter;
+                counter = $scope.adduser.seven ? counter + 1 : counter;
+                counter = $scope.adduser.eight ? counter + 1 : counter;
+                counter = $scope.adduser.nine ? counter + 1 : counter;
+                counter = $scope.adduser.ten ? counter + 1 : counter;
+                counter = $scope.adduser.eleven ? counter + 1 : counter;
+
+                if (counter < 2 && !$scope.validate.teamsize) {
+                    $scope.validate.teamsizemax = true;
+                    error = true;
+                }
+
                 if (!error) {
                     $scope.validate.teamsize = false;
                     $scope.validate.team = false;
+                    $scope.validate.teamsizemax = false;
 
                     $state.go("app.teamadd1", {
                         team1: team,
                         myprofile: $scope.myprofile
                     });
+                }
+                else {
+                    $scope.disabledbutton = false;
                 }
             }
 
@@ -532,22 +551,24 @@ angular.module('football.controllers')
 
         $scope.currentprofile = {};
 
+        $scope.notloaded = false;
+
         $scope.tabs =
             {
-                Available: false,
-                Members: true,
+                Available: true,
+                Members: false,
                 Statistics: false
             }
         $scope.colors =
             {
-                Available: "",
-                Members: true,
+                Available: true,
+                Members: false,
                 Statistics: false
             }
         $scope.status =
             {
-                Available: "none",
-                Members: "solid",
+                Available: "solid",
+                Members: "none",
                 Statistics: "none"
             }
 
@@ -617,9 +638,22 @@ angular.module('football.controllers')
                 TeamStores.GetTeamByKey($stateParams.teamid, function (myprofile) {
 
                     $ionicLoading.hide();
+                    $scope.notloaded = true;
                     if (myprofile !== null || myprofile !== undefiend || myprofile !== "") {
 
                         $scope.currentprofile = myprofile;
+
+                        var teamsizestring = "";
+
+                        teamsizestring = $scope.currentprofile.teamoffive ? teamsizestring + "5v5 " : teamsizestring;
+                        teamsizestring = $scope.currentprofile.teamofsix ? teamsizestring + "6v6 " : teamsizestring;
+                        teamsizestring = $scope.currentprofile.teamofseven ? teamsizestring + "7v7 " : teamsizestring;
+                        teamsizestring = $scope.currentprofile.teamofeight ? teamsizestring + "8v8 " : teamsizestring;
+                        teamsizestring = $scope.currentprofile.teamofnine ? teamsizestring + "9v9 " : teamsizestring;
+                        teamsizestring = $scope.currentprofile.teamoften ? teamsizestring + "10v10 " : teamsizestring;
+                        teamsizestring = $scope.currentprofile.teamofeleven ? teamsizestring + "11v11 " : teamsizestring;
+
+                        $scope.currentprofile.teamsizestring = teamsizestring;
 
                         var user = firebase.auth().currentUser;
                         if (!(user === null || user == '' || user === undefined)) {
@@ -634,13 +668,14 @@ angular.module('football.controllers')
                                 }
                             }
                         }
+                        
                     }
 
 
-
+                    
 
                 })
-            }, 1000);
+            }, 500);
 
         }
         catch (error) {
@@ -791,7 +826,7 @@ angular.module('football.controllers')
                     if (counter > 0) {
                         if (amiadmin && counter == 1) {
 
-                            template = 'Are you sure you want to leave the team? Note: Team will be deleted afterwarss';
+                            template = 'Are you sure you want to leave the team? Note: Team will be deleted afterwards';
 
                             var confirmPopup = $ionicPopup.confirm({
                                 title: 'Leave Team',
@@ -923,7 +958,7 @@ angular.module('football.controllers')
             maxValue: 23,
 
             options: {
-                floor: 0,
+                floor: 7,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
@@ -944,7 +979,7 @@ angular.module('football.controllers')
             minValue: 7,
             maxValue: 23,
             options: {
-                floor: 0,
+                floor: 7,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
@@ -966,7 +1001,7 @@ angular.module('football.controllers')
             minValue: 7,
             maxValue: 23,
             options: {
-                floor: 0,
+                floor: 7,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
@@ -988,7 +1023,7 @@ angular.module('football.controllers')
             minValue: 7,
             maxValue: 23,
             options: {
-                floor: 0,
+                floor: 7,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
@@ -1010,7 +1045,7 @@ angular.module('football.controllers')
             minValue: 7,
             maxValue: 23,
             options: {
-                floor: 0,
+                floor: 7,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
@@ -1031,7 +1066,7 @@ angular.module('football.controllers')
             minValue: 7,
             maxValue: 23,
             options: {
-                floor: 0,
+                floor: 7,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
@@ -1053,7 +1088,7 @@ angular.module('football.controllers')
             maxValue: 23,
 
             options: {
-                floor: 0,
+                floor: 7,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,

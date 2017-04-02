@@ -88,7 +88,8 @@ angular.module('football.controllers')
                                 matchdate.setMonth(challenges.child("month").val());
                                 matchdate.setHours(challenges.child("hour").val());
                                 matchdate.setDate(challenges.child("day").val());
-                                if (date <= matchdate) {
+
+                                if (currentdate <= matchdate) {
                                     var matchdata = {
 
                                         key: challenges.key,

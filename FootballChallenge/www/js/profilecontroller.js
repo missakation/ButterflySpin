@@ -2,9 +2,25 @@
 angular.module('football.controllers')
 
 
-    .controller('profilecontroller', function ($scope, ProfileStore, $ionicPopup, $state, $stateParams, $ionicLoading, $timeout) {
+    .controller('profilecontroller', function ($scope, ProfileStore, $ionicPopup, TeamStores, $state, $stateParams, $ionicLoading, $timeout) {
+
+
+        $scope.$on("$ionicView.afterEnter", function (event, data) {
+
+            $scope.refreshpage();
+
+        });
+
+
+
 
         $scope.currentprofile = {};
+        $scope.teamdisplayed = {
+            key: "",
+            name: "",
+            picture: "",
+            rank: ""
+        }
 
         //here
         $ionicLoading.show({
@@ -14,35 +30,58 @@ angular.module('football.controllers')
             maxWidth: 200,
             showDelay: 0
         });
-        //works
-        $timeout(function () {
-            ProfileStore.GetProfileInfo(function (myprofile) {
 
-                $ionicLoading.hide();
-                $scope.currentprofile = myprofile;
-            })
-        }, 3000);
+        $scope.notloaded = false;
 
-        $ionicLoading.show({
-            content: 'Loading',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-        });
+        $scope.refreshpage = function () {
+            //works
+            $timeout(function () {
+                ProfileStore.GetProfileInfo(function (myprofile) {
+                    TeamStores.GetTeamInfoByKey(myprofile.teamdisplayedkey, function (favteam) {
+                        if (favteam !== null || favteam !== undefined) {
 
+                            $scope.teamdisplayed.name = favteam.teamname;
+                            $scope.teamdisplayed.picture = favteam.badge;
+                            $scope.teamdisplayed.rank = favteam.rank;
+                            $scope.teamdisplayed.key = favteam.key;
+
+                        }
+
+
+                        $scope.notloaded = true;
+                        $ionicLoading.hide();
+                        $scope.currentprofile = myprofile;
+                        $scope.$apply();
+                        $scope.$broadcast('scroll.refreshComplete');
+                    })
+
+                }, function (error) {
+
+                })
+            }, 3000);
+        }
+
+        $scope.gototeam = function(key)
+        {
+            if (!(key == null || key == '' || key === undefined)) {
+                $state.go("app.teamprofile",
+                    {
+                        teamid: key
+                    })
+            }
+        }
 
         $scope.tabs =
             {
-                Available: false,
-                Members: true,
+                Available: true,
+                Members: false,
                 Statistics: false
             }
 
         $scope.status =
             {
-                Available: "none",
-                Members: "solid",
+                Available: "solid",
+                Members: "none",
                 Statistics: "none"
             }
 
@@ -107,13 +146,93 @@ angular.module('football.controllers')
                 })
         }
 
+        $scope.doRefresh = function () {
+            $scope.refreshpage();
+        }
+
+
+
 
     })
-    .controller('ProfileEditController', function ($cordovaImagePicker, $scope, $ionicHistory, ProfileStore1, $ionicLoading, $state, $stateParams, $timeout, $ionicPopup, $stateParams, $state, TeamStores) {
+    .controller('ProfileEditController', function ($cordovaImagePicker, $scope, $ionicHistory, ProfileStore1, $ionicLoading, $timeout, $ionicPopup, $stateParams, $state, TeamStores) {
 
         $scope.currentprofile = $state.params.myprofile;
 
 
+        $scope.isplayercolors = {
+            player:
+            {
+                color: '#2ab041',
+                backcolor: 'white'
+            },
+            goalkeeper:
+            {
+                color: '#2ab041',
+                backcolor: 'white'
+            }
+        }
+
+        if ($scope.currentprofile.isplayer) {
+            $scope.isplayercolors.player.color = 'white';
+            $scope.isplayercolors.player.backcolor = '#2ab041';
+
+            $scope.isplayercolors.goalkeeper.color = '#2ab041';
+            $scope.isplayercolors.goalkeeper.backcolor = 'white';
+        }
+        else {
+            $scope.isplayercolors.player.color = '#2ab041';
+            $scope.isplayercolors.player.backcolor = 'white';
+
+            $scope.isplayercolors.goalkeeper.color = 'white';
+            $scope.isplayercolors.goalkeeper.backcolor = '#2ab041';
+        }
+
+        $scope.switchcolors = function (x) {
+            switch (x) {
+                case 0:
+                    $scope.currentprofile.isplayer = true;
+                    $scope.isplayercolors.player.color = 'white';
+                    $scope.isplayercolors.player.backcolor = '#2ab041';
+
+                    $scope.isplayercolors.goalkeeper.color = '#2ab041';
+                    $scope.isplayercolors.goalkeeper.backcolor = 'white';
+                    break;
+                case 1:
+                    $scope.currentprofile.isplayer = false;
+                    $scope.isplayercolors.player.color = '#2ab041';
+                    $scope.isplayercolors.player.backcolor = 'white';
+
+                    $scope.isplayercolors.goalkeeper.color = 'white';
+                    $scope.isplayercolors.goalkeeper.backcolor = '#2ab041';
+                    break;
+
+
+            }
+            $scope.$apply();
+        }
+
+
+        $scope.sliderskill = {
+            value: 3,
+            options: {
+                showSelectionBar: true,
+                floor: 0,
+                ceil: 3,
+                showSelectionBar: true,
+                getPointerColor: function (value) {
+                    if (value <= 0)
+                        return 'red';
+                    if (value <= 1)
+                        return 'orange';
+                    if (value <= 2)
+                        return 'yellow';
+                    return '#2AE02A';
+                },
+                hideLimitLabels: true,
+                stepsArray: ['newbie', 'not bad', 'solid', 'pro']
+
+            }
+        };
 
 
         $scope.slider1 = {
@@ -121,7 +240,7 @@ angular.module('football.controllers')
             maxValue: 23,
 
             options: {
-                floor: 0,
+                floor: 7,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
@@ -144,7 +263,7 @@ angular.module('football.controllers')
             minValue: 7,
             maxValue: 23,
             options: {
-                floor: 0,
+                floor: 7,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
@@ -167,7 +286,7 @@ angular.module('football.controllers')
             minValue: 7,
             maxValue: 23,
             options: {
-                floor: 0,
+                floor: 7,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
@@ -191,7 +310,7 @@ angular.module('football.controllers')
             minValue: 7,
             maxValue: 23,
             options: {
-                floor: 0,
+                floor: 7,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
@@ -215,7 +334,7 @@ angular.module('football.controllers')
             minValue: 7,
             maxValue: 23,
             options: {
-                floor: 0,
+                floor: 7,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
@@ -238,7 +357,7 @@ angular.module('football.controllers')
             minValue: 7,
             maxValue: 23,
             options: {
-                floor: 0,
+                floor: 7,
                 showSelectionBar: true,
                 readOnly: true,
                 disabled: true,
@@ -262,7 +381,7 @@ angular.module('football.controllers')
             maxValue: 23,
 
             options: {
-                floor: 0,
+                floor: 7,
                 showSelectionBar: true,
                 readOnly: true,
                 hideLimitLabels: true,
@@ -312,8 +431,23 @@ angular.module('football.controllers')
         }
 
         $scope.UpdateUser = function (profile) {
-            
-            ProfileStore1.UpdateProfile(profile).then(function (result) {
+
+
+
+            if ($scope.currentprofile.teamdisplayed == "Select a Team" || $scope.currentprofile.teamdisplayed.trim() == "" || $scope.currentprofile.teamdisplayed.trim() == null) {
+                $scope.currentprofile.teamdisplayed = "none";
+            }
+            else {
+                for (var i = 0; i < $scope.currentprofile.myteams.length; i++) {
+
+                    if ($scope.currentprofile.myteams[i].teamname == $scope.currentprofile.teamdisplayed) {
+                        $scope.currentprofile.teamdisplayedkey = $scope.currentprofile.myteams[i].key;
+                    }
+
+                }
+            }
+
+            ProfileStore1.UpdateProfile($scope.currentprofile).then(function (result) {
 
                 $ionicHistory.goBack();
 
@@ -344,19 +478,19 @@ angular.module('football.controllers')
                 });
                 xhr.send();
             };
-
+ 
             var blobToFile = function (blob, name) {
                     blob.lastModifiedDate = new Date();
                     blob.name = name;
                     return blob;
             };
-
+ 
             var getFileObject = function(filePathOrUrl, cb) {
                 getFileBlob(filePathOrUrl, function (blob) {
                     cb(blobToFile(blob, 'test.jpg'));
                 });
             };
-
+ 
             getFileObject('img/test.jpg', function (fileObject) {
                 console.log(fileObject);
             })*/
@@ -395,7 +529,7 @@ angular.module('football.controllers')
                                     console.log('Upload is running');
                                     break;
                             }
-                        } , function (error) {
+                        }, function (error) {
                             switch (error.code) {
                                 case 'storage/unauthorized':
                                     // User doesn't have permission to access the object

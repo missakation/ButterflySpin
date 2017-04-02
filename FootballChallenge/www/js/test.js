@@ -36,6 +36,12 @@ angular.module('football.controllers')
                     updates['players/' + id + '/startsunday'] = profile.startsunday;
                     updates['players/' + id + '/startsundayend'] = profile.startsundayend;
                     updates['players/' + id + '/comments'] = profile.comments;
+                    updates['players/' + id + '/available'] = profile.available;
+                    updates['players/' + id + '/isplayer'] = profile.isplayer;
+                    updates['players/' + id + '/teamdisplayed'] =profile.teamdisplayed,
+                    updates['players/' + id + '/teamdisplayedkey'] = profile.teamdisplayedkey,
+                    updates['players/' + id + '/skilllevel'] = profile.skilllevel
+
 
                     //Age
                     updates['players/' + id + '/ageyear'] = year;
@@ -61,6 +67,11 @@ angular.module('football.controllers')
                     updates['playersinfo/' + id + '/startsaturdayend'] = profile.startsaturdayend;
                     updates['playersinfo/' + id + '/startsunday'] = profile.startsunday;
                     updates['playersinfo/' + id + '/startsundayend'] = profile.startsundayend;
+                    updates['playersinfo/' + id + '/available'] = profile.available;
+                    updates['playersinfo/' + id + '/teamdisplayed'] = profile.teamdisplayed,
+                    updates['playersinfo/' + id + '/teamdisplayedkey'] = profile.teamdisplayedkey,
+                    updates['playersinfo/' + id + '/skilllevel'] = profile.skilllevel
+
 
                     //Age
                     updates['playersinfo/' + id + '/ageyear'] = year;
@@ -69,6 +80,7 @@ angular.module('football.controllers')
                     updates['playersinfo/' + id + '/ageset'] = ageset;
                     updates['playersinfo/' + id + '/firstname'] = profile.firstname;
                     updates['playersinfo/' + id + '/lastname'] = profile.lastname;
+                    updates['playersinfo/' + id + '/isplayer'] = profile.isplayer;
 
                     return firebase.database().ref().update(updates);
                 }

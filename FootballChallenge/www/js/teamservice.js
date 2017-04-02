@@ -4,6 +4,7 @@
     .factory('TeamStores', function () {
         var MyTeams = [];
         var TeamProfile = {};
+        var TeamProfileInfo = {};
         return {
 
             GetMyTeams: function (callback) {
@@ -398,7 +399,20 @@
                                 "upcomingmatches": upcomingmatches,
                                 "favstadium": snapshot.child("favstadium").val(),
                                 "favstadiumphoto": snapshot.child("favstadiumphoto").val(),
-                                "numChildren": numberofmatches
+                                "numChildren": numberofmatches,
+
+                                "teamoffive": snapshot.child("teamoffive").val(),
+                                "teamofsix": snapshot.child("teamofsix").val(),
+                                "teamofseven": snapshot.child("teamofseven").val(),
+                                "teamofeight": snapshot.child("teamofeight").val(),
+                                "teamofnine": snapshot.child("teamofnine").val(),
+                                "teamoften": snapshot.child("teamoften").val(),
+                                "teamofeleven": snapshot.child("teamofeleven").val(),
+                                "teamsizestring":"",
+
+                                "available":snapshot.child("available").val(),
+                                "availablepng": snapshot.child("available").val() ? "available" : "busy"
+
                             };
                             TeamProfile = Items;
 
@@ -412,12 +426,48 @@
                     alert(error.message);
                 }
             },
+            GetTeamInfoByKey: function (key, callback) {
+                try {
+
+
+                    firebase.database().ref('/teaminfo/' + key).once('value').then(function (snapshot) {
+                        TeamProfileInfo = {};
+
+                        if (snapshot.exists()) {
+
+
+                            var user = firebase.auth().currentUser;
+                            var id = user.uid;
+                   
+
+                            var Items = {
+                                "key": snapshot.key,
+                                "teamname": snapshot.child("teamname").val(),
+                                'badge': snapshot.child("badge").val(),
+                                'homejersey': snapshot.child("homejersey").val(),
+                                'awayjersey': snapshot.child("awayjersey").val(),
+                                "rating": 1500,
+                                "rank": 100,
+
+                            };
+                            TeamProfileInfo = Items;
+
+                        }
+                        callback(TeamProfileInfo);
+
+
+                    });
+                }
+                catch (error) {
+                    alert(error.message);
+                }
+            },
 
             GetPlayersByTeam: function (key, callback) {
                 try {
 
 
-                    firebase.database().ref('/teams/' + key +'/players').once('value').then(function (snapshot) {
+                    firebase.database().ref('/teams/' + key + '/players').once('value').then(function (snapshot) {
                         var players = [];
                         if (snapshot.exists()) {
 
@@ -427,23 +477,23 @@
                             var id = user.uid;
 
                             //get all the players name with ID and Name
-                                snapshot.forEach(function (pl) {
+                            snapshot.forEach(function (pl) {
 
-                                    if (pl.key != "firstone") {
-                                        var data = {
+                                if (pl.key != "firstone") {
+                                    var data = {
 
-                                            key: pl.key,
-                                            name: pl.child("name").val(),
-                                            isadmin: pl.child("isadmin").val(),
-                                            itsme: pl.key == id
-                                        }
-                                        players.push(data);
+                                        key: pl.key,
+                                        name: pl.child("name").val(),
+                                        isadmin: pl.child("isadmin").val(),
+                                        itsme: pl.key == id
                                     }
+                                    players.push(data);
+                                }
 
 
-                                })
-                            
-                      }
+                            })
+
+                        }
                         alert(JSON.stringify(players));
                         callback(players);
 
@@ -510,6 +560,7 @@
                     updates['teams/' + id + '/comments'] = profile.comments;
                     updates['teams/' + id + '/favstadium'] = profile.favstadium;
                     updates['teams/' + id + '/favstadiumphoto'] = profile.favstadiumphoto;
+                    updates['teams/' + id + '/available'] = profile.available;
 
 
 
@@ -531,6 +582,7 @@
                     updates['teaminfo/' + id + '/comments'] = profile.comments;
                     updates['teaminfo/' + id + '/favstadium'] = profile.favstadium;
                     updates['teaminfo/' + id + '/favstadiumphoto'] = profile.favstadiumphoto;
+                    updates['teaminfo/' + id + '/available'] = profile.available;
 
 
                     return firebase.database().ref().update(updates);

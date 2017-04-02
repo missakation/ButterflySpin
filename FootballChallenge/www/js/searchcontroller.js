@@ -1,7 +1,43 @@
 ﻿
 angular.module('football.controllers')
 
-    .controller('SearchController', function ($scope, SearchStore, $ionicPopup,$timeout, $ionicLoading) {
+    .controller('SearchController', function ($scope, SearchStore, $ionicPopup,$ionicPopover, $timeout, $ionicLoading) {
+
+        // .fromTemplate() method
+        var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
+
+        $scope.popover = $ionicPopover.fromTemplate(template, {
+            scope: $scope
+        });
+
+        // .fromTemplateUrl() method
+        $ionicPopover.fromTemplateUrl('templates/my-popovers.html', {
+            scope: $scope
+        }).then(function (popover) {
+            $scope.popover = popover;
+        });
+
+
+        $scope.openPopover = function ($event) {
+            $scope.popover.show($event);
+        };
+        $scope.closePopover = function () {
+            $scope.popover.hide();
+        };
+        //Cleanup the popover when we're done with it!
+        $scope.$on('$destroy', function () {
+            $scope.popover.remove();
+        });
+        // Execute action on hide popover
+        $scope.$on('popover.hidden', function () {
+            // Execute action
+            //scope.$digest();
+            //alert($scope.choice)
+        });
+        // Execute action on remove popover
+        $scope.$on('popover.removed', function () {
+            // Execute action
+        });
 
 
 
@@ -11,46 +47,28 @@ angular.module('football.controllers')
             date: new Date(),
         };
 
-        
+
 
         var user = firebase.auth().currentUser;
 
-     /*   if (user != null) {
-            user.providerData.forEach(function (profile) {
+        /*   if (user != null) {
+               user.providerData.forEach(function (profile) {
+   
+                   alert("  Provider-specific UID: " + profile.uid);
+                   alert("  Name: " + profile.displayName);
+                   alert("  Email: " + profile.email);
+               });
+           }*/
 
-                alert("  Provider-specific UID: " + profile.uid);
-                alert("  Name: " + profile.displayName);
-                alert("  Email: " + profile.email);
-            });
-        }*/
-        
-            $scope.search.date.setDate($scope.search.date.getDate() + 1);
-            $scope.search.date.setHours(21);
-            $scope.search.date.setMinutes(0);
-            $scope.search.date.setMilliseconds(0);
-            $scope.search.date.setSeconds(0);
+        $scope.search.date.setDate($scope.search.date.getDate() + 1);
+        $scope.search.date.setHours(21);
+        $scope.search.date.setMinutes(0);
+        $scope.search.date.setMilliseconds(0);
+        $scope.search.date.setSeconds(0);
 
-            $scope.allfreeplayers = [];
+        $scope.allfreeplayers = [];
 
-            $scope.checkfree = function (search) {
-
-                $ionicLoading.show({
-                    content: 'Loading',
-                    animation: 'fade-in',
-                    showBackdrop: true,
-                    maxWidth: 200,
-                    showDelay: 0
-                });
-
-                //})
-                SearchStore.SearchAvailablePlayers($scope.search, function (leagues) {
-                    $ionicLoading.hide();
-                    $scope.allfreeplayers = leagues;
-
-                })
-
-            }
-
+        $scope.checkfree = function (search) {
 
             $ionicLoading.show({
                 content: 'Loading',
@@ -61,18 +79,35 @@ angular.module('football.controllers')
             });
 
             //})
-            try {
-            $timeout(function()
-            {
             SearchStore.SearchAvailablePlayers($scope.search, function (leagues) {
-                $scope.allfreeplayers = leagues;
-                
-                SearchStore.GetMyProfileInfo( function (profile) {
                 $ionicLoading.hide();
-                $scope.myprofile = profile;
+                $scope.allfreeplayers = leagues;
+
             })
-            })
-            },2000)
+
+        }
+
+
+        $ionicLoading.show({
+            content: 'Loading',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+
+        //})
+        try {
+            $timeout(function () {
+                SearchStore.SearchAvailablePlayers($scope.search, function (leagues) {
+                    $scope.allfreeplayers = leagues;
+
+                    SearchStore.GetMyProfileInfo(function (profile) {
+                        $ionicLoading.hide();
+                        $scope.myprofile = profile;
+                    })
+                })
+            }, 2000)
 
         }
         catch (error) {
@@ -81,27 +116,24 @@ angular.module('football.controllers')
 
         $scope.requestnumber = function (player) {
 
-            
 
-         if(!player.status>0)
-            {
-                
-               SearchStore.RequestNumber($scope.myprofile,player).then(function (value) 
-                 {
 
-                      player.status=1;
-                      player.statusdesc = "Number Requested";
-                      player.color="white";
-                      player.backcolor="#2ab042";
-                      $scope.apply();
+            if (!player.status > 0) {
 
-                 }, function (error)
-            {
-                    alert(error.message);
-            })
+                SearchStore.RequestNumber($scope.myprofile, player).then(function (value) {
 
-           }
-           
+                    player.status = 1;
+                    player.statusdesc = "Number Requested";
+                    player.color = "white";
+                    player.backcolor = "#2ab042";
+                    $scope.apply();
+
+                }, function (error) {
+                        alert(error.message);
+                    })
+
+            }
+
         }
 
 

@@ -60,7 +60,13 @@ angular.module('football.controllers', [])
                                 agemonth: 1,
                                 ageday: 1990,
                                 identity: identity,
-                                playerstatus:true
+                                playerstatus:true,
+                                available:false,
+                                isplayer:true,
+                                teamdisplayed:"none",
+                                teamdisplayedkey:"none",
+
+                                skillevel: "newbie"
 
                             }
                         //alert(newPostKey);
@@ -157,7 +163,14 @@ angular.module('football.controllers', [])
                                 agemonth: 1,
                                 ageday: 1990,
                                 identity:identity,
-                                playerstatus:true
+                                playerstatus:true,
+
+                                available:false,
+                                isplayer:true,
+                                teamdisplayed:"none",
+                                teamdisplayedkey:"none",
+                                skillevel: "newbie"
+
 
                             }
                         //alert(newPostKey);

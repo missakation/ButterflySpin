@@ -39,7 +39,7 @@ angular.module('football.controllers')
             if (picker) {
                 picker.then(function pickerViewFinish(output) {
                     if (output) {
-                        // output is Array type //when clicks select
+                        // output is Array type
                         var correctDate;
                         var selectedDate = output[0];
                         var selectedTime = output[1];

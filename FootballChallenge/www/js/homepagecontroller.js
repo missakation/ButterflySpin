@@ -66,25 +66,28 @@ angular.module('football.controllers')
 
         $scope.notloaded = true;
         try {
+
             $scope.profile = {};
 
-            $timeout(function () {
-                //Get My Profile
-                // Simple GET request example:
-                $http({
-                    method: 'GET',
-                    url: 'https://us-central1-project-6346119287623064588.cloudfunctions.net/date'
-                }).then(function successCallback(response) {
+            /* $timeout(function () {
+                 //Get My Profile
+                 // Simple GET request example:
+                 $http({
+                     method: 'GET',
+                     url: 'https://us-central1-project-6346119287623064588.cloudfunctions.net/date'
+                 }).then(function successCallback(response) {
+ 
+                     $scope.currentdate = new Date(response.data);
+                     $scope.doRefresh($scope.currentdate);
+ 
+                 }, function errorCallback(response) {
+                     // called asynchronously if an error occurs
+                     // or server returns response with an error status.
+                     alert(JSON.stringify(response));
+                 });
+             }, 2000); */
 
-                    $scope.currentdate = new Date(response.data);
-                    $scope.doRefresh($scope.currentdate);
 
-                }, function errorCallback(response) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                    alert(JSON.stringify(response));
-                });
-            }, 2000);
         } catch (error) {
             alert(error.message);
         }
@@ -293,12 +296,30 @@ angular.module('football.controllers')
         // });
         //alert($scope.profile.displayname);
 
+        $scope.doRefresh1 = function (currentdate) {
+
+            $http({
+                method: 'GET',
+                url: 'https://us-central1-project-6346119287623064588.cloudfunctions.net/date'
+            }).then(function successCallback(response) {
+
+                $scope.currentdate = new Date(response.data);
+                $scope.doRefresh($scope.currentdate);
+
+            }, function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+                alert(JSON.stringify(response));
+            });
+
+        }
+
         $scope.doRefresh = function (currentdate) {
 
             try {
                 $scope.profile = {};
 
-                HomeStore.GetProfileInfo(currentdate,function (leagues) {
+                HomeStore.GetProfileInfo(currentdate, function (leagues) {
 
                     var todaydate = new Date();
                     var oldchallenges = [];

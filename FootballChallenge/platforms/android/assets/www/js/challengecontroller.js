@@ -149,7 +149,7 @@ angular.module('football.controllers')
 
     })
 
-    .controller('challengestadiumcontroller', function ($http,$scope, ChallengeStore, HomeStore, ReservationFact, $state, $stateParams, $ionicPopup, $ionicLoading, $ionicPopover) {
+    .controller('challengestadiumcontroller', function ($http, $scope, $ionicHistory, ChallengeStore, HomeStore, ReservationFact, $state, $stateParams, $ionicPopup, $ionicLoading, $ionicPopover) {
 
         $scope.selectedstadiums = [];
         $scope.challengestatus = false;
@@ -251,19 +251,42 @@ angular.module('football.controllers')
                     confirmPopup.then(function (res) {
                         if (res) {
 
-                            ChallengeStore.ChallengeTeams($state.params.date, $state.params.teams, $scope.selectedstadiums, $scope.myteam, $scope.profile)
-                                .then(function (value) {
+                            ChallengeStore.GetNumChallengeByDate($state.params.date, $scope.myteam, function (result) {
+                                alert(result);
+                                if (result + $state.params.teams.length < 4) {
+                                    ChallengeStore.ChallengeTeams($state.params.date, $state.params.teams, $scope.selectedstadiums, $scope.myteam, $scope.profile)
+                                        .then(function (value) {
 
+                                            var alertPopup = $ionicPopup.alert({
+                                                title: 'Success',
+                                                template: 'Successfully Challenged'
+                                            }).then(function () {
+                                                $ionicHistory.nextViewOptions({
+                                                    disableBack: true
+                                                });
+                                                $state.go("app.homepage");
+                                            });
+
+                                        }, function (error) {
+                                            alert(error.message);
+                                        })
+                                }
+                                else {
                                     var alertPopup = $ionicPopup.alert({
-                                        title: 'Success',
-                                        template: 'Successfully Challenged'
+                                        title: 'Error',
+                                        template: 'You have ' + (3-result) + ' challenges left for the selected date' 
                                     }).then(function () {
-                                        $state.go("app.homepage");
-                                    });
 
-                                }, function (error) {
-                                    alert(error.message);
-                                })
+                                    });
+                                }
+
+
+
+                            }, function (error) {
+                                alert(error.message);
+                            })
+
+
 
                         }
 
@@ -293,7 +316,7 @@ angular.module('football.controllers')
 
                 try {
 
-                    ChallengeStore.GetMyTeams(function (myteams) {
+                    ChallengeStore.GetMyAdminTeams(function (myteams) {
 
                         $ionicLoading.hide();
                         $scope.test = myteams;
@@ -301,7 +324,7 @@ angular.module('football.controllers')
                         if (myteams.length == 0) {
                             var alertPopup = $ionicPopup.alert({
                                 title: 'Empty',
-                                template: 'You do not below to any team right now'
+                                template: 'You do not belong to any team right now'
                             });
                         }
 

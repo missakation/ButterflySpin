@@ -21,7 +21,7 @@ angular.module('football.controllers')
                 var startat = "";
                 var startend = "";
 
-                 var user = firebase.auth().currentUser;
+                var user = firebase.auth().currentUser;
                 var id = user.uid;
 
                 switch (weekday) {
@@ -68,54 +68,56 @@ angular.module('football.controllers')
 
                     snapshot.forEach(function (childSnapshot) {
 
-                        var status=0;
+                        var status = 0;
                         var statusdesc = "Request Number";
-                        var color="#2ab042";
-                        var backcolor="white";
+                        var color = "#2ab042";
+                        var backcolor = "white";
 
-                        if (childSnapshot.child(startat).exists()) {
-                            if (childSnapshot.child(startat).val() <= hour && childSnapshot.child("enableinvitations").val()) {
+                        if (childSnapshot.child("available").val()) {
 
-                                if(childSnapshot.child("myrequests/"+id).exists())
-                                {
-                                 status=1;
-                                 statusdesc = "Number Requested";
-                                 color="white";
-                                 backcolor="#2ab042";
+                            if (childSnapshot.child(startat).exists()) {
+                                if (childSnapshot.child(startat).val() <= hour && childSnapshot.child("enableinvitations").val()) {
+
+                                    if (childSnapshot.child("myrequests/" + id).exists()) {
+                                        status = 1;
+                                        statusdesc = "Number Requested";
+                                        color = "white";
+                                        backcolor = "#2ab042";
+                                    }
+
+                                    var Items = {
+                                        "key": childSnapshot.key,
+                                        "displayname": childSnapshot.child("displayname").val(),
+                                        "enableinvitations": childSnapshot.child("enableinvitations").val(),
+                                        "favouritesport": childSnapshot.child("favouritesport").val(),
+                                        "firstname": childSnapshot.child("firstname").val(),
+                                        "highestrating": childSnapshot.child("highestrating").val(),
+                                        "lastname": childSnapshot.child("lastname").val(),
+                                        "playposition": childSnapshot.child("playposition").val(),
+                                        "ranking": childSnapshot.child("ranking").val(),
+                                        "status": childSnapshot.child("status").val(),
+                                        "teams": childSnapshot.child("teams").val(),
+                                        "telephone": childSnapshot.child("telephone").val(),
+                                        "userdescription": childSnapshot.child("userdescription").val(),
+                                        "winstreak": childSnapshot.child("winstreak").val(),
+                                        "favstadium": childSnapshot.child("favstadium").val(),
+                                        "favstadiumphoto": childSnapshot.child("favstadiumphoto").val(),
+                                        "age": childSnapshot.child("age").val(),
+                                        "nummatches": childSnapshot.child("nummatches").val(),
+                                        "status": status,
+                                        "color": color,
+                                        "backcolor": backcolor,
+                                        "statusdesc": statusdesc
+
+
+
+                                    };
+
+                                    AvailablePlayers.push(Items)
                                 }
-
-                                var Items = {
-                                    "key": childSnapshot.key,
-                                    "displayname": childSnapshot.child("displayname").val(),
-                                    "enableinvitations": childSnapshot.child("enableinvitations").val(),
-                                    "favouritesport": childSnapshot.child("favouritesport").val(),
-                                    "firstname": childSnapshot.child("firstname").val(),
-                                    "highestrating": childSnapshot.child("highestrating").val(),
-                                    "lastname": childSnapshot.child("lastname").val(),
-                                    "playposition": childSnapshot.child("playposition").val(),
-                                    "ranking": childSnapshot.child("ranking").val(),
-                                    "status": childSnapshot.child("status").val(),
-                                    "teams": childSnapshot.child("teams").val(),
-                                    "telephone": childSnapshot.child("telephone").val(),
-                                    "userdescription": childSnapshot.child("userdescription").val(),
-                                    "winstreak": childSnapshot.child("winstreak").val(),
-                                    "favstadium": childSnapshot.child("favstadium").val(),
-                                    "favstadiumphoto": childSnapshot.child("favstadiumphoto").val(),
-                                    "age": childSnapshot.child("age").val(),
-                                    "nummatches": childSnapshot.child("nummatches").val(),     
-                                    "status": status,
-                                    "color":color,
-                                    "backcolor":backcolor,
-                                    "statusdesc":statusdesc
-
-                                
-
-                                };
-
-                                AvailablePlayers.push(Items)
                             }
-                        }
-                    });
+                            }
+                        });
                     //  alert(JSON.stringify(AvailablePlayers));
                     callback(AvailablePlayers);
                 });
@@ -128,32 +130,37 @@ angular.module('football.controllers')
 
                     snapshot.forEach(function (childSnapshot) {
 
-                        var childdescription = childSnapshot.child("userdescription");
 
-                        if (childdescription.trim().toString().includes(description.trim())) {
+                        if (childSnapshot.child("available").val()) {
 
-                            var Items = {
-                                "key": childSnapshot.val(),
-                                "availabledays": childSnapshot.child("availabledays").val(),
-                                "displayname": childSnapshot.child("displayname").val(),
-                                "enableinvitations": childSnapshot.child("enableinvitations").val(),
-                                "favouritesport": childSnapshot.child("favouritesport").val(),
-                                "firstname": childSnapshot.child("firstname").val(),
-                                "highestrating": childSnapshot.child("highestrating").val(),
-                                "lastname": childSnapshot.child("lastname").val(),
-                                "middlename": childSnapshot.child("middlename").val(),
-                                "playposition": childSnapshot.child("playposition").val(),
-                                "ranking": childSnapshot.child("ranking").val(),
-                                "status": childSnapshot.child("status").val(),
-                                "teams": childSnapshot.child("teams").val(),
-                                "telephone": childSnapshot.child("telephone").val(),
-                                "userdescription": childSnapshot.child("userdescription").val(),
-                                "winstreak": childSnapshot.child("winstreak").val(),
-                                "photo": childSnapshot.child("photoURL").val()
 
-                            };
+                            var childdescription = childSnapshot.child("userdescription");
 
-                            TempItems.push(Items);
+                            if (childdescription.trim().toString().includes(description.trim())) {
+
+                                var Items = {
+                                    "key": childSnapshot.val(),
+                                    "availabledays": childSnapshot.child("availabledays").val(),
+                                    "displayname": childSnapshot.child("displayname").val(),
+                                    "enableinvitations": childSnapshot.child("enableinvitations").val(),
+                                    "favouritesport": childSnapshot.child("favouritesport").val(),
+                                    "firstname": childSnapshot.child("firstname").val(),
+                                    "highestrating": childSnapshot.child("highestrating").val(),
+                                    "lastname": childSnapshot.child("lastname").val(),
+                                    "middlename": childSnapshot.child("middlename").val(),
+                                    "playposition": childSnapshot.child("playposition").val(),
+                                    "ranking": childSnapshot.child("ranking").val(),
+                                    "status": childSnapshot.child("status").val(),
+                                    "teams": childSnapshot.child("teams").val(),
+                                    "telephone": childSnapshot.child("telephone").val(),
+                                    "userdescription": childSnapshot.child("userdescription").val(),
+                                    "winstreak": childSnapshot.child("winstreak").val(),
+                                    "photo": childSnapshot.child("photoURL").val()
+
+                                };
+
+                                TempItems.push(Items);
+                            }
                         }
                     });
                 });
@@ -176,54 +183,54 @@ angular.module('football.controllers')
 
                             var toadd = true;
 
-                     //       if (childSnapshot.key != id) {
-                                
-                                var status = "Invite to Team";
+                            //       if (childSnapshot.key != id) {
 
-                                if (childSnapshot.child("teaminvitations/" + team.key).exists()) {
+                            var status = "Invite to Team";
 
-                                    switch (childSnapshot.child("teaminvitations/" + team.key + "/status")) {
-                                        case 0:
-                                            status = "Pending Request";
-                                            break;
-                                        case 1:
-                                            toadd = false;
-                                            break;
-                                        case 2:
-                                            status = "Invite to Team";
-                                            break;
+                            if (childSnapshot.child("teaminvitations/" + team.key).exists()) {
 
-                                        default:
-                                            break;
-                                    }
+                                switch (childSnapshot.child("teaminvitations/" + team.key + "/status")) {
+                                    case 0:
+                                        status = "Pending Request";
+                                        break;
+                                    case 1:
+                                        toadd = false;
+                                        break;
+                                    case 2:
+                                        status = "Invite to Team";
+                                        break;
 
+                                    default:
+                                        break;
                                 }
 
-                                if (toadd) {
+                            }
 
-                                    var Items = {
-                                        "key": childSnapshot.key,
-                                        "displayname": childSnapshot.child("displayname").val(),
-                                        "enableinvitations": childSnapshot.child("enableinvitations").val(),
-                                        "favouritesport": childSnapshot.child("favouritesport").val(),
-                                        "firstname": childSnapshot.child("firstname").val(),
-                                        "highestrating": childSnapshot.child("highestrating").val(),
-                                        "lastname": childSnapshot.child("lastname").val(),
-                                        "middlename": childSnapshot.child("middlename").val(),
-                                        "playposition": childSnapshot.child("playposition").val(),
-                                        "ranking": childSnapshot.child("ranking").val(),
-                                        "status": status,
-                                        "teams": childSnapshot.child("teams").val(),
-                                        "telephone": childSnapshot.child("telephone").val(),
-                                        "winstreak": childSnapshot.child("winstreak").val(),
-                                        "photo": childSnapshot.child("photo").val()
+                            if (toadd) {
 
-                                    };
+                                var Items = {
+                                    "key": childSnapshot.key,
+                                    "displayname": childSnapshot.child("displayname").val(),
+                                    "enableinvitations": childSnapshot.child("enableinvitations").val(),
+                                    "favouritesport": childSnapshot.child("favouritesport").val(),
+                                    "firstname": childSnapshot.child("firstname").val(),
+                                    "highestrating": childSnapshot.child("highestrating").val(),
+                                    "lastname": childSnapshot.child("lastname").val(),
+                                    "middlename": childSnapshot.child("middlename").val(),
+                                    "playposition": childSnapshot.child("playposition").val(),
+                                    "ranking": childSnapshot.child("ranking").val(),
+                                    "status": status,
+                                    "teams": childSnapshot.child("teams").val(),
+                                    "telephone": childSnapshot.child("telephone").val(),
+                                    "winstreak": childSnapshot.child("winstreak").val(),
+                                    "photo": childSnapshot.child("photo").val()
 
-                                    AllPlayers.push(Items);
-                                }
+                                };
 
-                       //     }
+                                AllPlayers.push(Items);
+                            }
+
+                            //     }
 
                         });
                         callback(AllPlayers);
@@ -305,7 +312,7 @@ angular.module('football.controllers')
 
                 return TempItems;
             },
-            RequestNumber: function (myprofile,player) {
+            RequestNumber: function (myprofile, player) {
                 //alert(user.teamname);
                 // Get a key for a new Post.
                 var user = firebase.auth().currentUser;
@@ -319,10 +326,10 @@ angular.module('football.controllers')
                         requestorkey: myprofile.key,
                         requestorname: myprofile.displayname,
                         requestorphoto: myprofile.photo,
-                        requestortelephone:myprofile.telephone,
+                        requestortelephone: myprofile.telephone,
 
                     };
-                    
+
                     var updates = {};
                     updates['/players/' + player.key + '/myrequests/' + id] = requestdata;
 
@@ -333,19 +340,19 @@ angular.module('football.controllers')
                 }
             },
             GetMyProfileInfo: function (callback) {
-                
+
 
                 var user = firebase.auth().currentUser;
                 var id = user.uid;
 
                 try {
 
-                        
-                    firebase.database().ref('/players/' +id).once('value').then(function (snapshot) {
-                        
-                    TempItems = {};
 
-                  
+                    firebase.database().ref('/players/' + id).once('value').then(function (snapshot) {
+
+                        TempItems = {};
+
+
                         var Items = {
                             "key": snapshot.key,
                             "displayname": snapshot.child("displayname").val(),
@@ -364,19 +371,18 @@ angular.module('football.controllers')
                         callback(TempItems);
                     });
 
-                    
+
                 }
                 catch (error) {
                     alert(error.message);
                 }
             },
-            SearchAllByField: function (table, fieldName, fieldValue, callback)
-            {
+            SearchAllByField: function (table, fieldName, fieldValue, callback) {
                 var searchResult = [];
                 //var yarraw = firebase.database().ref('/players');//.orderByChild(fieldName).startAt(fieldValue);
                 firebase.database().ref(table).orderByChild(fieldName).startAt(fieldValue).endAt(fieldValue).once('value').then(function (snapshot) {
-                //firebase.database().ref('players').once('value').then(function (snapshot) {
-                    
+                    //firebase.database().ref('players').once('value').then(function (snapshot) {
+
                     snapshot.forEach(function (childSnapshot) {
                         if (childSnapshot.val() != null) {
                             searchResult.push(childSnapshot.val());
@@ -386,7 +392,7 @@ angular.module('football.controllers')
                     callback(searchResult);
                 });
 
-               
+
             }
 
         }

@@ -65,23 +65,23 @@
                             <!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
                             <div align="center">
-                                <img src="{{stadium.photo}}" style="width:100%;height:140px;">
+                               <img src="http://www.sundul.com/wp-content/uploads/2013/02/Bikin-Stadion-Baru-Inter-Milan-Siap-Hengkang-Dari-San-Siro.jpg" style="width:100%;height:140px;">
                             </div>
 
-                            <div class="row headercolor">
-                                <div class="col col-66" style="color:white">
-                                    {{stadium.name}} / {{stadium.description}}
+                            <div class="row">
+                                <div class="col col-75" style="font-size:14px;color:white;text-transform:capitalize;padding-bottom:0px">
+                                    {{stadium.name}} - {{stadium.description}}
                                 </div>
 
-                                <div class="col" align="right" style="color:lightgray">
+                                <div class="col" align="right" style="color:#5f7485;padding:5px 0 0 5px">
                                     Price
                                 </div>
 
                             </div>
 
-                            <div class="row headercolor">
+                            <div class="row">
                                 <div class="col col-66" align="left">
-                                    <rating readonly="readOnly" ng-model="stadium.rating" align="left">
+                                    <rating readonly="readOnly" ng-model="stadium.rating" style="color:orange" align="left">
 
                                     </rating>
 

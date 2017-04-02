@@ -99,6 +99,26 @@ angular.module('football.controllers')
                         var num = Math.abs(ageDate.getUTCFullYear() - 1970);
 
 
+                        var skilldescription = "newbie";
+                        switch (snapshot.child("skilllevel").val()) {
+                            case 0:
+                                skilldescription = "newbie";
+                                break;
+                            case 1:
+                                skilldescription = "not bad";
+                                break;
+
+                            case 2:
+                                skilldescription = "solid";
+                                break;
+                            case 3:
+                                skilldescription = "Pro";
+                                break;
+
+                            default:
+                                break;
+                        }
+
                         var Items = {
                             "key": snapshot.key,
                             "displayname": snapshot.child("displayname").val(),
@@ -108,7 +128,7 @@ angular.module('football.controllers')
                             //   "highestrating": snapshot.child("highestrating").val(),
                             "lastname": snapshot.child("lastname").val(),
                             "middlename": snapshot.child("middlename").val(),
-                            "playposition": snapshot.child("playposition").val(),
+                            "playposition": snapshot.child("isplayer").val()? "Player":"Goalkeeper",
                             "ranking": snapshot.child("ranking").val(),
                             "status": snapshot.child("status").val(),
                             //   "teams": snapshot.child("teams").exists() ? snapshot.child("teams").val() : "",
@@ -141,7 +161,20 @@ angular.module('football.controllers')
                             "ageset": snapshot.child("ageset").val(),
                             "age": age,
                             "agenum": num,
-                            "identity":snapshot.child("identity").val(),
+                            "identity": snapshot.child("identity").val(),
+                            "available": snapshot.child("available").val(),
+                            "availablepng": snapshot.child("available").val() ? "available" : "busy",
+                            "isplayer": snapshot.child("isplayer").val(),
+                            "teamdisplayed": snapshot.child("teamdisplayed").val(),
+                            "teamdisplayedkey": snapshot.child("teamdisplayedkey").val(),
+
+                            "skilllevel": snapshot.child("skilllevel").val(),
+                            "skilldescription": skilldescription
+
+                            //"distancetoplay": snapshot.child("identity").val(),
+                            //"teamtoshow":snapshot.child("identity").val()
+
+
 
                         };
 
@@ -185,6 +218,8 @@ angular.module('football.controllers')
                     updates['players/' + id + '/startsunday'] = profile.startsunday;
                     updates['players/' + id + '/startsundayend'] = profile.startsundayend;
 
+                    updates['players/' + id + '/available'] = profile.available;
+
                     //Age
                     updates['players/' + id + '/ageyear'] = year;
                     updates['players/' + id + '/agemonth'] = month;
@@ -207,6 +242,7 @@ angular.module('football.controllers')
                     updates['playersinfo/' + id + '/startsaturdayend'] = profile.startsaturdayend;
                     updates['playersinfo/' + id + '/startsunday'] = profile.startsunday;
                     updates['playersinfo/' + id + '/startsundayend'] = profile.startsundayend;
+                    updates['playersinfo/' + id + '/available'] = profile.available;
 
                     //Age
                     updates['playersinfo/' + id + '/ageyear'] = year;
