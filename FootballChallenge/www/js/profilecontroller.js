@@ -219,17 +219,8 @@ angular.module('football.controllers')
                 floor: 0,
                 ceil: 3,
                 showSelectionBar: true,
-                getPointerColor: function (value) {
-                    if (value <= 0)
-                        return 'red';
-                    if (value <= 1)
-                        return 'orange';
-                    if (value <= 2)
-                        return 'yellow';
-                    return '#2AE02A';
-                },
                 hideLimitLabels: true,
-                stepsArray: ['newbie', 'not bad', 'solid', 'pro']
+                stepsArray: ['Newbie', 'Not Bad', 'Solid', 'Pro']
 
             }
         };
@@ -250,7 +241,7 @@ angular.module('football.controllers')
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'rgb(38,175,61)';
+                    return '#2ab041';
 
                 },
                 ceil: 23,
@@ -273,7 +264,7 @@ angular.module('football.controllers')
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'rgb(38,175,61)';
+                    return '#2ab041';
                 },
                 ceil: 23,
                 draggableRange: false
@@ -296,7 +287,7 @@ angular.module('football.controllers')
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'rgb(38,175,61)';
+                    return '#2ab041';
 
                 },
                 ceil: 23,
@@ -320,7 +311,7 @@ angular.module('football.controllers')
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'rgb(38,175,61)';
+                    return '#2ab041';
 
                 },
                 ceil: 23,
@@ -344,7 +335,7 @@ angular.module('football.controllers')
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'rgb(38,175,61)';
+                    return '#2ab041';
 
                 },
                 ceil: 23,
@@ -367,7 +358,7 @@ angular.module('football.controllers')
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'rgb(38,175,61)';
+                    return '#2ab041';
 
                 },
                 ceil: 23,
@@ -391,7 +382,7 @@ angular.module('football.controllers')
                     return 'White';
                 },
                 getPointerColor: function (value) {
-                    return 'rgb(38,175,61)';
+                    return '#2ab041';
 
                 },
                 ceil: 23,

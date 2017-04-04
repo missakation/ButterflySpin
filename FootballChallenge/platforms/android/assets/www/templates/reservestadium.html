@@ -450,7 +450,7 @@
 		width: 100%;
 		height: 100%;
 		margin: auto;
-		font-size: 16px;
+		font-size: 14px;
 		padding-left: 0px;
 		padding-right: 0px;
 		line-height: normal;
@@ -613,7 +613,7 @@
 </style>
 
 
-<ion-view view-title="Reserve">
+<ion-view view-title="Reserve a Stadium">
 
 	<ion-nav-buttons side="primary">
 		<button class="button button-icon ion-android-funnel" align="right" style="color:white" ng-click="popover.show($event)"></button>
@@ -799,16 +799,21 @@
 				</div>
 			</div>
 			<div class="row" align="center">
-				<div class="col" align="center" style="font-weight:100;color:#5f7485;font-size:12px;padding-bottom:0px;padding-top:0px" align="left">
+
+				<div  align="center" style="width:5%;font-weight:100;color:#5f7485;font-size:12px;padding:0px;padding-top:0px" align="left">
+					<i class="icon ion-location" style="color: #5f7485;font-size:18px">
+</i>
+				</div>
+				<div  align="left" style="width:34%;font-weight:100;color:#5f7485;font-size:12px;padding:0px;padding-top:0px" align="left">
 					{{stadiums.distance | number:2}}KM
 				</div>
 
-				<div class="col" style="font-weight:100;color:#5f7485;border-right:1px #5f7485 solid;border-left:1px #5f7485 solid;padding-top:0px;font-size:12px;padding-bottom:0px"
+				<div style="width:33%;font-weight:100;color:#5f7485;border-right:1px #5f7485 solid;border-left:1px #5f7485 solid;padding:0px;font-size:12px;padding-bottom:0px"
 				 align="center"> TYPE
 
 				</div>
 
-				<div class="col" style="font-weight:100;color:#5f7485;font-size:12px;padding-bottom:0px;padding-top:0px" align="center">
+				<div style="width:27%;font-weight:100;color:#5f7485;font-size:12px;padding:0px" align="center">
 					STADIUM SIZE
 
 				</div>
@@ -817,19 +822,21 @@
 
 
 			<div class="row" style="padding-bottom:12px">
-				<div class="col" align="center" style="font-weight:bold;color:white;padding-top:0px">
+				<div style="width:5%">
+</div>
+				<div  align="left" style="width:34%;font-weight:bold;color:white;padding:0px">
 					Anthelias
 				</div>
 
-				<div class="col" align="center" style="color:white;padding-top:0px;border-right:1px #5f7485 solid;border-left:1px #5f7485 solid">
+				<div  align="center" style="width:33%;color:white;padding:0px;border-right:1px #5f7485 solid;border-left:1px #5f7485 solid">
 					<b>
 			{{stadiums.type}}  &#8226 {{stadiums.typefloor}}
 			</b>
 				</div>
 
-				<div class="col" align="center" style="color:white;padding-top:0px">
+				<div align="center" style="width:27%;color:white;padding:0px">
 					<b>
-			{{stadiums.players}} v {{stadiums.players}}
+			Max {{stadiums.players}} v {{stadiums.players}}
 			</b>
 				</div>
 

@@ -1,14 +1,22 @@
 <style>
     .headercolor {
         background-color: rgb(62, 83, 100);
-        color: white }
-
+        color: white;
+        border-bottom: 3px solid rgb(62, 83, 100);
+        border-top: 3px;
+    }
+    
     .spinner svg {
-  width: 38px;
-  height: 38px;
-  stroke: #444;
-  fill: #444;
-  margin-top:30%;
+        width: 38px;
+        height: 38px;
+        stroke: #444;
+        fill: #444;
+        margin-top: 30%;
+    }
+    
+    .card {
+        background-color: transparent;
+    }
 }
     
 </style>
@@ -32,41 +40,53 @@
         </div>
 
 
-        <div class="card" ng-show="!notloaded" style="border: none">
-            <div class="row" style="background-color:rgb(62,83,100);border: none;margin-bottom:-10px">
+        <div class="card" ng-show="!notloaded" style="margin:7px 10px;border-color:transparent">
+            <div class="row" style="padding:20px 0 0 0;margin:0px;background-color:rgb(62,83,100);border: none">
 
-                <div class="col" align="center" ng-click="goteamprofile(rankedteams[0].key)">
-                    <h4 class="whitetext" style="color:white;font-weight:bold">1st</h4>
-                    <img src="img/Badges/{{rankedteams[0].badge}}.png" style="width:57px;height:60px">
-                    <h5 class="whitetext" style="font-weight:bold" >
-                        {{rankedteams[0].teamname}}
-                    </h5>
-                    <h6 style="color: DarkTurquoise "> <b>2300AR</b>
-                    </h6>
+                <div class="col" align="center" ng-click="goteamprofile(rankedteams[0].key)" style="padding:0px;margin:0px">
+                    <h5 class="whitetext" style="font-weight:bold;text-transform:capitalize;color:white"> {{rankedteams[1].teamname}}</h5>
+                    <img src="img/Badges/{{rankedteams[1].badge}}.png" style="width:57px;height:60px">
+                    <h4 class="whitetext" style="margin-bottom:3px;font-size:20px;font-weight:bold;text-transform:capitalize;color:white">
+                        2nd
+                    </h4>
                 </div>
 
-                <div class="col" align="center" ng-click="goteamprofile(rankedteams[1].key)">
-                    <h4 class="whitetext" style="color:white;font-weight:bold">2nd</h4>
+                <div class="col" align="center" ng-click="goteamprofile(rankedteams[1].key)" style="padding:0px;margin:-18px 0 0 0px">
+                    <h5 class="whitetext" style="font-weight:bold;text-transform:capitalize;color:white"> {{rankedteams[0].teamname}}</h5>
+                    <img src="img/Badges/{{rankedteams[0].badge}}.png" style="width:70px;height:76px;margin-bottom:-10px">
+                    <h4 class="whitetext" style="margin-bottom:3px;font-size:30px;font-weight:bold;text-transform:capitalize;color:white">
+                        1st
+                    </h4>
+
+                </div>
+
+                <div class="col" align="center" ng-click="goteamprofile(rankedteams[3].key)" style="padding:0px;margin:0px">
+                    <h5 class="whitetext" style="font-weight:bold;text-transform:capitalize;color:white"> {{rankedteams[2].teamname}}</h5>
                     <img src="img/Badges/{{rankedteams[2].badge}}.png" style="width:57px;height:60px">
-                    <h5 class="whitetext" style=" font-weight:bold">
-                        {{rankedteams[1].teamname}}
-                    </h5>
-                    <h6 style="color: DarkTurquoise "> <b>2250AR</b>
-                    </h6>
-                </div>
-
-                <div class="col" align="center" ng-click="goteamprofile(rankedteams[3].key)">
-                    <h4 class="whitetext" style="color:white;font-weight:bold">3rd</h4>
-                    <img src="img/Badges/{{rankedteams[3].badge}}.png" style="width:57px;height:60px">
-                    <h5 class="whitetext" style=" font-weight:bold">
-                        {{rankedteams[2].teamname}}
-                    </h5>
-                    <h6 style="color: DarkTurquoise "> <b>2220AR</b>
-                    </h6>
+                    <h4 style="margin-bottom:3px;font-size:20px;font-weight:bold;text-transform:capitalize;color:white">
+                        3rd
+                    </h4>
                 </div>
             </div>
-        </div>
-        <div class="card" style="border-color:rgb(45,62,75);background-color: rgb(45,62,75);box-shadow:none " ng-show="!notloaded">
+            <div class="row" style="color:darkturquoise;padding:0px;margin:0px;background-color:rgb(62,83,100);border: none">
+
+                <div class="col" align="center">
+                    2400 AR
+                </div>
+
+                <div class="col" align="center">
+                    2550 AR
+                </div>
+
+                <div class="col" align="center">
+                    2300 AR
+                </div>
+
+
+                </div>
+            </div>
+        <div style="padding-top:0px;margin:0px 10px;padding-bottom:0px;border-color:rgb(45,62,75);background-color: rgb(45,62,75);box-shadow:none"
+            ng-show="!notloaded">
             <div class="row" style="border:none" ng-show="!notloaded">
 
                 <div class="col" align="center">
@@ -85,16 +105,16 @@
 
 
         <div class="card" ng-show="!notloaded" style="background-color:rgb(62, 83, 100) ">
-            <div class="row row-center" style="border-bottom:1px solid #5f7485;padding:0px;background-color:rgb(62,83,100)" ng-repeat="item in rankedteams"
+            <div class="row row-center" style="border-bottom:6px solid #5f7485;padding:0px;background-color:rgb(62,83,100)" ng-repeat="item in rankedteams"
                 ng-hide="{{$index<3}}" ng-click="goteamprofile(item.key)">
-                <div class="col col-10" style="margin-right:-2px">
+                <div style="width:9%;padding:5px 1% 5px 0" align="right">
                     <h5 class="whitetext" style="color:white;margin:0px -2px 0px 0px">
                         {{$index+1}}.
                     </h5>
 
                 </div>
                 <div class="col">
-                    <h5 class="whitetext" style="color:white;font-weight:bold; margin:10px 0px 10px 0px">
+                    <h5 class="whitetext" style="text-transform:capitalize;color:white;font-weight:bold; margin:10px 0px 10px 0px">
                         {{item.teamname}}
                     </h5>
 
