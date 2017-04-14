@@ -78,7 +78,7 @@
 	<h6 class="whitetext" style="color:darkturquoise;font-weight:bold;margin-top:0px">
 		Rank 55th
 	</h6>
-	<img src="img/Jerseys/{{challenge.team1badge}}.png" style="width:35px;height:35px ">
+	<img src="img/Jerseys/{{challenge.team1jersey}}.png" style="width:35px;height:35px ">
 </div>
 </div>
 <div class="col">
@@ -109,7 +109,7 @@
 	<h6 class="whitetext" style="color:darkturquoise; font-weight:bold;margin-top:0px">
 		Rank:{{challenge.team1rank}}
 	</h6>
-	<img src="img/Jerseys/{{challenge.team2badge}}.png" style="width:35px;height:35px ">
+	<img src="img/Jerseys/{{challenge.team2jersey}}.png" style="width:35px;height:35px ">
 </div>
 </div>
 
@@ -139,7 +139,7 @@
 <div class="row " ng-repeat="item in myplayers">
 	<div class="col col-50">
 		<h5 class="whitetext">
-			{{item.name}}
+			{{item.firstname}} {{item.lastname}}
 		</h5>
 	</div>
 
@@ -169,7 +169,7 @@
 
 
 </div>
-<div class="button-bar" ng-hide="notloaded || (!item.isadmin)">
+<div class="button-bar" ng-hide="notloaded || (!isadmin)">
 	<button class="button  button-assertive" ng-click="CancelChallenge(challenge)">Cancel Challenge</button>
 </div>
 <br />

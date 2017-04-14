@@ -652,7 +652,7 @@
 
 					</div>
 
-					<div align="left" style="border-top:1px solid #5f7485;color:rgb(157,171,184);font-size:15px;padding:10px 5px 10px 5px"> Stadium Type </div>
+					<div align="left" style="border-top:1px solid #5f7485;color:rgb(157,171,184);font-size:14px;padding:10px 5px 10px 5px"> Difficulty </div>
 					<button class="button button-small" ng-model="filter.indoor" style="color:#2ab041;line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px;margin:0 3px;">
 						 Easy</button>
 					<button class="button button-small" style="color:#2ab041;line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px">
@@ -663,19 +663,20 @@
 					</div>
 
 
+
 					<!---			<ion-checkbox style="color:rgb(142,156,169);background-color:rgb(46,62,75)" ng-model="filter.indoor">Indoor</ion-checkbox>
 						<ion-checkbox style="color:rgb(142,156,169);background-color:rgb(46,62,75)" ng-model="filter.outdoor">Outdoor</ion-checkbox>
 						<ion-checkbox style="color:rgb(142,156,169);background-color:rgb(46,62,75)" ng-model="filter.grass">Grass</ion-checkbox>
 						<ion-checkbox style="color:rgb(142,156,169);background-color:rgb(46,62,75)" ng-model="filter.clay">Clay</ion-checkbox>
 -->
 					<div align="left" style="border-top:1px solid #5f7485;color:rgb(157,171,184);font-size:15px;padding:10px 5px 0px 5px;margin-top:10px">
-						Distance (in Km) </div>
+						Team Distance (in Km) </div>
 					<div style="padding-left:10px;padding-right:10px;padding-bottom:5px;border-bottom:1px solid #5f7485">
 						<rzslider rz-slider-model="filter.money " rz-slider-high="250000" style="color:white ">
 						</rzslider>
 
 					</div>
-				
+					
 					<div class="row">
 
 						<div class="col col-50" align="center">
@@ -694,8 +695,9 @@
 			</ion-popover-view>
 		</script>
 
-		<div class="item item-dark" style="background-color:darkturquoise" ion-datetime-picker ng-model="search.date" minute-step="30">
-			{{search.date| date: "yyyy-MM-dd H:mm"}}
+		<div class="item item-dark" style="border:transparent;background-color:#2ab041" ion-datetime-picker ng-model="search.date"
+		 minute-step="30">	
+		 		{{search.date| date: "yyyy-MM-dd H:mm"}}
 		</div>
 
 
@@ -759,14 +761,16 @@
 				</div>
 
 				<div style="font-size:14px;width:27%;padding:0px;margin:5px 0 -25px 0;color:white" align="center">
-					<h5 style="margin-bottom:4px;padding:0px;font-weight:bold;color:white"> Very hard </h5>
-					<img src="img/difficulty/extreme.png" style="margin:0 0 10px 0;width:75px">
+					<h5 style="margin-bottom:4px;padding:0px;font-weight:bold;color:white">{{team.difficultytext}} </h5>
+					<img src="img/difficulty/{{team.difficulty}}" align="left" style="padding-left:10px;margin:0 0 10px 0;height:10px">
 
 				</div>
 
 				<div style="font-size:14px;width:27%;border-left:1px solid #5f7485;border-right:1px solid #5f7485;padding:0px;margin:5px 0 -10px 0;color:white"
 				 align="center">
-
+			<p class="whitetext" style="padding-left:10px">
+				
+			</p>
 				</div>
 				<div align="center" style="font-weight:bold;margin:15px 0 -10px 0;font-size:14px;width:23%;color:white"> 404 Hrs.
 
@@ -777,9 +781,10 @@
 				404 team info not found.
 			</p>
 
+
 			<div class="row">
-				<div class="col">
-					<button class="button button-block button-small" ng-click="updateselectedteams(team)" style="border-radius:25px;background-color:{{team.backcolor}}">
+				<div class="padding" style="width:100%;" align="center">
+					<button class="button button-balanced small_button" ng-click="updateselectedteams(team)" style="min-height:35px;line-height:35px;width:100%;border-radius:25px;background-color:{{team.backcolor}}">
 <h5 style="color:{{team.color}}"> {{team.selected}}
 </h5>
 
@@ -791,13 +796,12 @@
 
 		</div>
 
-
-
 	</ion-content>
 
 	<div class="bar bar-footer " style="background-color:#2d3e4b">
 
-		<button class="button button-small " style="width:100%; background-color:#28b041; color:white; border-radius:20px" ng-click="choosestadium()"> Choose Stadium
+		<button class="button button-balanced small_button" style="min-height:35px;line-height:35px;width:100%; background-color:#2ab041; color:white; border-radius:20px"
+		 ng-click="choosestadium()"> Choose Stadium
 </button>
 	</div>
 

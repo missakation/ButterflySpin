@@ -2,7 +2,7 @@
 angular.module('football.controllers')
 
 
-    .controller('HomeController', function ($scope, $http, $state, HomeStore, $timeout, $ionicPopup, $ionicLoading, $cordovaSocialSharing) {
+    .controller('HomeController', function ($scope, $http, HomeStore, LoginStore, TeamStores, $state, $timeout, $ionicPopup, $ionicLoading, $cordovaSocialSharing) {
 
         $scope.nointernet = false;
         $scope.$on("$ionicView.afterEnter", function (event, data) {
@@ -14,12 +14,15 @@ angular.module('football.controllers')
                 try {
 
                     var user = firebase.auth().currentUser;
+
                     if (!(user === null || user == '' || user === undefined)) {
 
                         var id = user.uid;
+
                         if (!(id === null || id == '' || id === undefined)) {
 
                             if (!($scope.profile === null || $scope.profile == '' || $scope.profile === undefined)) {
+
                                 if ($scope.profile.id !== id) {
                                     $scope.profile = [];
                                     $scope.$apply();
@@ -48,6 +51,7 @@ angular.module('football.controllers')
                 }
                 catch (error) {
                     alert(error.message);
+                    LoginStore.PostError(error);
                 }
             }, 500)
         });
@@ -90,6 +94,7 @@ angular.module('football.controllers')
 
         } catch (error) {
             alert(error.message);
+            LoginStore.PostError(error);
         }
 
         $scope.acceptinvitation = function (challenge) {
@@ -104,8 +109,18 @@ angular.module('football.controllers')
 
             } catch (error) {
                 alert(error.message);
+                LoginStore.PostError(error);
             }
 
+        }
+
+        $scope.gototeam = function (id) {
+            if (!(id == null || id == '' || id === undefined)) {
+                $state.go("app.teamprofile",
+                    {
+                        teamid: id
+                    })
+            }
         }
 
         $scope.declineinvitation = function (challenge) {
@@ -133,6 +148,7 @@ angular.module('football.controllers')
                             $scope.$apply();
                         }, function (error) {
                             alert(error.message);
+                            LoginStore.PostError(error);
                         })
                     }
 
@@ -140,6 +156,7 @@ angular.module('football.controllers')
 
             } catch (error) {
                 alert(error.message);
+                LoginStore.PostError(error);
             }
         }
         $scope.cancelinvitation = function (challenge) {
@@ -165,6 +182,7 @@ angular.module('football.controllers')
                             $scope.$apply();
                         }, function (error) {
                             alert(error.message);
+                            LoginStore.PostError(error);
                         })
                     }
 
@@ -172,6 +190,7 @@ angular.module('football.controllers')
 
             } catch (error) {
                 alert(error.message);
+                LoginStore.PostError(error);
             }
         }
 
@@ -189,6 +208,7 @@ angular.module('football.controllers')
                                 $state.go("app.teammanagement");
                             }, function (error) {
                                 alert(error.message);
+                                LoginStore.PostError(error);
                             })
 
 
@@ -204,6 +224,7 @@ angular.module('football.controllers')
 
                         }, function (error) {
                             alert(error.message);
+                            LoginStore.PostError(error);
                         })
                         break;
 
@@ -214,6 +235,7 @@ angular.module('football.controllers')
 
             } catch (error) {
                 alert(error.message);
+                LoginStore.PostError(error);
             }
 
 
@@ -239,6 +261,7 @@ angular.module('football.controllers')
 
                         }, function (error) {
                             alert(error.message);
+                            LoginStore.PostError(error);
                         })
                         break;
 
@@ -249,6 +272,7 @@ angular.module('football.controllers')
 
             } catch (error) {
                 alert(error.message);
+                LoginStore.PostError(error);
             }
 
 
@@ -267,6 +291,7 @@ angular.module('football.controllers')
                             $scope.$apply();
                         }, function (error) {
                             alert(error.message);
+                            LoginStore.PostError(error);
                         })
                         break;
 
@@ -279,6 +304,7 @@ angular.module('football.controllers')
                             $scope.$apply();
                         }, function (error) {
                             alert(error.message);
+                            LoginStore.PostError(error);
                         })
                         break;
 
@@ -289,6 +315,7 @@ angular.module('football.controllers')
             }
             catch (error) {
                 alert(error.message);
+                LoginStore.PostError(error);
             }
 
         }
@@ -314,6 +341,17 @@ angular.module('football.controllers')
 
         }
 
+
+        $scope.teamdisplayed = {
+            key: "",
+            name: "",
+            picture: "",
+            rank: ""
+        }
+
+
+
+
         $scope.doRefresh = function (currentdate) {
 
             try {
@@ -325,6 +363,39 @@ angular.module('football.controllers')
                     var oldchallenges = [];
                     var newchallenges = [];
                     $scope.profile = leagues;
+
+                    if ($scope.profile.photo.trim() == "") {
+                        $scope.profile.photo = "img/PlayerProfile.png"
+                    }
+
+                    if ($scope.profile.teamdisplayedkey !== "") {
+                        TeamStores.GetTeamInfoByKey($scope.profile.teamdisplayedkey, function (favteam) {
+                            if (favteam !== null || favteam !== undefined) {
+
+                                $scope.teamdisplayed.name = favteam.teamname;
+                                $scope.teamdisplayed.picture = favteam.badge;
+                                $scope.teamdisplayed.rank = favteam.rank;
+                                $scope.teamdisplayed.key = favteam.key;
+
+                            }
+                            else {
+                                $scope.teamdisplayed.name = "";
+                                $scope.teamdisplayed.picture = "defaultteam";
+                                $scope.teamdisplayed.rank = "";
+                                $scope.teamdisplayed.key = "";
+                            }
+
+
+
+
+                        })
+                    }
+                    else {
+                        $scope.teamdisplayed.name = "";
+                        $scope.teamdisplayed.picture = "defaultteam";
+                        $scope.teamdisplayed.rank = "";
+                        $scope.teamdisplayed.key = "";
+                    }
                     //$scope.profile.upcominteamgmatches.push($scope.profile.upcomingmatches);
 
                     if (leagues.challenges.length > 0) {
@@ -338,6 +409,8 @@ angular.module('football.controllers')
                         }
                     }
 
+                    $scope.profile.upcomingmatches = $scope.profile.upcomingmatches.concat($scope.profile.upcominteamgmatches);
+
                     HomeStore.DeleteOldChalleges(oldchallenges).then(function () {
 
 
@@ -350,6 +423,8 @@ angular.module('football.controllers')
                         $scope.showteaminvite = $scope.profile.teaminvitations.length == 0 ? false : true;
                         $scope.showupcomingsinglematches = $scope.profile.upcomingmatches.length == 0 ? false : true;
 
+
+
                         //Get the first 4 ranked teams
                         HomeStore.GetFirstFour(function (leagues) {
                             $scope.rankedteams = leagues;
@@ -359,6 +434,7 @@ angular.module('football.controllers')
                         $scope.$apply();
                     }, function (error) {
                         alert(error.message);
+                        LoginStore.PostError(error);
                     })
 
                     $scope.$apply();
@@ -368,6 +444,7 @@ angular.module('football.controllers')
                 })
             } catch (error) {
                 alert(error.message);
+                LoginStore.PostError(error);
             }
         }
 
@@ -481,7 +558,7 @@ angular.module('football.controllers')
     })
 
 
-    .controller('ChallengeStadiumController', function ($timeout, $scope, $state, HomeStore, $ionicPopup, $ionicLoading) {
+    .controller('ChallengeStadiumController', function ($timeout, $scope, LoginStore, $state, ReservationFact, HomeStore, $ionicPopup, $ionicLoading) {
 
         $scope.allfreestadiums = $state.params.challenge.stadiums;
 
@@ -505,28 +582,45 @@ angular.module('football.controllers')
                         {
                             date: $scope.challenge.date
                         }
-                    HomeStore.RegisterTeamMatch($scope.search, "", stadium, $scope.challenge)
-                        .then(function (value) {
-                            var alertPopup = $ionicPopup.Alert({
-                                cssClass: 'custom-class',
-                                template: 'Successfully Reserved'
-                            });
+                    ReservationFact.CheckIfFree(stadium, $scope.search.date, function (result) {
 
-                            $state.go("app.gamedetails",
-                                {
-                                    gameid: $scope.challenge.key
-                                });
-                        }, function (error) {
-                            var alertPopup = $ionicPopup.show({
-                                title: 'Error',
-                                template: 'Stadium Not Available. Please Try Again'
-                            });
+                        if (!result) {
 
-                            alertPopup.then(function (res) {
-                                // Custom functionality....
-                            });
+                            HomeStore.RegisterTeamMatch($scope.search, "", stadium, $scope.challenge)
+                                .then(function (value) {
+                                    var alertPopup = $ionicPopup.Alert({
+                                        cssClass: 'custom-class',
+                                        template: 'Successfully Reserved'
+                                    });
 
-                        })
+                                    $state.go("app.gamedetails",
+                                        {
+                                            gameid: $scope.challenge.key
+                                        });
+                                }, function (error) {
+                                    var alertPopup = $ionicPopup.show({
+                                        title: 'Error',
+                                        template: 'Stadium Not Available. Please Cancel the Challenge'
+                                    });
+
+                                    alertPopup.then(function (res) {
+                                        $state.go("app.homepage");
+                                    });
+
+                                })
+                        }
+
+                    }, function (error) {
+                        var alertPopup = $ionicPopup.show({
+                            title: 'Error',
+                            template: 'Stadium Not Available. Please Cancel the Challenge'
+                        });
+
+                        alertPopup.then(function (res) {
+                            $state.go("app.homepage");
+                        });
+                    })
+
 
                 }
             })

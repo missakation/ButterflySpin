@@ -43,6 +43,7 @@
     <author email="you@example.com" href="http://example.com.com/">Missak Boyajian</author>
     <content src="index.html" />
     <access origin="*" />
+    <allow-navigation href="http://192.168.1.75:8100" />
     <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
     <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />

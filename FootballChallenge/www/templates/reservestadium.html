@@ -1,5 +1,5 @@
 <style>
-	.item {
+.item {
 		background-color: rgb(46, 62, 75);
 	}
 	
@@ -369,19 +369,6 @@
 	}
 	/** from date time picker style css files **/
 	
-	.picker-view {
-		z-index: 9999;
-		position: absolute;
-		left: 0;
-		top: 50px;
-		text-align: center;
-		width: 100%;
-		width: 100vw;
-		height: 25.75%;
-		background-color: transparent;
-		margin-top: -6px
-	}
-	
 	.picker-view::-webkit-scrollbar,
 	.picker-view *::-webkit-scrollbar {
 		display: none;
@@ -394,21 +381,10 @@
 		display: -ms-flexbox;
 		display: flex;
 		position: relative;
-		background-color: white;
 		z-index: 3;
-		height: 6vh;
-		background-color: rgb(42, 62, 82);
-	}
-	
-	.picker-view .picker-accessory-bar .picker-title {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		-webkit-transform: translate(-50%, -50%);
-		transform: translate(-50%, -50%);
-		margin: 0;
-		font-size: 3.75vh;
-		color: rgba(128, 128, 128, 0.8);
+		height: 47px;
+		background-color: transparent;
+		top: 155px;
 	}
 	
 	.picker-view .picker-accessory-bar .button {
@@ -416,22 +392,21 @@
 		top: 50%;
 		-webkit-transform: translateY(-50%);
 		transform: translateY(-50%);
-		font-size: 20px;
-		color: #0EBCE1;
 	}
 	
 	.picker-view .picker-accessory-bar .button:first-of-type {
-		left: 1%;
-		background-color: rgb(42, 62, 82);
+		left: 205%;
+		background-color: transparent;
 		color: white;
-		font-size: 4.5vh;
+		font-size: 2vh;
 	}
 	
 	.picker-view .picker-accessory-bar .button:last-of-type {
-		right: 1%;
-		background-color: rgb(42, 62, 82);
-		color: lime;
-		font-size: 4.5vh;
+		right: 0%;
+		background-color: #2ab041;
+		color: white;
+		font-size: 3vh;
+		width: 100%;
 	}
 	
 	.picker-view .picker-content {
@@ -442,7 +417,8 @@
 		display: flex;
 		position: relative;
 		background-color: white;
-		height: 80%;
+		height: 60%;
+		top: 15px;
 	}
 	
 	.picker-view .picker-content .picker-scroll {
@@ -450,7 +426,7 @@
 		width: 100%;
 		height: 100%;
 		margin: auto;
-		font-size: 14px;
+		font-size: 16px;
 		padding-left: 0px;
 		padding-right: 0px;
 		line-height: normal;
@@ -604,12 +580,20 @@
 		}
 	}
 	
-	.button {
-		border-style: none;
-		line-height: 0px;
-		min-height: 0px;
+	.picker-view {
+		z-index: 9999;
+		position: fixed;
+		left: 0;
+		top: 5%;
+		text-align: center;
+		width: 100%;
+		width: 100vw;
+		height: 27.75%;
+		height: 27.75vh;
+		background-color: transparent;
+		margin-top: -6px;
 	}
-	/** end **/
+}
 </style>
 
 
@@ -650,7 +634,7 @@
 								<div class="input-label" style="color:rgb(157,171,184)">
 										Sort By	
 								</div>
-								<select  ng-model="choice.sort">
+								<select  ng-model="managecolors.sortby">
 								<option >Best</option>
 								<option >Rating</option>
 								<option> Price</option>
@@ -661,22 +645,22 @@
 					</div>
 
 					<div align="left" style="border-top:1px solid #5f7485;color:rgb(157,171,184);font-size:15px;padding:10px 5px 10px 5px"> Stadium Type </div>
-					<button class="button button-small" ng-model="filter.indoor" style="color:#2ab041;line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px;margin:0 3px;">
+					<button class="button button-small" style="background-color: {{managecolors.indoor.backcolor}} ; color:{{managecolors.indoor.color}};line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px;margin:0 3px;" ng-click ="updatedoortype('indoor')" >
 						 Indoor</button>
-					<button class="button button-small" style="color:#2ab041;line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px">
+					<button class="button button-small"  style="background-color: {{managecolors.outdoor.backcolor}} ; color:{{managecolors.outdoor.color}};line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px" ng-click ="updatedoortype('outdoor')"> 
 						Outdoor</button>
-					<button class="button button-small" style="color:#2ab041;width:30%;line-height:30px;font-size:14px;font-weight:bold;border-radius:50px;margin:0 3px">
+					<button class="button button-small"  style="background-color: {{managecolors.anydoor.backcolor}} ; color:{{managecolors.anydoor.color}};width:30%;line-height:30px;font-size:14px;font-weight:bold;border-radius:50px;margin:0 3px" ng-click ="updatedoortype('anydoor')">
 						Any </button>
 					<br>
 					</div>
 
 					<div align="left" style="border-top:1px solid #5f7485;color:rgb(157,171,184);font-size:15px;padding:10px 5px;margin-top:10px">
 						Floor Type </div>
-					<button class="button button-small" style="color:#2ab041;line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px;margin:0 3px;">
+					<button class="button button-small" style="background-color: {{managecolors.grass.backcolor}} ; color:{{managecolors.grass.color}};line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px;margin:0 3px;" ng-click = "updategroundtype('grass')">
 						 Grass</button>
-					<button class="button button-small" style="color:#2ab041;line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px">
+					<button class="button button-small" style="background-color: {{managecolors.ground.backcolor}} ; color:{{managecolors.ground.color}};line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px" ng-click = "updategroundtype('ground')">
 						Ground</button>
-					<button class="button button-small" style="color:#2ab041;width:30%;line-height:30px;font-size:14px;font-weight:bold;border-radius:50px;margin:0px 3px">
+					<button class="button button-small" style="background-color: {{managecolors.anyground.backcolor}} ; color:{{managecolors.anyground.color}};width:30%;line-height:30px;font-size:14px;font-weight:bold;border-radius:50px;margin:0px 3px" ng-click = "updategroundtype('anyground')">
 						Any </button>
 
 					</div>
@@ -689,13 +673,13 @@
 					<div align="left" style="border-top:1px solid #5f7485;color:rgb(157,171,184);font-size:15px;padding:10px 5px 0px 5px;margin-top:10px">
 						Distance (in Km) </div>
 					<div style="padding-left:10px;padding-right:10px;padding-bottom:5px;border-bottom:1px solid #5f7485">
-						<rzslider rz-slider-model="filter.money " rz-slider-high="250000" style="color:white ">
+						<rzslider rz-slider-model="managecolors.distancefrom" rz-slider-high="managecolors.distanceto" style="color:white ">
 						</rzslider>
 
 					</div>
 					<div align="left" style=";color:rgb(157,171,184);font-size:15px;padding:10px 5px 0px 5px;margin-top:10px"> Price (in LBP) </div>
 					<div style="padding-left:10px;padding-right:10px;padding-bottom:5px;border-bottom:1px solid #5f7485">
-						<rzslider rz-slider-model="filter.money " rz-slider-high="250000" style="color:white ">
+						<rzslider rz-slider-model="managecolors.pricefrom" rz-slider-high="managecolors.priceto" style="color:white ">
 						</rzslider>
 
 					</div>
@@ -760,7 +744,7 @@
 			<!--<label class="item item-input">-->
 
 
-			<input class="button open-button" ng-readonly="true" on-tap="openPickerView()" style="border-radius:0px;color:white;width:100%;line-height:40px;padding-bottom:0px;margin-bottom:0px;background-color:darkturquoise"
+			<input class="button open-button" ng-readonly="true" on-tap="openPickerView()" style="border-radius:0px;color:white;width:100%;line-height:40px;padding-bottom:0px;margin-bottom:0px;background-color:#2ab041"
 			 ng-model="search.text">
 			<!--<input type="datetime-local" step="30"  ng-model="search.date" ng-change="checkfree()">-->
 			<!--</label>-->
@@ -800,20 +784,20 @@
 			</div>
 			<div class="row" align="center">
 
-				<div  align="center" style="width:5%;font-weight:100;color:#5f7485;font-size:12px;padding:0px;padding-top:0px" align="left">
+				<div align="center" style="width:10%;color:#5f7485;font-size:12px;padding:0px;padding-top:0px" align="left">
 					<i class="icon ion-location" style="color: #5f7485;font-size:18px">
 </i>
 				</div>
-				<div  align="left" style="width:34%;font-weight:100;color:#5f7485;font-size:12px;padding:0px;padding-top:0px" align="left">
+				<div align="left" style="width:29%;color:#5f7485;font-size:12px;padding:0px;padding-top:0px" align="left">
 					{{stadiums.distance | number:2}}KM
 				</div>
 
-				<div style="width:33%;font-weight:100;color:#5f7485;border-right:1px #5f7485 solid;border-left:1px #5f7485 solid;padding:0px;font-size:12px;padding-bottom:0px"
+				<div style="width:33%;color:#5f7485;border-right:1px #5f7485 solid;border-left:1px #5f7485 solid;padding:0px;font-size:12px;padding-bottom:0px"
 				 align="center"> TYPE
 
 				</div>
 
-				<div style="width:27%;font-weight:100;color:#5f7485;font-size:12px;padding:0px" align="center">
+				<div style="width:27%;color:#5f7485;font-size:12px;padding:0px" align="center">
 					STADIUM SIZE
 
 				</div>
@@ -823,12 +807,12 @@
 
 			<div class="row" style="padding-bottom:12px">
 				<div style="width:5%">
-</div>
-				<div  align="left" style="width:34%;font-weight:bold;color:white;padding:0px">
-					Anthelias
+				</div>
+				<div align="left" style="width:34%;font-weight:bold;color:white;padding:0px">
+					Anthelias 404
 				</div>
 
-				<div  align="center" style="width:33%;color:white;padding:0px;border-right:1px #5f7485 solid;border-left:1px #5f7485 solid">
+				<div align="center" style="width:33%;color:white;padding:0px;border-right:1px #5f7485 solid;border-left:1px #5f7485 solid">
 					<b>
 			{{stadiums.type}}  &#8226 {{stadiums.typefloor}}
 			</b>

@@ -14,12 +14,15 @@ angular.module('football.controllers')
                 try {
 
                     var user = firebase.auth().currentUser;
+
                     if (!(user === null || user == '' || user === undefined)) {
 
                         var id = user.uid;
+
                         if (!(id === null || id == '' || id === undefined)) {
 
                             if (!($scope.profile === null || $scope.profile == '' || $scope.profile === undefined)) {
+
                                 if ($scope.profile.id !== id) {
                                     $scope.profile = [];
                                     $scope.$apply();
@@ -325,6 +328,10 @@ angular.module('football.controllers')
                     var oldchallenges = [];
                     var newchallenges = [];
                     $scope.profile = leagues;
+
+                    if ($scope.profile.photo.trim() == "") {
+                        $scope.profile.photo = "img/PlayerProfile.png"
+                    }
                     //$scope.profile.upcominteamgmatches.push($scope.profile.upcomingmatches);
 
                     if (leagues.challenges.length > 0) {

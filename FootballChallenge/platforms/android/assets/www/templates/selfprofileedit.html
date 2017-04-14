@@ -425,11 +425,11 @@
 					</div>
 				</div>
 
-				<div class="row row-center" style="border-top:1px solid #5f7485;padding:5px 0px" align="left">
+				<div class="row" style="border-bottom:1px solid #5f7485;border-top:1px solid #5f7485;padding:5px 0px" align="left">
 					<div class="col col-80" style="padding:0 0 0 10px">
 						<h5 class="whitetext" style="padding:0px;color:rgb(153,167,180);font-size:14px">
 
-							DO YOU WANT TO BE INVITED TO TEAMS OR MATCHES ?
+							Do you want to be invited to teams or matches ?
 						</h5>
 					</div>
 					<div class="col col-20">
@@ -446,19 +446,33 @@
 
 
 				<div ng-show="currentprofile.available">
-					<label class="item item-input item-select" style="border-bottom:transparent;padding-bottom:15px;padding-top:16px;border-top:1px solid #5f7485;color:rgb(153,167,180);font-size:14px;background-color:transparent;padding-left:10px">
-						FAVORITE STADIUM
-						
-		<select ng-model="adduser.favstadium" style="background-color:transparent;border-color:transparent;color:#2ab041" >
-							<option selected>Select a Stadium</option>
-							<option ng-repeat="item in allstadiums">{{item.name}}</option>
-					</select>
-					
-					</label>
-					<h6 align="center" style="margin-top:0px;border-bottom:1px solid #5f7485;color:#97a7b4">
-						<i class="ion-ios-information-outline" style="font-size:15px;color:#2ab041"></i> Info: Favorite stadium will be used
-						as your location.
+						<div class="row" style="padding-bottom:5px" ng-click="gochoosestadium(currentprofile)">
+					<div class="col col-66" ng-click="gochoosestadium(currentprofile)" align="left" style="padding-bottom:0px;color: white">
+						<h5 align=left style="padding-bottom:0px;color:rgb(153,167,180)">
+							FAVORITE STADIUM
+						</h5>
+						<div>
+						</div>
+
+					</div>
+
+					<h5 class="col col-33" ng-click="gochoosestadium(currentprofile)" align="center" style="border-radius:15px;border:1px solid #97a7b4;padding-top:5px;color:#2ab041">
+						{{currentprofile.favstadium| uppercase }}
+					</h5>
+				</diV>
+
+				<div class="row row center" style="border-bottom:1px solid #5f7485">
+					<div align="center" style="width:10%;padding:0px">
+						<i class="ion-ios-information-outline" style="margin-top:5px;font-size:30px;color:#2ab041"></i>
+
+					</div>
+
+					<h6 style="width:90%;padding:0px;color:rgb(153,167,180);font-size:13px" align="left">
+						Info: Favorite stadium will be used as your location
+
 					</h6>
+				</div>
+
 
 
 					<div align="left" style="margin-bottom:0px;padding-left: 10px;padding-right:10px ">

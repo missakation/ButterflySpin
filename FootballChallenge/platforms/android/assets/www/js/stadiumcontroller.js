@@ -19,7 +19,7 @@ angular.module('football.controllers')
 
             var picker = pickerView.show({
                 titleText: '', // default empty string
-                doneButtonText: 'Search', // dafault 'Done'
+                doneButtonText: 'Search Stadiums', // dafault 'Done'
                 cancelButtonText: 'Close', // default 'Cancel'
                 items: [{
                     values: dateArrayThingy,

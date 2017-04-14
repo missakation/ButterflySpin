@@ -13,7 +13,7 @@ angular.module('football.controllers', [])
 
                         var date = new Date();
                         var char = newuser.email.charAt(0).charCodeAt(0);
-                        
+
                         var identity = char;
                         var identity = identity.toString() + date.getDay().toString() + date.getSeconds().toString() + date.getMilliseconds().toString();
 
@@ -37,36 +37,37 @@ angular.module('football.controllers', [])
                                 cancelled: 0,
                                 cancelledweather: 0,
                                 didnotshowup: 0,
-                                startmonday: 0,
-                                startmondayend: 0,
-                                starttuesday: 0,
-                                starttuesdayend: 0,
-                                startwednesday: 0,
-                                startwednesdayend: 0,
-                                startthursday: 0,
-                                startthursdayend: 0,
-                                startfriday: 0,
-                                startfridayend: 0,
-                                startsaturday: 0,
-                                startsaturdayend: 0,
-                                startsunday: 0,
-                                startsundayend: 0,
+                                startmonday: 7,
+                                startmondayend: 23,
+                                starttuesday: 7,
+                                starttuesdayend: 23,
+                                startwednesday: 7,
+                                startwednesdayend: 23,
+                                startthursday: 7,
+                                startthursdayend: 23,
+                                startfriday: 7,
+                                startfridayend: 23,
+                                startsaturday: 7,
+                                startsaturdayend: 23,
+                                startsunday: 7,
+                                startsundayend: 23,
                                 favstadium: "",
                                 favstadiumphoto: "",
                                 photoURL: "",
                                 comments: "",
                                 ageset: 0,
-                                ageyear: 1,
+                                ageyear: 1990,
                                 agemonth: 1,
-                                ageday: 1990,
+                                ageday: 1,
                                 identity: identity,
-                                playerstatus:true,
-                                available:false,
-                                isplayer:true,
-                                teamdisplayed:"none",
-                                teamdisplayedkey:"none",
+                                playerstatus: true,
+                                available: false,
+                                isplayer: true,
+                                teamdisplayed: "none",
+                                teamdisplayedkey: "none",
 
-                                skillevel: "newbie"
+                                skillevel: "newbie",
+                                isbanned: false
 
                             }
                         //alert(newPostKey);
@@ -129,7 +130,7 @@ angular.module('football.controllers', [])
                                 telephone: "",
                                 enableinvitations: true,
                                 highestrating: 1500,
-                                firstname: "",
+                                firstname: newuser.displayName == null ? "" : newuser.displayName,
                                 lastname: "",
                                 status: "0",
                                 playposition: "Defender",
@@ -140,36 +141,37 @@ angular.module('football.controllers', [])
                                 cancelled: 0,
                                 cancelledweather: 0,
                                 didnotshowup: 0,
-                                startmonday: 0,
+                                startmonday: 7,
                                 startmondayend: 23,
-                                starttuesday: 0,
+                                starttuesday: 7,
                                 starttuesdayend: 23,
-                                startwednesday: 0,
+                                startwednesday: 7,
                                 startwednesdayend: 23,
-                                startthursday: 0,
+                                startthursday: 7,
                                 startthursdayend: 23,
-                                startfriday: 0,
+                                startfriday: 7,
                                 startfridayend: 23,
-                                startsaturday: 0,
+                                startsaturday: 7,
                                 startsaturdayend: 23,
-                                startsunday: 0,
+                                startsunday: 7,
                                 startsundayend: 23,
                                 favstadium: "",
                                 favstadiumphoto: "",
                                 photoURL: newuser.photoURL == null ? "" : newuser.photoURL,
                                 comments: "",
                                 ageset: 0,
-                                ageyear: 1,
+                                ageyear: 1990,
                                 agemonth: 1,
-                                ageday: 1990,
-                                identity:identity,
-                                playerstatus:true,
+                                ageday: 1,
+                                identity: identity,
+                                playerstatus: true,
 
-                                available:false,
-                                isplayer:true,
-                                teamdisplayed:"none",
-                                teamdisplayedkey:"none",
-                                skillevel: "newbie"
+                                available: false,
+                                isplayer: true,
+                                teamdisplayed: "none",
+                                teamdisplayedkey: "none",
+                                skillevel: "newbie",
+                                isbanned: false
 
 
                             }
@@ -245,7 +247,7 @@ angular.module('football.controllers', [])
 
 
 
-                    if (user != null) {
+                    if (user != null && newuser!=null && newuser!=undefined) {
 
                         LoginStore.GetUser(function (data) {
                             if (data) {
@@ -260,12 +262,12 @@ angular.module('football.controllers', [])
                                     user.sendEmailVerification().then(function () {
 
                                         var alertPopup = $ionicPopup.alert({
-                                            title: 'Account Registed',
+                                            title: 'Account Registered',
                                             template: 'Thank you for registering. Check your email or verification.You will be redirected to the homepage'
                                         });
 
                                         alertPopup.then(function () {
-                                            $state.go("app.homepage");
+                                             $state.go('app.firsttimelogin');
                                         });
                                     }, function (error) {
                                         alert(error.message);
@@ -299,12 +301,54 @@ angular.module('football.controllers', [])
 
         };
 
-    $scope.toggle = false;
+        $scope.toggle = false;
         $scope.LogIn = function (username) {
 
-            firebase.auth().signInWithEmailAndPassword($scope.registerusername, $scope.registerpassword).then(function (user) {
+            var usere = firebase.auth().currentUser;
+
+            if (!usere) {
+
+                firebase.auth().signInWithEmailAndPassword($scope.registerusername, $scope.registerpassword).then(function (user) {
+
+                    LoginStore.GetUser(function (data) {
+                        var user = firebase.auth().currentUser;
+                        if (data) {
+
+                            $state.go("app.homepage");
+                        }
+                        else {
+                            
+                            
+                            LoginStore.AddUser(user).then(function (result) {
+
+                                user.sendEmailVerification().then(function () {
+
+                                    $state.go('app.homepage');
+
+                                }, function (error) {
+                                    $state.go('app.homepage');
+                                });
+
+                            }, function (error) {
+                                // An error happened.
+                            });
 
 
+
+                        }
+
+                    });
+
+                })
+                    .catch(function (error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        alert(errorMessage);
+                        // ...
+                    });
+            }
+            else {
                 LoginStore.GetUser(function (data) {
                     if (data) {
 
@@ -331,17 +375,11 @@ angular.module('football.controllers', [])
                     }
 
                 });
-
-            })
-                .catch(function (error) {
-                    // Handle Errors here.
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    alert(errorMessage);
-                    // ...
-                });
+            }
         };
-                $scope.Switch = function () {
+
+
+        $scope.Switch = function () {
 
             $scope.toggle = !$scope.toggle;
 
@@ -376,7 +414,7 @@ angular.module('football.controllers', [])
                                                         }
                                                         else {
                                                             LoginStore.AddFbUser($scope.myprofile).then(function (result) {
-                                                                $state.go('app.homepage');
+                                                                $state.go('app.firsttimelogin');
                                                             }, function (error) {
                                                                 alert(error.message);
                                                             });
@@ -384,7 +422,7 @@ angular.module('football.controllers', [])
                                                     });
 
                                                 }
-                                            }, 3000);
+                                            }, 1000);
 
 
 
@@ -526,6 +564,221 @@ angular.module('football.controllers', [])
 
 
         };
+    })
+
+    .controller('FirstTimeLoginController', function ($scope, $state, $ionicPopup, TeamStores,ProfileStore1,$ionicHistory) {
+
+        
+
+        $scope.currentprofile =
+            {
+                startmonday: 7,
+                startmondayend: 23,
+                starttuesday: 7,
+                starttuesdayend: 23,
+                startwednesday: 7,
+                startwednesdayend: 23,
+                startthursday: 7,
+                startthursdayend: 23,
+                startfriday: 7,
+                startfridayend: 23,
+                startsaturday: 7,
+                startsaturdayend: 23,
+                startsunday: 7,
+                startsundayend: 23,
+                favstadium: "",
+                favstadiumphoto: "",
+                available: false,
+                skilllevel: "Newbie"
+            }
+
+        $scope.sliderskill = {
+            value: 3,
+            options: {
+                showSelectionBar: true,
+                floor: 0,
+                ceil: 3,
+                showSelectionBar: true,
+                hideLimitLabels: true,
+                stepsArray: ['Newbie', 'Not Bad', 'Solid', 'Pro']
+
+            }
+        };
+
+
+        $scope.slider1 = {
+            minValue: 7,
+            maxValue: 23,
+
+            options: {
+                floor: 7,
+                showSelectionBar: true,
+                hideLimitLabels: true,
+                autoHideLimitLabels: true,
+                getSelectionBarColor: function (value) {
+                    return 'White';
+                },
+                getPointerColor: function (value) {
+                    return '#2ab041';
+
+                },
+                ceil: 23,
+                draggableRange: false
+
+            }
+        };
+
+        $scope.slider2 = {
+            minValue: 7,
+            maxValue: 23,
+            options: {
+                floor: 7,
+                showSelectionBar: true,
+                hideLimitLabels: true,
+                autoHideLimitLabels: true,
+                getSelectionBarColor: function (value) {
+                    return 'White';
+                },
+                getPointerColor: function (value) {
+                    return '#2ab041';
+                },
+                ceil: 23,
+                draggableRange: false
+
+            }
+        };
+
+
+        $scope.slider3 = {
+            minValue: 7,
+            maxValue: 23,
+            options: {
+                floor: 7,
+                showSelectionBar: true,
+                hideLimitLabels: true,
+                autoHideLimitLabels: true,
+                getSelectionBarColor: function (value) {
+                    return 'White';
+                },
+                getPointerColor: function (value) {
+                    return '#2ab041';
+
+                },
+                ceil: 23,
+                draggableRange: false
+
+            }
+        };
+
+
+        $scope.slider4 = {
+            minValue: 7,
+            maxValue: 23,
+            options: {
+                floor: 7,
+                showSelectionBar: true,
+                hideLimitLabels: true,
+                autoHideLimitLabels: true,
+                getSelectionBarColor: function (value) {
+                    return 'White';
+                },
+                getPointerColor: function (value) {
+                    return '#2ab041';
+
+                },
+                ceil: 23,
+                draggableRange: false
+
+            }
+        };
+
+
+        $scope.slider5 = {
+            minValue: 7,
+            maxValue: 23,
+            options: {
+                floor: 7,
+                showSelectionBar: true,
+                hideLimitLabels: true,
+                autoHideLimitLabels: true,
+                getSelectionBarColor: function (value) {
+                    return 'White';
+                },
+                getPointerColor: function (value) {
+                    return '#2ab041';
+
+                },
+                ceil: 23,
+                draggableRange: false
+
+            }
+        };
+
+        $scope.slider6 = {
+            minValue: 7,
+            maxValue: 23,
+            options: {
+                floor: 7,
+                showSelectionBar: true,
+                hideLimitLabels: true,
+                autoHideLimitLabels: true,
+                getSelectionBarColor: function (value) {
+                    return 'White';
+                },
+                getPointerColor: function (value) {
+                    return '#2ab041';
+
+                },
+                ceil: 23,
+                draggableRange: false
+
+            }
+        };
+
+        $scope.slider7 = {
+            minValue: 7,
+            maxValue: 23,
+
+            options: {
+                floor: 7,
+                showSelectionBar: true,
+                hideLimitLabels: true,
+                autoHideLimitLabels: true,
+                getSelectionBarColor: function (value) {
+                    return 'White';
+                },
+                getPointerColor: function (value) {
+                    return '#2ab041';
+
+                },
+                ceil: 23,
+                draggableRange: false
+
+            }
+        };
+
+        $scope.gochoosestadium = function(stadium)
+        {
+
+        }
+
+        $scope.UpdateUser = function (profile) {
+
+             alert("test");
+             ProfileStore1.UpdateProfile(profile,false).then(function (result) {
+
+                $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
+                $state.go("app.homepage");
+
+            }, function (error) {
+                alert(error.message);
+            });
+
+        };
+
+
     })
 
 

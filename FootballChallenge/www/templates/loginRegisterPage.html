@@ -18,7 +18,7 @@
 			color: white
 		}
 		
-			input {
+		input {
 			width: 90%;
 			display: block;
 			border: none;
@@ -84,35 +84,40 @@
 		</div>
 
 		<br>
-
+		<div style="padding-left:20px">
+			<h5 style="color:Red">
+				{{errormessage}}
+			</h5>
+			<h5 style="color:Red">
+				{{errormessage1}}
+			</h5>
+		</div>
 		<div align="center" style="padding-top:10px;padding-bottom:10px">
 
-			<input  placeholder="First Name"  ng-model="registerdata.firstname" style="padding:20px;background-color:rgba(0, 0, 0, 0.4);padding-left:20px;color:#2ab041;border-radius:5px"
-			 placeholder="First Name" type="text" >
+
+			<input placeholder="First Name" ng-model="registerdata.firstname" style="padding:20px;background-color:rgba(0, 0, 0, 0.4);padding-left:20px;color:#2ab041;border-radius:5px"
+			 placeholder="First Name" type="text">
 			<br>
 			<input ng-model="registerdata.lastname" style="padding:20px;background-color:rgba(0, 0, 0, 0.4);padding-left:20px;color:#2ab041;border-radius:5px"
 			 type="text" placeholder="Last Name">
 			<br>
 			<input ng-model="registerdata.email" style="padding:20px;background-color:rgba(0, 0, 0, 0.4);padding-left:20px;color:#2ab041;border-radius:5px"
-			type="email"  placeholder="Email">
+			 type="email" placeholder="Email">
 			<br>
-			<input  ng-model="registerdata.password" style="padding:20px;background-color:rgba(0, 0, 0, 0.4);padding-left:20px;color:#2ab041;border-radius:5px"
-			 type="password"  placeholder="Password">
-			<br>
-			<input ng-model="registerdata.confirmpassword" style="padding:20px;background-color:rgba(0, 0, 0, 0.4);padding-left:20px;color:#2ab041;border-radius:5px"
-			  type="password"  placeholder="Retype Password">
+			<input ng-model="registerdata.password" style="padding:20px;background-color:rgba(0, 0, 0, 0.4);padding-left:20px;color:#2ab041;border-radius:5px"
+			 type="password" placeholder="Password">
 			<br>
 		</div>
 
 
-	<div class="padding" align="center" style="margin-top:-10px">
-				<button class="button button-balanced small_button" style="min-height:6vh;line-height:6vh;width:100%;color:white;background-color:#2ab041;border-radius: 20px;border-top:-5px"
-				 ng-click="Register()">
+		<div class="padding" align="center" style="margin-top:-10px">
+			<button class="button button-balanced small_button" style="min-height:6vh;line-height:6vh;width:100%;color:white;background-color:#2ab041;border-radius: 20px;border-top:-5px"
+			 ng-click="Register()">
                 Register
             </button>
-			
-			</div>
-		
+
+		</div>
+
 
 
 	</ion-content>

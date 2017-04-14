@@ -74,6 +74,8 @@ angular.module('football.controllers')
             showDelay: 0
         });
 
+        $scope.teamsizecounter = 0;
+
         $scope.validate =
             {
                 team: false,
@@ -166,176 +168,227 @@ angular.module('football.controllers')
 
 
         $scope.next = function () {
-
-            $scope.validate.teamsize = false;
-            $scope.validate.team = false;
-
-            var error = false;
-
-            $scope.disabledbutton = true;
             try {
-                var team = {
-                    teamname: $scope.adduser.teamname,
-                    teamadmin: "",
-                    rating: 0,
-                    pteamsize: $scope.adduser.pteamsize,
-                    favstadium: $scope.adduser.favstadium,
-                    homejersey: "",
-                    awayjersey: "",
-                    badge: false,
-                    five: $scope.adduser.five,
-                    six: $scope.adduser.six,
-                    seven: $scope.adduser.seven,
-                    eight: $scope.adduser.eight,
-                    nine: $scope.adduser.nine,
-                    ten: $scope.adduser.ten,
-                    eleven: $scope.adduser.eleven,
-                    photo: ""
+                TeamStores.GetTeamByName($scope.adduser.teamname, function (exist) {
 
-                };
+                    if (!exist) {
+                        $scope.validate.teamsize = false;
+                        $scope.validate.team = false;
 
-                for (var i = 0; i < $scope.allstadiums.length; i++) {
-                    if ($scope.adduser.favstadium == $scope.allstadiums[i].name) {
-                        team.photo = $scope.allstadiums[i].photo
+                        var error = false;
+
+                        $scope.disabledbutton = true;
+
+                        var team = {
+                            teamname: $scope.adduser.teamname,
+                            teamadmin: "",
+                            rating: 0,
+                            pteamsize: $scope.adduser.pteamsize,
+                            favstadium: $scope.adduser.favstadium,
+                            homejersey: "",
+                            awayjersey: "",
+                            badge: false,
+                            five: $scope.adduser.five,
+                            six: $scope.adduser.six,
+                            seven: $scope.adduser.seven,
+                            eight: $scope.adduser.eight,
+                            nine: $scope.adduser.nine,
+                            ten: $scope.adduser.ten,
+                            eleven: $scope.adduser.eleven,
+                            photo: ""
+
+                        };
+
+                        for (var i = 0; i < $scope.allstadiums.length; i++) {
+                            if ($scope.adduser.favstadium == $scope.allstadiums[i].name) {
+                                team.photo = $scope.allstadiums[i].photo
+                            }
+                        }
+
+                        if (!(team.five || team.six || team.seven || team.eight || team.nine || team.ten || team.eleven)) {
+                            $scope.validate.teamsize = true;
+                            $scope.disabledbutton = false;
+                            error = true;
+                        }
+                        if (team.teamname.length < 3 && team.teamname.length < 15) {
+                            $scope.validate.team = true;
+                            $scope.disabledbutton = false;
+                            error = true;
+                        }
+
+                        var counter = 0;
+                        counter = $scope.adduser.five ? counter + 1 : counter;
+                        counter = $scope.adduser.six ? counter + 1 : counter;
+                        counter = $scope.adduser.seven ? counter + 1 : counter;
+                        counter = $scope.adduser.eight ? counter + 1 : counter;
+                        counter = $scope.adduser.nine ? counter + 1 : counter;
+                        counter = $scope.adduser.ten ? counter + 1 : counter;
+                        counter = $scope.adduser.eleven ? counter + 1 : counter;
+
+                        if (counter < 2 && !$scope.validate.teamsize) {
+                            $scope.validate.teamsizemax = true;
+                            error = true;
+                        }
+
+                        if (!error) {
+                            $scope.validate.teamsize = false;
+                            $scope.validate.team = false;
+                            $scope.validate.teamsizemax = false;
+
+                            $state.go("app.teamadd1", {
+                                team1: team,
+                                myprofile: $scope.myprofile
+                            });
+                        }
+                        else {
+                            $scope.disabledbutton = false;
+                        }
+
                     }
-                }
+                    else {
 
-                if (!(team.five || team.six || team.seven || team.eight || team.nine || team.ten || team.eleven)) {
-                    $scope.validate.teamsize = true;
-                    $scope.disabledbutton = false;
-                    error = true;
-                }
-                if (team.teamname.length < 3 && team.teamname.length < 15) {
-                    $scope.validate.team = true;
-                    $scope.disabledbutton = false;
-                    error = true;
-                }
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Team Exists',
+                            template: 'Change Team Name'
+                        }).then(function () {
 
-                var counter = 0;
-                counter = $scope.adduser.five ? counter + 1 : counter;
-                counter = $scope.adduser.six ? counter + 1 : counter;
-                counter = $scope.adduser.seven ? counter + 1 : counter;
-                counter = $scope.adduser.eight ? counter + 1 : counter;
-                counter = $scope.adduser.nine ? counter + 1 : counter;
-                counter = $scope.adduser.ten ? counter + 1 : counter;
-                counter = $scope.adduser.eleven ? counter + 1 : counter;
+                        });
+                    }
 
-                if (counter < 2 && !$scope.validate.teamsize) {
-                    $scope.validate.teamsizemax = true;
-                    error = true;
-                }
-
-                if (!error) {
-                    $scope.validate.teamsize = false;
-                    $scope.validate.team = false;
-                    $scope.validate.teamsizemax = false;
-
-                    $state.go("app.teamadd1", {
-                        team1: team,
-                        myprofile: $scope.myprofile
-                    });
-                }
-                else {
-                    $scope.disabledbutton = false;
-                }
+                });
             }
 
             catch (error) {
                 alert(error.message);
                 $scope.disabledbutton = false;
             }
+        }
 
-
-
-        };
 
         $scope.updateteamsize = function (x) {
-            switch (x) {
-                case 1:
-                    if ($scope.adduser.five) {
-                        $scope.managecolors.five.color = "#28b041";
-                        $scope.managecolors.five.backcolor = "White";
-                        $scope.adduser.five = false;
-                    }
-                    else {
-                        $scope.managecolors.five.color = "white";
-                        $scope.managecolors.five.backcolor = "#28b041";
-                        $scope.adduser.five = true;
-                    }
 
-                    break;
-                case 2:
-                    if ($scope.adduser.six) {
-                        $scope.managecolors.six.color = "#28b041";
-                        $scope.managecolors.six.backcolor = "White";
-                        $scope.adduser.six = false;
-                    }
-                    else {
-                        $scope.managecolors.six.color = "white";
-                        $scope.managecolors.six.backcolor = "#28b041";
-                        $scope.adduser.six = true;
-                    }
-                    break;
-                case 3:
-                    if ($scope.adduser.seven) {
-                        $scope.managecolors.seven.color = "#28b041";
-                        $scope.managecolors.seven.backcolor = "White";
-                        $scope.adduser.seven = false;
-                    }
-                    else {
-                        $scope.managecolors.seven.color = "white";
-                        $scope.managecolors.seven.backcolor = "#28b041";
-                        $scope.adduser.seven = true;
-                    }
-                    break;
-                case 4:
-                    if ($scope.adduser.eight) {
-                        $scope.managecolors.eight.color = "#28b041";
-                        $scope.managecolors.eight.backcolor = "White";
-                        $scope.adduser.eight = false;
-                    }
-                    else {
-                        $scope.managecolors.eight.color = "white";
-                        $scope.managecolors.eight.backcolor = "#28b041";
-                        $scope.adduser.eight = true;
-                    }
-                    break;
-                case 5:
-                    if ($scope.adduser.nine) {
-                        $scope.managecolors.nine.color = "#28b041";
-                        $scope.managecolors.nine.backcolor = "White";
-                        $scope.adduser.nine = false;
-                    }
-                    else {
-                        $scope.managecolors.nine.color = "white";
-                        $scope.managecolors.nine.backcolor = "#28b041";
-                        $scope.adduser.nine = true;
-                    }
-                    break;
-                case 6:
-                    if ($scope.adduser.ten) {
-                        $scope.managecolors.ten.color = "#28b041";
-                        $scope.managecolors.ten.backcolor = "White";
-                        $scope.adduser.ten = false;
-                    }
-                    else {
-                        $scope.managecolors.ten.color = "white";
-                        $scope.managecolors.ten.backcolor = "#28b041";
-                        $scope.adduser.ten = true;
-                    }
-                    break;
-                case 7:
-                    if ($scope.adduser.eleven) {
-                        $scope.managecolors.eleven.color = "#28b041";
-                        $scope.managecolors.eleven.backcolor = "White";
-                        $scope.adduser.eleven = false;
-                    }
-                    else {
-                        $scope.managecolors.eleven.color = "white";
-                        $scope.managecolors.eleven.backcolor = "#28b041";
-                        $scope.adduser.eleven = true;
-                    }
-                    break;
+
+            var opposite = ($scope.adduser.five && x == 1)
+                ||
+                ($scope.adduser.six && x == 2)
+                ||
+                ($scope.adduser.seven && x == 3)
+                ||
+                ($scope.adduser.eight && x == 4)
+                ||
+                ($scope.adduser.nine && x == 5)
+                ||
+                ($scope.adduser.ten && x == 6)
+                ||
+                ($scope.adduser.eleven && x == 7);
+
+
+            if ((!opposite && $scope.teamsizecounter < 2) || opposite) {
+
+                if (opposite) {
+                    $scope.teamsizecounter--;
+                }
+                else {
+                    $scope.teamsizecounter++;
+                }
+                switch (x) {
+                    case 1:
+                        if ($scope.adduser.five) {
+                            $scope.managecolors.five.color = "#28b041";
+                            $scope.managecolors.five.backcolor = "White";
+                            $scope.adduser.five = false;
+                        }
+                        else {
+                            $scope.managecolors.five.color = "white";
+                            $scope.managecolors.five.backcolor = "#28b041";
+                            $scope.adduser.five = true;
+                        }
+
+                        break;
+                    case 2:
+                        if ($scope.adduser.six) {
+                            $scope.managecolors.six.color = "#28b041";
+                            $scope.managecolors.six.backcolor = "White";
+                            $scope.adduser.six = false;
+                        }
+                        else {
+                            $scope.managecolors.six.color = "white";
+                            $scope.managecolors.six.backcolor = "#28b041";
+                            $scope.adduser.six = true;
+                        }
+                        break;
+                    case 3:
+                        if ($scope.adduser.seven) {
+                            $scope.managecolors.seven.color = "#28b041";
+                            $scope.managecolors.seven.backcolor = "White";
+                            $scope.adduser.seven = false;
+                        }
+                        else {
+                            $scope.managecolors.seven.color = "white";
+                            $scope.managecolors.seven.backcolor = "#28b041";
+                            $scope.adduser.seven = true;
+                        }
+                        break;
+                    case 4:
+                        if ($scope.adduser.eight) {
+                            $scope.managecolors.eight.color = "#28b041";
+                            $scope.managecolors.eight.backcolor = "White";
+                            $scope.adduser.eight = false;
+                        }
+                        else {
+                            $scope.managecolors.eight.color = "white";
+                            $scope.managecolors.eight.backcolor = "#28b041";
+                            $scope.adduser.eight = true;
+                        }
+                        break;
+                    case 5:
+                        if ($scope.adduser.nine) {
+                            $scope.managecolors.nine.color = "#28b041";
+                            $scope.managecolors.nine.backcolor = "White";
+                            $scope.adduser.nine = false;
+                        }
+                        else {
+                            $scope.managecolors.nine.color = "white";
+                            $scope.managecolors.nine.backcolor = "#28b041";
+                            $scope.adduser.nine = true;
+                        }
+                        break;
+                    case 6:
+                        if ($scope.adduser.ten) {
+                            $scope.managecolors.ten.color = "#28b041";
+                            $scope.managecolors.ten.backcolor = "White";
+                            $scope.adduser.ten = false;
+                        }
+                        else {
+                            $scope.managecolors.ten.color = "white";
+                            $scope.managecolors.ten.backcolor = "#28b041";
+                            $scope.adduser.ten = true;
+                        }
+                        break;
+                    case 7:
+                        if ($scope.adduser.eleven) {
+                            $scope.managecolors.eleven.color = "#28b041";
+                            $scope.managecolors.eleven.backcolor = "White";
+                            $scope.adduser.eleven = false;
+                        }
+                        else {
+                            $scope.managecolors.eleven.color = "white";
+                            $scope.managecolors.eleven.backcolor = "#28b041";
+                            $scope.adduser.eleven = true;
+                        }
+                        break;
+                }
+            }
+            else {
+                if ($scope.teamsizecounter == 2) {
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Wrong',
+                        template: 'You cannot select more than 2'
+                    }).then(function () {
+
+                    });
+                }
+
             }
         }
 
@@ -668,11 +721,11 @@ angular.module('football.controllers')
                                 }
                             }
                         }
-                        
+
                     }
 
 
-                    
+
 
                 })
             }, 500);
@@ -1202,7 +1255,7 @@ angular.module('football.controllers')
 
     })
 
-    .controller('InvitePlayersController', function ($scope, $ionicPopup, $ionicHistory, HomeStore, $ionicLoading, $state, $stateParams, SearchStore, TeamStores, $timeout) {
+    .controller('InvitePlayersController', function ($scope, ProfileStore1, $ionicPopup, $ionicHistory, HomeStore, $ionicLoading, $state, $stateParams, SearchStore, TeamStores, $timeout) {
 
         $scope.notloaded = true;
 
@@ -1210,15 +1263,25 @@ angular.module('football.controllers')
 
 
         $timeout(function () {
-            SearchStore.SearchPlayers($scope.myteam, function (leagues) {
+            ProfileStore1.SearchPlayers($scope.myteam, function (leagues) {
                 $scope.allplayers = leagues;
-                HomeStore.GetProfileInfo(function (players) {
+
+                var date = new Date();
+                HomeStore.GetProfileInfo(date, function (players) {
                     $scope.profile = players;
                     $scope.notloaded = false;
                     $scope.$apply();
+
+                }, function (error) {
+                    $scope.notloaded = false;
+                    $scope.$apply();
                 })
+
+            }, function (error) {
+                $scope.notloaded = false;
+                $scope.$apply();
             })
-        }, 2000)
+        }, 1000)
 
 
 

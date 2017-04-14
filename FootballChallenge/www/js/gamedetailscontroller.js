@@ -29,7 +29,7 @@ angular.module('football.controllers')
                     $scope.challenge = challengedetails;
 
                     //alert(JSON.stringify($scope.challenge));
-                    
+                    console.log(challengedetails);
                     
                     if ($scope.challenge.team1adminid === $scope.myid) {
                         $scope.isadmin = true;
@@ -55,7 +55,7 @@ angular.module('football.controllers')
                         TeamStores.GetTeamByKey($scope.currentteam, function (myteam) {
 
                             $scope.myteam = myteam;
-
+                            console.log(myteam);
 
                             $scope.myplayers = $scope.myteam.players;
                             
@@ -99,7 +99,7 @@ angular.module('football.controllers')
                             
                             $scope.$apply();
                           //  alert("test2");
-
+                          console.log($scope.isadmin);
                         })
                     }
                     $scope.notloaded = false;

@@ -373,7 +373,7 @@
 		z-index: 9999;
 		position: absolute;
 		left: 0;
-		top: 50px;
+		top: 5.3%;
 		text-align: center;
 		width: 100%;
 		width: 100vw;
@@ -394,10 +394,10 @@
 		display: -ms-flexbox;
 		display: flex;
 		position: relative;
-		background-color: white;
 		z-index: 3;
-		height: 6vh;
-		background-color: rgb(42, 62, 82);
+		height: 47px;
+		background-color: transparent;
+		top:155px;
 	}
 	
 	.picker-view .picker-accessory-bar .picker-title {
@@ -421,17 +421,18 @@
 	}
 	
 	.picker-view .picker-accessory-bar .button:first-of-type {
-		left: 1%;
-		background-color: rgb(42, 62, 82);
+		left: 5%;
+		background-color: transparent;
 		color: white;
-		font-size: 4.5vh;
+		font-size: 2vh;
 	}
 	
 	.picker-view .picker-accessory-bar .button:last-of-type {
-		right: 1%;
-		background-color: rgb(42, 62, 82);
-		color: lime;
-		font-size: 4.5vh;
+		right: 0%;
+		background-color: #2ab041;
+		color: white;
+		font-size: 3vh;
+		width:100%;
 	}
 	
 	.picker-view .picker-content {
@@ -442,7 +443,8 @@
 		display: flex;
 		position: relative;
 		background-color: white;
-		height: 80%;
+				height: 60%;
+		top:15px;
 	}
 	
 	.picker-view .picker-content .picker-scroll {
@@ -450,7 +452,7 @@
 		width: 100%;
 		height: 100%;
 		margin: auto;
-		font-size: 14px;
+		font-size: 16px;
 		padding-left: 0px;
 		padding-right: 0px;
 		line-height: normal;
@@ -604,12 +606,7 @@
 		}
 	}
 	
-	.button {
-		border-style: none;
-		line-height: 0px;
-		min-height: 0px;
-	}
-	/** end **/
+
 </style>
 
 
@@ -760,7 +757,7 @@
 			<!--<label class="item item-input">-->
 
 
-			<input class="button open-button" ng-readonly="true" on-tap="openPickerView()" style="border-radius:0px;color:white;width:100%;line-height:40px;padding-bottom:0px;margin-bottom:0px;background-color:darkturquoise"
+			<input class="button open-button" ng-readonly="true" on-tap="openPickerView()" style="border-radius:0px;color:white;width:100%;line-height:40px;padding-bottom:0px;margin-bottom:0px;background-color:#2ab041"
 			 ng-model="search.text">
 			<!--<input type="datetime-local" step="30"  ng-model="search.date" ng-change="checkfree()">-->
 			<!--</label>-->

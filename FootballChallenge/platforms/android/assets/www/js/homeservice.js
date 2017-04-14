@@ -3,7 +3,7 @@ angular.module('football.controllers')
 
     .factory('HomeStore', function () {
         var myprofile = {};
-
+        var profile = {};
         var TempItems = [];
         var RankedTeams = [];
         return {
@@ -300,8 +300,8 @@ angular.module('football.controllers')
                             "key": snapshot.key,
                             "displayname": snapshot.child("displayname").val(),
                             "firstname": snapshot.child("firstname").val(),
-                            "highestrating": snapshot.child("highestrating").val(),
                             "lastname": snapshot.child("lastname").val(),
+                            "highestrating": snapshot.child("highestrating").val(),
                             "middlename": snapshot.child("middlename").val(),
                             "playposition": snapshot.child("playposition").val(),
                             "ranking": snapshot.child("ranking").val(),
@@ -320,6 +320,44 @@ angular.module('football.controllers')
 
                         };
                         callback(myprofile);
+                    }, function (error) {
+                        alert(error.message);
+                    });
+                } catch (error) {
+
+                }
+                // return myprofile;
+            },
+
+            GetProfileInfoByKey: function (key, callback) {
+                TempItems = [];
+                var user = firebase.auth().currentUser;
+                //alert("test");
+                var id = user.uid;
+
+                try {
+
+
+                    firebase.database().ref('/players/' + id).once('value', function (snapshot) {
+
+
+                        profile = {
+                            "key": snapshot.key,
+                            "displayname": snapshot.child("displayname").val(),
+                            "firstname": snapshot.child("firstname").val(),
+                            "lastname": snapshot.child("lastname").val(),
+                            "highestrating": snapshot.child("highestrating").val(),
+                            "middlename": snapshot.child("middlename").val(),
+                            "playposition": snapshot.child("playposition").val(),
+                            "ranking": snapshot.child("ranking").val(),
+                            "status": snapshot.child("status").val(),
+                            "photo": snapshot.child("photoURL").val(),
+                            //"teams": snapshot.child("teams").exists() ? snapshot.child("teams").val() : "",
+                            "telephone": snapshot.child("telephone").val(),
+                            "winstreak": snapshot.child("winstreak").val(),
+
+                        };
+                        callback(profile);
                     }, function (error) {
                         alert(error.message);
                     });

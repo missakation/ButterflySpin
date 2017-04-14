@@ -81,6 +81,16 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                 }
             })
 
+            .state('app.firsttimelogin', {
+                url: '/firsttimelogin',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/firsttimelogin.html',
+                        controller: 'FirstTimeLoginController'
+                    }
+                }
+            })
+
             .state('app.browse', {
                 url: '/browse',
                 views: {
@@ -103,8 +113,7 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                 url: '/feedbacks',
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/feedbacks.html',
-                        controller: 'PlaylistsCtrl'
+                        templateUrl: 'templates/feedbacks.html'
                     }
                 }
             })
@@ -134,20 +143,12 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                 url: '/availableplayers',
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/availableplayers.html'
+                        templateUrl: 'templates/availableplayers.html',
+                        controller: "SearchController"
                     }
                 }
             })
 
-            .state('app.single', {
-                url: '/homepage/:playlistId',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/playlist.html',
-                        controller: 'PlaylistCtrl'
-                    }
-                }
-            })
             .state('app.chooseyourteam', {
                 url: '/chooseyourteam',
                 views: {
@@ -164,8 +165,7 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                 url: '/availablestadiums',
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/availablestadiums.html',
-                        controller: 'PlaylistCtrl'
+                        templateUrl: 'templates/availablestadiums.html'
                     }
                 }
             })
@@ -207,7 +207,7 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                 url: '/teamadd1',
                 params: {
                     team1: null,
-                    myprofile:null
+                    myprofile: null
                 },
                 views: {
                     'menuContent': {
@@ -222,7 +222,7 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                 url: '/teamadd2',
                 params: {
                     team2: null,
-                    myprofile:null
+                    myprofile: null
                 },
                 views: {
                     'menuContent': {
@@ -287,6 +287,17 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                     }
                 }
             })
+
+            .state('app.profileview', {
+                url: '/profileview/:key',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/profileview.html',
+                        controller: 'profilecontroller'
+                    }
+                }
+            })
+
             .state('app.selfprofileedit', {
                 url: '/selfprofileedit',
                 params: {

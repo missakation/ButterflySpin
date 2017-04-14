@@ -37,7 +37,7 @@
                 <ion-item ng-hide="players.length > 0" style="border:0px;background-color:#3E5364;color:white">No players found</ion-item>
                 <ion-scroll ng-show="players.length > 0" direction="x" class="item wide-item" style="border:0px;background-color:#3E5364">
                     <div class="row" style="background-color:#3E5364">
-                        <div class="col" ng-repeat="player in players">
+                        <div class="col" ng-repeat="player in players" ui-sref="app.profileview({key: player.uid})">
                             <div class="row">
 
                                 <div class="col">

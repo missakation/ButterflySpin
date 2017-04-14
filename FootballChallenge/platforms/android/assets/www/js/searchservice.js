@@ -4,8 +4,9 @@ angular.module('football.controllers')
     .factory('SearchStore', function () {
         var TempItems = [];
         var AllPlayers = [];
-
+        var AvailablePlayers = [];
         return {
+            
             SearchAvailablePlayers: function (searchinfo, callback) {
                 AvailablePlayers = [];
 
@@ -98,7 +99,6 @@ angular.module('football.controllers')
                                         "status": childSnapshot.child("status").val(),
                                         "teams": childSnapshot.child("teams").val(),
                                         "telephone": childSnapshot.child("telephone").val(),
-                                        "userdescription": childSnapshot.child("userdescription").val(),
                                         "winstreak": childSnapshot.child("winstreak").val(),
                                         "favstadium": childSnapshot.child("favstadium").val(),
                                         "favstadiumphoto": childSnapshot.child("favstadiumphoto").val(),
@@ -168,79 +168,7 @@ angular.module('football.controllers')
                 return TempItems;
             },
 
-            SearchPlayers: function (team, callback) {
 
-                var user = firebase.auth().currentUser;
-                var id = user.uid;
-
-                AllPlayers = [];
-
-                try {
-
-                    firebase.database().ref('/players').once('value').then(function (snapshot) {
-
-                        snapshot.forEach(function (childSnapshot) {
-
-                            var toadd = true;
-
-                            //       if (childSnapshot.key != id) {
-
-                            var status = "Invite to Team";
-
-                            if (childSnapshot.child("teaminvitations/" + team.key).exists()) {
-
-                                switch (childSnapshot.child("teaminvitations/" + team.key + "/status")) {
-                                    case 0:
-                                        status = "Pending Request";
-                                        break;
-                                    case 1:
-                                        toadd = false;
-                                        break;
-                                    case 2:
-                                        status = "Invite to Team";
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-
-                            }
-
-                            if (toadd) {
-
-                                var Items = {
-                                    "key": childSnapshot.key,
-                                    "displayname": childSnapshot.child("displayname").val(),
-                                    "enableinvitations": childSnapshot.child("enableinvitations").val(),
-                                    "favouritesport": childSnapshot.child("favouritesport").val(),
-                                    "firstname": childSnapshot.child("firstname").val(),
-                                    "highestrating": childSnapshot.child("highestrating").val(),
-                                    "lastname": childSnapshot.child("lastname").val(),
-                                    "middlename": childSnapshot.child("middlename").val(),
-                                    "playposition": childSnapshot.child("playposition").val(),
-                                    "ranking": childSnapshot.child("ranking").val(),
-                                    "status": status,
-                                    "teams": childSnapshot.child("teams").val(),
-                                    "telephone": childSnapshot.child("telephone").val(),
-                                    "winstreak": childSnapshot.child("winstreak").val(),
-                                    "photo": childSnapshot.child("photo").val()
-
-                                };
-
-                                AllPlayers.push(Items);
-                            }
-
-                            //     }
-
-                        });
-                        callback(AllPlayers);
-                    })
-
-                } catch (error) {
-                    alert(error.message);
-                }
-
-            },
 
             SearchStadiums: function (description) {
                 TempItems = [];

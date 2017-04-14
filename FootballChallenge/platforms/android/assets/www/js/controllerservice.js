@@ -47,7 +47,7 @@ angular.module('football.controllers', [])
                                 favstadium:"",
                                 favstadiumphoto:"",
 
-                                agestatus:false;
+                                agestatus:false,
                                 ageyear:"",
                                 agemonth:"",
                                 ageday:""

@@ -43,7 +43,7 @@
         <div class="card" ng-show="!notloaded" style="margin:7px 10px;border-color:transparent">
             <div class="row" style="padding:20px 0 0 0;margin:0px;background-color:rgb(62,83,100);border: none">
 
-                <div class="col" align="center" ng-click="goteamprofile(rankedteams[0].key)" style="padding:0px;margin:0px">
+                <div class="col" align="center" ng-click="goteamprofile(rankedteams[1].key)" style="padding:0px;margin:0px">
                     <h5 class="whitetext" style="font-weight:bold;text-transform:capitalize;color:white"> {{rankedteams[1].teamname}}</h5>
                     <img src="img/Badges/{{rankedteams[1].badge}}.png" style="width:57px;height:60px">
                     <h4 class="whitetext" style="margin-bottom:3px;font-size:20px;font-weight:bold;text-transform:capitalize;color:white">
@@ -71,15 +71,15 @@
             <div class="row" style="color:darkturquoise;padding:0px;margin:0px;background-color:rgb(62,83,100);border: none">
 
                 <div class="col" align="center">
-                    2400 AR
+                    {{rankedteams[1].rank}} AR
                 </div>
 
                 <div class="col" align="center">
-                    2550 AR
+                    {{rankedteams[0].rank}} AR
                 </div>
 
                 <div class="col" align="center">
-                    2300 AR
+                    {{rankedteams[2].rank}} AR
                 </div>
 
 
@@ -121,7 +121,7 @@
                 </div>
                 <div class="col">
                     <h5 class="whitetext" align="right" style="color: DarkTurquoise; font-weight:bold">
-                        2100AR
+                        {{item.rank}}AR
                     </h5>
 
                 </div>

@@ -1,7 +1,7 @@
 ﻿
 angular.module('football.controllers')
 
-    .controller('SearchController', function ($scope, SearchStore, $ionicPopup,$ionicPopover, $timeout, $ionicLoading) {
+    .controller('SearchController', function ($scope, SearchStore, $ionicPopup, $ionicPopover, $timeout, $ionicLoading) {
 
         // .fromTemplate() method
         var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
@@ -11,7 +11,7 @@ angular.module('football.controllers')
         });
 
         // .fromTemplateUrl() method
-        $ionicPopover.fromTemplateUrl('templates/my-popovers.html', {
+        $ionicPopover.fromTemplateUrl('templates/player-popover.html', {
             scope: $scope
         }).then(function (popover) {
             $scope.popover = popover;
@@ -38,8 +38,6 @@ angular.module('football.controllers')
         $scope.$on('popover.removed', function () {
             // Execute action
         });
-
-
 
         var freestadiums = [];
 
@@ -80,8 +78,12 @@ angular.module('football.controllers')
 
             //})
             SearchStore.SearchAvailablePlayers($scope.search, function (leagues) {
-                $ionicLoading.hide();
                 $scope.allfreeplayers = leagues;
+
+                SearchStore.GetMyProfileInfo(function (profile) {
+                    $ionicLoading.hide();
+                    $scope.myprofile = profile;
+                })
 
             })
 
@@ -99,14 +101,7 @@ angular.module('football.controllers')
         //})
         try {
             $timeout(function () {
-                SearchStore.SearchAvailablePlayers($scope.search, function (leagues) {
-                    $scope.allfreeplayers = leagues;
-
-                    SearchStore.GetMyProfileInfo(function (profile) {
-                        $ionicLoading.hide();
-                        $scope.myprofile = profile;
-                    })
-                })
+                $scope.checkfree();
             }, 2000)
 
         }
@@ -117,21 +112,24 @@ angular.module('football.controllers')
         $scope.requestnumber = function (player) {
 
 
+            if (!(player == null || player == undefined || player == []) && !($scope.myprofile == null || $scope.myprofile == undefined || $scope.myprofile == [])) {
 
-            if (!player.status > 0) {
 
-                SearchStore.RequestNumber($scope.myprofile, player).then(function (value) {
+                if (!player.status > 0) {
 
-                    player.status = 1;
-                    player.statusdesc = "Number Requested";
-                    player.color = "white";
-                    player.backcolor = "#2ab042";
-                    $scope.apply();
+                    SearchStore.RequestNumber($scope.myprofile, player).then(function (value) {
 
-                }, function (error) {
+                        player.status = 1;
+                        player.statusdesc = "Number Requested";
+                        player.color = "white";
+                        player.backcolor = "#2ab042";
+                        $scope.apply();
+
+                    }, function (error) {
                         alert(error.message);
                     })
 
+                }
             }
 
         }

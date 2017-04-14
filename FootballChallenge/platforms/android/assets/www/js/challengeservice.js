@@ -30,7 +30,6 @@ angular.module('football.controllers')
                             "rank": childSnapshot.child("rank").val(),
                             "numberofgames": childSnapshot.child("numberofgames").val(),
                             "wins": childSnapshot.child("wins").val(),
-                            "teamadmin": childSnapshot.child("teamadmin").val(),
 
                         };
 
@@ -66,8 +65,10 @@ angular.module('football.controllers')
 
                                     "key": childSnapshot.key,
                                     "teamname": childSnapshot.child("teamname").val(),
-                                    "teamphoto": childSnapshot.child("teamphoto").val(),
-                                    "datecreated": childSnapshot.child("datecreated").val(),
+                                    'teamphoto': childSnapshot.child("teamphoto").val(),
+                                    'datecreated': childSnapshot.child("datecreated").val(),
+                                    'badge': childSnapshot.child("badge").val(),
+                                    "teamadmin": childSnapshot.child("teamadmin").val(),
                                     "homejersey": childSnapshot.child("homejersey").val(),
                                     "awayjersey": childSnapshot.child("awayjersey").val(),
                                     "badge": childSnapshot.child("badge").val(),
@@ -166,11 +167,8 @@ angular.module('football.controllers')
             },
             ChallengeTeams: function (date, teams, stadiums, myteam, myprofile) {
 
-                //alert(JSON.stringify(teams));
-                //alert(JSON.stringify(stadiums));
-                //alert(JSON.stringify(myteam));
 
-                alert(myprofile.photo);
+                //alert(myprofile.photo);
 
                 var updates = {};
 
@@ -365,14 +363,14 @@ angular.module('football.controllers')
                             team1logo: challenges.child("team1logo").val(),
                             team1name: challenges.child("team1name").val(),
                             team1rank: challenges.child("team1rank").val(),
-                            team1jersey: challenges.child("team1jersey"),
+                            team1jersey: challenges.child("team1jersey").val(),
 
                             team2adminid: challenges.child("team2adminid").val(),
                             team2key: challenges.child("team2key").val(),
                             team2logo: challenges.child("team2logo").val(),
                             team2name: challenges.child("team2name").val(),
                             team2rank: challenges.child("team2rank").val(),
-                            team2jersey: challenges.child("team2jersey"),
+                            team2jersey: challenges.child("team2jersey").val(),
 
                             challengeradmin: challenges.child("challengeradmin").val(),
                             year: challenges.child("year").val(),

@@ -61,9 +61,13 @@ angular.module('football.controllers')
 
         try {
             //works
-            ChallengeStore.GetAllTeamsNotMe(function (leagues) {
+
+            var date = new Date();
+            ChallengeStore.GetAllTeamsNotMe($scope.myteam,date,function (leagues) {
                 $ionicLoading.hide();
                 $scope.test = leagues;
+
+                
 
                 if (leagues.length == 0) {
                     var alertPopup = $ionicPopup.alert({
@@ -71,6 +75,7 @@ angular.module('football.controllers')
                         template: 'No Team Found'
                     });
                 }
+                $scope.$apply();
 
             })
         }

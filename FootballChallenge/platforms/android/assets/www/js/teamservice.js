@@ -82,6 +82,31 @@
                 return TempItems;
             },
 
+            GetRecommendedOpponents: function () {
+                firebase.database().ref('/teams').once('value').then(function (snapshot) {
+                    var firstName = snapshot.child("barca/teamphoto").val(); // "Ada"
+                    //alert(firstName);
+                    var members = 0;
+
+                    snapshot.forEach(function (childSnapshot) {
+
+                        var Items = {
+
+                            "key": childSnapshot.val(),
+                            "teamname": childSnapshot.child("teamname").val(),
+                            'teamphoto': childSnapshot.child("teamphoto").val(),
+                            'datecreated': datecreated
+                            //'members': childSnapshot.child("players").numChildren()
+
+                        };
+
+                        TempItems.push(Items)
+                    });
+                });
+
+                return TempItems;
+            },
+
             AddNewTeam: function (newteam, profile) {
                 //alert(user.teamname);
                 // Get a key for a new Post.
@@ -158,12 +183,16 @@
 
                     contact.players[id] = {
                         name: profile.displayname,
+                        firstname: profile.firstname,
+                        lastname: profile.lastname,
                         isadmin: true
                     };
 
                     contact.captain[id] =
                         {
                             name: profile.displayname,
+                            firstname: profile.firstname,
+                            lastname: profile.lastname,
                             isadmin: true
                         };
 
@@ -197,6 +226,8 @@
                     playerside.players[id] =
                         {
                             name: profile.displayname,
+                            firstname: profile.firstname,
+                            lastname: profile.lastname,
                             isadmin: "True"
                         };
 
@@ -267,7 +298,9 @@
                                     var data = {
 
                                         key: pl.key,
-                                        name: pl.child("name").val()
+                                        name: pl.child("name").val(),
+                                        firstname: pl.child("firstname").val(),
+                                        lastname: pl.child("lastname").val(),
 
                                     }
                                     admins.push(data);
@@ -289,6 +322,8 @@
 
                                             key: pl.key,
                                             name: pl.child("name").val(),
+                                            firstname: pl.child("firstname").val(),
+                                            lastname: pl.child("lastname").val(),
                                             isadmin: pl.child("isadmin").val(),
                                             itsme: pl.key == id,
                                             //for game details
@@ -408,9 +443,9 @@
                                 "teamofnine": snapshot.child("teamofnine").val(),
                                 "teamoften": snapshot.child("teamoften").val(),
                                 "teamofeleven": snapshot.child("teamofeleven").val(),
-                                "teamsizestring":"",
+                                "teamsizestring": "",
 
-                                "available":snapshot.child("available").val(),
+                                "available": snapshot.child("available").val(),
                                 "availablepng": snapshot.child("available").val() ? "available" : "busy"
 
                             };
@@ -438,7 +473,7 @@
 
                             var user = firebase.auth().currentUser;
                             var id = user.uid;
-                   
+
 
                             var Items = {
                                 "key": snapshot.key,
@@ -706,6 +741,26 @@
                     alert(error.message);
                 }
 
+            },
+
+            GetTeamByName: function (teamname, callback) {
+                try {
+
+                    firebase.database().ref("/teaminfo").orderByChild("teamname").equalTo(teamname).once('value').then(function (snapshot) {
+                        var exists = false;
+
+                        if (snapshot.exists()) {
+                            exists = true;
+                        }
+
+                        callback(exists);
+
+
+                    });
+                }
+                catch (error) {
+                    alert(error.message);
+                }
             }
 
 
