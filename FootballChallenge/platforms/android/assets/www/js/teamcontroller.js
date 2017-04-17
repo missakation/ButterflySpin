@@ -6,39 +6,24 @@ angular.module('football.controllers')
         $scope.showadd = true;
         $scope.notloaded = true;
 
-        $ionicLoading.show({
-            template: 'Loading...',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-        });
 
         //works
         //$timeout(function () {
 
         try {
-            $timeout(function () {
                 TeamStores.GetMyTeams(function (leagues) {
-                    $ionicLoading.hide();
                     $scope.test = leagues;
 
                     if (leagues.length == 0) {
-                        //    var alertPopup = $ionicPopup.alert({
-                        //        title: 'Empty',
-                        //        template: 'You do not below to any team right now'
-                        //    });
                     }
                     else if (leagues.length > 10) {
                         $scope.showadd = false;
 
                     }
                     $scope.notloaded = false;
-                    $scope.$apply
+                    $scope.$apply;
 
                 })
-            }, 2000);
-
 
         }
         catch (error) {
@@ -698,13 +683,18 @@ angular.module('football.controllers')
 
                         var teamsizestring = "";
 
-                        teamsizestring = $scope.currentprofile.teamoffive ? teamsizestring + "5v5 " : teamsizestring;
-                        teamsizestring = $scope.currentprofile.teamofsix ? teamsizestring + "6v6 " : teamsizestring;
-                        teamsizestring = $scope.currentprofile.teamofseven ? teamsizestring + "7v7 " : teamsizestring;
-                        teamsizestring = $scope.currentprofile.teamofeight ? teamsizestring + "8v8 " : teamsizestring;
-                        teamsizestring = $scope.currentprofile.teamofnine ? teamsizestring + "9v9 " : teamsizestring;
-                        teamsizestring = $scope.currentprofile.teamoften ? teamsizestring + "10v10 " : teamsizestring;
-                        teamsizestring = $scope.currentprofile.teamofeleven ? teamsizestring + "11v11 " : teamsizestring;
+                        teamsizestring = $scope.currentprofile.teamoffive ? teamsizestring + "5v5 ." : teamsizestring;
+                        teamsizestring = $scope.currentprofile.teamofsix ? teamsizestring + "6v6 ." : teamsizestring;
+                        teamsizestring = $scope.currentprofile.teamofseven ? teamsizestring + "7v7 ." : teamsizestring;
+                        teamsizestring = $scope.currentprofile.teamofeight ? teamsizestring + "8v8 ." : teamsizestring;
+                        teamsizestring = $scope.currentprofile.teamofnine ? teamsizestring + "9v9 ." : teamsizestring;
+                        teamsizestring = $scope.currentprofile.teamoften ? teamsizestring + "10v10 ." : teamsizestring;
+                        teamsizestring = $scope.currentprofile.teamofeleven ? teamsizestring + "11v11 ." : teamsizestring;
+
+                        if(teamsizestring.length>2)
+                        {
+                            teamsizestring = teamsizestring.substr(0,teamsizestring.length-1);
+                        }
 
                         $scope.currentprofile.teamsizestring = teamsizestring;
 

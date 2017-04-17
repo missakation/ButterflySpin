@@ -38,7 +38,14 @@
         },
         "cordova-plugin-image-picker": {
             "PACKAGE_NAME": "com.ionicframework.Arina"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.Arina"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.Arina"
+        }
+    }
 }

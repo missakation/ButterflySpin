@@ -78,8 +78,12 @@ angular.module('football.controllers')
 
             //})
             SearchStore.SearchAvailablePlayers($scope.search, function (leagues) {
-                $ionicLoading.hide();
                 $scope.allfreeplayers = leagues;
+
+                SearchStore.GetMyProfileInfo(function (profile) {
+                    $ionicLoading.hide();
+                    $scope.myprofile = profile;
+                })
 
             })
 
@@ -97,14 +101,7 @@ angular.module('football.controllers')
         //})
         try {
             $timeout(function () {
-                SearchStore.SearchAvailablePlayers($scope.search, function (leagues) {
-                    $scope.allfreeplayers = leagues;
-
-                    SearchStore.GetMyProfileInfo(function (profile) {
-                        $ionicLoading.hide();
-                        $scope.myprofile = profile;
-                    })
-                })
+                $scope.checkfree();
             }, 2000)
 
         }

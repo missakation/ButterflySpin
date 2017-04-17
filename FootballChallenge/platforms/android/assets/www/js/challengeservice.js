@@ -74,7 +74,9 @@ angular.module('football.controllers')
                                     "badge": childSnapshot.child("badge").val(),
                                     "rank": childSnapshot.child("rank").val(),
                                     "numberofgames": childSnapshot.child("numberofgames").val(),
-                                    "wins": childSnapshot.child("wins").val()
+                                    "wins": childSnapshot.child("wins").val(),
+
+                                    "rating": childSnapshot.child("rating").val(),
                                 };
 
                                 AllMyAdminTeams.push(Items)
@@ -124,7 +126,8 @@ angular.module('football.controllers')
                     callback(AllITems);
                 });
             },
-            GetAllTeamsNotMe: function (callback) {
+
+            GetAllAvailableTeams: function (callback) {
                 //    firebase.database().ref('/teams').limitToFirst(4).once('value').then(function (snapshot) {
                 firebase.database().ref('/teams').once('value').then(function (snapshot) {
                     //alert(firstName);
@@ -135,32 +138,164 @@ angular.module('football.controllers')
 
                     if (id !== null || id == '' || id === undefined) {
                         snapshot.forEach(function (childSnapshot) {
-                            if (!childSnapshot.child('players').child(id).exists()) {
+                            var Items = {
+                                "key": childSnapshot.key,
+                                "teamname": childSnapshot.child("teamname").val(),
+                                'teamphoto': childSnapshot.child("teamphoto").val(),
+                                //'datecreated': childSnapshot.child("datecreated").val(),
+                                "favstadium": "",
+                                "favstadiumphoto": childSnapshot.child("favstadiumphoto").val(),
+                                "favstadium": childSnapshot.child("favstadium").val(),
+                                "homejersey": childSnapshot.child("homejersey").val(),
+                                "awayjersey": childSnapshot.child("awayjersey").val(),
+                                "badge": childSnapshot.child("badge").val(),
+                                "rank": childSnapshot.child("rank").val(),
+                                "numberofgames": childSnapshot.child("numberofgames").val(),
+                                "wins": childSnapshot.child("wins").val(),
+                                "selected": "select",
+                                "color": "#28b041",
+                                "backcolor": "white",
+                                "teamadmin": childSnapshot.child("teamadmin").val(),
+                            };
 
-
-                                var Items = {
-                                    "key": childSnapshot.key,
-                                    "teamname": childSnapshot.child("teamname").val(),
-                                    'teamphoto': childSnapshot.child("teamphoto").val(),
-                                    //'datecreated': childSnapshot.child("datecreated").val(),
-                                    "favstadium": "",
-                                    "favstadiumphoto": childSnapshot.child("favstadiumphoto").val(),
-                                    "favstadium": childSnapshot.child("favstadium").val(),
-                                    "homejersey": childSnapshot.child("homejersey").val(),
-                                    "awayjersey": childSnapshot.child("awayjersey").val(),
-                                    "badge": childSnapshot.child("badge").val(),
-                                    "rank": childSnapshot.child("rank").val(),
-                                    "numberofgames": childSnapshot.child("numberofgames").val(),
-                                    "wins": childSnapshot.child("wins").val(),
-                                    "selected": "select",
-                                    "color": "#28b041",
-                                    "backcolor": "white",
-                                    "teamadmin": childSnapshot.child("teamadmin").val(),
-                                };
-
-                                AllITems.push(Items);
-                            }
+                            AllITems.push(Items)
                         });
+                    }
+                    callback(AllITems);
+                });
+            },
+            GetAllTeamsNotMe: function (myteam, date, callback) {
+
+
+
+                var year = date.getFullYear();
+                var month = date.getMonth();
+                var day = date.getDate();
+
+                var hour = date.getHours();
+                var minute = date.getMinutes();
+
+                var weekday = date.getDay();
+
+                var startat = "";
+                var startend = "";
+
+
+                switch (weekday) {
+                    case 0:
+                        startat = "startsunday";
+                        startend = "startsundayend";
+                        break;
+                    case 1:
+                        startat = "startmonday";
+                        startend = "startmondayend";
+                        break;
+                    case 2:
+                        startat = "starttuesday";
+                        startend = "starttuesdayend";
+                        break;
+                    case 3:
+                        startat = "startwednesday";
+                        startend = "startwednesdayend";
+                        break;
+                    case 4:
+                        startat = "startthursday";
+                        startend = "startthursdayend";
+                        break;
+                    case 5:
+                        startat = "startfriday";
+                        startend = "startfridayend";
+                        break;
+                    case 6:
+                        startat = "startsaturday";
+                        startend = "startsaturdayend";
+                        break;
+
+
+                    default:
+                        startat = "startmonday";
+                        startend = "startmondayend";
+
+                }
+                //    firebase.database().ref('/teams').limitToFirst(4).once('value').then(function (snapshot) {
+                firebase.database().ref('/teams').orderByChild(startend).startAt(hour).once('value').then(function (snapshot) {
+                    //alert(firstName);
+                    AllITems = [];
+
+                    var user = firebase.auth().currentUser;
+                    var id = user.uid;
+
+                    if (id !== null || id == '' || id === undefined) {
+
+                        if (snapshot.exists()) {
+
+                            snapshot.forEach(function (childSnapshot) {
+
+                                if (!childSnapshot.child('players').child(id).exists()) {
+
+                                    if (childSnapshot.child(startat).val() <= hour) {
+
+                                        if (childSnapshot.child("available").val()) {
+
+                                            var range = 1110 - childSnapshot.child("rating").val();
+
+                                            var difficulty = "";
+                                            var difficultytext = "";
+                                            switch (true) {
+                                                case range <= 100 && range >= -100:
+                                                    difficulty = "Medium.png";
+                                                    difficultytext = "Medium";
+                                                    break;
+                                                case range < -100 && range > -200:
+                                                    difficulty = "Hard.png";
+                                                     difficultytext = "Hard";
+                                                    break;
+                                                case range <= -200:
+                                                    difficulty = "Extreme.png";
+                                                     difficultytext = "Extreme";
+                                                    break;
+                                                case range > 100 && range <= 200:
+                                                    difficulty = "Easy.png";
+                                                     difficultytext = "Easy";
+                                                    break;
+                                                case range > 200:
+                                                    difficulty = "VeryEasy.png";
+                                                     difficultytext = "Very Easy";
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+
+                                            //alert(childSnapshot.key);
+                                            var Items = {
+
+                                                "key": childSnapshot.key,
+                                                "teamname": childSnapshot.child("teamname").val(),
+                                                'teamphoto': childSnapshot.child("teamphoto").val(),
+                                                //'datecreated': childSnapshot.child("datecreated").val(),
+                                                "favstadium": "",
+                                                "favstadiumphoto": childSnapshot.child("favstadiumphoto").val(),
+                                                "favstadium": childSnapshot.child("favstadium").val(),
+                                                "homejersey": childSnapshot.child("homejersey").val(),
+                                                "awayjersey": childSnapshot.child("awayjersey").val(),
+                                                "badge": childSnapshot.child("badge").val(),
+                                                "rank": childSnapshot.child("rank").val(),
+                                                "rating": childSnapshot.child("rating").val(),
+                                                "numberofgames": childSnapshot.child("numberofgames").val(),
+                                                "wins": childSnapshot.child("wins").val(),
+                                                "selected": "select",
+                                                "color": "#28b041",
+                                                "backcolor": "white",
+                                                "teamadmin": childSnapshot.child("teamadmin").val(),
+                                                "difficulty":difficulty,
+                                                "difficultytext":difficultytext
+                                            };
+                                            AllITems.push(Items);
+                                        }
+                                    }
+                                }
+                            });
+                        }
                     }
                     callback(AllITems);
                 });
@@ -221,7 +356,7 @@ angular.module('football.controllers')
                                     accepted: false,
                                     adminphoto: myprofile.photo,
                                     admintelephon: myprofile.telephone,
-                                    adminname: myprofile.displayname
+                                    adminname: myprofile.firstname + " " + myprofile.lastname
 
 
                                 }
@@ -262,7 +397,7 @@ angular.module('football.controllers')
 
                                     adminphoto: myprofile.photo,
                                     admintelephon: myprofile.telephone,
-                                    adminname: myprofile.displayname
+                                    adminname: myprofile.firstname + " " + myprofile.lastname
 
                                 }
 

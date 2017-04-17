@@ -26,7 +26,7 @@ angular.module('football.controllers')
 
                 
                 $scope.notloaded = false;
-                $scope.rankedteams = leagues;
+                $scope.rankedteams = leagues.reverse();
                 $scope.$apply();
 
                 $scope.$broadcast('scroll.infiniteScrollComplete');

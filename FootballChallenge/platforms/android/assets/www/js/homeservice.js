@@ -67,7 +67,7 @@ angular.module('football.controllers')
                                     isadmin: isadmin,
 
 
-                                    adminphoto: challenges.child("adminphoto").val(),
+                                    adminphoto: challenges.child("adminphoto").val() == "" ? "img/PlayerProfile.png" : challenges.child("adminphoto").val(),
                                     admintelephon: challenges.child("admintelephon").val(),
                                     adminname: challenges.child("adminname").val()
 
@@ -156,6 +156,7 @@ angular.module('football.controllers')
 
                                         stadiumkey: game.child("stadiumkey").val(),
                                         ministadiumkey: game.child("ministadiumkey").val(),
+                                        stadiumdescription: game.child("stadiumdescription").val(),
                                         photo: game.child("photo").val(),
                                         price: game.child("price").val(),
                                         stadiumdescription: game.child("stadiumdescription").val(),
@@ -200,7 +201,7 @@ angular.module('football.controllers')
 
                                     adminkey: challenges.child("adminkey").val(),
                                     admindisplayname: challenges.child("admindisplayname").val(),
-                                    adminphoto: challenges.child("adminphoto").val(),
+                                    adminphoto: challenges.child("adminphoto").val() == "" ? "img/PlayerProfile.png" : challenges.child("adminphoto").val(),
                                     admintelephone: challenges.child("admintelephone").val(),
 
                                 }
@@ -234,8 +235,9 @@ angular.module('football.controllers')
 
                                 var matchdata = {
                                     key: teams.key,
-                                    name: teams.child("requestorname").val(),
-                                    photo: teams.child("requestorphoto").val(),
+                                    firstname: teams.child("firstname").val(),
+                                    lastname: teams.child("lastname").val(),
+                                    photo: teams.child("requestorphoto").val() == "" ? "img/PlayerProfile.png" : teams.child("requestorphoto").val(),
                                     telephone: teams.child("requestortelephone").val()
 
                                 }
@@ -316,7 +318,9 @@ angular.module('football.controllers')
                             "gameinvitation": gameinvitation,
                             "myteams": myteams,
                             "requestednumbers": requestednumbers,
-                            "upcomingmatches": upcomingsinglematches
+                            "upcomingmatches": upcomingsinglematches,
+                            "teamdisplayed": "none",
+                            "teamdisplayedkey": snapshot.child("teamdisplayedkey").val(),
 
                         };
                         callback(myprofile);
@@ -355,6 +359,8 @@ angular.module('football.controllers')
                             //"teams": snapshot.child("teams").exists() ? snapshot.child("teams").val() : "",
                             "telephone": snapshot.child("telephone").val(),
                             "winstreak": snapshot.child("winstreak").val(),
+                            "teamdisplayed": "none",
+                            "teamdisplayedkey": snapshot.child("teamdisplayedkey").val(),
 
                         };
                         callback(profile);
@@ -557,6 +563,7 @@ angular.module('football.controllers')
                         team1logo: challenge.team1logo,
                         team1name: challenge.team1name,
                         team1rank: challenge.team1rank,
+
                         team2adminid: challenge.team2adminid,
                         team2key: challenge.team2key,
                         team2logo: challenge.team2logo,
@@ -634,7 +641,10 @@ angular.module('football.controllers')
                         updates['/teams/' + invitation.key + '/players/' + id] =
                             {
                                 isadmin: false,
-                                name: myprofile.displayname
+                                name: myprofile.displayname,
+                                name: myprofile.displayname,
+                                firstname: myprofile.firstname,
+                                lastname: myprofile.lastname
                             };
 
                         updates['/players/' + id + '/teams/' + invitation.key] =
@@ -674,7 +684,8 @@ angular.module('football.controllers')
 
                         updates['/players/' + request.key + '/friends/' + id] =
                             {
-                                name: request.name,
+                                firstname: request.firstname,
+                                lastname: request.lastname,
                                 key: request.key,
                                 telephone: request.telephone,
                                 photo: request.photo
@@ -701,7 +712,7 @@ angular.module('football.controllers')
 
                     if (id !== null || id == '' || id === undefined) {
 
-                        updates['/players/' + id + '/myrequests/' + request.key] = null;
+                        updates['/players/' + id + '/myrequests/' + request.key] = 2;
 
                     }
 
@@ -738,7 +749,7 @@ angular.module('football.controllers')
 
                     if (id !== null || id == '' || id === undefined) {
 
-                        updates['/players/' + id + '/teaminvitations/' + invitation.key] = null;
+                        updates['/players/' + id + '/teaminvitations/' + invitation.key + '/requeststatus'] = 2;
 
                     }
 

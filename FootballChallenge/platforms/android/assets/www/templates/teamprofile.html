@@ -1,7 +1,14 @@
 <!--Ari-->
 <ion-view view-title="Team Profile" align="center">
 	<style>
-	img {
+
+		.icon
+		{
+			font-size:18px;
+	
+
+		}
+	.img {
 			height: 100px;
 			width: 100px;
 		}
@@ -259,10 +266,10 @@
 		<div class="card" style="padding-bottom:0px; margin-bottom:10px" ng-hide="currentprofile.upcomingmatches.length === 0">
 			<ion-item style="border:none;padding:10px 0 10px 0">
 				<div align="center">
-					<h2 class="whitetext">
+					<div style="color:White;font-size:16px">
 						UPCOMING GAMES
 
-					</h2>
+					</div>
 				</div>
 			</ion-item>
 
@@ -278,6 +285,172 @@
 					</button>
 				</div>
 
+			</div>
+		</div>
+		   <div class="card" style="background-color:rgb(62,83,100); padding-bottom:0px">
+            <div style="margin-bottom:-4px">
+                <h4 class="whitetext" align="middle" style="background-color:rgb(62,83,100)"><b>TEAM MATCH HISTORY</b></h4>
+
+                <ion-slide-box style="padding:0px" on-slide-changed="slideHasChanged($index)">
+                    <ion-slide>
+                        <div class="row" style="padding:0px">
+
+
+                            <div class="col" style="padding-top:0px">
+                                <div class="list">
+
+                                    <div class="row">
+
+                                        <div class="col" align="center">
+                                            <a href="#/app/selfprofile">
+                                              <img src="img/Badges/{{currentprofile.badge}}.png" style="height:70px ; width:70px" height="50" />
+                                            </a>
+                                            <div align="center">
+                                                <h4 align="center" style="text-transform:capitalize;font-weight:bold;color:white"> {{currentprofile.teamname}}</h4>
+                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">404 not found</h5>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col" style="padding:0 0 10px 0">
+
+                                            <div align="center">
+                                                <h4 style="font-weight:bold;color:white">404 date</h4>
+
+                                                <h4 style="color:red">
+                                                    LOSS
+                                                </h4>
+                                                <h3 style="margin:25px 0 0 0;color:white;font-weight:bold">
+                                                    VS
+                                                </h3>
+                                                <h5 style="margin-top:6px;color:darkturquoise">-23 AR</h5>
+
+                                            </div>
+                                        </div>
+                                        <div class="col" align="center">
+
+                                            <a href="#/app/selfprofile">
+                                                <img src="img/Badges/{{rankedteams[1].badge}}.png" style="height:70px ; width:70px" height="50" />
+                                            </a>
+                                            <div align="center">
+                                                <h4 align="center" style="text-transform:capitalize;font-weight:bold;color:white">{{rankedteams[1].teamname}}</h4>
+                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">404 not found</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </ion-slide>
+
+                    <ion-slide>
+                        <div class="row" style="padding:0px">
+
+
+                            <div class="col" style="padding-top:0px">
+                                <div class="list">
+
+                                    <div class="row">
+
+                                        <div class="col" align="center">
+                                            <a href="#/app/selfprofile">
+                                                    <img src="img/Badges/{{currentprofile.badge}}.png" style="height:70px ; width:70px" height="50" />
+                                            </a>
+                                            <div align="center">
+                                                <h4 align="center" style="font-weight:bold;color:white">{{currentprofile.teamname}}</h4>
+                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">1500 AR</h5>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col" style="padding:0 0 10px 0">
+
+                                            <div align="center">
+                                                <h4 style="font-weight:bold;color:white">05-Mar-16</h4>
+
+                                                <h4 style="color:#2ab041">
+                                                    WIN
+                                                </h4>
+                                                <h3 style="margin:25px 0 0 0;color:white;font-weight:bold">
+                                                    VS
+                                                </h3>
+                                                <h5 style="padding-bottom:10px;margin-top:6px;color:#2ab041">+33 AR</h5>
+
+                                            </div>
+                                        </div>
+                                        <div class="col" align="center">
+
+                                            <a href="#/app/selfprofile">
+                                                <img src="img/Badges/{{rankedteams[0].badge}}.png" style="height:70px ; width:70px" height="50" />
+                                            </a>
+                                            <div align="center">
+                                                <h4 align="center" style="font-weight:bold;color:white">{{rankedteams[2].teamname}}</h4>
+                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">1500 AR</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </ion-slide>
+
+                    <ion-slide>
+                        <div class="row" style="padding:0px">
+
+
+                            <div class="col" style="padding-top:0px;background-color:darkred">
+                                <div class="list">
+
+                                    <div class="row">
+
+                                        <div class="col" align="center">
+                                            <a href="#/app/selfprofile">
+                                                    <img src="img/Badges/{{currentprofile.badge}}.png" style="height:70px ; width:70px" height="50" />
+                                            </a>
+                                            <div align="center">
+                                                <h4 align="center" style="font-weight:bold;color:white">{{currentprofile.teamname}}</h4>
+                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">1500 AR</h5>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col" style="padding:0 0 10px 0">
+
+                                            <div align="center">
+                                                <h4 style="font-weight:bold;color:white">02-Mar-16</h4>
+
+                                                <h4 style="color:white">
+                                                    Loss
+                                                </h4>
+                                                <h3 style="margin:25px 0 0 0;color:white;font-weight:bold">
+                                                    VS
+                                                </h3>
+                                                <h5 style="margin-top:6px;color:darkturquoise">-19 AR</h5>
+
+                                            </div>
+                                        </div>
+                                        <div class="col" align="center">
+
+                                            <a href="#/app/selfprofile">
+                                                <img src="img/Badges/{{rankedteams[0].badge}}.png" style="height:70px ; width:70px" />
+                                            </a>
+                                            <div align="center">
+                                                <h4 align="center" style="font-weight:bold;color:white">{{rankedteams[2].teamname}}</h4>
+                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">1500 AR</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </ion-slide>
+
+
+                </ion-slide-box>
+				</div>
 			</div>
 		</div>
 

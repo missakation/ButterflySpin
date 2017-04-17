@@ -1,7 +1,7 @@
 ﻿
 angular.module('football.controllers')
 
-    .controller('SearchController', function ($scope, SearchStore, $ionicPopup, $ionicPopover, $timeout, $ionicLoading) {
+    .controller('SearchController', function ($scope, SearchStore, $ionicPopup, $ionicPopover, $timeout, $ionicLoading, SMSService) {
 
         // .fromTemplate() method
         var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
@@ -117,17 +117,32 @@ angular.module('football.controllers')
 
                 if (!player.status > 0) {
 
-                    SearchStore.RequestNumber($scope.myprofile, player).then(function (value) {
+                    var userId = firebase.auth().currentUser.uid;
+                    $ionicLoading.show({
+                        content: 'Loading',
+                        animation: 'fade-in',
+                        showBackdrop: true,
+                        maxWidth: 200,
+                        showDelay: 0
+                    });
+                    firebase.database().ref('/players/' + userId).once('value').then(function (snapshot) {
+                        $ionicLoading.hide();
+                        if (!snapshot.val().isMobileVerified) {
+                            SMSService.verifyUserMobile($scope, $scope.requestnumber, [player])
+                        } else {
+                            SearchStore.RequestNumber($scope.myprofile, player).then(function (value) {
+                                console.log(4)
+                                player.status = 1;
+                                player.statusdesc = "Number Requested";
+                                player.color = "white";
+                                player.backcolor = "#2ab042";
+                                $scope.$apply();
 
-                        player.status = 1;
-                        player.statusdesc = "Number Requested";
-                        player.color = "white";
-                        player.backcolor = "#2ab042";
-                        $scope.apply();
-
-                    }, function (error) {
-                        alert(error.message);
-                    })
+                            }, function (error) {
+                                alert(error.message);
+                            })
+                        }
+                    });
 
                 }
             }

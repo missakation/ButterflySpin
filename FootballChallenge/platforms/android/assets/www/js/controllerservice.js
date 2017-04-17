@@ -6,7 +6,7 @@ angular.module('football.controllers', [])
 
         return {
 
-            AddUser: function (newuser,registerdata) {
+            AddUser: function (newuser, registerdata) {
                 try {
                     alert("test");
                     if (newuser != null) {
@@ -44,13 +44,13 @@ angular.module('football.controllers', [])
                                 startsaturdayend: 0,
                                 startsunday: 0,
                                 startsundayend: 0,
-                                favstadium:"",
-                                favstadiumphoto:"",
+                                favstadium: "",
+                                favstadiumphoto: "",
 
-                                agestatus:false,
-                                ageyear:"",
-                                agemonth:"",
-                                ageday:""
+                                agestatus: false,
+                                ageyear: "",
+                                agemonth: "",
+                                ageday: ""
 
                             }
                         //alert(newPostKey);
@@ -97,11 +97,8 @@ angular.module('football.controllers', [])
                 }
 
             }
-
         }
-
-    })
-
+        })
 
 
-    
+

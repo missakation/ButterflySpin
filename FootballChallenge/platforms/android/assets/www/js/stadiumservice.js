@@ -100,8 +100,8 @@ angular.module('football.controllers')
                                         "rating": 1,
                                         //"freetimes": freetimes,
                                         "SortPoints": 0,
-                                        "latitude":mainstadiumSnapshot.child("cordovalatitude").val(),
-                                        "longitude":mainstadiumSnapshot.child("cordovalongitude").val()
+                                        "latitude": mainstadiumSnapshot.child("cordovalatitude").val(),
+                                        "longitude": mainstadiumSnapshot.child("cordovalongitude").val()
                                         //"freedates":
                                         //{
                                         //    date : startdate
@@ -458,8 +458,35 @@ angular.module('football.controllers')
                 catch (error) {
                     alert(error);
                 }
+            },
+            CheckIfFree: function (stadiums, date, callback) {
+                try {
+                    var year = date.getFullYear();
+                    var month = date.getMonth();
+                    var day = date.getDate();
+
+                    var hour = date.getHours();
+                    var minute = date.getMinutes();
+
+                    var key = stadiums.stadiumkey;
+                    var subkey = stadiums.ministadiumkey;
+
+                    var newkey = subkey + year.toString() + month.toString() + day.toString() + hour.toString() + minute.toString();
+
+                    var exists = false;
+
+                    firebase.database().ref('/stadiums/' + key + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey)
+                        .once('value', function (snapshot) {
+                            if (snapshot.exists()) {
+                                exists = true;
+                            }
+                            callback(exists);
+                        })
+                }
+                catch (error) {
+                    alert(error.message);
+                }
+
             }
-
         }
-
     })

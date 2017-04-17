@@ -37,6 +37,10 @@ angular.module('football.controllers')
             //works
             $timeout(function () {
                 ProfileStore.GetProfileInfo(function (myprofile) {
+                    $scope.currentprofile = myprofile;
+                    if ($scope.currentprofile.photo.trim() == "") {
+                        $scope.currentprofile.photo = "img/PlayerProfile.png"
+                    }
                     if (myprofile.teamdisplayedkey !== "none") {
                         TeamStores.GetTeamInfoByKey(myprofile.teamdisplayedkey, function (favteam) {
                             if (favteam !== null || favteam !== undefined) {
@@ -54,6 +58,7 @@ angular.module('football.controllers')
                                 $scope.teamdisplayed.key = "";
                             }
 
+                           $scope.currentprofile["teamdisplayed"] = $scope.teamdisplayed.name == "" ? "Select a Team" : $scope.teamdisplayed.name;
 
 
 
@@ -68,10 +73,6 @@ angular.module('football.controllers')
 
                     $scope.notloaded = true;
                     $ionicLoading.hide();
-                    $scope.currentprofile = myprofile;
-                    if ($scope.currentprofile.photo.trim() == "") {
-                        $scope.currentprofile.photo = "img/PlayerProfile.png"
-                    }
                     $scope.$apply();
                     $scope.$broadcast('scroll.refreshComplete');
 
@@ -446,7 +447,7 @@ angular.module('football.controllers')
 
 
             if ($scope.currentprofile.teamdisplayed == "Select a Team" || $scope.currentprofile.teamdisplayed.trim() == "" || $scope.currentprofile.teamdisplayed.trim() == null) {
-                $scope.currentprofile.teamdisplayed = "none";
+                $scope.currentprofile.teamdisplayedkey = "none";
             }
             else {
                 for (var i = 0; i < $scope.currentprofile.myteams.length; i++) {
@@ -601,7 +602,7 @@ angular.module('football.controllers')
         $scope.refreshpage = function () {
             //works
             $timeout(function () {
-                HomeStore.GetProfileInfoByKey($stateParams.key,function (myprofile) {
+                HomeStore.GetProfileInfoByKey($stateParams.key, function (myprofile) {
                     if (myprofile.teamdisplayedkey !== "none") {
                         TeamStores.GetTeamInfoByKey(myprofile.teamdisplayedkey, function (favteam) {
                             if (favteam !== null || favteam !== undefined) {

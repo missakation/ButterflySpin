@@ -6,7 +6,7 @@ angular.module('football.controllers')
         var AllPlayers = [];
         var AvailablePlayers = [];
         return {
-            
+
             SearchAvailablePlayers: function (searchinfo, callback) {
                 AvailablePlayers = [];
 
@@ -80,11 +80,37 @@ angular.module('football.controllers')
                                 if (childSnapshot.child(startat).val() <= hour && childSnapshot.child("enableinvitations").val()) {
 
                                     if (childSnapshot.child("myrequests/" + id).exists()) {
+
+                                        switch (childSnapshot.child("myrequests/" + id + "/requeststatus").val()) {
+                                            case 0:
+                                                statusdesc = "Number Requested";
+                                                break;
+                                            case 1:
+                                                statusdesc = "Friend";
+                                                break;
+                                            case 2:
+                                                statusdesc = "Number Requested";
+                                                break;
+
+                                            default:
+                                                break;
+                                        }
                                         status = 1;
-                                        statusdesc = "Number Requested";
+
                                         color = "white";
                                         backcolor = "#2ab042";
                                     }
+
+                                    var age = new Date();
+
+                                    age.setDate(snapshot.child("ageday").val());
+                                    age.setFullYear(snapshot.child("ageyear").val());
+                                    age.setMonth(snapshot.child("agemonth").val());
+
+
+                                    var ageDifMs = Date.now() - age.getTime();
+                                    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+                                    var num = Math.abs(ageDate.getUTCFullYear() - 1970);
 
                                     var Items = {
                                         "key": childSnapshot.key,
@@ -94,7 +120,7 @@ angular.module('football.controllers')
                                         "firstname": childSnapshot.child("firstname").val(),
                                         "highestrating": childSnapshot.child("highestrating").val(),
                                         "lastname": childSnapshot.child("lastname").val(),
-                                        "playposition": childSnapshot.child("playposition").val(),
+                                        "playposition": childSnapshot.child("isplayer").val() ? "Player" : "Goalkeeper",
                                         "ranking": childSnapshot.child("ranking").val(),
                                         "status": childSnapshot.child("status").val(),
                                         "teams": childSnapshot.child("teams").val(),
@@ -102,12 +128,16 @@ angular.module('football.controllers')
                                         "winstreak": childSnapshot.child("winstreak").val(),
                                         "favstadium": childSnapshot.child("favstadium").val(),
                                         "favstadiumphoto": childSnapshot.child("favstadiumphoto").val(),
-                                        "age": childSnapshot.child("age").val(),
+                                        "age": num,
                                         "nummatches": childSnapshot.child("nummatches").val(),
                                         "status": status,
                                         "color": color,
                                         "backcolor": backcolor,
-                                        "statusdesc": statusdesc
+                                        "statusdesc": statusdesc,
+
+                                        "skilllevel": childSnapshot.child("skilllevel").val(),
+                                        "comments": snapshot.child("comments").val(),
+                                        "photo": snapshot.child("photoURL").val()
 
 
 
@@ -116,8 +146,8 @@ angular.module('football.controllers')
                                     AvailablePlayers.push(Items)
                                 }
                             }
-                            }
-                        });
+                        }
+                    });
                     //  alert(JSON.stringify(AvailablePlayers));
                     callback(AvailablePlayers);
                 });
@@ -244,28 +274,40 @@ angular.module('football.controllers')
                 //alert(user.teamname);
                 // Get a key for a new Post.
                 var user = firebase.auth().currentUser;
-                var id = user.uid;
 
-                try {
-                    var requestdata = {
-                        //badge:team.badge,
-                        requesteduid: id,
-                        requeststatus: 0,
-                        requestorkey: myprofile.key,
-                        requestorname: myprofile.displayname,
-                        requestorphoto: myprofile.photo,
-                        requestortelephone: myprofile.telephone,
 
-                    };
+                if (!(user === null || user == '' || user === undefined)) {
+                    var id = user.uid;
+                    if (!(id === null || id == '' || id === undefined)) {
+                        try {
+                            var requestdata = {
+                                //badge:team.badge,
+                                requesteduid: id,
+                                requeststatus: 0,
+                                requestorkey: myprofile.key,
+                                firstname: myprofile.firstname,
+                                lastname: myprofile.lastname,
+                                requestorphoto: myprofile.photo,
+                                requestortelephone: myprofile.telephone,
 
-                    var updates = {};
-                    updates['/players/' + player.key + '/myrequests/' + id] = requestdata;
+                            };
 
-                    return firebase.database().ref().update(updates);
+                            var updates = {};
+                            updates['/players/' + player.key + '/myrequests/' + id] = requestdata;
+
+                            return firebase.database().ref().update(updates);
+                        }
+
+                        catch (error) {
+                            alert(error.message);
+                        }
+                    }
                 }
-                catch (error) {
-                    alert(error.message);
+                else {
+                    alert("Something wrong happened");
                 }
+
+
             },
             GetMyProfileInfo: function (callback) {
 

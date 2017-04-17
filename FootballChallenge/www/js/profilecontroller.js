@@ -58,7 +58,7 @@ angular.module('football.controllers')
                                 $scope.teamdisplayed.key = "";
                             }
 
-                           $scope.currentprofile["teamdisplayed"] = $scope.teamdisplayed.name == "" ? "Select a Team" : $scope.teamdisplayed.name;
+                            $scope.currentprofile["teamdisplayed"] = $scope.teamdisplayed.name == "" ? "Select a Team" : $scope.teamdisplayed.name;
 
 
 
@@ -472,12 +472,25 @@ angular.module('football.controllers')
         $scope.progress = 0;
         $scope.uploading = false;
 
-        $scope.ChangePicture = function () {
+        $scope.ChangePicture = function () {       
+                 // var options = {
+            //     maximumImagesCount: 1,
+            //     width: 800,
+            //     height: 800,
+            //     quality: 75
+            // };
+
+            console.log(JSON.stringify(window.Camera))
+
             var options = {
-                maximumImagesCount: 1,
-                width: 800,
-                height: 800,
-                quality: 80
+                quality: 75,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                encodingType: Camera.EncodingType.PNG,
+                allowEdit: true,
+                targetWidth: 800,
+                targetHeight: 800,
+                saveToPhotoAlbum: false
             };
 
 
@@ -507,63 +520,72 @@ angular.module('football.controllers')
                 console.log(fileObject);
             })*/
 
-            window.imagePicker.getPictures(options)
-                .then(function (results) {
-                    //console.log('Image URI: ' + results[0]);
+                 navigator.camera.getPicture(function (imageURI) {
+                $scope.currentprofile.photo = "data:image/png;base64," + imageURI;
+                $scope.$apply();
+                var user = firebase.auth().currentUser;
+                var id = user.uid;
+                var updates = {};
+                updates['players/' + id + '/photoURL'] = $scope.currentprofile.photo;
+                firebase.database().ref().update(updates);
 
-                    // File or Blob named mountains.jpg
-                    var file = results[0];
+                // $scope.$apply();
+                // //console.log('Image URI: ' + results[0]);
+                //
+                // // File or Blob named mountains.jpg
+                // var file = results[0];
+                //
+                // // Create the file metadata
+                // var metadata = {
+                //     contentType: 'image/jpeg'
+                // };
+                //
+                // var user = firebase.auth().currentUser;
+                // var id = user.uid;
+                //
+                // $scope.uploading = true;
+                //
+                // // Upload file and metadata to the object 'images/mountains.jpg'
+                // var uploadTask = storageRef.child('playerimages/' + '/' + id + '/' + file.name).put(file, metadata);
+                //
+                // // Listen for state changes, errors, and completion of the upload.
+                // uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+                //     function (snapshot) {
+                //         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                //         $scope.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                //         //console.log('Upload is ' + progress + '% done');
+                //         switch (snapshot.state) {
+                //             case firebase.storage.TaskState.PAUSED: // or 'paused'
+                //                 console.log('Upload is paused');
+                //                 break;
+                //             case firebase.storage.TaskState.RUNNING: // or 'running'
+                //                 console.log('Upload is running');
+                //                 break;
+                //         }
+                //     }, function (error) {
+                //         switch (error.code) {
+                //             case 'storage/unauthorized':
+                //                 // User doesn't have permission to access the object
+                //                 break;
+                //
+                //             case 'storage/canceled':
+                //                 // User canceled the upload
+                //                 break;
+                //
+                //             case 'storage/unknown':
+                //                 // Unknown error occurred, inspect error.serverResponse
+                //                 break;
+                //         }
+                //         $scope.$apply();
+                //     }, function () {
+                //         // Upload completed successfully, now we can get the download URL
+                //         var downloadURL = uploadTask.snapshot.downloadURL;
+                //     });
 
-                    // Create the file metadata
-                    var metadata = {
-                        contentType: 'image/jpeg'
-                    };
-
-                    var user = firebase.auth().currentUser;
-                    var id = user.uid;
-
-                    $scope.uploading = true;
-
-                    // Upload file and metadata to the object 'images/mountains.jpg'
-                    var uploadTask = storageRef.child('playerimages/' + '/' + id + '/' + file.name).put(file, metadata);
-
-                    // Listen for state changes, errors, and completion of the upload.
-                    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-                        function (snapshot) {
-                            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                            $scope.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                            //console.log('Upload is ' + progress + '% done');
-                            switch (snapshot.state) {
-                                case firebase.storage.TaskState.PAUSED: // or 'paused'
-                                    console.log('Upload is paused');
-                                    break;
-                                case firebase.storage.TaskState.RUNNING: // or 'running'
-                                    console.log('Upload is running');
-                                    break;
-                            }
-                        }, function (error) {
-                            switch (error.code) {
-                                case 'storage/unauthorized':
-                                    // User doesn't have permission to access the object
-                                    break;
-
-                                case 'storage/canceled':
-                                    // User canceled the upload
-                                    break;
-
-                                case 'storage/unknown':
-                                    // Unknown error occurred, inspect error.serverResponse
-                                    break;
-                            }
-                            $scope.$apply();
-                        }, function () {
-                            // Upload completed successfully, now we can get the download URL
-                            var downloadURL = uploadTask.snapshot.downloadURL;
-                        });
-
-                }, function (error) {
-                    // error getting photos
-                });
+            }, function (error) {
+                console.log(error);
+                // error getting photos
+            }, options)
         }
 
     })

@@ -203,6 +203,7 @@
                         teamname: newteam.teamname,
                         badge: newteam.badge,
                         rank: 1500,
+                        rating:1500,
 
                         dateyear: year,
                         datemonth: month,

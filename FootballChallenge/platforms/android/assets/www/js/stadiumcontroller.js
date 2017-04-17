@@ -95,7 +95,126 @@ angular.module('football.controllers')
             grass: true,
             money: 0
 
+        };
+
+        $scope.white = "white";
+        $scope.backcolor = "#28b041";
+
+        $scope.managecolors =
+            {
+                indoor:
+                {
+                    color: "#28b041",
+                    backcolor: "white",
+                    selected: false
+                },
+                outdoor:
+                {
+                    color: "#28b041",
+                    backcolor: "white",
+                    selected: false
+                },
+                anydoor:
+                {
+                    color: "#28b041",
+                    backcolor: "white",
+                    selected: true
+                },
+                grass:
+                {
+                    color: "#28b041",
+                    backcolor: "white",
+                    selected: false
+                },
+                ground:
+                {
+                    color: "#28b041",
+                    backcolor: "white",
+                    selected: false
+                },
+                anyground:
+                {
+                    color: "#28b041",
+                    backcolor: "white",
+                    selected: true
+                },
+                sortby: "Best",
+                distancefrom: 0,
+                distanceto: 250000,
+                pricefrom: 0,
+                priceto: 300000
+            }
+
+
+
+        $scope.updatedoortype = function (x) {
+
+            $scope.managecolors.indoor.selected = false;
+            $scope.managecolors.outdoor.selected = false;
+            $scope.managecolors.anydoor.selected = false;
+
+
+            console.log("test");
+            switch (x) {
+                case "indoor":
+                    $scope.managecolors.indoor.selected = true;
+
+                    break;
+                case "outdoor":
+                    $scope.managecolors.outdoor.selected = true;
+                    break;
+                case "anydoor":
+                    $scope.managecolors.anydoor.selected = true;
+                    break;
+            }
+
+            $scope.updatecolors();
+
         }
+
+        $scope.updategroundtype = function (x) {
+            $scope.managecolors.grass.selected = false;
+            $scope.managecolors.ground.selected = false;
+            $scope.managecolors.anyground.selected = false;
+
+            switch (x) {
+                case "grass":
+                    $scope.managecolors.grass.selected = true;
+                    break;
+                case "ground":
+                    $scope.managecolors.ground.selected = true;
+                    break;
+                case "anyground":
+                    $scope.managecolors.anyground.selected = true;
+                    break;
+            }
+            $scope.updatecolors();
+        }
+
+        $scope.updatecolors = function () {
+            $scope.managecolors.indoor.color = $scope.managecolors.indoor.selected ? $scope.white : $scope.backcolor;
+            $scope.managecolors.indoor.backcolor = $scope.managecolors.indoor.selected ? $scope.backcolor : $scope.white;
+
+            $scope.managecolors.outdoor.color = $scope.managecolors.outdoor.selected ? $scope.white : $scope.backcolor;
+            $scope.managecolors.outdoor.backcolor = $scope.managecolors.outdoor.selected ? $scope.backcolor : $scope.white;
+
+            $scope.managecolors.anydoor.color = $scope.managecolors.anydoor.selected ? $scope.white : $scope.backcolor;
+            $scope.managecolors.anydoor.backcolor = $scope.managecolors.anydoor.selected ? $scope.backcolor : $scope.white;
+
+            $scope.managecolors.ground.color = $scope.managecolors.ground.selected ? $scope.white : $scope.backcolor;
+            $scope.managecolors.ground.backcolor = $scope.managecolors.ground.selected ? $scope.backcolor : $scope.white;
+
+            $scope.managecolors.grass.color = $scope.managecolors.grass.selected ? $scope.white : $scope.backcolor;
+            $scope.managecolors.grass.backcolor = $scope.managecolors.grass.selected ? $scope.backcolor : $scope.white;
+
+            $scope.managecolors.anyground.color = $scope.managecolors.anyground.selected ? $scope.white : $scope.backcolor;
+            $scope.managecolors.anyground.backcolor = $scope.managecolors.anyground.selected ? $scope.backcolor : $scope.white;
+
+            $scope.$apply();
+        }
+
+        $scope.updatecolors();
+
         $scope.choice = {
             sort: 'price'
         };
@@ -379,31 +498,21 @@ angular.module('football.controllers')
                 showDelay: 0
             });
 
-            $scope.allfreestadiums = $scope.globalstadiums.filter(function (el) {
+            $scope.allfreestadiums = [];
 
-                return ((el.type.toLowerCase() == "indoor" && $scope.filter.indoor) &&
-                    ((el.typefloor.toLowerCase() == "grass" && $scope.filter.grass) || (el.typefloor.toLowerCase() == "clay" && $scope.filter.clay))
-                    ||
-                    (el.type.toLowerCase() == "outdoor" && $scope.filter.outdoor) &&
-                    ((el.typefloor.toLowerCase() == "grass" && $scope.filter.grass) || (el.typefloor.toLowerCase() == "clay" && $scope.filter.clay)))
+            for (var i = 0; i < $scope.globalstadiums.length; i++) {
 
-
-
-            });
-
-            if (!$scope.filter.indoor && !$scope.filter.outdoor && !$scope.filter.grass && !$scope.filter.clay) {
-                $scope.allfreestadiums = $scope.globalstadiums;
+                if (($scope.managecolors.anydoor.selected
+                    || $scope.globalstadiums[i].type.toLowerCase() == "indoor" && $scope.managecolors.indoor.selected
+                    || $scope.globalstadiums[i].type.toLowerCase() == "outdoor" && $scope.managecolors.outdoor.selected)
+                    && ($scope.managecolors.anyground.selected
+                        || ($scope.globalstadiums[i].typefloor.toLowerCase() == "grass" && $scope.managecolors.grass.selected)
+                        || $scope.globalstadiums[i].typefloor.toLowerCase() == "clay" && $scope.managecolors.ground.selected)) {
+                    $scope.allfreestadiums.push($scope.globalstadiums[i]);
+                }
             }
-
-
-
+            $scope.$apply();
             $ionicLoading.hide();
-
-
-
-            //    $scope.allfreestadiums = $scope.allfreestadiums.filter(function (el) {
-            //                return el.key !== team.key;
-            //            });
 
         }
 

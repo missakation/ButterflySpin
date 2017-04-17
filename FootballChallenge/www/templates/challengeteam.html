@@ -619,8 +619,8 @@
 
 		</ion-nav-back-button>
 	</ion-nav-bar>
-	<ion-nav-buttons side="primary">
-		<button class="button button-icon ion-android-funnel" style="color:white" ng-click="popover.show($event)"></button>
+	<ion-nav-buttons side="right">
+		<button class="button button-icon ion-android-options" style="color:white" ng-click="popover.show($event)"></button>
 	</ion-nav-buttons>
 	<style>
 
@@ -653,11 +653,11 @@
 					</div>
 
 					<div align="left" style="border-top:1px solid #5f7485;color:rgb(157,171,184);font-size:14px;padding:10px 5px 10px 5px"> Difficulty </div>
-					<button class="button button-small" ng-model="filter.indoor" style="color:#2ab041;line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px;margin:0 3px;">
+					<button class="button" ng-model="filter.indoor" style="padding:2px 4px 1px;min-width:28px;min-height:30px;line-height:26px;color:#2ab041;line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px;margin:0 3px;">
 						 Easy</button>
-					<button class="button button-small" style="color:#2ab041;line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px">
+					<button class="button" style="padding:2px 4px 1px;min-width:28px;min-height:30px;line-height:26px;color:#2ab041;line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px">
 						Hard</button>
-					<button class="button button-small" style="color:#2ab041;width:30%;line-height:30px;font-size:14px;font-weight:bold;border-radius:50px;margin:0 3px">
+					<button class="button" style="padding:2px 4px 1px;min-width:28px;min-height:30px;line-height:26px;color:#2ab041;width:30%;line-height:30px;font-size:14px;font-weight:bold;border-radius:50px;margin:0 3px">
 						Any </button>
 					<br>
 					</div>
@@ -742,11 +742,11 @@
 			<hr style="height:1px; visibility:hidden">
 
 			<div class="row" style="padding:0px">
-				<div style="width:23%;font-size:12px;margin:0px;padding:0px;color:#5f7485;border-right:1px solid #5f7485" align="center">
+				<div style="width:18%;font-size:12px;margin:0px;padding:0px;color:#5f7485;border-right:1px solid #5f7485" align="center">
 					MATCHES
 
 				</div>
-				<div style="width:27%;font-size:12px;padding:0px;color:#5f7485" align="center"> DIFFICULTY
+				<div style="width:33%;font-size:12px;padding:0px;color:#5f7485" align="center"> DIFFICULTY
 				</div>
 				<div style="width:27%;font-size:12px;padding:0px;border-left:1px solid #5f7485;border-right:1px solid #5f7485;color:#5f7485"
 				 align="center"> RATING
@@ -756,13 +756,13 @@
 			</div>
 
 			<div class="row" style="padding:0px;margin-top:-15x">
-				<div align="center" style="margin:5px 0 -10px 0;font-size:14px;width:23%;border-right:1px solid #5f7485;color:#5f7485"> {{item.playposition}}
+				<div align="center" style="margin:5px 0 -10px 0;font-size:14px;width:18%;border-right:1px solid #5f7485;color:#5f7485"> {{item.playposition}}
 
 				</div>
 
-				<div style="font-size:14px;width:27%;padding:0px;margin:5px 0 -25px 0;color:white" align="center">
+				<div style="font-size:14px;width:33%;padding:0px;margin:5px 0 -25px 0;color:white" align="center">
 					<h5 style="margin-bottom:4px;padding:0px;font-weight:bold;color:white">{{team.difficultytext}} </h5>
-					<img src="img/difficulty/{{team.difficulty}}" align="left" style="padding-left:10px;margin:0 0 10px 0;height:10px">
+					<img src="img/difficulty/{{team.difficulty}}" align="left" style="margin:0 0 10px 0;height:10px">
 
 				</div>
 

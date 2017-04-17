@@ -216,14 +216,10 @@
 
                 <div class="col" align="center" style="border-left-style: solid;border-width: thin;border-color: #5f7485;">
 
-                    <div>
-                        <a href="#/app/teamprofile/{{profile.myteams[0].key}}">
-                            <img src="img/Badges/{{profile.myteams[0].badge}}.png" style="height:60px ; width:60px" height="50" />
-                        </a>
-                    </div>
+                            <img src="img/Badges/{{teamdisplayed.picture}}.png" style="height:60px ; width:60px" height="50" ng-click="gototeam(teamdisplayed.key)">
                     <div align="center">
-                        <h5 class="whitetext" style="text-transform:capitalize">{{profile.myteams[0].teamname}}</h5>
-                        <p style="margin-top:-5px;color:darkturquoise">{{profile.ranking}}th</p>
+                        <h5 class="whitetext" style="text-transform:capitalize">{{teamdisplayed.name}}</h5>
+                        <p style="margin-top:-5px;color:darkturquoise" ng-hide="teamdisplayed.key==''">{{teamdisplayed.rank}}th</p>
                     </div>
 
 
@@ -318,7 +314,7 @@
 
 
 
-                <div class="row row-center" ng-repeat="upmatches in profile.upcominteamgmatches" style="border-bottom:25px solid #5f7485;margin-bottom:5px;padding:0 5px 0 5px;background-color:rgb(62,83,100)">
+           <div class="row row-center" ng-repeat="upmatches in profile.upcomingmatches | orderBy: 'date':false" style="border-bottom:1px solid #5f7485;margin:0px;padding:0px;background-color:rgb(62,83,100)">
                     <div class="col col-75">
 
                         <h6 class="whitetext">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h6>
@@ -336,26 +332,10 @@
                     </div>
 
                 </div>
-                <div class="row row-center" ng-repeat="upmatches in profile.upcomingmatches" style="border-bottom:1px solid #5f7485;margin:0px;padding:0px;background-color:rgb(62,83,100)">
-                    <div class="col col-75">
-                        <h6 class="whitetext" style="text-transform:capitalize">{{upmatches.date |date:'MMM d, y h:mm a'}} @ {{upmatches.stadiumdescription}}</h6>
-                    </div>
-                    <div class="col">
-
-                        <button ng-show="upmatches.isadmin" class="button button-balanced button-small" style="border-radius:50px;width:60px;font-size:12px;background-color:#28b041;color:white"
-                            ng-click="gogamedetails(upmatches)"> Manage
-</button>
-
-                        <button ng-show="!(upmatches.isadmin)" class="button button-small" style="border-radius:50px;width:60px;font-size:12px;background-color:#28b041;color:white"
-                            ng-click="gogamedetails(upmatches)"> View
-</button>
-                    </div>
-
-                </div>
             </div>
         </div>
 
-        <div class="card" ng-repeat="upmatches in profile.teaminvitations" style="background-color:rgb(62,83,100)">
+        <div class="card" ng-repeat="upmatches in profile.teaminvitations | orderBy: 'date':false" style="background-color:rgb(62,83,100)">
             <div align="center">
                 <h4 class="whitetext" align="middle"><b>Team Invitation</b>
                 </h4>
@@ -384,7 +364,7 @@
                 </div>
                 <div class="col">
                     <h5 class="whitetext">
-                        Hello I am {{upmatches.admindisplayname}}<br> Would you like to join my team {{upmatches.teamname}}?
+                        Hello I am {{upmatches.firstname}} {{upmatches.lastname}}<br> Would you like to join my team {{upmatches.teamname}}?
                     </h5>
 
                 </div>
@@ -405,12 +385,12 @@
             </div>
 
         </div>
-        <div class="card" style="background-color:rgb(62,83,100)" ng-repeat="challenges in profile.challenges">
+        <div class="card" style="background-color:rgb(62,83,100)" ng-repeat="challenges in profile.challenges | orderBy: 'date':false">
             <div align="center">
-                <h4 class="whitetext" style="text-transform:capitalize" align="middle"><b> {{challenges.team2name}} Challenged you</b></h4>
+                <h4 class="whitetext" style="text-transform:uppercase;color:#2ab041" align="middle"><b> {{challenges.team2name}} Challenged you</b></h4>
             </div>
             <div align="center">
-                <h5 class="whitetext" style="color:white"> {{challenges.date |date:'EEE MMM d, y h:mm a'}}
+                <h5 style="color:white;font-size:15px;font-weight:bold"> {{challenges.date |date:'EEE MMM d, y h:mm a'}}
                 </h5>
             </div>
             <div class="row" style="padding-bottom:0px">
@@ -520,7 +500,7 @@
 
 
 
-        <div class="card" style="background-color:rgb(62,83,100)" ng-repeat="challenges in profile.gameinvitation">
+        <div class="card" style="background-color:rgb(62,83,100)" ng-repeat="challenges in profile.gameinvitation | orderBy: 'date':false">
             <div align="center">
                 <h4 class="whitetext" align="middle"><b>Pending Attendance</b></h4>
             </div>
@@ -591,7 +571,7 @@
         </div>
 
 
-        <div class="card" style="background-color:rgb(62,83,100)" ng-repeat="requests in profile.requestednumbers">
+        <div class="card" style="background-color:rgb(62,83,100)" ng-repeat="requests in profile.requestednumbers | orderBy: 'date':false">
             <div align="center">
                 <h4 class="whitetext" align="middle"><b>PENDING REQUESTS</b></h4>
             </div>
@@ -606,7 +586,7 @@
                 </div>
 
                 <div class="col" style="padding-left:15px">
-                    <h5 class="whitetext" style="color:white"> Hey, My name is {{requests.name}}. I would to Request your mobile number
+                    <h5 class="whitetext" style="color:white"> Hey, My name is {{requests.firstname}} {{requests.lastname}}. I would to Request your mobile number
                     </h5>
                 </div>
 
@@ -689,9 +669,9 @@
             </div>
         </div>
 
-        <div class="card" style="background-color:rgb(62,83,100); padding-bottom:0px">
+        <!---   <div class="card" style="background-color:rgb(62,83,100); padding-bottom:0px">
             <div style="margin-bottom:-4px">
-                <h4 class="whitetext" align="middle" style="background-color:rgb(62,83,100)"><b>RECOMMENDED OPPONENTS</b></h4>
+                 <h4 class="whitetext" align="middle" style="background-color:rgb(62,83,100)"><b>RECOMMENDED OPPONENTS</b></h4>
 
                 <ion-slide-box on-slide-changed=slideHasChanged($index)>
                     <ion-slide id="onboard">
@@ -801,329 +781,10 @@
                     </ion-slide>
             </div>
         </div>
-        <div class="card" style="background-color:rgb(62,83,100); padding-bottom:0px">
-            <div style="margin-bottom:-4px">
-                <h4 class="whitetext" align="middle" style="background-color:rgb(62,83,100)"><b>TEAM MATCH HISTORY</b></h4>
-
-                <ion-slide-box style="padding:0px" on-slide-changed="slideHasChanged($index)">
-                    <ion-slide>
-                        <div class="row" style="padding:0px">
-
-
-                            <div class="col" style="padding-top:0px">
-                                <div class="list">
-
-                                    <div class="row">
-
-                                        <div class="col" align="center">
-                                            <a href="#/app/selfprofile">
-                                                <img src="img/Badges/{{rankedteams[0].badge}}.png" style="height:70px ; width:70px" height="50" />
-                                            </a>
-                                            <div align="center">
-                                                <h4 align="center" style="text-transform:capitalize;font-weight:bold;color:white">{{rankedteams[0].teamname}}</h4>
-                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">404 not found</h5>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col" style="padding:0 0 10px 0">
-
-                                            <div align="center">
-                                                <h4 style="font-weight:bold;color:white">404 date</h4>
-
-                                                <h4 style="color:red">
-                                                    LOSS
-                                                </h4>
-                                                <h3 style="margin:25px 0 0 0;color:white;font-weight:bold">
-                                                    VS
-                                                </h3>
-                                                <h5 style="margin-top:6px;color:darkturquoise">-23 AR</h5>
-
-                                            </div>
-                                        </div>
-                                        <div class="col" align="center">
-
-                                            <a href="#/app/selfprofile">
-                                                <img src="img/Badges/{{rankedteams[1].badge}}.png" style="height:70px ; width:70px" height="50" />
-                                            </a>
-                                            <div align="center">
-                                                <h4 align="center" style="text-transform:capitalize;font-weight:bold;color:white">{{rankedteams[1].teamname}}</h4>
-                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">404 not found</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </ion-slide>
-
-                    <ion-slide>
-                        <div class="row" style="padding:0px">
-
-
-                            <div class="col" style="padding-top:0px">
-                                <div class="list">
-
-                                    <div class="row">
-
-                                        <div class="col" align="center">
-                                            <a href="#/app/selfprofile">
-                                                <img src="img/Badges/{{rankedteams[0].badge}}.png" style="height:70px ; width:70px" height="50" />
-                                            </a>
-                                            <div align="center">
-                                                <h4 align="center" style="font-weight:bold;color:white">{{rankedteams[0].teamname}}</h4>
-                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">1500 AR</h5>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col" style="padding:0 0 10px 0">
-
-                                            <div align="center">
-                                                <h4 style="font-weight:bold;color:white">05-Mar-16</h4>
-
-                                                <h4 style="color:#2ab041">
-                                                    WIN
-                                                </h4>
-                                                <h3 style="margin:25px 0 0 0;color:white;font-weight:bold">
-                                                    VS
-                                                </h3>
-                                                <h5 style="margin-top:6px;color:darkturquoise">+33 AR</h5>
-
-                                            </div>
-                                        </div>
-                                        <div class="col" align="center">
-
-                                            <a href="#/app/selfprofile">
-                                                <img src="img/Badges/{{rankedteams[0].badge}}.png" style="height:70px ; width:70px" height="50" />
-                                            </a>
-                                            <div align="center">
-                                                <h4 align="center" style="font-weight:bold;color:white">{{rankedteams[2].teamname}}</h4>
-                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">1500 AR</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </ion-slide>
-
-                    <ion-slide>
-                        <div class="row" style="padding:0px">
-
-
-                            <div class="col" style="padding-top:0px;background-color:darkred">
-                                <div class="list">
-
-                                    <div class="row">
-
-                                        <div class="col" align="center">
-                                            <a href="#/app/selfprofile">
-                                                <img src="img/Badges/{{rankedteams[0].badge}}.png" style="height:70px ; width:70px" height="50" />
-                                            </a>
-                                            <div align="center">
-                                                <h4 align="center" style="font-weight:bold;color:white">{{rankedteams[3].teamname}}</h4>
-                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">1500 AR</h5>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col" style="padding:0 0 10px 0">
-
-                                            <div align="center">
-                                                <h4 style="font-weight:bold;color:white">02-Mar-16</h4>
-
-                                                <h4 style="color:white">
-                                                    Loss
-                                                </h4>
-                                                <h3 style="margin:25px 0 0 0;color:white;font-weight:bold">
-                                                    VS
-                                                </h3>
-                                                <h5 style="margin-top:6px;color:darkturquoise">-19 AR</h5>
-
-                                            </div>
-                                        </div>
-                                        <div class="col" align="center">
-
-                                            <a href="#/app/selfprofile">
-                                                <img src="img/Badges/{{rankedteams[0].badge}}.png" style="height:70px ; width:70px" />
-                                            </a>
-                                            <div align="center">
-                                                <h4 align="center" style="font-weight:bold;color:white">{{rankedteams[2].teamname}}</h4>
-                                                <h5 align="center" style="font-weight:bold;color:darkturquoise">1500 AR</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </ion-slide>
-
-
-                </ion-slide-box>
-            </div>
-        </div>
-        </div>
-
-        <!--    <ion-item style="background-color:rgb(45,62,75)">
-            <h2 align="middle">
-                <b style="color:white"> MATCH HISTORY </b></h2>
-        </ion-item>
-
-        <ion-scroll direction="x" class="item wide-item" style="background-color:rgb(30,30,30)">
-
-
-            <div class="row">
-
-
-                <div class="col" style="width:400px ;border-style:solid;border-color:white;background-color:darkred">
-                    <div class="list">
-
-                        <div class="row">
-
-                            <div class="col" style="border:thick">
-
-                                <a href="#/app/selfprofile">
-                                    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:70px ; width:70px"
-                                        height="50" />
-                                </a>
-                                <div align="center">
-                                    <h2>Barcelona</h2>
-                                    <p style="color:white">1500 AR</p>
-                                </div>
-
-                            </div>
-
-                            <div class="col">
-
-                                <div align="center">
-                                    <h2>VS</h2>
-                                    <br />
-                                    <h2>Loss</h2>
-                                    <p style="color:white">-23AR</p>
-                                    <p style="color:white">6.June 2016</p>
-                                </div>
-                            </div>
-                            <div class="col" style="border:thick">
-
-                                <a href="#/app/selfprofile">
-                                    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:70px ; width:70px"
-                                        height="50" />
-                                </a>
-                                <div align="center">
-                                    <h2>Barcelona</h2>
-                                    <p style="color:white">1500 AR</p>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" style="width:400px ;border-style:solid;border-color:white;background-color:darkgreen">
-                    <div class="list">
-
-                        <div class="row">
-
-                            <div class="col" style="border:thick">
-
-                                <a href="#/app/selfprofile">
-                                    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:70px ; width:70px"
-                                        height="50" />
-                                </a>
-                                <div align="center">
-                                    <h2>Barcelona</h2>
-                                    <p style="color:white">1500 AR</p>
-                                </div>
-
-                            </div>
-
-                            <div class="col">
-
-                                <div align="center">
-                                    <h2>VS</h2>
-                                    <br />
-                                    <h2>Loss</h2>
-                                    <p style="color:white">-23AR</p>
-                                    <p style="color:white">6.June 2016</p>
-                                </div>
-                            </div>
-                            <div class="col" style="border:thick">
-
-                                <a href="#/app/selfprofile">
-                                    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:70px ; width:70px"
-                                        height="50" />
-                                </a>
-                                <div align="center">
-                                    <h2>Barcelona</h2>
-                                    <p style="color:white">1500 AR</p>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" style="width:400px ;border-style:solid;border-color:white;background-color:darkred">
-                    <div class="list">
-
-                        <div class="row">
-
-                            <div class="col" style="border:thick">
-
-                                <a href="#/app/selfprofile">
-                                    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:70px ; width:70px"
-                                        height="50" />
-                                </a>
-                                <div align="center">
-                                    <h2>Barcelona</h2>
-                                    <p style="color:white">1500 AR</p>
-                                </div>
-
-                            </div>
-
-                            <div class="col">
-
-                                <div align="center">
-                                    <h2>VS</h2>
-                                    <br />
-                                    <h2>Loss</h2>
-                                    <p style="color:white">-23AR</p>
-                                    <p style="color:white">6.June 2016</p>
-                                </div>
-                            </div>
-                            <div class="col" style="border:thick">
-
-                                <a href="#/app/selfprofile">
-                                    <img src="http://www.vectorportal.com/img_novi/barcelona1_3472.jpg" style="border-radius:50% ; height:70px ; width:70px"
-                                        height="50" />
-                                </a>
-                                <div align="center">
-                                    <h2>Barcelona</h2>
-                                    <p style="color:white">1500 AR</p>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ion-scroll>  
-
     
-        <ion-item style="background-color:black"> 
-
-            <h2 align="middle"><b>Invite Friend</b></h2>
-        </ion-item> -->
-                 <div class="card" style="background-color:rgb(62,83,100); margin:0 10px;padding-bottom:0px">
-            <div style="background-color:rgb(62,83,100);margin-bottom:-4px">
-                <h4 class="whitetext" align="middle"><b>RECOMMENDED STADIUMS</b></h4>
+            -->         <div class="card" style="background-color:rgb(62,83,100); margin:10px 10px;padding-bottom:0px">
+         <div style="background-color:rgb(62,83,100);margin-bottom:-4px">
+              <h4 class="whitetext" align="middle"><b>RECOMMENDED STADIUMS</b></h4>
 
 
                 <ion-slide-box on-slide-changed="slideHasChanged($index)" style="font-size:12px">
@@ -1140,6 +801,7 @@
  </ion-slide-box>
  </div>
  </div>
+
 
         <div class="card" style="background-color:rgb(62,83,100)">
 

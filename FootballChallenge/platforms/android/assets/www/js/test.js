@@ -38,8 +38,8 @@ angular.module('football.controllers')
                     updates['players/' + id + '/startsundayend'] = profile.startsundayend;
                     updates['players/' + id + '/available'] = profile.available;
                     updates['players/' + id + '/skilllevel'] = profile.skilllevel;
-                    updates['players/' + id + '/favstadium'] = profile.favstadium;
-                    updates['players/' + id + '/favstadiumphoto'] = profile.favstadiumphoto;
+                    //updates['players/' + id + '/favstadium'] = profile.favstadium;
+                    //updates['players/' + id + '/favstadiumphoto'] = profile.favstadiumphoto;
 
 
                     //Age
@@ -73,8 +73,8 @@ angular.module('football.controllers')
                     updates['playersinfo/' + id + '/startsundayend'] = profile.startsundayend;
                     updates['playersinfo/' + id + '/available'] = profile.available;
                     updates['playersinfo/' + id + '/skilllevel'] = profile.skilllevel;
-                    updates['playersinfo/' + id + '/favstadium'] = profile.favstadium;
-                    updates['playersinfo/' + id + '/favstadiumphoto'] = profile.favstadiumphoto;
+                    //updates['playersinfo/' + id + '/favstadium'] = profile.favstadium;
+                    //updates['playersinfo/' + id + '/favstadiumphoto'] = profile.favstadiumphoto;
 
                     if (withdetails) {
                         //Age
