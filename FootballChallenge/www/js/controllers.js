@@ -56,8 +56,7 @@ angular.module('football.controllers', [])
             };
             var confirmPopup = $ionicPopup.confirm({
                 cssClass: 'custom-class',
-                title: 'Mobile verification',
-                template: 'You need to verify your mobile number to proceed. <br/> <div class="row"><div class="col col-20" style="padding-top: 13px">+961</div><div class="col"><input type="tel" placeholder="Enter your mobile number" ng-model="smsVerification.mobileNumber" style="padding: 0 5px;"></div></div>',
+                template: 'Please Verify Your Mobile Number<br/> <div class="row" style="padding-top:10px"><div style="width:15%;padding-top:15px">+961</div><div class="col"><input type="tel" required placeholder="Enter your mobile number" ng-model="smsVerification.mobileNumber" style="padding:20px 10px 20px 10px;background-color:rgba(0, 0, 0, 0.4);padding-left:10px;color:#2ab041;border-radius:5px"></div></div>',
                 scope: $scope,
                 buttons: [
                     { text: 'Cancel' },
@@ -92,8 +91,8 @@ angular.module('football.controllers', [])
                             console.log(res)
                             var tries = 0;
                             var verifyPopup = $ionicPopup.confirm({
-                                title: 'Mobile verification',
-                                template: 'Enter the verification code we sent via SMS below to verify your mobile number <br/> <div class="row"><div class="col"><input type="text" placeholder="Enter the verification code" ng-model="smsVerification.codeNumber" style="padding: 0 5px"></div></div>',
+                                cssClass: 'custom-class',
+                                template: 'Enter the verification code we sent via SMS below to verify your mobile number <br/> <div class="row"><div class="col"><input type="number" required placeholder="Enter the verification code" ng-model="smsVerification.codeNumber" style="padding:20px 10px 20px 10px;background-color:rgba(0, 0, 0, 0.4);padding-left:10px;color:#2ab041;border-radius:5px""></div></div>',
                                 scope: $scope,
                                 buttons: [
                                     { text: 'Cancel' },
@@ -147,6 +146,38 @@ angular.module('football.controllers', [])
 
         return {
             verifyUserMobile: verifyUserMobile
+        }
+    })
+        .factory('FirebaseStorageService', function ($q) {
+        return {
+            saveUserProfilePicture: function (data, userId) {
+                var deferred = $q.defer();
+
+                data = data.substr("data:image/png;base64,".length);
+
+                var storage = firebase.app().storage().ref();
+                var name = userId + "/" + (new Date()).getTime() + ".png";
+                var f = storage.child("playerimages/" + name);
+                var task = f.putString(data, 'base64');
+
+                task.on('state_changed', function(snapshot) {
+
+                }, function(error) {
+                    console.error("Unable to save image.");
+                    console.error(error);
+                    deferred.reject(error);
+                }, function() {
+                    var url = task.snapshot.downloadURL;
+                    console.log("Saved to " + url);
+
+                    var db = firebase.database();
+                    var players = db.ref().child("players");
+                    players.child(userId).child("photoURL").set(url);
+                    deferred.resolve(url);
+                });
+
+                return deferred.promise;
+            }
         }
     })
     .factory('ProfileStore1', function () {
@@ -298,7 +329,7 @@ angular.module('football.controllers', [])
                                     "teams": childSnapshot.child("teams").val(),
                                     "telephone": childSnapshot.child("telephone").val(),
                                     "winstreak": childSnapshot.child("winstreak").val(),
-                                    "photo": childSnapshot.child("photo").val()
+                                    "photo": childSnapshot.child("photoURL").val()
 
                                 };
 
@@ -321,7 +352,45 @@ angular.module('football.controllers', [])
     })
     .factory('HomeStore', function () {
         var myprofile = {};
+        myprofile["key"] = "";
+        myprofile['photo'] = "img/PlayerProfile.png";
+        myprofile["displayname"] = "";
+        myprofile["firstname"] = "";
+        myprofile["lastname"] = "";
+        myprofile["highestrating"] = "";
+        myprofile["middlename"] = "";
+        myprofile["playposition"] = "";
+        myprofile["ranking"] = "";
+        myprofile["status"] = "";
+        myprofile["telephone"] = "";
+        myprofile["winstreak"] = "";
+        myprofile["challenges"] = "";
+        myprofile["upcominteamgmatches"] = [];
+        myprofile["teaminvitations"] = [];
+        myprofile["gameinvitation"] = [];
+        myprofile["myteams"] = [];
+        myprofile["requestednumbers"] = [];
+        myprofile["upcomingmatches"] = [];
+        myprofile["teamdisplayed"] = "none";
+        myprofile["teamdisplayedkey"] = "";
+
         var profile = {};
+        profile['photo'] = "img/PlayerProfile.png";
+        profile["key"] = "";
+        profile["displayname"] = "";
+        profile["firstname"] = "";
+        profile["lastname"] = "";
+        profile["highestrating"] = "";
+        profile["middlename"] = "";
+        profile["playposition"] = "";
+        profile["ranking"] = "";
+        profile["status"] = "";
+        profile["photo"] = "";
+        profile["telephone"] = "";
+        profile["winstreak"] = "";
+        profile["teamdisplayed"] = "";
+        profile["teamdisplayedkey"] = "";
+        
         var TempItems = [];
         var RankedTeams = [];
         return {
@@ -616,31 +685,28 @@ angular.module('football.controllers', [])
 
                         }
 
-                        myprofile = {
-                            "key": snapshot.key,
-                            "displayname": snapshot.child("displayname").val(),
-                            "firstname": snapshot.child("firstname").val(),
-                            "lastname": snapshot.child("lastname").val(),
-                            "highestrating": snapshot.child("highestrating").val(),
-                            "middlename": snapshot.child("middlename").val(),
-                            "playposition": snapshot.child("playposition").val(),
-                            "ranking": snapshot.child("ranking").val(),
-                            "status": snapshot.child("status").val(),
-                            "photo": snapshot.child("photoURL").val(),
-                            //"teams": snapshot.child("teams").exists() ? snapshot.child("teams").val() : "",
-                            "telephone": snapshot.child("telephone").val(),
-                            "winstreak": snapshot.child("winstreak").val(),
-                            "challenges": totchallenges,
-                            "upcominteamgmatches": upcomingmatches,
-                            "teaminvitations": teaminvitations,
-                            "gameinvitation": gameinvitation,
-                            "myteams": myteams,
-                            "requestednumbers": requestednumbers,
-                            "upcomingmatches": upcomingsinglematches,
-                            "teamdisplayed": "none",
-                            "teamdisplayedkey": snapshot.child("teamdisplayedkey").val(),
+                        myprofile["key"] = snapshot.key;
+                        myprofile["photo"] = snapshot.child("photoURL").val();
+                        myprofile["displayname"] = snapshot.child("displayname").val();
+                        myprofile["firstname"] = snapshot.child("firstname").val();
+                        myprofile["lastname"] = snapshot.child("lastname").val();
+                        myprofile["highestrating"] = snapshot.child("highestrating").val();
+                        myprofile["middlename"] = snapshot.child("middlename").val();
+                        myprofile["playposition"] = snapshot.child("playposition").val();
+                        myprofile["ranking"] = snapshot.child("ranking").val();
+                        myprofile["status"] = snapshot.child("status").val();
+                        myprofile["telephone"] = snapshot.child("telephone").val();
+                        myprofile["winstreak"] = snapshot.child("winstreak").val();
+                        myprofile["challenges"] = totchallenges;
+                        myprofile["upcominteamgmatches"] = upcomingmatches;
+                        myprofile["teaminvitations"] = teaminvitations;
+                        myprofile["gameinvitation"] = gameinvitation;
+                        myprofile["myteams"] = myteams;
+                        myprofile["requestednumbers"] = requestednumbers;
+                        myprofile["upcomingmatches"] = upcomingsinglematches;
+                        myprofile["teamdisplayed"] = "none";
+                        myprofile["teamdisplayedkey"] = snapshot.child("teamdisplayedkey").val();
 
-                        };
                         callback(myprofile);
                     }, function (error) {
                         alert(error.message);
@@ -659,28 +725,22 @@ angular.module('football.controllers', [])
 
                 try {
 
-
                     firebase.database().ref('/players/' + id).once('value', function (snapshot) {
-
-
-                        profile = {
-                            "key": snapshot.key,
-                            "displayname": snapshot.child("displayname").val(),
-                            "firstname": snapshot.child("firstname").val(),
-                            "lastname": snapshot.child("lastname").val(),
-                            "highestrating": snapshot.child("highestrating").val(),
-                            "middlename": snapshot.child("middlename").val(),
-                            "playposition": snapshot.child("playposition").val(),
-                            "ranking": snapshot.child("ranking").val(),
-                            "status": snapshot.child("status").val(),
-                            "photo": snapshot.child("photoURL").val(),
-                            //"teams": snapshot.child("teams").exists() ? snapshot.child("teams").val() : "",
-                            "telephone": snapshot.child("telephone").val(),
-                            "winstreak": snapshot.child("winstreak").val(),
-                            "teamdisplayed": "none",
-                            "teamdisplayedkey": snapshot.child("teamdisplayedkey").val(),
-
-                        };
+                        profile["key"] = snapshot.key;
+                        profile["displayname"] = snapshot.child("displayname").val();
+                        profile["firstname"] = snapshot.child("firstname").val();
+                        profile["lastname"] = snapshot.child("lastname").val();
+                        profile["highestrating"] = snapshot.child("highestrating").val();
+                        profile["middlename"] = snapshot.child("middlename").val();
+                        profile["playposition"] = snapshot.child("playposition").val();
+                        profile["ranking"] = snapshot.child("ranking").val();
+                        profile["isMobileVerified"] = snapshot.child("isMobileVerified").val();
+                        profile["status"] = snapshot.child("status").val();
+                        profile["photo"] = snapshot.child("photoURL").val();
+                        profile["telephone"] = snapshot.child("telephone").val();
+                        profile["winstreak"] = snapshot.child("winstreak").val();
+                        profile["teamdisplayed"] = "none";
+                        profile["teamdisplayedkey"] = snapshot.child("teamdisplayedkey").val();
                         callback(profile);
                     }, function (error) {
                         alert(error.message);
@@ -1375,7 +1435,7 @@ angular.module('football.controllers', [])
                 }
 
             },
-            PostError(error) {
+            PostError: function(error) {
                 var user = firebase.auth().currentUser;
                 if (!(user == undefined || user != null)) {
                     var id = user.uid;
@@ -1416,7 +1476,7 @@ angular.module('football.controllers', [])
 
     })
 
-    .controller('LoginController', function ($scope, $ionicModal, $ionicPopup, $timeout, $state, LoginStore) {
+    .controller('LoginController', function ($scope, $ionicModal, $ionicPopup, $timeout, $state, LoginStore, FirebaseStorageService) {
 
         $scope.loginData = {};
         $scope.myprofile = {};
@@ -1541,13 +1601,13 @@ angular.module('football.controllers', [])
         $scope.userImage = "img/PlayerProfile.png";
         $scope.chooseImage = function () {
             var options = {
-                quality: 75,
+                quality: 70,
                 destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
                 encodingType: Camera.EncodingType.PNG,
                 allowEdit: true,
-                targetWidth: 800,
-                targetHeight: 800,
+                targetWidth: 400,
+                targetHeight: 400,
                 saveToPhotoAlbum: false
             };
 
@@ -1581,19 +1641,14 @@ angular.module('football.controllers', [])
                             }
                             else {
 
-                                LoginStore.AddUser(newuser, $scope.registerdata).then(function (user) {
+                                LoginStore.AddUser(newuser, $scope.registerdata).then(function (success) {
                                     var user = firebase.auth().currentUser;
-
-                                    var id = user.uid;
-                                    var updates = {};
-                                    updates['players/' + id + '/photoURL'] = $scope.userImage && $scope.userImage !== "img/PlayerProfile.png" ? $scope.userImage : "";
-                                    firebase.database().ref().update(updates);
-
+                                    FirebaseStorageService.saveUserProfilePicture($scope.userImage, user.uid);
                                     user.sendEmailVerification().then(function () {
 
                                         var alertPopup = $ionicPopup.alert({
                                             title: 'Account Registered',
-                                            template: 'Thank you for registering. Check your email or verification.You will be redirected to the homepage'
+                                            template: 'Welcome To Arina. Please Take a moment to set up your profile'
                                         });
 
                                         alertPopup.then(function () {
@@ -1602,14 +1657,10 @@ angular.module('football.controllers', [])
                                     }, function (error) {
                                         alert(error.message);
                                     });
-
                                 }, function (error) {
                                     // An error happened.
                                 });
-
                             }
-
-
                         });
 
                     }
@@ -1880,7 +1931,7 @@ angular.module('football.controllers', [])
 
                     var alertPopup = $ionicPopup.alert({
                         title: 'Reset Password',
-                        template: 'An email has been sent to your email to reset'
+                        template: 'An email has been sent to your email to reset your password'
                     });
 
                     alertPopup.then(function () {
@@ -1898,7 +1949,7 @@ angular.module('football.controllers', [])
         };
     })
 
-    .controller('FirstTimeLoginController', function ($scope, $state, $ionicPopup, TeamStores, ProfileStore1, $ionicHistory) {
+    .controller('FirstTimeLoginController', function ($scope, $state, $ionicPopup, TeamStores, ProfileStore1, $ionicHistory, SMSService, $ionicLoading) {
 
 
 
@@ -1923,6 +1974,34 @@ angular.module('football.controllers', [])
                 available: false,
                 skilllevel: "Newbie"
             }
+            
+        $scope.checkMobileNumber = function(e, verified) {
+            console.log(111, verified);
+            if(verified) {
+                $scope.currentprofile.available = verified;
+                $scope.$apply();
+            }
+            if($scope.currentprofile.available && !verified) {
+                e.preventDefault();
+                $scope.currentprofile.available = !$scope.currentprofile.available;
+                var userId = firebase.auth().currentUser.uid;
+                $ionicLoading.show({
+                    content: 'Loading',
+                    animation: 'fade-in',
+                    showBackdrop: true,
+                    maxWidth: 200,
+                    showDelay: 0
+                });
+                firebase.database().ref('/players/' + userId).once('value').then(function(snapshot) {
+                    $ionicLoading.hide();
+                    if(!snapshot.val().isMobileVerified) {
+                        SMSService.verifyUserMobile($scope, $scope.checkMobileNumber, [e, true])
+                    } else {
+                        $scope.currentprofile.available = !$scope.currentprofile.available;
+                    }
+                });
+            }
+        };
 
         $scope.sliderskill = {
             value: 3,

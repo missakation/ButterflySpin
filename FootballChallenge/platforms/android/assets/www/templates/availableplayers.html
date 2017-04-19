@@ -303,11 +303,96 @@
 		margin-top: 0px;
 		color: #2ab041;
 	}
+			input {
+			width: 90%;
+			display: block;
+			border: none;
+			padding: 0px;
+			-webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+			transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+			background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%, #2ab041 4%);
+			background-position: -200px 0;
+			background-size: 1000px 200%;
+			background-repeat: no-repeat;
+			color: #2ab041;
+		}
+		
+		input:focus,
+		input:valid {
+			box-shadow: none;
+			outline: none;
+			background-position: 0 0;
+		}
+		
+		input::-webkit-input-placeholder {
+			-webkit-transition: all 0.3s ease-in-out;
+			transition: all 0.3s ease-in-out;
+		}
+		
+		input:focus::-webkit-input-placeholder,
+		input:valid::-webkit-input-placeholder {
+			color: #2ab041;
+			font-size: 1em;
+			-webkit-transform: translateY(-30px);
+			transform: translateY(-30px);
+			visibility: visible !important;
+		}
+		.popup {
+		border-radius: 50px;
+		font-size: 15px;
+	}
+	
+	.custom-class .popup-head {
+		display: none;
+	}
+	
+	.popup-buttons .button:first-child {
+		border-radius: 50px;
+		margin: 05px;
+		padding: 0px;
+		background-color: rgb(154, 167, 180);
+		color: white;
+	}
+	
+	.popup-buttons .button:last-child {
+		border-radius: 50px;
+		margin: 5px;
+		padding: 0px;
+		background-color: #2ab041;
+		color: white;
+	}
+	
+	.popup-body {
+		padding: 10px;
+		margin: -5px;
+		background-color: rgb(62, 83, 100);
+		color: white;
+		text-align: center;
+		border-radius: 15px 15px 0 0;
+	}
+	
+	.popup-buttons {
+		padding: 10px 5px 5px 5px;
+		margin: -5px;
+		background-color: rgb(62, 83, 100);
+		color: white;
+		text-align: center;
+		border-radius: 0 0 15px 15px;
+	}
+	
+	.popup-head {
+		display: none;
+	}
+	
+	.popup-title {
+		color: white;
+	}
+	
 </style>
 
 <ion-view view-title="Player Finder">
-	<ion-nav-buttons side="primary">
-		<button class="button button-icon ion-android-funnel" align="right" style="color:white" ng-click="popover.show($event)"></button>
+	<ion-nav-buttons side="right">
+		<button class="button button-icon ion-android-options" align="right" style="color:white" ng-click="popover.show($event)"></button>
 
 	</ion-nav-buttons>
 
@@ -333,7 +418,7 @@
 
 					<div class="list" style="margin-bottom:2px">
 
-						<label class="item item-input item-select" style="border-top:1px solid #5f7485;padding-left:5px;padding-bottom:5px;color:rgb(142,156,169);background-colr:rgb(46,62,75)">
+						<label class="item item-input item-select" style="border-top:1px solid #5f7485;padding-left:5px;padding-bottom:5px;color:rgb(142,156,169);background-color:rgb(46,62,75)">
 								<div class="input-label" style="color:rgb(157,171,184)">
 										Sort By	
 								</div>
@@ -344,6 +429,14 @@
 								</select>
 							</label>
 
+					</div>
+						<div align="left" style="border-top:1px solid #5f7485;color:rgb(157,171,184);font-size:15px;padding:10px 5px">
+						POSITION </div>
+					<button class="button" style="padding:2px 4px 1px;min-width:28px;min-height:30px;line-height:26px;font-size:12px;background-color: {{managecolors.grass.backcolor}} ; color:{{managecolors.grass.color}};line-height:30px;font-size:14px;width:47%;font-weight:bold;border-radius:50px;margin:0 3px 10px 3px" ng-click = "updategroundtype('grass')">
+						 Goalkeeper</button>
+					<button class="button" style="padding:2px 4px 1px;min-width:28px;min-height:30px;line-height:26px;background-color: {{managecolors.ground.backcolor}} ; color:{{managecolors.ground.color}};line-height:30px;font-size:14px;width:47%;font-weight:bold;border-radius:50px" ng-click = "updategroundtype('ground')">
+						Player</button>
+					
 					</div>
 
 
@@ -474,7 +567,7 @@
 
 			<div class="row" style="padding-top:0px">
 				<div class="col" style="padding-top:0px">
-					<button class="button button-block button-light button-small" style="color:#2ab041;background-color: {{item.backcolor}};border-radius:25px"
+					<button class="button button-block button-light" style="padding:2px 4px 1px;min-width:28px;min-height:30px;line-height:26px;color:#2ab041;background-color: {{item.backcolor}};border-radius:25px"
 					 type="submit" ng-click="requestnumber(item)">
 			<h5 style="color:{{item.color}}"> {{item.statusdesc}}
 			</h5>

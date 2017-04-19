@@ -12,7 +12,7 @@ angular.module('football.controllers')
 
         $scope.goteamprofile = function (id) {
             if (id !== null || id == '' || id === undefined) {
-                $state.go("app.teamprofile",
+                $state.go("app.teamview",
                     {
                         teamid: id
                     })

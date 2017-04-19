@@ -1,7 +1,7 @@
 ﻿
 angular.module('football.controllers')
 
-    .controller('TeamController', function ($scope, $ionicHistory, $ionicPopup, $ionicLoading, $state, $stateParams, TeamStores, $timeout) {
+    .controller('TeamController', function ($scope, $ionicHistory, $ionicPopup, $ionicLoading, $state, $stateParams, TeamStores, $timeout, SMSService) {
 
         $scope.showadd = true;
         $scope.notloaded = true;
@@ -11,19 +11,19 @@ angular.module('football.controllers')
         //$timeout(function () {
 
         try {
-                TeamStores.GetMyTeams(function (leagues) {
-                    $scope.test = leagues;
+            TeamStores.GetMyTeams(function (leagues) {
+                $scope.test = leagues;
 
-                    if (leagues.length == 0) {
-                    }
-                    else if (leagues.length > 10) {
-                        $scope.showadd = false;
+                if (leagues.length == 0) {
+                }
+                else if (leagues.length > 10) {
+                    $scope.showadd = false;
 
-                    }
-                    $scope.notloaded = false;
-                    $scope.$apply;
+                }
+                $scope.notloaded = false;
+                $scope.$apply;
 
-                })
+            })
 
         }
         catch (error) {
@@ -32,8 +32,23 @@ angular.module('football.controllers')
         //  }, 2000)
 
         $scope.gotoadd = function () {
-            $state.go("app.teamadd");
-        }
+            var userId = firebase.auth().currentUser.uid;
+            $ionicLoading.show({
+                content: 'Loading',
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 200,
+                showDelay: 0
+            });
+            firebase.database().ref('/players/' + userId).once('value').then(function (snapshot) {
+                $ionicLoading.hide();
+                if (!snapshot.val().isMobileVerified) {
+                    SMSService.verifyUserMobile($scope, $scope.gotoadd, [])
+                } else {
+                    $state.go("app.teamadd");
+                }
+            });
+        };
 
         var connectedRef = firebase.database().ref(".info/connected");
         connectedRef.on("value", function (snap) {
@@ -691,9 +706,8 @@ angular.module('football.controllers')
                         teamsizestring = $scope.currentprofile.teamoften ? teamsizestring + "10v10 ." : teamsizestring;
                         teamsizestring = $scope.currentprofile.teamofeleven ? teamsizestring + "11v11 ." : teamsizestring;
 
-                        if(teamsizestring.length>2)
-                        {
-                            teamsizestring = teamsizestring.substr(0,teamsizestring.length-1);
+                        if (teamsizestring.length > 2) {
+                            teamsizestring = teamsizestring.substr(0, teamsizestring.length - 1);
                         }
 
                         $scope.currentprofile.teamsizestring = teamsizestring;
@@ -704,7 +718,7 @@ angular.module('football.controllers')
                             if (!(id === null || id == '' || id === undefined)) {
 
                                 for (var j = 0; j < $scope.currentprofile.players.length; j++) {
-                                    if ($scope.currentprofile.players[i].key == id) {
+                                    if ($scope.currentprofile.players[i] && $scope.currentprofile.players[i].hasOwnProperty('key') && $scope.currentprofile.players[i].key === id) {
                                         $scope.doibelong = true;
                                     }
 

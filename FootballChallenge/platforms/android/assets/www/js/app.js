@@ -244,6 +244,16 @@ angular.module('football', ['ionic', 'football.controllers', "ion-datetime-picke
                 }
             })
 
+            .state('app.teamview', {
+                url: '/teamprofile/:teamid',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/teamview.html',
+                        controller: 'TeamProfileController'
+                    }
+                }
+            })
+
             .state('app.choosestadium', {
                 url: '/choosestadium',
                 params: {

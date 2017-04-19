@@ -593,14 +593,48 @@
 		background-color: transparent;
 		margin-top: -6px;
 	}
-}
+	
+	input {
+		width: 100%;
+		display: block;
+		border: none;
+		padding: 0px;
+		-webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+		transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+		background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%, #2ab041 4%);
+		background-position: -200px 0;
+		background-size: 1000px 200%;
+		background-repeat: no-repeat;
+		color: #2ab041;
+	}
+	
+	input:focus,
+	input:valid {
+		box-shadow: none;
+		outline: none;
+		background-position: 0 0;
+	}
+	
+	input::-webkit-input-placeholder {
+		-webkit-transition: all 0.3s ease-in-out;
+		transition: all 0.3s ease-in-out;
+	}
+	
+	input:focus::-webkit-input-placeholder,
+	input:valid::-webkit-input-placeholder {
+		color: #2ab041;
+		font-size: 1em;
+		-webkit-transform: translateY(-30px);
+		transform: translateY(-30px);
+		visibility: visible !important;
+	}
 </style>
 
 
 <ion-view view-title="Reserve a Stadium">
 
-	<ion-nav-buttons side="primary">
-		<button class="button button-icon ion-android-funnel" align="right" style="color:white" ng-click="popover.show($event)"></button>
+	<ion-nav-buttons side="right">
+		<button class="button button-icon ion-android-options" align="right" style="color:white" ng-click="popover.show($event)"></button>
 
 	</ion-nav-buttons>
 
@@ -645,22 +679,28 @@
 					</div>
 
 					<div align="left" style="border-top:1px solid #5f7485;color:rgb(157,171,184);font-size:15px;padding:10px 5px 10px 5px"> Stadium Type </div>
-					<button class="button button-small" style="background-color: {{managecolors.indoor.backcolor}} ; color:{{managecolors.indoor.color}};line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px;margin:0 3px;" ng-click ="updatedoortype('indoor')" >
+					<button class="button button-small" style="background-color: {{managecolors.indoor.backcolor}} ; color:{{managecolors.indoor.color}};line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px;margin:0 3px;"
+					 ng-click="updatedoortype('indoor')">
 						 Indoor</button>
-					<button class="button button-small"  style="background-color: {{managecolors.outdoor.backcolor}} ; color:{{managecolors.outdoor.color}};line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px" ng-click ="updatedoortype('outdoor')"> 
+					<button class="button button-small" style="background-color: {{managecolors.outdoor.backcolor}} ; color:{{managecolors.outdoor.color}};line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px"
+					 ng-click="updatedoortype('outdoor')"> 
 						Outdoor</button>
-					<button class="button button-small"  style="background-color: {{managecolors.anydoor.backcolor}} ; color:{{managecolors.anydoor.color}};width:30%;line-height:30px;font-size:14px;font-weight:bold;border-radius:50px;margin:0 3px" ng-click ="updatedoortype('anydoor')">
+					<button class="button button-small" style="background-color: {{managecolors.anydoor.backcolor}} ; color:{{managecolors.anydoor.color}};width:30%;line-height:30px;font-size:14px;font-weight:bold;border-radius:50px;margin:0 3px"
+					 ng-click="updatedoortype('anydoor')">
 						Any </button>
 					<br>
 					</div>
 
 					<div align="left" style="border-top:1px solid #5f7485;color:rgb(157,171,184);font-size:15px;padding:10px 5px;margin-top:10px">
 						Floor Type </div>
-					<button class="button button-small" style="background-color: {{managecolors.grass.backcolor}} ; color:{{managecolors.grass.color}};line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px;margin:0 3px;" ng-click = "updategroundtype('grass')">
+					<button class="button button-small" style="background-color: {{managecolors.grass.backcolor}} ; color:{{managecolors.grass.color}};line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px;margin:0 3px;"
+					 ng-click="updategroundtype('grass')">
 						 Grass</button>
-					<button class="button button-small" style="background-color: {{managecolors.ground.backcolor}} ; color:{{managecolors.ground.color}};line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px" ng-click = "updategroundtype('ground')">
+					<button class="button button-small" style="background-color: {{managecolors.ground.backcolor}} ; color:{{managecolors.ground.color}};line-height:30px;font-size:14px;width:30%;font-weight:bold;border-radius:50px"
+					 ng-click="updategroundtype('ground')">
 						Ground</button>
-					<button class="button button-small" style="background-color: {{managecolors.anyground.backcolor}} ; color:{{managecolors.anyground.color}};width:30%;line-height:30px;font-size:14px;font-weight:bold;border-radius:50px;margin:0px 3px" ng-click = "updategroundtype('anyground')">
+					<button class="button button-small" style="background-color: {{managecolors.anyground.backcolor}} ; color:{{managecolors.anyground.color}};width:30%;line-height:30px;font-size:14px;font-weight:bold;border-radius:50px;margin:0px 3px"
+					 ng-click="updategroundtype('anyground')">
 						Any </button>
 
 					</div>

@@ -1,12 +1,61 @@
 <style>
-      
-     .headercolor {
+    .popup {
+        border-radius: 50px;
+        font-size: 15px;
+    }
+    
+    .custom-class .popup-head {
+        display: none;
+    }
+    
+    .popup-buttons .button:first-child {
+        border-radius: 50px;
+        margin: 05px;
+        padding: 0px;
+        background-color: rgb(153, 167, 180);
+        color: white;
+    }
+    
+    .popup-buttons .button:last-child {
+        border-radius: 50px;
+        margin: 05px;
+        padding: 0px;
+        background-color: #2ab041;
+        color: white;
+    }
+    
+    .popup-body {
+        padding: 10px;
+        margin: -5px;
+        background-color: rgb(62, 83, 100);
+        color: white;
+        text-align: center;
+        border-radius: 15px 15px 0 0;
+    }
+    
+    .popup-buttons {
+        padding: 10px 5px 5px 5px;
+        margin: -5px;
+        background-color: rgb(62, 83, 100);
+        color: white;
+        text-align: center;
+        border-radius: 0 0 15px 15px;
+    }
+    
+    .popup-head {
+        display: none;
+    }
+    
+    .popup-title {
+        color: white;
+    }
+    
+    .headercolor {
         background-color: rgb(62, 83, 100);
         color: white;
         border-bottom: 2px solid rgb(62, 83, 100);
-        border-top:1px;
+        border-top: 1px;
     }
-
 </style>
 <ion-view view-title="My Teams">
 
@@ -54,12 +103,12 @@
                 <h4 style="color: #5f7485;float:left; width:50%; padding-left:25px;margin:0px"> MEMBERS
                 </h4>
                 <h4 style="color: #5f7485;float:left; width:40%;margin-left:-15px;border-left:solid;margin:0px; border-width:thin; border-color: #5f7485;padding-left:25px">
-                RATING
+                    RATING
                 </h4>
                 <h4 style="color:white;float:left; width:50%;padding-left:48px;top:0px;margin:0px"> <b>{{team.members}}</b>
                 </h4>
                 <h4 style="color:darkturquoise;float:left; width:50%;margin:0px;border-left:solid; border-width:thin; border-color: #5f7485;padding-left:29px">
-                1500</b>
+                    1500</b>
                 </h4>
 
             </a>

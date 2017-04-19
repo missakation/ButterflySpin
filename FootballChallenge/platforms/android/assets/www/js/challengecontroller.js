@@ -176,7 +176,6 @@ angular.module('football.controllers')
                     template: 'No Available Stadiums'
                 });
             }
-            alert("test");
 
 
             // Simple GET request example:

@@ -127,6 +127,7 @@
                 try {
                     var contact = {
                         //badge:team.badge,
+                        available:true,
                         rating: 1000,
                         status: '1',
                         teamadmin: id,
@@ -199,7 +200,7 @@
 
                     var playerside = {
                         //badge:team.badge,
-
+                        available:true,
                         teamname: newteam.teamname,
                         badge: newteam.badge,
                         rank: 1500,

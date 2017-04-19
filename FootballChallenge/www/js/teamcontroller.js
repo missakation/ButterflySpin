@@ -718,7 +718,7 @@ angular.module('football.controllers')
                             if (!(id === null || id == '' || id === undefined)) {
 
                                 for (var j = 0; j < $scope.currentprofile.players.length; j++) {
-                                    if ($scope.currentprofile.players[i].key == id) {
+                                    if ($scope.currentprofile.players[i] && $scope.currentprofile.players[i].hasOwnProperty('key') && $scope.currentprofile.players[i].key === id) {
                                         $scope.doibelong = true;
                                     }
 

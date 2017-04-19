@@ -167,7 +167,6 @@ angular.module('football.controllers')
             GetAllTeamsNotMe: function (myteam, date, callback) {
 
 
-
                 var year = date.getFullYear();
                 var month = date.getMonth();
                 var day = date.getDate();
@@ -231,10 +230,9 @@ angular.module('football.controllers')
 
                             snapshot.forEach(function (childSnapshot) {
 
-                                if (!childSnapshot.child('players').child(id).exists()) {
+                                 if (!childSnapshot.child('players').child(id).exists()) {
 
                                     if (childSnapshot.child(startat).val() <= hour) {
-
                                         if (childSnapshot.child("available").val()) {
 
                                             var range = 1110 - childSnapshot.child("rating").val();

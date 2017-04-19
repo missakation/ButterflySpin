@@ -112,8 +112,8 @@ module.exports.metadata =
     "ionic-plugin-keyboard": "1.0.9",
     "cordova-plugin-x-socialsharing": "5.1.6",
     "cordova-plugin-image-picker": "1.1.1",
-    "cordova-plugin-compat": "1.1.0",
-    "cordova-plugin-camera": "2.4.0"
+    "cordova-plugin-camera": "2.4.0",
+    "cordova-plugin-compat": "1.1.0"
 };
 // BOTTOM OF METADATA
 });

@@ -521,7 +521,9 @@ angular.module('football.controllers')
                     || $scope.globalstadiums[i].type.toLowerCase() == "outdoor" && $scope.managecolors.outdoor.selected)
                     && ($scope.managecolors.anyground.selected
                         || ($scope.globalstadiums[i].typefloor.toLowerCase() == "grass" && $scope.managecolors.grass.selected)
-                        || $scope.globalstadiums[i].typefloor.toLowerCase() == "clay" && $scope.managecolors.ground.selected)) {
+                        || $scope.globalstadiums[i].typefloor.toLowerCase() == "clay" && $scope.managecolors.ground.selected)
+                    && ($scope.globalstadiums[i].price <= $scope.managecolors.priceto && $scope.globalstadiums[i].price >= $scope.managecolors.pricefrom)
+                    && ($scope.globalstadiums[i].distance <= $scope.managecolors.distanceto && $scope.globalstadiums[i].price >= $scope.managecolors.distancefrom)) {
                     $scope.allfreestadiums.push($scope.globalstadiums[i]);
                 }
             }

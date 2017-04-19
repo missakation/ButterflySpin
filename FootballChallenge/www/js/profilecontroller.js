@@ -175,7 +175,7 @@ angular.module('football.controllers')
 
 
     })
-    .controller('ProfileEditController', function ($cordovaImagePicker, $scope, $ionicHistory, ProfileStore1, $ionicLoading, $timeout, $ionicPopup, $stateParams, $state, TeamStores) {
+    .controller('ProfileEditController', function ($cordovaImagePicker, $scope, $ionicHistory, ProfileStore1, $ionicLoading, $timeout, $ionicPopup, $stateParams, $state, TeamStores, FirebaseStorageService) {
 
         $scope.currentprofile = $state.params.myprofile;
 
@@ -472,8 +472,8 @@ angular.module('football.controllers')
         $scope.progress = 0;
         $scope.uploading = false;
 
-        $scope.ChangePicture = function () {       
-                 // var options = {
+        $scope.ChangePicture = function () {
+            // var options = {
             //     maximumImagesCount: 1,
             //     width: 800,
             //     height: 800,
@@ -483,13 +483,13 @@ angular.module('football.controllers')
             console.log(JSON.stringify(window.Camera))
 
             var options = {
-                quality: 75,
+                quality: 70,
                 destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
                 encodingType: Camera.EncodingType.PNG,
                 allowEdit: true,
-                targetWidth: 800,
-                targetHeight: 800,
+                targetWidth: 400,
+                targetHeight: 400,
                 saveToPhotoAlbum: false
             };
 
@@ -520,14 +520,19 @@ angular.module('football.controllers')
                 console.log(fileObject);
             })*/
 
-                 navigator.camera.getPicture(function (imageURI) {
+            navigator.camera.getPicture(function (imageURI) {
                 $scope.currentprofile.photo = "data:image/png;base64," + imageURI;
+
+                FirebaseStorageService.saveUserProfilePicture($scope.currentprofile.photo, firebase.auth().currentUser.uid).then(function (imageUrl) {
+                    $scope.currentprofile.photo = imageUrl;
+                    $scope.$apply();
+                }, function (error) {
+                    $scope.currentprofile.photo = "img/PlayerProfile.png";
+                    $scope.$apply();
+                    alert("Unable to save image to storage.")
+                })
+
                 $scope.$apply();
-                var user = firebase.auth().currentUser;
-                var id = user.uid;
-                var updates = {};
-                updates['players/' + id + '/photoURL'] = $scope.currentprofile.photo;
-                firebase.database().ref().update(updates);
 
                 // $scope.$apply();
                 // //console.log('Image URI: ' + results[0]);
