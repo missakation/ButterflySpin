@@ -27,6 +27,17 @@ angular.module('football.controllers')
                 
                 $scope.notloaded = false;
                 $scope.rankedteams = leagues.reverse();
+
+                /* UTILITIES
+                LeaderBoardStore.UpdateRatings($scope.rankedteams).then(function(result)
+                {
+
+                },function(error)
+                {
+                    alert(error.message);
+                })
+                */
+
                 $scope.$apply();
 
                 $scope.$broadcast('scroll.infiniteScrollComplete');

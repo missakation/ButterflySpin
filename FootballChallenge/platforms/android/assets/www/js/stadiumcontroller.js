@@ -470,6 +470,9 @@ angular.module('football.controllers')
                                             $scope.search.date.setMilliseconds(0);
                                             $scope.search.date.setSeconds(0);
                                             //alert($scope.search.date);
+                                            $ionicHistory.nextViewOptions({
+                                                disableBack: true
+                                            });
                                             $state.go("app.bookings");
                                         }, function (error) {
                                             var alertPopup = $ionicPopup.alert({

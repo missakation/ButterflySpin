@@ -409,14 +409,12 @@
 		width: 100%;
 	}
 	
-	.picker-view .picker-content {
-		display: -webkit-box;
-		display: -webkit-flex;
-		display: -moz-flex;
-		display: -ms-flexbox;
-		display: flex;
+.picker-view .picker-content {	
+		-moz-column-count: 3;
+		-webkit-column-count: 3;
+		column-count: 3;
 		position: relative;
-		background-color: white;
+		background-color: rgb(42, 62, 82);
 		height: 60%;
 		top: 15px;
 	}

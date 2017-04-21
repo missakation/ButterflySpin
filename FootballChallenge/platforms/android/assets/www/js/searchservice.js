@@ -292,8 +292,20 @@ angular.module('football.controllers')
 
                             };
 
+                            var requesttome = {
+                                //badge:team.badge,
+                                requeststatus: 0,
+                                requestorkey: player.key,
+                                firstname: player.firstname,
+                                lastname: player.lastname,
+                                requestortelephone: "",
+
+                            };
+
                             var updates = {};
                             updates['/players/' + player.key + '/myrequests/' + id] = requestdata;
+
+                            updates['/players/' + myprofile.key + '/previousrequests/' + player.key] = requesttome;
 
                             return firebase.database().ref().update(updates);
                         }

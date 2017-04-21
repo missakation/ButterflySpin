@@ -248,6 +248,23 @@ angular.module('football.controllers')
 
                         }
 
+                        if (snapshot.child("previousrequests").exists()) {
+                            snapshot.child("previousrequests").forEach(function (teams) {
+
+                                var matchdata = {
+                                    key: teams.key,
+                                    firstname: teams.child("firstname").val(),
+                                    lastname: teams.child("lastname").val(),
+                                    photo: teams.child("requestorphoto").val() == "" ? "img/PlayerProfile.png" : teams.child("requestorphoto").val(),
+                                    telephone: teams.child("requestortelephone").val()
+
+                                }
+                                requestednumbers.push(matchdata);
+
+                            })
+
+
+                        }
 
                         if (snapshot.child("gameinvitation").exists()) {
                             snapshot.child("gameinvitation").forEach(function (challenges) {
