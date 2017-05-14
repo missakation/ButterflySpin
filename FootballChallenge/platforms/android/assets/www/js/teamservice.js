@@ -485,7 +485,13 @@
                                 'awayjersey': snapshot.child("awayjersey").val(),
                                 "rating": 1500,
                                 "rank": 100,
-
+                                "teamoffive": snapshot.child("teamoffive").val(),
+                                "teamofsix": snapshot.child("teamofsix").val(),
+                                "teamofseven": snapshot.child("teamofseven").val(),
+                                "teamofeight": snapshot.child("teamofeight").val(),
+                                "teamofnine": snapshot.child("teamofnine").val(),
+                                "teamoften": snapshot.child("teamoften").val(),
+                                "teamofeleven": snapshot.child("teamofeleven").val()
                             };
                             TeamProfileInfo = Items;
 

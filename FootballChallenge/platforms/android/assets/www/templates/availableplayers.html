@@ -481,9 +481,19 @@
 			</ion-popover-view>
 		</script>
 
-		<div class="item item-dark" ion-datetime-picker ng-model="search.date" minute-step="15" ng-change="checkfree()">
-			{{search.date| date: "yyyy-MM-dd H:mm"}}
-		</div>
+		<!--<div class="item item-dark" ion-datetime-picker ng-model="search.date" minute-step="15" ng-change="checkfree()">
+			<!--{{search.date| date: "yyyy-MM-dd H:mm"}}-->
+		<!--</div>-->
+        <div align="center">
+            <!--<p style="background-color:lightgray">Date</p>-->
+            <!--<label class="item item-input">-->
+
+
+            <input class="button open-button" ng-readonly="true" on-tap="openPickerView()" style="border-radius:0px;color:white;width:100%;line-height:40px;padding-bottom:0px;margin-bottom:0px;background-color:#2ab041"
+                   ng-model="search.text">
+            <!--<input type="datetime-local" step="30"  ng-model="search.date" ng-change="checkfree()">-->
+            <!--</label>-->
+        </div>
 
 		<div class="card" style="background-color:rgb(62,83,100)" ng-repeat="item in allfreeplayers">
 			<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->

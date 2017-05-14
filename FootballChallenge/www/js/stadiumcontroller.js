@@ -50,7 +50,7 @@ angular.module('football.controllers')
                         $scope.search.date = new Date(selectedDate + " " + selectedTime + ", " + (new Date()).getFullYear());
                         $scope.search.players = (output[2].split(" "))[1];
                         console.log($scope.search.date);
-                        $scope.search.text = output.join(" -");
+                        $scope.search.text = output.join(" - ");
                         $scope.checkfree();
                     }
                 });
@@ -294,6 +294,10 @@ angular.module('football.controllers')
         //$scope.search.date = "2013-01-08";
         var tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(21);
+        tomorrow.setMinutes(0);
+        tomorrow.setMilliseconds(0);
+        tomorrow.setSeconds(0);
 
         $scope.search = {
             date: tomorrow,
@@ -306,11 +310,7 @@ angular.module('football.controllers')
 
 
 
-        $scope.search.date.setDate($scope.search.date.getDate() + 1);
-        $scope.search.date.setHours(21);
-        $scope.search.date.setMinutes(0);
-        $scope.search.date.setMilliseconds(0);
-        $scope.search.date.setSeconds(0);
+        $scope.search.date = tomorrow;
         //alert($scope.search.date);
         $scope.allfreestadiums = [];
 

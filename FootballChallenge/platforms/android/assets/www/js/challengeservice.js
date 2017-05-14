@@ -164,21 +164,49 @@ angular.module('football.controllers')
                     callback(AllITems);
                 });
             },
-            GetAllTeamsNotMe: function (myteam, date, callback) {
+            GetAllTeamsNotMe: function (myteam, search, callback) {
 
+                var numOfPlayers = search.players;
+                var year = search.date.getFullYear();
+                var month = search.date.getMonth();
+                var day = search.date.getDate();
 
-                var year = date.getFullYear();
-                var month = date.getMonth();
-                var day = date.getDate();
+                var hour = search.date.getHours();
+                var minute = search.date.getMinutes();
 
-                var hour = date.getHours();
-                var minute = date.getMinutes();
-
-                var weekday = date.getDay();
+                var weekday = search.date.getDay();
 
                 var startat = "";
                 var startend = "";
+                
+                var teamOf = "";
 
+                switch (numOfPlayers) {
+                    case 5:
+                        teamOf = "teamoffive";
+                        break;
+                    case 6:
+                        teamOf = "teamofsix";
+                        break;
+                    case 7:
+                        teamOf = "teamofseven";
+                        break;
+                    case 8:
+                        teamOf = "teamofeight";
+                        break;
+                    case 9:
+                        teamOf = "teamofnine";
+                        break;
+                    case 10:
+                        teamOf = "teamoften";
+                        break;
+                    case 11:
+                        teamOf = "teamofeleven";
+                        break;
+
+                    default:
+                        teamOf = "teamoffive";
+                }
 
                 switch (weekday) {
                     case 0:
@@ -234,7 +262,9 @@ angular.module('football.controllers')
 
                                     if (childSnapshot.child(startat).val() <= hour) {
                                         if (childSnapshot.child("available").val()) {
-
+                                            if (childSnapshot.child(teamOf).val())
+                                            {
+                                                alert(childSnapshot.child(teamOf).val());
                                             var range = 1110 - childSnapshot.child("rating").val();
 
                                             var difficulty = "";
@@ -246,19 +276,19 @@ angular.module('football.controllers')
                                                     break;
                                                 case range < -100 && range > -200:
                                                     difficulty = "Hard.png";
-                                                     difficultytext = "Hard";
+                                                    difficultytext = "Hard";
                                                     break;
                                                 case range <= -200:
                                                     difficulty = "Extreme.png";
-                                                     difficultytext = "Extreme";
+                                                    difficultytext = "Extreme";
                                                     break;
                                                 case range > 100 && range <= 200:
                                                     difficulty = "Easy.png";
-                                                     difficultytext = "Easy";
+                                                    difficultytext = "Easy";
                                                     break;
                                                 case range > 200:
                                                     difficulty = "VeryEasy.png";
-                                                     difficultytext = "Very Easy";
+                                                    difficultytext = "Very Easy";
                                                     break;
                                                 default:
                                                     break;
@@ -289,6 +319,7 @@ angular.module('football.controllers')
                                                 "difficultytext":difficultytext
                                             };
                                             AllITems.push(Items);
+                                        }
                                         }
                                     }
                                 }

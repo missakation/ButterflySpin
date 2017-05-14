@@ -346,7 +346,8 @@ angular.module('football.controllers')
                             "ranking": snapshot.child("ranking").val(),
                             "status": snapshot.child("status").val(),
                             "telephone": snapshot.child("telephone").val(),
-                            "photo": snapshot.child("photoURL").val()
+                            "photo": snapshot.child("photoURL").val(),
+                            "favstadium": snapshot.child("favstadium").val()
                         };
 
                         TempItems = Items;

@@ -362,7 +362,7 @@
 	}
 	/** from date time picker style css files **/
 	
-	.picker-view {
+	/*.picker-view {
 		z-index: 9999;
 		position: absolute;
 		left: 0;
@@ -595,7 +595,7 @@
 			opacity: 0;
 			-webkit-transform: translateY(100%);
 		}
-	}
+	}*/
 	
 	.button {
 		border-style: none;
@@ -695,10 +695,14 @@
 			</ion-popover-view>
 		</script>
 
-		<div class="item item-dark" style="border:transparent;background-color:#2ab041" ion-datetime-picker ng-model="search.date"
+		<!--<div class="item item-dark" style="border:transparent;background-color:#2ab041" ion-datetime-picker ng-model="search.date"
 		 minute-step="30">	
 		 		{{search.date| date: "yyyy-MM-dd H:mm"}}
-		</div>
+		</div>-->
+        <div align="center">
+            <input class="button open-button" ng-readonly="true" on-tap="openPickerView()" style="border-radius:0px;color:white;width:100%;line-height:40px;padding-bottom:0px;margin-bottom:0px;background-color:#2ab041"
+                   ng-model="search.text">
+        </div>
 
 
 		<div align="left">
