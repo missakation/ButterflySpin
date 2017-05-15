@@ -146,7 +146,7 @@
 
 			</div>
 
-			<div class="col col-34" align="center" style="margin-left:2px;padding:0px;padding-left:0px;color:white"> 404
+			<div class="col col-34" align="center" style="margin-left:2px;padding:0px;padding-left:0px;color:white"> {{currentprofile.favstadiumname}}
 			</div>
 		</div>
 
@@ -191,12 +191,6 @@
 
 					</div>
 
-					<div class="col" style="border-bottom: {{status.Statistics}};border-color:#2ab041;padding:10px 0px; border-right:2px solid #5f7485">
-						<h3 class="whitetext" ng-click="switchscreens(2)">
-							<b>STATISTICS</b>
-						</h3>
-
-					</div>
 					<div class="col" style="border-bottom: {{status.Members}};padding:10px 0px;border-color:#2ab041">
 						<h3 class="whitetext" ng-click="switchscreens(3)">
 							<b>MY GAMES</b>
@@ -210,50 +204,6 @@
 
 			</ion-item>
 
-
-			<ion-item ng-show="tabs.Statistics" align="left" style="border: none;padding:0px">
-
-
-				<div class="row row-center" style="border-bottom:1px solid #5f7485;margin-top:15px">
-					<div class='col col-75'>
-
-						<h3 class="whitetext">Games On Arina</h3>
-					</div>
-
-					<div class="col">
-
-						<h3 class="whitetext" align="right">404</h3>
-					</div>
-
-				</div>
-
-				<div class="row row-center" style="border-bottom:1px solid #5f7485; padding-top:5px; margin:0px">
-					<div class='col col-75'>
-
-						<h3 class="whitetext">Wins</h3>
-					</div>
-
-					<div class="col">
-
-						<h3 class="whitetext" align="right">404</h3>
-					</div>
-
-				</div>
-
-				<div class="row row-center" style="border-bottom:1px solid #5f7485; padding-top:5px; margin:0px">
-					<div class="col col-75">
-
-						<h3 class="whitetext">Win Streak</h3>
-					</div>
-
-					<div class="col">
-
-						<h3 class="whitetext" align="right">404</h3>
-					</div>
-
-				</div>
-
-			</ion-item>
 
 
 			<ion-item ng-show="tabs.Available" align="left" style="border: none;padding:0px">
@@ -376,7 +326,7 @@
 					</div>
 
 				</div>
-		</div>
+				
 
 
 		</ion-item>

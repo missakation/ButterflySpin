@@ -41,7 +41,9 @@
                                 "price": childSnapshot.child("price").val(),
                                 "photo": childSnapshot.child("photo").val(),
                                 "stadiumdescription": childSnapshot.child("stadiumdescription").val(),
-                                "date":gameedate
+                                "date":gameedate,
+                                "duration":childSnapshot.child("stadiumdescription").val(),
+                                "phone":childSnapshot.child("duration").val(),
 
                             };
 

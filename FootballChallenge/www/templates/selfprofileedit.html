@@ -403,19 +403,19 @@
 
 		<div align="center" style="padding-top:10px;padding-bottom:10px">
 
-			<input type="text" required ng-model="currentprofile.firstname" placeholder="First name" style="padding:5px;background-color:rgba(0, 0, 0, 0.4);padding-left:20px;color:#2ab041;border-radius:5px">
+			<input type="text" required ng-model="currentprofile.firstname" placeholder="First name" style="border:1px solid #96a6b3;padding:5px;padding-left:20px;color:#2ab041;border-radius:5px">
 		</div>
 
 		<div align="center" style="padding-top:10px;padding-bottom:10px">
 
-			<input type="text" required ng-model="currentprofile.lastname" placeholder="Last name" style="padding:5px;background-color:rgba(0, 0, 0, 0.4);padding-left:20px;color:#2ab041;border-radius:5px">
+			<input type="text" required ng-model="currentprofile.lastname" placeholder="Last name" style="border:1px solid #96a6b3;padding:5px;padding-left:20px;color:#2ab041;border-radius:5px">
 		</div>
 
 
 		<h5 style="color:rgb(153,167,180);background-color:transparent;padding-left:10px"> BIRTHDAY </h5>
 		<div align="center" style="padding-bottom:10px">
 
-			<input type="date" required ng-model="currentprofile.age" placeholder="Birthday" style="padding:5px;background-color:rgba(0, 0, 0, 0.4);padding-left:20px;color:#2ab041;border-radius:5px">
+			<input type="date" required ng-model="currentprofile.age" placeholder="Birthday" style="border:1px solid #96a6b3;padding:5px;padding-left:20px;color:#2ab041;border-radius:5px">
 		</div>
 
 
@@ -426,7 +426,7 @@
 			</h5>
 
 			<div align="center" class="list" style="width:95%">
-				<label class="item item-input" style="padding:2px 20px 20px 10px;background-color:rgba(0, 0, 0, 0.4); border-radius:5px;">
+				<label class="item item-input" style="border:1px solid #96a6b3;padding:2px 20px 20px 10px; border-radius:5px;">
                 <textarea maxlength="200" type="text" placeholder="Write something cool about yourself!" ng-model="currentprofile.comments" style="color:#2ab041;background-color:transparent;padding-left:2px">
                 	 </textarea>
 					 	</div>
@@ -465,7 +465,7 @@
 					</div>
 					<div class="col col-20">
 						<label class="toggle">
-							<input type="checkbox" ng-model="currentprofile.available">
+							<input type="checkbox" ng-model="currentprofile.available" ng-click="checkMobileNumber($event)"> 
 							<div class="track">
 								<div class="handle"></div>
 							</div>
@@ -488,7 +488,7 @@
 						</div>
 
 						<h5 class="col col-33" ng-click="gochoosestadium(currentprofile)" align="center" style="border-radius:15px;border:1px solid #97a7b4;padding-top:5px;color:#2ab041">
-							{{currentprofile.favstadium| uppercase }}
+							{{currentprofile.favstadiumname| uppercase }}
 						</h5>
 					</diV>
 
@@ -627,15 +627,6 @@
 						</div>
 					</div>
 
-					<div align="left" style="border-top:1px solid #5f7485;margin-bottom:0px;margin-top:15px;padding-left: 10px;padding-right:10px ">
-						<h5 style="margin-bottom:0px;color:rgb(153,167,180)"> HOW FAR FROM YOUR FAVORITE STADIUM ARE YOU WILLING TO PLAY ?
-						</h5>
-					</div>
-					<div class="button-bar" align="center" style="border-bottom:1px solid #5f7485;padding-right:10px;padding-left:22%">
-						<div class="col">
-							<rzslider style="color:white"></rzslider>
-						</div>
-					</div>
 				</div>
 
 	</ion-content>

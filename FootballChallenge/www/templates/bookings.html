@@ -52,11 +52,11 @@
     }
     
     .spinner svg {
-        width: 38px;
-        height: 38px;
-        stroke: #444;
-        fill: #444;
-        margin-top: 30%;
+        width: 10% !important;
+        height: 100px !important;
+        stroke: #2ab041;
+        fill: #2ab041;
+        margin-top:20%;
     }
 </style>
 
@@ -91,7 +91,7 @@
 
     <ion-content style="background-color:rgb(46,62,75)">
         <div align="center">
-            <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
+            <ion-spinner ng-show="notloaded" icon="lines"></ion-spinner>
         </div>
         <div>    
             <div class="card" ng-repeat="item in selectedbookings | orderBy: 'date':false"   style="border:10px solid rgb(62, 83, 100);margin:30px 5px -31px 5px;background-color:rgb(46,62,75)">

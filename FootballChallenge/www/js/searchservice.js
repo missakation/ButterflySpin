@@ -64,86 +64,94 @@ angular.module('football.controllers')
 
 
 
-                firebase.database().ref('/players').orderByChild(startend).startAt(hour).once('value').then(function (snapshot) {
+                firebase.database().ref('/playersinfo').orderByChild(startend).startAt(hour).once('value').then(function (snapshot) {
                     AvailablePlayers = [];
 
                     snapshot.forEach(function (childSnapshot) {
 
-                        var status = 0;
-                        var statusdesc = "Request Number";
-                        var color = "#2ab042";
-                        var backcolor = "white";
 
-                        if (childSnapshot.child("available").val()) {
+                        if (childSnapshot.key != firebase.auth().currentUser.uid) {
 
-                            if (childSnapshot.child(startat).exists()) {
-                                if (childSnapshot.child(startat).val() <= hour && childSnapshot.child("enableinvitations").val()) {
 
-                                    if (childSnapshot.child("myrequests/" + id).exists()) {
+                            var status = 0;
+                            var statusdesc = "Request Number";
+                            var color = "#2ab042";
+                            var backcolor = "white";
 
-                                        switch (childSnapshot.child("myrequests/" + id + "/requeststatus").val()) {
-                                            case 0:
-                                                statusdesc = "Number Requested";
-                                                break;
-                                            case 1:
-                                                statusdesc = "Friend";
-                                                break;
-                                            case 2:
-                                                statusdesc = "Number Requested";
-                                                break;
 
-                                            default:
-                                                break;
+
+                            if (childSnapshot.child("available").val()) {
+
+                                if (childSnapshot.child(startat).exists()) {
+                                    if (childSnapshot.child(startat).val() <= hour && childSnapshot.child("enableinvitations").val()) {
+
+                                        if (childSnapshot.child("myrequests/" + id).exists()) {
+
+                                            switch (childSnapshot.child("myrequests/" + id + "/requeststatus").val()) {
+                                                case 0:
+                                                    statusdesc = "Number Requested";
+                                                    break;
+                                                case 1:
+                                                    statusdesc = "Friend";
+                                                    break;
+                                                case 2:
+                                                    statusdesc = "Number Requested";
+                                                    break;
+
+                                                default:
+                                                    break;
+                                            }
+                                            status = 1;
+
+                                            color = "white";
+                                            backcolor = "#2ab042";
                                         }
-                                        status = 1;
 
-                                        color = "white";
-                                        backcolor = "#2ab042";
+                                        var age = new Date();
+
+                                        age.setDate(childSnapshot.child("ageday").val());
+                                        age.setFullYear(childSnapshot.child("ageyear").val());
+                                        age.setMonth(childSnapshot.child("agemonth").val());
+
+
+                                        var ageDifMs = Date.now() - age.getTime();
+                                        var ageDate = new Date(ageDifMs); // miliseconds from epoch
+                                        var num = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+
+                                        var Items = {
+                                            "key": childSnapshot.key,
+                                            "displayname": childSnapshot.child("displayname").val(),
+                                            "enableinvitations": childSnapshot.child("enableinvitations").val(),
+                                            "favouritesport": childSnapshot.child("favouritesport").val(),
+                                            "firstname": childSnapshot.child("firstname").val(),
+                                            "highestrating": childSnapshot.child("highestrating").val(),
+                                            "lastname": childSnapshot.child("lastname").val(),
+                                            "playposition": childSnapshot.child("isplayer").val() ? "Player" : "Goalkeeper",
+                                            "ranking": childSnapshot.child("ranking").val(),
+                                            "status": childSnapshot.child("status").val(),
+                                            "teams": childSnapshot.child("teams").val(),
+                                            "telephone": childSnapshot.child("telephone").val(),
+                                            "winstreak": childSnapshot.child("winstreak").val(),
+                                            "favstadium": childSnapshot.child("favstadium").val(),
+                                            "favstadiumphoto": childSnapshot.child("favstadiumphoto").val(),
+                                            "age": num,
+                                            "nummatches": childSnapshot.child("nummatches").val(),
+                                            "status": status,
+                                            "color": color,
+                                            "backcolor": backcolor,
+                                            "statusdesc": statusdesc,
+
+                                            "skilllevel": childSnapshot.child("skilllevel").val(),
+                                            "comments": childSnapshot.child("comments").val(),
+                                            "photo": childSnapshot.child("photoURL").val() == "" ? "img/PlayerProfile.png" : childSnapshot.child("photoURL").val()
+
+
+
+                                        };
+
+                                        AvailablePlayers.push(Items)
                                     }
-
-                                    var age = new Date();
-
-                                    age.setDate(snapshot.child("ageday").val());
-                                    age.setFullYear(snapshot.child("ageyear").val());
-                                    age.setMonth(snapshot.child("agemonth").val());
-
-
-                                    var ageDifMs = Date.now() - age.getTime();
-                                    var ageDate = new Date(ageDifMs); // miliseconds from epoch
-                                    var num = Math.abs(ageDate.getUTCFullYear() - 1970);
-
-                                    var Items = {
-                                        "key": childSnapshot.key,
-                                        "displayname": childSnapshot.child("displayname").val(),
-                                        "enableinvitations": childSnapshot.child("enableinvitations").val(),
-                                        "favouritesport": childSnapshot.child("favouritesport").val(),
-                                        "firstname": childSnapshot.child("firstname").val(),
-                                        "highestrating": childSnapshot.child("highestrating").val(),
-                                        "lastname": childSnapshot.child("lastname").val(),
-                                        "playposition": childSnapshot.child("isplayer").val() ? "Player" : "Goalkeeper",
-                                        "ranking": childSnapshot.child("ranking").val(),
-                                        "status": childSnapshot.child("status").val(),
-                                        "teams": childSnapshot.child("teams").val(),
-                                        "telephone": childSnapshot.child("telephone").val(),
-                                        "winstreak": childSnapshot.child("winstreak").val(),
-                                        "favstadium": childSnapshot.child("favstadium").val(),
-                                        "favstadiumphoto": childSnapshot.child("favstadiumphoto").val(),
-                                        "age": num,
-                                        "nummatches": childSnapshot.child("nummatches").val(),
-                                        "status": status,
-                                        "color": color,
-                                        "backcolor": backcolor,
-                                        "statusdesc": statusdesc,
-
-                                        "skilllevel": childSnapshot.child("skilllevel").val(),
-                                        "comments": snapshot.child("comments").val(),
-                                        "photo": snapshot.child("photoURL").val()
-
-
-
-                                    };
-
-                                    AvailablePlayers.push(Items)
                                 }
                             }
                         }
@@ -156,7 +164,7 @@ angular.module('football.controllers')
                 TempItems = [];
 
 
-                firebase.database().ref('/players').on('value', function (snapshot) {
+                firebase.database().ref('/playersinfo').on('value', function (snapshot) {
 
                     snapshot.forEach(function (childSnapshot) {
 
@@ -185,7 +193,7 @@ angular.module('football.controllers')
                                     "telephone": childSnapshot.child("telephone").val(),
                                     "userdescription": childSnapshot.child("userdescription").val(),
                                     "winstreak": childSnapshot.child("winstreak").val(),
-                                    "photo": childSnapshot.child("photoURL").val()
+                                    "photo": childSnapshot.child("photoURL").val() == "" ? "img/PlayerProfile.png" : childSnapshot.child("photoURL").val(),
 
                                 };
 
@@ -204,7 +212,7 @@ angular.module('football.controllers')
                 TempItems = [];
 
 
-                firebase.database().ref('/stadiums').on('value', function (snapshot) {
+                firebase.database().ref('/stadiumsinfo').on('value', function (snapshot) {
 
                     snapshot.forEach(function (childSnapshot) {
 
@@ -239,7 +247,7 @@ angular.module('football.controllers')
                 TempItems = [];
 
 
-                firebase.database().ref('/teams').on('value', function (snapshot) {
+                firebase.database().ref('/teamsinfo').on('value', function (snapshot) {
 
                     snapshot.forEach(function (childSnapshot) {
 
@@ -298,8 +306,6 @@ angular.module('football.controllers')
                                 requestorkey: player.key,
                                 firstname: player.firstname,
                                 lastname: player.lastname,
-                                requestortelephone: "",
-
                             };
 
                             var updates = {};
@@ -348,6 +354,7 @@ angular.module('football.controllers')
                             "telephone": snapshot.child("telephone").val(),
                             "photo": snapshot.child("photoURL").val(),
                             "favstadium": snapshot.child("favstadium").val()
+
                         };
 
                         TempItems = Items;

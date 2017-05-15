@@ -1,18 +1,18 @@
 <style>
-.item {
+	.item {
 		background-color: rgb(46, 62, 75);
 	}
-	
+
 	.item-select select {
 		background-color: rgb(46, 62, 75);
 		color: #2ab041;
 	}
-	
+
 	.item-select:after {
 		margin-top: 0px;
 		color: #2ab041;
 	}
-	
+
 	.rzslider {
 		position: relative;
 		display: inline-block;
@@ -25,32 +25,32 @@
 		-ms-user-select: none;
 		user-select: none;
 	}
-	
+
 	.rzslider.with-legend {
 		margin-bottom: 0px;
 	}
-	
+
 	.rzslider[disabled] {
 		cursor: not-allowed;
 	}
-	
+
 	.rzslider[disabled] .rz-pointer {
 		cursor: not-allowed;
 		background-color: #d8e0f3;
 	}
-	
+
 	.rzslider span {
 		position: absolute;
 		display: inline-block;
 		white-space: nowrap;
 	}
-	
+
 	.rzslider .rz-base {
 		width: 100%;
 		height: 100%;
 		padding: 0;
 	}
-	
+
 	.rzslider .rz-bar-wrapper {
 		left: 0;
 		z-index: 1;
@@ -60,11 +60,11 @@
 		margin-top: -16px;
 		box-sizing: border-box;
 	}
-	
+
 	.rzslider .rz-bar-wrapper.rz-draggable {
 		cursor: move;
 	}
-	
+
 	.rzslider .rz-bar {
 		left: 0;
 		z-index: 1;
@@ -75,7 +75,7 @@
 		-moz-border-radius: 2px;
 		border-radius: 2px;
 	}
-	
+
 	.rzslider .rz-bar.rz-selection {
 		z-index: 2;
 		background: white;
@@ -83,7 +83,7 @@
 		-moz-border-radius: 2px;
 		border-radius: 2px;
 	}
-	
+
 	.rzslider .rz-pointer {
 		top: -9px;
 		z-index: 3;
@@ -95,7 +95,7 @@
 		-moz-border-radius: 16px;
 		border-radius: 16px;
 	}
-	
+
 	.rzslider .rz-pointer:after {
 		position: absolute;
 		top: 7px;
@@ -108,19 +108,19 @@
 		border-radius: 4px;
 		content: '';
 	}
-	
+
 	.rzslider .rz-pointer:hover:after {
 		background-color: rgb(147, 221, 162);
 	}
-	
+
 	.rzslider .rz-pointer.rz-active {
 		z-index: 4;
 	}
-	
+
 	s .rzslider .rz-pointer.rz-active:after {
 		background-color: rgb(147, 221, 162);
 	}
-	
+
 	.rzslider .rz-bubble {
 		bottom: 14px;
 		padding: 1px 3px;
@@ -128,15 +128,15 @@
 		cursor: default;
 		font-weight: bold;
 	}
-	
+
 	.rzslider .rz-bubble.rz-selection {
 		top: 16px;
 	}
-	
+
 	.rzslider .rz-bubble.rz-limit {
 		color: rgb(147, 221, 162);
 	}
-	
+
 	.rzslider .rz-ticks {
 		position: absolute;
 		top: -3px;
@@ -155,7 +155,7 @@
 		-ms-flex-pack: justify;
 		justify-content: space-between;
 	}
-	
+
 	.rzslider .rz-ticks .rz-tick {
 		width: 10px;
 		height: 10px;
@@ -164,17 +164,27 @@
 		background: rgb(147, 221, 162);
 		border-radius: 50%;
 	}
-	
+
 	.rzslider .rz-ticks .rz-tick.rz-selected {
 		background: #0db9f0;
 	}
-	
+
 	.rzslider .rz-ticks .rz-tick .rz-tick-value {
 		position: absolute;
 		top: -30px;
 		transform: translate(-50%, 0);
 	}
-	
+
+	.picker-view .picker-content {	
+		-moz-column-count: 3;
+		-webkit-column-count: 3;
+		column-count: 3;
+		position: relative;
+		background-color: rgb(42, 62, 82);
+		height: 60%;
+		top: 15px;
+	}
+
 	.rzslider .rz-ticks .rz-tick .rz-tick-legend {
 		position: absolute;
 		top: 24px;
@@ -182,12 +192,12 @@
 		white-space: normal;
 		transform: translate(-50%, 0);
 	}
-	
+
 	.rzslider .rz-ticks.rz-ticks-values-under .rz-tick-value {
 		top: initial;
 		bottom: -40px;
 	}
-	
+
 	.rzslider.rz-vertical {
 		position: relative;
 		width: 4px;
@@ -196,13 +206,13 @@
 		margin: 0 20px;
 		vertical-align: baseline;
 	}
-	
+
 	.rzslider.rz-vertical .rz-base {
 		width: 100%;
 		height: 100%;
 		padding: 0;
 	}
-	
+
 	.rzslider.rz-vertical .rz-bar-wrapper {
 		top: auto;
 		left: 0;
@@ -211,32 +221,32 @@
 		padding: 0 0 0 16px;
 		margin: 0 0 0 -16px;
 	}
-	
+
 	.rzslider.rz-vertical .rz-bar {
 		bottom: 0;
 		left: auto;
 		width: 4px;
 		height: 100%;
 	}
-	
+
 	.rzslider.rz-vertical .rz-pointer {
 		top: auto;
 		bottom: 0;
 		left: -14px !important;
 		color: #2ab041;
 	}
-	
+
 	.rzslider.rz-vertical .rz-bubble {
 		bottom: 0;
 		left: 16px !important;
 		margin-left: 3px;
 	}
-	
+
 	.rzslider.rz-vertical .rz-bubble.rz-selection {
 		top: auto;
 		left: 16px !important;
 	}
-	
+
 	.rzslider.rz-vertical .rz-ticks {
 		top: 0;
 		left: -3px;
@@ -248,17 +258,17 @@
 		-ms-flex-direction: column-reverse;
 		flex-direction: column-reverse;
 	}
-	
+
 	.rzslider.rz-vertical .rz-ticks .rz-tick {
 		vertical-align: middle;
 	}
-	
+
 	.rzslider.rz-vertical .rz-ticks .rz-tick .rz-tick-value {
 		top: initial;
 		left: 22px;
 		transform: translate(0, -28%);
 	}
-	
+
 	.rzslider.rz-vertical .rz-ticks .rz-tick .rz-tick-legend {
 		top: initial;
 		right: 24px;
@@ -266,13 +276,13 @@
 		white-space: nowrap;
 		transform: translate(0, -28%);
 	}
-	
+
 	.rzslider.rz-vertical .rz-ticks.rz-ticks-values-under .rz-tick-value {
 		right: 12px;
 		bottom: initial;
 		left: initial;
 	}
-	
+
 	.h3.whitetext,
 	h2.whitetext,
 	h1.whitetext,
@@ -282,7 +292,7 @@
 	p.whitetext {
 		color: white;
 	}
-	
+
 	.h3.bluetext,
 	h2.bluetext,
 	h1.bluetext,
@@ -292,7 +302,7 @@
 	p.bluetext {
 		color: darkblue;
 	}
-	
+
 	.h3.greytext,
 	h2.greytext,
 	h1.greytext,
@@ -302,23 +312,23 @@
 	p.greytext {
 		color: gray;
 	}
-	
+
 	.item .item-content1 {
 		background-color: white;
 		color: black;
 		border: rgb(64, 64, 64);
 		border-color: rgb(64, 64, 64);
 	}
-	
+
 	.popup {
 		border-radius: 50px;
 		font-size: 15px;
 	}
-	
+
 	.custom-class .popup-head {
 		display: none;
 	}
-	
+
 	.popup-buttons .button:first-child {
 		border-radius: 50px;
 		margin: 05px;
@@ -326,7 +336,7 @@
 		background-color: rgb(153, 167, 180);
 		color: white;
 	}
-	
+
 	.popup-buttons .button:last-child {
 		border-radius: 50px;
 		margin: 05px;
@@ -334,7 +344,7 @@
 		background-color: #2ab041;
 		color: white;
 	}
-	
+
 	.popup-body {
 		padding: 10px;
 		margin: -5px;
@@ -343,7 +353,7 @@
 		text-align: center;
 		border-radius: 15px 15px 0 0;
 	}
-	
+
 	.popup-buttons {
 		padding: 10px 5px 5px 5px;
 		margin: -5px;
@@ -352,23 +362,22 @@
 		text-align: center;
 		border-radius: 0 0 15px 15px;
 	}
-	
+
 	.popup-head {
 		display: none;
 	}
-	
+
 	.popup-title {
 		color: white;
 	}
-	
+
 	.headercolor {
 		background-color: rgb(62, 83, 100);
 		color: white;
 		border-bottom: 2px solid rgb(62, 83, 100);
 		border-top: 3px;
 	}
-	
-	
+
 	input {
 		width: 100%;
 		display: block;
@@ -382,19 +391,19 @@
 		background-repeat: no-repeat;
 		color: #2ab041;
 	}
-	
+
 	input:focus,
 	input:valid {
 		box-shadow: none;
 		outline: none;
 		background-position: 0 0;
 	}
-	
+
 	input::-webkit-input-placeholder {
 		-webkit-transition: all 0.3s ease-in-out;
 		transition: all 0.3s ease-in-out;
 	}
-	
+
 	input:focus::-webkit-input-placeholder,
 	input:valid::-webkit-input-placeholder {
 		color: #2ab041;
@@ -427,7 +436,7 @@
 
 
 
-	<ion-content style="background-color:rgb(46,62,85)">
+	<ion-content  style="background-color:rgb(46,62,85)">
 
 
 		<script id="templates/my-popover.html" type="text/ng-template">
@@ -445,9 +454,10 @@
 								</div>
 								<select  ng-model="managecolors.sortby">
 								<option >Best</option>
+								<option> Distance</option>
 								<option >Rating</option>
 								<option> Price</option>
-								<option> Distance</option>
+
 								</select>
 							</label>
 
@@ -569,7 +579,7 @@
 			<!--  <a class="item item-thumbnail-left" ng-href="#/app/reservestadiumdetails/{{stadiums.stadiumkey}}"> -->
 
 			<div align="center" style="padding-bottom:0px">
-				<img src="{{stadiums.photo}}" style="width:100%;height:140px;" ui-sref="app.reservestadiumdetails({stadiumid: stadiums.stadiumkey})">
+				<img ion-img-cache src="{{stadiums.photo}}" style="width:100%;height:140px;" ui-sref="app.reservestadiumdetails({stadiumid: stadiums.stadiumkey})">
 			</div>
 
 			<div class="row ">
@@ -597,13 +607,13 @@
 		</b>
 				</div>
 			</div>
-			<div class="row" align="center">
+			<div class="row" style="padding-left:0px" align="center">
 
-				<div align="center" style="width:10%;color:#5f7485;font-size:12px;padding:0px;padding-top:0px" align="left">
-					<i class="icon ion-location" style="color: #5f7485;font-size:18px">
+				<div align="center" style="width:12%;color:#5f7485;padding:0px;padding-top:0px" align="left">
+					<i class="icon ion-location" style="color: #5f7485;font-size:20px">
 </i>
 				</div>
-				<div align="left" style="width:29%;color:#5f7485;font-size:12px;padding:0px;padding-top:0px" align="left">
+				<div align="left" style="width:28%;color:#5f7485;font-size:12px;padding:0px;padding-top:0px" align="left">
 					{{stadiums.distance | number:2}}KM
 				</div>
 
@@ -620,14 +630,13 @@
 			</div>
 
 
-			<div class="row" style="padding-bottom:12px">
-				<div style="width:5%">
-				</div>
-				<div align="left" style="width:34%;font-weight:bold;color:white;padding:0px">
+			<div class="row" style="padding-left:0px;padding-bottom:12px">
+			
+				<div align="center" style="width:40%;font-weight:bold;color:white;padding:0px">
 					Anthelias 404
 				</div>
 
-				<div align="center" style="width:33%;color:white;padding:0px;border-right:1px #5f7485 solid;border-left:1px #5f7485 solid">
+				<div align="center" style="text-transform:capitalize;width:33%;color:white;padding:0px;border-right:1px #5f7485 solid;border-left:1px #5f7485 solid">
 					<b>
 			{{stadiums.type}}  &#8226 {{stadiums.typefloor}}
 			</b>
@@ -642,6 +651,7 @@
 			</div>
 
 			<!--			<h3 class="whitetext"> Number: <b>{{stadiums.description}}</b></h3> -->
+
 
 			<div class="row" style="padding:0 0px 0 0px">
 				<div class="col" style="width:100%;padding:2px;margin-top:-10px">

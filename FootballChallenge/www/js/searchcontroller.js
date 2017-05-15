@@ -2,7 +2,7 @@
 angular.module('football.controllers')
 
     .controller('SearchController', function ($scope, SearchStore, ReservationFact, $ionicPopup, $ionicPopover, $timeout, $ionicLoading, pickerView, SMSService) {
-		/** picker view stuff **/
+        /** picker view stuff **/
         function getDateFromDayName(selectedDay) {
             var selectedDate = new Date();
             if (selectedDay == "Tomorrow") {
@@ -20,29 +20,29 @@ angular.module('football.controllers')
         $scope.allfreestadiums = [];
         $scope.gotlocation = false;
         $scope.search = {
-                        date: new Date(),
-                };
+            date: new Date(),
+        };
 
         $ionicLoading.show({
-        content: 'Loading',
+            content: 'Loading',
             animation: 'fade-in',
-                showBackdrop: true,
-                maxWidth: 200,
-                showDelay: 0
-            });
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
         //getting current location
         navigator.geolocation.getCurrentPosition(function (position) {
             //here
-            
-                        //here
-                        /*  alert('Latitude: ' + position.coords.latitude + '\n' +
-                        'Longitude: ' + position.coords.longitude + '\n' +
-                        'Altitude: ' + position.coords.altitude + '\n' +
-                        'Accuracy: ' + position.coords.accuracy + '\n' +
-                        'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' +
-                        'Heading: ' + position.coords.heading + '\n' +
-                        'Speed: ' + position.coords.speed + '\n' +
-                        'Timestamp: ' + position.timestamp + '\n');*/
+
+            //here
+            /*  alert('Latitude: ' + position.coords.latitude + '\n' +
+            'Longitude: ' + position.coords.longitude + '\n' +
+            'Altitude: ' + position.coords.altitude + '\n' +
+            'Accuracy: ' + position.coords.accuracy + '\n' +
+            'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' +
+            'Heading: ' + position.coords.heading + '\n' +
+            'Speed: ' + position.coords.speed + '\n' +
+            'Timestamp: ' + position.timestamp + '\n');*/
 
             $scope.latitude = position.coords.latitude;
             $scope.longitude = position.coords.longitude;
@@ -56,38 +56,38 @@ angular.module('football.controllers')
         SearchStore.GetMyProfileInfo(function (profile) {
 
             $scope.myprofile = profile;
-            
+
             var tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() +1);
-            
+            tomorrow.setDate(tomorrow.getDate() + 1);
+
             tomorrow.setHours(21);
             tomorrow.setMinutes(0);
             tomorrow.setMilliseconds(0);
             tomorrow.setSeconds(0);
 
-            
+
 
             $scope.search = {
-                    date: tomorrow,
-                    text: "Tomorrow, 9:00PM" //- " + ($scope.myprofile.favstadium != null && $scope.myprofile.favstadium != "" ?$scope.myprofile.favstadium:"Near me")
-                    };
+                date: tomorrow,
+                text: "Tomorrow, 9:00PM" //- " + ($scope.myprofile.favstadium != null && $scope.myprofile.favstadium != "" ?$scope.myprofile.favstadium:"Near me")
+            };
         });
-        
-        //get all stadiums
-        ReservationFact.GetAllStadiums(function (leagues)
-        {
-            //toRad function
-            if (typeof (Number.prototype.toRad) === "undefined") {
-                Number.prototype.toRad = function () {
-                    return this * Math.PI / 180;
-                }
+
+        //toRad function
+        if (typeof (Number.prototype.toRad) === "undefined") {
+            Number.prototype.toRad = function () {
+                return this * Math.PI / 180;
             }
+        }
+
+        //get all stadiums
+        ReservationFact.GetAllStadiums(function (leagues) {
+
             $scope.allfreestadiums = leagues;
-            if ($scope.gotlocation)
-            {
+            if ($scope.gotlocation) {
                 /** Converts numeric degrees to radians */
-                for (var i = 0; i < leagues.length; i++)
-                {
+                
+                for (var i = 0; i < leagues.length; i++) {
                     var lat1 = $scope.latitude;
                     var lon1 = $scope.longitude;
 
@@ -107,21 +107,20 @@ angular.module('football.controllers')
                     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
                     var d = R * c;
 
-                    $scope.allfreestadiums[i].distance = d;                    
+                    $scope.allfreestadiums[i].distance = d;
                 }
-                $scope.allfreestadiums  = $scope.allfreestadiums.sort(function (a, b) {
+                $scope.allfreestadiums = $scope.allfreestadiums.sort(function (a, b) {
                     return a.distance - b.distance;
                 });
             }
-            
+
 
 
             //preparing stadiums list
             stadiums.push("Near me");
             if ($scope.myprofile.favstadium)
                 stadiums.push($scope.myprofile.favstadium);
-            for (var i = 0; i < leagues.length; i++)
-            {
+            for (var i = 0; i < leagues.length; i++) {
                 //console.log(leagues[i].name);
                 if (leagues[i].name != $scope.myprofile.favstadium)
                     stadiums.push(leagues[i].name);
@@ -142,7 +141,7 @@ angular.module('football.controllers')
                     values: dateArrayThingy,
                     defaultIndex: 1
                 }, {
-                    values: [' 7:00 AM ', ' 7:30 AM ', ' 8:00 AM ', ' 8:30 AM ', ' 9:00 AM ', '9:30 AM ', ' 10:00 AM ', ' 10:30 AM', ' 11:00 AM ', ' 11:30 AM ', ' Noon ', ' 1:00 PM ', ' 1:30 PM ', ' 2:00 PM ', ' 2:30 PM ', ' 3:00 PM ', ' 3:30 PM ', ' 4:00 PM ', ' 4:30 PM ', ' 5:00 PM ', ' 5:30 PM ', ' 6:00 PM ', ' 6:30 PM ', ' 7:00 PM ', ' 7:30 PM ', ' 8:00 PM', ' 8:30 PM ', ' 9:00 PM ', ' 9:30 PM ', ' 10:00 PM ', ' 10:30 PM ', ' 11:00 PM', '11:30 PM ', ' Midnight ', ],
+                    values: [' 7:00 AM ', ' 7:30 AM ', ' 8:00 AM ', ' 8:30 AM ', ' 9:00 AM ', '9:30 AM ', ' 10:00 AM ', ' 10:30 AM', ' 11:00 AM ', ' 11:30 AM ', ' Noon ', ' 1:00 PM ', ' 1:30 PM ', ' 2:00 PM ', ' 2:30 PM ', ' 3:00 PM ', ' 3:30 PM ', ' 4:00 PM ', ' 4:30 PM ', ' 5:00 PM ', ' 5:30 PM ', ' 6:00 PM ', ' 6:30 PM ', ' 7:00 PM ', ' 7:30 PM ', ' 8:00 PM', ' 8:30 PM ', ' 9:00 PM ', ' 9:30 PM ', ' 10:00 PM ', ' 10:30 PM ', ' 11:00 PM', '11:30 PM ', ' Midnight ',],
                     defaultIndex: 27
                 }/*, {
                     values: stadiums,
@@ -151,7 +150,7 @@ angular.module('football.controllers')
                 */
                 ]
             });
-            
+
             if (picker) {
                 picker.then(function pickerViewFinish(output) {
                     if (output) {
@@ -175,11 +174,9 @@ angular.module('football.controllers')
 
         };
         /** End picker view stufgf**/
-		var freestadiums = [];
+        var freestadiums = [];
 
 
-
-        
         // .fromTemplate() method
         var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
 
@@ -216,7 +213,6 @@ angular.module('football.controllers')
             // Execute action
         });
 
-
         var user = firebase.auth().currentUser;
 
         /*   if (user != null) {
@@ -227,12 +223,10 @@ angular.module('football.controllers')
                    alert("  Email: " + profile.email);
                });
            }*/
-        
 
         $scope.allfreeplayers = [];
 
-        $scope.checkfree = function (search)
-        {
+        $scope.checkfree = function (search) {
 
             $ionicLoading.show({
                 content: 'Loading',
@@ -246,6 +240,8 @@ angular.module('football.controllers')
             SearchStore.SearchAvailablePlayers($scope.search, function (leagues) {
                 $scope.allfreeplayers = leagues;
                 $ionicLoading.hide();
+
+
             })
 
         }
@@ -270,8 +266,7 @@ angular.module('football.controllers')
             alert(error.message);
         }
 
-        $scope.requestnumber = function (player)
-        {
+        $scope.requestnumber = function (player) {
 
 
             if (!(player == null || player == undefined || player == []) && !($scope.myprofile == null || $scope.myprofile == undefined || $scope.myprofile == [])) {
@@ -313,7 +308,6 @@ angular.module('football.controllers')
 
 
     })
-	
 var weekday = new Array(7);
 weekday[0] = "Su,";
 weekday[1] = "Mo,";
@@ -366,6 +360,3 @@ for (i = 0; i < 100; i++) {
     var dayInMonth = nesheDate.getDate();
     dateArrayThingy.push(day + " " + month + " " + dayInMonth);
 }
-
-
-

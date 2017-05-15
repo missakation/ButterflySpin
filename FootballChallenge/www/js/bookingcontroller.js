@@ -35,7 +35,6 @@ angular.module('football.controllers')
                     $scope.bookings = leagues;
                     $scope.tabs.Current = true;
                     $scope.notloaded = false;
-                    $scope.$apply();
 
                     $scope.currentdate = new Date(response.data);
 
@@ -51,8 +50,7 @@ angular.module('football.controllers')
                     }
 
                     $scope.selectedbookings = $scope.currentbookings;
-                    $scope.$apply();
-
+                    console.log($scope.selectedbookings);
                 }, function errorCallback(response) {
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.

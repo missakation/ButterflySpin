@@ -101,7 +101,9 @@ angular.module('football.controllers')
                                         //"freetimes": freetimes,
                                         "SortPoints": 0,
                                         "latitude": mainstadiumSnapshot.child("cordovalatitude").val(),
-                                        "longitude": mainstadiumSnapshot.child("cordovalongitude").val()
+                                        "longitude": mainstadiumSnapshot.child("cordovalongitude").val(),
+                                        "iscombined": stadiumsnapshot.child("iscombined").val(),
+                                        "combined": stadiumsnapshot.child("combined").val(),
                                         //"freedates":
                                         //{
                                         //    date : startdate
@@ -114,6 +116,7 @@ angular.module('football.controllers')
 
 
                                     };
+
                                     Availables.push(Data);
                                 }
 
@@ -121,7 +124,7 @@ angular.module('football.controllers')
                             });
 
                         });
-
+                        console.log(Availables);
                         callback(Availables);
                     }, function (error) {
                         alert(error.message);
@@ -223,8 +226,21 @@ angular.module('football.controllers')
                         key: newkey
                     }
                     references.push(refdata);
-                    updates['/stadiums/' + key + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = extraslots;
-                    updates['/stadiumshistory/' + key + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = extraslots;
+
+                    var extrakeys = [];
+                    if (stadiums.iscombined) {
+                        for (var key in stadiums.combined) {
+                            extrakeys.push(key);
+                        }
+                        console.log(extrakeys);
+                        extrakeys.forEach(function (element) {
+                            updates['/stadiums/' + stadiums.stadiumkey + '/ministadiums/' + element + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = extraslots;
+                            updates['/stadiumshistory/' + stadiums.stadiumkey + '/ministadiums/' + element + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = extraslots;
+                        }, this);
+                    }
+
+                    updates['/stadiums/' + stadiums.stadiumkey + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = extraslots;
+                    updates['/stadiumshistory/' + stadiums.stadiumkey + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = extraslots;
 
 
                 }
@@ -249,11 +265,6 @@ angular.module('football.controllers')
                     fullstartdate: search.date,
                 };
 
-
-
-
-
-
                 var postDataPlayer = {
                     stadiumkey: stadiums.stadiumkey,
                     ministadiumkey: stadiums.ministadiumkey,
@@ -275,17 +286,27 @@ angular.module('football.controllers')
 
                 };
 
+                var keys = [];
+                if (stadiums.iscombined) {
+                    for (var itemkey in stadiums.combined) {
+                        keys.push(itemkey);
+                    }
 
-                // Write the new post's data simultaneously in the posts list and the user's post list.
-                var newPostKey = firebase.database().ref().child('posts').push().key;
+                    keys.forEach(function (element) {
+                        updates['/stadiums/' + stadiums.stadiumkey + '/ministadiums/' + element + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = postData;
+                        updates['/stadiumshistory/' + stadiums.stadiumkey + '/ministadiums/' + element + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = postData;
+                    }, this);
+                }
 
-                updates['/stadiums/' + key + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = postData;
-                updates['/stadiumshistory/' + key + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = postData;
+                updates['/stadiums/' + stadiums.stadiumkey + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = postData;
+                updates['/stadiumshistory/' + stadiums.stadiumkey + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = postData;
 
 
                 updates['/players/' + id + '/upcomingmatches/' + mainkey] = postDataPlayer;
 
                 updates['/accounting/' + id + '/' + mainkey] = accountinfo;
+
+                console.log(updates);
 
                 return firebase.database().ref().update(updates);
 
@@ -320,10 +341,13 @@ angular.module('football.controllers')
                             "outdoor": snapshot.child("outdoor").val(),
                             "rating": snapshot.child("rating").val(),
                             "telephone": snapshot.child("telephone").val(),
-                            "water": snapshot.child("water").val()
+                            "water": snapshot.child("water").val(),
+                            "photo": snapshot.child("photo").val()
 
                         };
                         StadiumInfo = Data;
+
+                        console.log(StadiumInfo);
                         callback(StadiumInfo);
 
                     });
@@ -385,18 +409,18 @@ angular.module('football.controllers')
                 try {
                     //firebase.database().ref('/stadiums/ministadiums').on('value',function (snapshot) {  
 
-                    firebase.database().ref('/stadiums').once('value', function (snapshot) {
+                    firebase.database().ref('/stadiumsinfo').once('value', function (snapshot) {
                         AllStadiums = [];
                         snapshot.forEach(function (minisnapshot) {
 
                             var Data = {
-                                "stadiumkey": minisnapshot.key,
+                                "key": minisnapshot.key,
                                 "name": minisnapshot.child("name").val(),
                                 "photo": minisnapshot.child("photo").val(),
                                 "area": minisnapshot.child("locationarea").val(),
-                                "city": minisnapshot.child("locationcity").val(),
                                 "latitude": minisnapshot.child("cordovalatitude").val(),
                                 "longitude": minisnapshot.child("cordovalongitude").val()
+
 
                             };
                             AllStadiums.push(Data);

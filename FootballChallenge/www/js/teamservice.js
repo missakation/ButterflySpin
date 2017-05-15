@@ -8,6 +8,7 @@
         return {
 
             GetMyTeams: function (callback) {
+                //console.log("TEST");
                 var user = firebase.auth().currentUser;
                 var id = user.uid;
 
@@ -16,38 +17,59 @@
 
                     firebase.database().ref('/players/' + id + '/teams').on('value', function (snapshot) {
                         MyTeams = [];
-                        snapshot.forEach(function (childSnapshot) {
-
-                            //firebase.database().ref('/teams/' + childSnapshot.key+'/players').once('value').then(function (teamdata) {
-
-                            var datecreated = new Date();
+                        if (snapshot.exists()) {
 
 
-                            datecreated.setMinutes(childSnapshot.child("dateminute").val());
-                            datecreated.setFullYear(childSnapshot.child("dateyear").val());
-                            datecreated.setMonth(childSnapshot.child("datemonth").val());
-                            datecreated.setHours(childSnapshot.child("datehour").val());
-                            datecreated.setDate(childSnapshot.child("dateday").val());
+                            snapshot.forEach(function (childSnapshot) {
+
+                                //firebase.database().ref('/teams/' + childSnapshot.key+'/players').once('value').then(function (teamdata) {
+
+                                var datecreated = new Date();
 
 
-                            var Items = {
-                                "key": childSnapshot.key,
-                                "teamname": childSnapshot.child("teamname").val(),
-                                'teamphoto': childSnapshot.child("teamphoto").val(),
-                                'datecreated': datecreated,
-                                'badge': childSnapshot.child("badge").val(),
-                                //'members': teamdata.numChildren()-1,
-                                "members": 1,
-                                "teamadmin": childSnapshot.child("teamadmin").val(),
-                                "favstadium": childSnapshot.child("favstadium").val()
-
-                            };
-
-                            MyTeams.push(Items);
-                            //   })
+                                datecreated.setMinutes(childSnapshot.child("dateminute").val());
+                                datecreated.setFullYear(childSnapshot.child("dateyear").val());
+                                datecreated.setMonth(childSnapshot.child("datemonth").val());
+                                datecreated.setHours(childSnapshot.child("datehour").val());
+                                datecreated.setDate(childSnapshot.child("dateday").val());
 
 
-                        });
+                                var Items = {
+                                    "key": childSnapshot.key,
+                                    "teamname": childSnapshot.child("teamname").val(),
+                                    'teamphoto': childSnapshot.child("teamphoto").val(),
+                                    'datecreated': datecreated,
+                                    'badge': childSnapshot.child("badge").val(),
+                                    //'members': teamdata.numChildren()-1,
+                                    "members": 1,
+                                    "teamadmin": childSnapshot.child("teamadmin").val(),
+                                    "favstadium": childSnapshot.child("favstadium").val(),
+                                    "rank": childSnapshot.child("rank").val(),
+                                    "rating": childSnapshot.child("rating").val(),
+
+                                };
+                                switch (Items.rank) {
+                                    case 1:
+                                        Items.rankdescription = Items.rank + ' st';
+                                        break;
+                                    case 2:
+                                        Items.rankdescription = Items.rank + ' nd';
+                                        break;
+                                    case 3:
+                                        Items.rankdescription = Items.rank + ' rd';
+                                        break;
+
+                                    default:
+                                        Items.rankdescription = Items.rank + ' th';
+                                        break;
+                                }
+                                MyTeams.push(Items);
+                                //   })
+
+
+                            });
+                        }
+
                         callback(MyTeams);
                     });
                 }
@@ -127,10 +149,11 @@
                 try {
                     var contact = {
                         //badge:team.badge,
-                        available:true,
-                        rating: 1000,
+                        available: true,
+                        rating: 1500,
                         status: '1',
                         teamadmin: id,
+                        teamadminphoto: profile.photo,
                         teamname: newteam.teamname,
                         yellowcard: 0,
                         pteamsize: newteam.pteamsize,
@@ -153,7 +176,7 @@
                         homejersey: newteam.homejersey,
                         awayjersey: newteam.awayjersey,
                         badge: newteam.badge,
-                        rank: 1500,
+                        rank: 0,
                         numberofgames: 0,
                         wins: 0,
 
@@ -177,6 +200,7 @@
                         captain: {
                             firstone: true,
                         },
+                        timestamp: firebase.database.ServerValue.TIMESTAMP,
 
                         comments: ""
 
@@ -200,11 +224,11 @@
 
                     var playerside = {
                         //badge:team.badge,
-                        available:true,
+                        available: true,
                         teamname: newteam.teamname,
                         badge: newteam.badge,
-                        rank: 1500,
-                        rating:1500,
+                        rank: 0,
+                        rating: 1500,
 
                         dateyear: year,
                         datemonth: month,
@@ -230,7 +254,8 @@
                             name: profile.displayname,
                             firstname: profile.firstname,
                             lastname: profile.lastname,
-                            isadmin: "True"
+                            isadmin: "True",
+                            teamadminphoto: profile.photo,
                         };
 
 
@@ -239,12 +264,16 @@
                     var newPostKey = firebase.database().ref().child('teams').push().key;
                     var teamstats = {
                         rank: 1500,
+                        rating: 0,
                         numberofgames: 0,
                         wins: 0,
                         badge: newteam.badge,
-                        name: newteam.teamname
+                        name: newteam.teamname,
+                        players: {}
                     }
-
+                    teamstats.players[id] = {
+                        id: id
+                    };
 
                     var updates = {};
 
@@ -262,6 +291,8 @@
                         updates['/teaminfo/' + newPostKey] = contact;
 
                         updates['/teamnames/' + contact.teamname] = id;
+
+
 
                     }
                     return firebase.database().ref().update(updates);
@@ -420,7 +451,8 @@
                                 "startsaturdayend": snapshot.child("startsaturdayend").val(),
                                 "startsunday": snapshot.child("startsunday").val(),
                                 "startsundayend": snapshot.child("startsundayend").val(),
-                                "rating": 1500,
+                                "rating": snapshot.child("rating").val(),
+                                "rank": snapshot.child("rank").val(),
                                 "numberofgames": 0,
                                 "wins": 0,
                                 "amiadmin": amiadmin,
@@ -435,7 +467,8 @@
                                 "datecreated": teamcreateddate,
                                 "upcomingmatches": upcomingmatches,
                                 "favstadium": snapshot.child("favstadium").val(),
-                                "favstadiumphoto": snapshot.child("favstadiumphoto").val(),
+                                "favstadiumphoto": "",
+                                "favstadiumname": "",
                                 "numChildren": numberofmatches,
 
                                 "teamoffive": snapshot.child("teamoffive").val(),
@@ -451,6 +484,26 @@
                                 "availablepng": snapshot.child("available").val() ? "available" : "busy"
 
                             };
+                            switch (Items.rank) {
+                                case 1:
+                                    Items.rankdescription = Items.rank + ' st';
+                                    break;
+                                case 2:
+                                    Items.rankdescription = Items.rank + ' nd';
+                                    break;
+                                case 3:
+                                    Items.rankdescription = Items.rank + ' rd';
+                                    break;
+
+                                default:
+                                    Items.rankdescription = Items.rank + ' th';
+                                    break;
+                            }
+
+                            //  var sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                            //  sfd.format(new Date(snapshot.child("timestamp").val()))
+                            //  alert(sfd);
+
                             TeamProfile = Items;
 
                         }
@@ -483,8 +536,8 @@
                                 'badge': snapshot.child("badge").val(),
                                 'homejersey': snapshot.child("homejersey").val(),
                                 'awayjersey': snapshot.child("awayjersey").val(),
-                                "rating": 1500,
-                                "rank": 100,
+                                "rating": snapshot.child("rating").val(),
+                                "rank": snapshot.child("rank").val(),
                                 "teamoffive": snapshot.child("teamoffive").val(),
                                 "teamofsix": snapshot.child("teamofsix").val(),
                                 "teamofseven": snapshot.child("teamofseven").val(),
@@ -492,7 +545,23 @@
                                 "teamofnine": snapshot.child("teamofnine").val(),
                                 "teamoften": snapshot.child("teamoften").val(),
                                 "teamofeleven": snapshot.child("teamofeleven").val()
+
                             };
+                            switch (Items.rank) {
+                                case 1:
+                                    Items.rankdescription = Items.rank + ' st';
+                                    break;
+                                case 2:
+                                    Items.rankdescription = Items.rank + ' nd';
+                                    break;
+                                case 3:
+                                    Items.rankdescription = Items.rank + ' rd';
+                                    break;
+
+                                default:
+                                    Items.rankdescription = Items.rank + ' th';
+                                    break;
+                            }
                             TeamProfileInfo = Items;
 
                         }
@@ -733,7 +802,8 @@
                         "dateminute": minute,
 
                         "adminkey": admindetails.key,
-                        "admindisplayname": admindetails.displayname,
+                        "adminfirstname": admindetails.firstname,
+                        "adminlastname": admindetails.lastname,
                         "adminphoto": admindetails.photo,
                         "admintelephone": admindetails.telephone
 

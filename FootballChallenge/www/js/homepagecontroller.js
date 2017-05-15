@@ -2,12 +2,14 @@
 angular.module('football.controllers')
 
 
-    .controller('HomeController', function ($scope, $http, HomeStore, LoginStore, TeamStores, $state, $timeout, $ionicPopup, $ionicLoading, $cordovaSocialSharing) {
+    .controller('HomeController', function ($scope, $ionicPush, $http, HomeStore, LoginStore, TeamStores, $state, $timeout, $ionicPopup, $ionicLoading, $cordovaSocialSharing) {
 
         $scope.nointernet = false;
         $scope.$on("$ionicView.afterEnter", function (event, data) {
             // handle event
             //works
+
+            // LoginStore.SendNotification("ELECTRIC SCREWDRIVER",[]);
 
             $timeout(function () {
 
@@ -16,6 +18,16 @@ angular.module('football.controllers')
                     var user = firebase.auth().currentUser;
 
                     if (!(user === null || user == '' || user === undefined)) {
+
+                        $ionicPush.register().then(function (t) {
+                            return $ionicPush.saveToken(t);
+                        }).then(function (t) {
+                            var updates = {};
+                            updates['/players/' + user.uid + '/devicetoken'] = t.token;
+                            firebase.database().ref().update(updates).then(function () {
+
+                            });
+                        });
 
                         var id = user.uid;
 
@@ -241,14 +253,22 @@ angular.module('football.controllers')
 
         }
 
+        $scope.$on('cloud:push:notification', function (event, data) {
+            var msg = data.message;
+            //alert(msg.title + ': ' + msg.text);
+        });
+
 
         $scope.acceptrequest = function (request, x) {
             try {
                 $scope.teaminvitationoperation = true;
                 switch (x) {
                     case 1:
-                        HomeStore.AcceptMobileRequest(request, $scope.profile).then(function () {
+                        HomeStore.AcceptMobileRequest(angular.copy(request), $scope.profile).then(function () {
+                            $scope.profile.requestednumbers = $scope.profile.requestednumbers.filter(function (el) {
+                                return el.key !== request.key;
 
+                            });
                         });
                         break;
                     case 2:
@@ -359,6 +379,8 @@ angular.module('football.controllers')
 
                 HomeStore.GetProfileInfo(currentdate, function (leagues) {
 
+                    console.log(leagues);
+
                     var todaydate = new Date();
                     var oldchallenges = [];
                     var newchallenges = [];
@@ -368,14 +390,19 @@ angular.module('football.controllers')
                         $scope.profile.photo = "img/PlayerProfile.png"
                     }
 
-                    if ($scope.profile.teamdisplayedkey !== "") {
+                    if ($scope.profile.teamdisplayedkey !== "none" && $scope.profile.teamdisplayedkey != "") {
+                        console.log($scope.profile.teamdisplayedkey);
                         TeamStores.GetTeamInfoByKey($scope.profile.teamdisplayedkey, function (favteam) {
                             if (favteam !== null || favteam !== undefined) {
+
+                                
 
                                 $scope.teamdisplayed.name = favteam.teamname;
                                 $scope.teamdisplayed.picture = favteam.badge;
                                 $scope.teamdisplayed.rank = favteam.rank;
                                 $scope.teamdisplayed.key = favteam.key;
+
+                                console.log($scope.teamdisplayed);
 
                             }
                             else {
@@ -465,7 +492,6 @@ angular.module('football.controllers')
 
         $scope.gogamedetails = function (gameid) {
 
-            alert(gameid.gamestyle);
             if (gameid.gamestyle == "alonematch") {
                 $state.go('app.bookings');
             }
@@ -486,7 +512,7 @@ angular.module('football.controllers')
 
         $scope.goteamprofile = function (id) {
             if (!(id == null || id == '' || id === undefined)) {
-                $state.go("app.teamprofile",
+                $state.go("app.teamview",
                     {
                         teamid: id
                     })
@@ -558,7 +584,7 @@ angular.module('football.controllers')
     })
 
 
-    .controller('ChallengeStadiumController', function ($timeout, $scope, LoginStore, $state, ReservationFact, HomeStore, $ionicPopup, $ionicLoading) {
+    .controller('ChallengeStadiumController', function ($timeout, $scope, $ionicHistory, LoginStore, $state, ReservationFact, HomeStore, $ionicPopup, $ionicLoading) {
 
         $scope.allfreestadiums = $state.params.challenge.stadiums;
 
@@ -582,44 +608,70 @@ angular.module('football.controllers')
                         {
                             date: $scope.challenge.date
                         }
-                    ReservationFact.CheckIfFree(stadium, $scope.search.date, function (result) {
 
-                        if (!result) {
+                    firebase.database().ref('/challenges/' + $scope.challenge.key).once('value').then(function (snapshot) {
 
-                            HomeStore.RegisterTeamMatch($scope.search, "", stadium, $scope.challenge)
-                                .then(function (value) {
-                                    var alertPopup = $ionicPopup.Alert({
-                                        cssClass: 'custom-class',
-                                        template: 'Successfully Reserved'
-                                    });
+                        if (snapshot.exists()) {
 
-                                    $state.go("app.gamedetails",
-                                        {
-                                            gameid: $scope.challenge.key
-                                        });
-                                }, function (error) {
-                                    var alertPopup = $ionicPopup.show({
-                                        title: 'Error',
-                                        template: 'Stadium Not Available. Please Cancel the Challenge'
-                                    });
+                            ReservationFact.CheckIfFree(stadium, $scope.search.date, function (result) {
 
-                                    alertPopup.then(function (res) {
-                                        $state.go("app.homepage");
-                                    });
+                                if (!result) {
 
-                                })
+                                    HomeStore.RegisterTeamMatch($scope.search, "", stadium, $scope.challenge)
+                                        .then(function (value) {
+                                            var alertPopup = $ionicPopup.alert({
+                                                cssClass: 'custom-class',
+                                                template: 'Successfully Reserved'
+                                            });
+
+                                            $ionicHistory.nextViewOptions({
+                                                disableBack: true
+                                            });
+                                            $state.go("app.gamedetails",
+                                                {
+                                                    gameid: $scope.challenge.key
+                                                });
+                                        }, function (error) {
+                                            var alertPopup = $ionicPopup.show({
+                                                title: 'Error',
+                                                template: 'Stadium Not Available. Please Cancel the Challenge'
+                                            });
+
+                                            alertPopup.then(function (res) {
+                                                $state.go("app.homepage");
+                                            });
+
+                                        })
+                                }
+
+                            }, function (error) {
+                                var alertPopup = $ionicPopup.show({
+                                    title: 'Error',
+                                    template: 'Stadium Not Available. Please Cancel the Challenge'
+                                });
+
+                                alertPopup.then(function (res) {
+                                    $state.go("app.homepage");
+                                });
+                            })
+
                         }
 
-                    }, function (error) {
-                        var alertPopup = $ionicPopup.show({
-                            title: 'Error',
-                            template: 'Stadium Not Available. Please Cancel the Challenge'
-                        });
+                        else {
+                            var alertPopup = $ionicPopup.show({
+                                title: 'Error',
+                                template: 'Challenge has been cancelled by the opponent refresh your page'
+                            });
 
-                        alertPopup.then(function (res) {
-                            $state.go("app.homepage");
-                        });
-                    })
+
+                            alertPopup.then(function (res) {
+                                $state.go("app.homepage");
+                            });
+
+                        }
+                    });
+
+
 
 
                 }

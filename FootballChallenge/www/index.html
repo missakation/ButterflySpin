@@ -43,6 +43,13 @@
 	<script src="js/platformOverrides.js"></script>
 	<!-- ionic/angularjs js -->
 	<script src="lib/ionic/js/ionic.bundle.js"></script>
+	<script src="lib/ionic.cloud.min.js"></script>
+
+
+	<script src="lib/imgcache.js"></script>
+	<script src="lib/ionic-img-cache.min.js"></script>
+
+
 
 	<script src="cordova.js"></script>
 
@@ -76,7 +83,7 @@
 
 	<script src="js/leaderboardcontroller.js"></script>
 	<script src="js/leaderboardservice.js"></script>
-	
+
 	<script src="js/challengecontroller.js"></script>
 	<script src="js/challengeservice.js"></script>
 	<script src="js/test.js"></script>
@@ -100,20 +107,23 @@
 	<script src="lib/angularjs-slider/dist/rzslider.min.js"></script>
 
 
+	<script src="lib/ionic-image-lazy-load/ionic-image-lazy-load.js"></script>
 
 
-<script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyDiBc8qXZEvw7XrtEqqyWwH2k8YnCP2EeI",
-    authDomain: "project-6346119287623064588.firebaseapp.com",
-    databaseURL: "https://project-6346119287623064588.firebaseio.com",
-    storageBucket: "project-6346119287623064588.appspot.com",
-    messagingSenderId: "597359579523"
-  };
-  firebase.initializeApp(config);
-</script>
+	<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+	<script>
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyDiBc8qXZEvw7XrtEqqyWwH2k8YnCP2EeI",
+			authDomain: "project-6346119287623064588.firebaseapp.com",
+			databaseURL: "https://project-6346119287623064588.firebaseio.com",
+			projectId: "project-6346119287623064588",
+			storageBucket: "project-6346119287623064588.appspot.com",
+			messagingSenderId: "597359579523"
+		};
+		firebase.initializeApp(config);
+
+	</script>
 
 </head>
 
@@ -125,11 +135,10 @@
 	<div></div>
 
 	<ion-nav-view>
-
-
 	</ion-nav-view>
 
 
 </body>
+
 
 </html>

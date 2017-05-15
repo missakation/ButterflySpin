@@ -102,7 +102,7 @@
 		</h5>
 		<div class="list" style="width:100%; padding-left:10px;padding-right:10px;padding-bottom:15px;border-bottom:1px solid #5f7485">
 			<label class="item item-input" style="padding:2px 20px 20px 10px;background-color:transparent; color:#ffffff; border-radius:5px; border-color:#97a7b4">
-                <textarea ng-maxlength="300" type="text" placeholder="Write something cool about your team!" ng-model="currentprofile.comments" style="color:white;background-color:transparent;padding-left:2px">
+                <textarea ng-maxlength="300" type="text" placeholder="Write something cool about your team!" ng-model="currentprofile.comments" style="color:#2ab041;background-color:transparent;padding-left:2px">
                 	 </textarea>
 					 	</div>
 
@@ -117,7 +117,7 @@
 			</div>
 			
 				<h5 class="col col-33" ng-click="gochoosestadium(currentprofile)" align="center" style="border-radius:15px;border:1px solid #97a7b4;padding-top:5px;color:#2ab041">
-					{{currentprofile.favstadium| uppercase }}
+					{{currentprofile.favstadiumname| uppercase }}
 				</h5>
 				
 				
@@ -138,7 +138,7 @@
 							</div>
 						<div class="col col-20" style="padding:0px;margin-top:-5px">
 						<label class="toggle">
-							<input type="checkbox" ng-model="currentprofile.available">
+							<input type="checkbox" ng-model="currentprofile.available" >
 							<div class="track">
 								<div class="handle"></div>
 							</div>

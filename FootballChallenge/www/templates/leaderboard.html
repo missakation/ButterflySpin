@@ -52,7 +52,7 @@
                     </h4>
                 </div>
 
-                <div class="col" align="center" ng-click="goteamprofile(rankedteams[1].key)" style="padding:0px;margin:-18px 0 0 0px">
+                <div class="col" align="center" ng-click="goteamprofile(rankedteams[0].key)" style="padding:0px;margin:-18px 0 0 0px">
                     <h5 class="whitetext" style="font-weight:bold;text-transform:capitalize;color:white"> {{rankedteams[0].teamname}}</h5>
                     <img src="img/Badges/{{rankedteams[0].badge}}.png" style="width:70px;height:76px;margin-bottom:-10px">
                     <h4 class="whitetext" style="margin-bottom:3px;font-size:30px;font-weight:bold;text-transform:capitalize;color:white">
@@ -61,7 +61,7 @@
 
                 </div>
 
-                <div class="col" align="center" ng-click="goteamprofile(rankedteams[3].key)" style="padding:0px;margin:0px">
+                <div class="col" align="center" ng-click="goteamprofile(rankedteams[2].key)" style="padding:0px;margin:0px">
                     <h5 class="whitetext" style="font-weight:bold;text-transform:capitalize;color:white"> {{rankedteams[2].teamname}}</h5>
                     <img src="img/Badges/{{rankedteams[2].badge}}.png" style="width:57px;height:60px">
                     <h4 style="margin-bottom:3px;font-size:20px;font-weight:bold;text-transform:capitalize;color:white">
@@ -128,7 +128,7 @@
                 </div>
         </div>
         </div>
-        <ion-infinite-scroll on-infinite="loadMore()" distance="1%">
+        <ion-infinite-scroll ng-disabled="limitfinished" on-infinite="loadMore()" distance="1%">
         </ion-infinite-scroll>
     </ion-content>
 

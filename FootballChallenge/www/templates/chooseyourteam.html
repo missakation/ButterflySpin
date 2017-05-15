@@ -25,7 +25,7 @@
     <ion-content style="background-color:rgb(45,62,75)">
 
 
-        <div ng-repeat="team in test" style="padding:0 10px">
+        <div ng-repeat="team in allmyteams" style="padding:0 10px">
             <a class="item item-thumbnail-left" ng-click="gochallengeteams({{team}})" style="background-color:rgb(62,83,100);border-radius:5px;margin-top:10px;border:hidden">
                 <img src="img/Badges/{{team.badge}}.png" style="width:65px;height:65px; margin-top:10px;margin-left:15px ">
 
@@ -34,7 +34,7 @@
                     <h2 style="text-transform:capitalize;color:white;font-size:16px;font-weight:bold">
                         <b>{{team.teamname}}</b></h2>
                 </div>
-                <div align="center" style="padding-right:0px; color:darkturquoise; font-size:12px; font-weight:bold"> RANK 404th
+                <div align="center" style="padding-right:0px; color:darkturquoise; font-size:12px; font-weight:bold"> RANK {{team.rank}}
                 </div>
                 <hr style="height:1px; visibility:hidden;" />
                 <h5 align="center" style="color: #5f7485;float:left; width:50%;padding-bottom:0px;margin-bottom:0px"> MEMBERS
@@ -42,10 +42,10 @@
                 <h5 align="center" style="padding-bottom:0px;margin-bottom:0px;color: #5f7485;float:left; width:50%;border-left:solid; border-width:thin; border-color: #5f7485">
                 RATING
                 </h5>
-                <h4 align="center" style="color:white;float:left; width:50%;top:0px"> <b>404</b>
+                <h4 align="center" style="color:white;float:left; width:50%;top:0px"> <b>{{team.members}}</b>
                 </h4>
                 <h4 align="center" style="color:darkturquoise;float:left; width:50%;border-left:solid; border-width:thin; border-color: #5f7485">
-                404</b>
+                {{team.rating}}</b>
                 </h4>
 
             </a>

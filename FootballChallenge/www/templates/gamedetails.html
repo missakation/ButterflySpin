@@ -55,7 +55,7 @@
 
 	<div class="bar bar-subheader" align="left" style="border:transparent;height:45px;margin-bottom:5px;background-color:#2ab041"
 	 ng-show="!notloaded">
-		<h3 class="title" align="left" style="color:white;font-size:14px">{{challenge.date |date:'EEE,MMM d - h:mm a'}} @ Footers 404 Stadium Name </h3>
+		<h3 class="title" align="left" style="font-weight:bold;color:white;font-size:14px">{{challenge.date |date:'EEEE - MMM d @ HH:mm a'}} - 404 5 vs 5 </h3>
 	</div>
 
 	<ion-content style="background-color:rgb(46,62,75)">
@@ -73,14 +73,14 @@
 			<div class="row" style="padding-bottom:0px">
 				<div class="col" style="padding:0px">
 					<div align="center">
-						<img src="img/Badges/{{challenge.team1logo}}.png" style="width:60px;height:60px ">
+						<img src="img/Badges/{{challenge.team1logo}}.png" style="margin-top:10px;width:60px;height:60px ">
 					</div>
 					<div align="center">
 						<h5 class="whitetext" style="font-weight:bold;text-transform: capitalize">
 							{{challenge.team1name}}
 						</h5>
 						<h6 style="color:darkturquoise">
-							{{challenge.team1rank}}AR
+							Rank {{challenge.team1rank}}
 						</h6>
 						<img src="img/Jerseys/{{challenge.team1jersey}}.png" style="width:40px;height:40px ">
 					</div>
@@ -92,57 +92,57 @@
 						<h3 class="whitetext" style="font-weight:bold;color:white">
 							VS
 						</h3>
-						<hr style="height:6px; visibility:hidden;" />
-
-
-
-						<img src="{{challenge.adminphoto}}" style="margin-top:15px;border-radius:50% ; height:65px ; width:65px" />
+						<h6 style="margin-top:70px;color:#5f7485" align="center"> DIFFICULTY </h6>
+						<h5 align="center" class="whitetext" style="margin-top:-5px;font-weight:bold">
+							HARD
+						</h5>
 
 
 					</div>
 				</div>
 				<div class="col" style="padding:0px">
 					<div align="center">
-						<img src="img/Badges/{{challenge.team2logo}}.png" style="width:60px;height:60px ">
+						<img src="img/Badges/{{challenge.team2logo}}.png" style="margin-top:10px;width:60px;height:60px ">
 					</div>
 					<div align="center">
 						<h5 class="whitetext" style="font-weight:bold;text-transform: capitalize">
 							{{challenge.team2name}}
 						</h5>
 						<h6 style="color:darkturquoise">
-							{{challenge.team2rank}}AR
+							Rank {{challenge.team2rank}}
 						</h6>
 						<img src="img/Jerseys/{{challenge.team2jersey}}.png" style="width:40px;height:40px ">
 					</div>
 				</div>
 
 			</div>
-			<div class="row" style="padding:0px">
-				<div class="col col-center" style="padding:0px">
-					<hr style="height:3vh; visibility:hidden;" />
-					<h6 align="center" style="color:#5f7485"> PITCH SIZE </h6>
-					<h5 class="whitetext" align="center" style="font-weight:bold">
-						5 V 5
-					</h5>
+		</div>
+		<div class="card" style="padding:0px;margin:5px;background-color:rgb(62, 83, 100)">
+			<h5 align="center" class="whitetext" style="text-transform: capitalize;font-size:15px;margin:5px 0 0 0; font-weight:bold">
+				Captain {{challenge.adminname}}
+			</h5>
+			<div class="row" style="padding:0px;background-color:rgb(62, 83, 100)">
+
+				<div style="width:20%;padding:0px">
+
+					<img src="{{challenge.adminphoto}}" style="border-radius:50% ; height:65px ; width:65px; margin-top:-10px" />
 
 				</div>
 
-				<div class="col col-50" align="center" style="padding:0px;border-right:1px solid #5f7485;border-left:1px solid #5f7485">
+				<div align="center" style="width:50%;padding:0px 5px">
 
-					<h5 class="whitetext" style="font-weight:bold">
-						Cpt.{{challenge.adminname}}
-					</h5>
+
 
 					<h6 style="color:#5f7485"> CONTACT </h6>
 					<h5 class="whitetext" style="font-weight:bold">
 						(+961) {{challenge.admintelephon}}
 					</h5>
 				</div>
-				<div class="col col-center" style="padding:0px">
-					<hr style="height:3vh; visibility:hidden;">
-					<h6 style="color:#5f7485" align="center"> DIFFICULTY </h6>
-					<h5 align="center" class="whitetext" style="font-weight:bold">
-						HARD
+				<div class="col" style="padding:0px">
+
+					<h6 style="color:#5f7485;border-left:1px solid #5f7485" align="center"> LAST SEEN </h6>
+					<h5 align="center" class="whitetext" style="padding-top:10px;margin-top:-10px;font-weight:bold;border-left:1px solid #5f7485">
+						404 Hrs
 					</h5>
 				</div>
 			</div>
@@ -150,6 +150,39 @@
 
 		</div>
 		</div>
+		<div class="card" align="center" style="background-color:rgb(62,83,100); padding:0px;margin:5px">
+			<div align="center" style="Font-weight:bold;color:white;font-size:15px;margin:5px 0px"> Stadium </div>
+			<img image-lazy-src="http://gazettereview.com/wp-content/uploads/2017/01/stadium-header.jpg" image-lazy-loader="lines" style="width:100%;height:140px;"
+			 ui-sref="app.reservestadiumdetails({stadiumid: stadiums.stadiumkey})">
+		
+
+		<div class="row ">
+			<div class="col col-66" style="padding-top:0px;color:white; font-weight:bold;font-size:12px"> {{stadiums.stadiumname}} / {{stadiums.description}}
+			</div>
+
+			<div class="col" align="right" style="padding-top:0px;font-size:11px;color:#5f7485"> PRICE
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col col-66" align="left">
+				<rating style="color:rgb(255,152,18);margin-top:-8px;padding-top:0px" readonly="readOnly" ng-model=stadiums.rating max="rating.max"
+				 align="left">
+
+				</rating>
+
+			</div>
+
+			<div class="col" align="right" style="padding:3px 0 0 0;color:white;margin-top:-8px;font-size:15px">
+				<b>
+	
+		{{stadiums.price}} LL
+		</b>
+			</div>
+		</div>
+		</div>
+
 
 
 
@@ -164,14 +197,14 @@
 			<div class="row ">
 				<div class="col">
 					<div align="center">
-						<img src="img/Badges/{{challenge.team1logo}}.png" style="width:60px;height:60px ">
+						<img src="img/Badges/{{challenge.team1logo}}.png" style="width:65px;height:65px;margin-top:-10px">
 					</div>
 					<div align="center">
 						<h5 class="whitetext">
 							{{challenge.team1name}}
 						</h5>
-						<h6 style="color:darkturquoise">
-							{{challenge.team1rank}}
+						<h6 style="color:darkturquoise;margin-top:-5px">
+							Rank {{challenge.team1rank}}
 						</h6>
 						<img src="img/Jerseys/{{challenge.team1jersey}}.png" style="width:40px;height:40px ">
 					</div>
@@ -200,7 +233,7 @@
 						<h5 class="whitetext">
 							{{challenge.team2name}}
 						</h5>
-						<h6 style="color:darkturquoise">
+						<h6 style="color:darkturquoise;margin-top:-5px">
 							Rank:{{challenge.team2rank}}
 						</h6>
 						<img src="img/Jerseys/{{challenge.team2jersey}}.png" style="width:40px;height:40px ">
@@ -250,18 +283,18 @@
 				<div class="col" ng-hide="notloaded">
 
 					<div align="center">
-						<button ng-show="item.status == 0 && !item.isadmin" class="button button-block button-balanced" style="padding:2px 4px 1px;min-width:28px;min-height:30px;line-height:26px;color:white"
+						<button ng-show="item.status == 0 && !item.isadmin" class="button button-block button-balanced" style="border-radius:50px;padding:2px 4px 1px;min-width:28px;min-height:30px;line-height:26px;color:white"
 						 type="submit" ng-click="InvitePlayer(challenge,item)"> Invite
 </button>
 
-						<button ng-show="item.status == 1 && !item.isadmin" class="button button-block button-energized" style="padding:2px 4px 1px;min-width:28px;min-height:30px;line-height:26px;color:white"
+						<button ng-show="item.status == 1 && !item.isadmin" class="button button-block button-energized" style="border-radius:50px;padding:2px 4px 1px;min-width:28px;min-height:30px;line-height:26px;color:white"
 						 type="submit"> Pending
 </button>
 
-						<button ng-show="item.status == 5 && !item.isadmin" class="button button-block button-balanced" style="padding:2px 4px 1px;min-width:28px;min-height:30px;line-height:26px;color:white"
+						<button ng-show="item.status == 5 && !item.isadmin" class="button button-block button-balanced" style="border-radius:50px;padding:2px 4px 1px;min-width:28px;min-height:30px;line-height:26px;color:white"
 						 type="submit"> Accepted
 </button>
-						<button ng-show="item.status == 3 && !item.isadmin" class="button button-block button-assertive" style="padding:2px 4px 1px;min-width:28px;min-height:30px;line-height:26px;color:white"> Cancelled
+						<button ng-show="item.status == 3 && !item.isadmin" class="button button-block button-assertive" style="border-radius:50px;padding:2px 4px 1px;min-width:28px;min-height:30px;line-height:26px;color:white"> Cancelled
 </button>
 
 					</div>

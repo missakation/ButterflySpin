@@ -24,35 +24,40 @@ angular.module('football.controllers')
 
             LeaderBoardStore.GetLeaderboard(limit, function (leagues) {
 
-                
+
                 $scope.notloaded = false;
                 $scope.rankedteams = leagues.reverse();
 
-                /* UTILITIES
-                LeaderBoardStore.UpdateRatings($scope.rankedteams).then(function(result)
+                
+               /* LeaderBoardStore.UpdateRatings($scope.rankedteams).then(function(result)
                 {
 
                 },function(error)
                 {
                     alert(error.message);
-                })
-                */
-
-                $scope.$apply();
+                })*/
+                
 
                 $scope.$broadcast('scroll.infiniteScrollComplete');
 
                 if ($scope.rankedteams.length < limit) {
                     $scope.limitfinished = false;
                 }
+                else
+                {
+                    $scope.limitfinished = true;
+                }
 
             })
         }
 
         $scope.loadMore = function () {
-            $scope.limit += 10;
-            $scope.refreshpage($scope.limit);
-            $scope.$apply();
+
+            if (!$scope.limitfinished) {
+                $scope.limit += 10;
+                $scope.refreshpage($scope.limit);
+            }
+
         }
 
         $scope.refreshpage($scope.limit);

@@ -1,7 +1,7 @@
 ﻿
 angular.module('football.controllers')
 
-    .controller('GameDetailsController', function ($scope,HomeStore, $ionicPopup, $ionicLoading, $state, $stateParams, TeamStores, ChallengeStore, $timeout) {
+    .controller('GameDetailsController', function ($scope, HomeStore, $ionicPopup, $ionicLoading, $state, $stateParams, TeamStores, ChallengeStore, $timeout) {
 
         $scope.loadingphase = false;
         $scope.isadmin = false;
@@ -20,17 +20,17 @@ angular.module('football.controllers')
         try {
             $scope.profile = {};
 
-            $timeout(function () {
-                $scope.user = firebase.auth().currentUser;
-                $scope.myid = $scope.user.uid;
+            $scope.user = firebase.auth().currentUser;
+            $scope.myid = $scope.user.uid;
 
+
+            ChallengeStore.GetChallengeByKey($scope.myid, $scope.gameid, function (challengedetails) {
                 
-                ChallengeStore.GetChallengeByKey($scope.myid, $scope.gameid, function (challengedetails) {
+                if ( challengedetails.hasOwnProperty("key")) {
                     $scope.challenge = challengedetails;
 
-                    //alert(JSON.stringify($scope.challenge));
-                    console.log(challengedetails);
-                    
+                    //alert(JSON.stringify($scope.challenge)); 
+
                     if ($scope.challenge.team1adminid === $scope.myid) {
                         $scope.isadmin = true;
                         $scope.first = true;
@@ -49,7 +49,7 @@ angular.module('football.controllers')
 
                     if ($scope.isadmin) {
 
-                        
+
 
                         //get team depending on your admin key
                         TeamStores.GetTeamByKey($scope.currentteam, function (myteam) {
@@ -58,21 +58,19 @@ angular.module('football.controllers')
                             console.log(myteam);
 
                             $scope.myplayers = $scope.myteam.players;
-                            
+
                             if ($scope.isadmin) {
 
                                 if ($scope.first) {
                                     for (var i = 0; i < $scope.myplayers.length; i++) {
                                         for (var j = 0; j < $scope.challenge.team1players.length; j++) {
-                                            if ($scope.myplayers[i].key == $scope.challenge.team1players[j].key) 
-                                            {
+                                            if ($scope.myplayers[i].key == $scope.challenge.team1players[j].key) {
                                                 $scope.myplayers[i].status = $scope.challenge.team1players[j].status;
                                             }
-                                            if ($scope.myplayers[i].key == $scope.myid) 
-                                            {
+                                            if ($scope.myplayers[i].key == $scope.myid) {
                                                 $scope.myplayers[i].status = 5;
                                             }
-                                            
+
                                         }
 
                                     }
@@ -96,24 +94,33 @@ angular.module('football.controllers')
                             }
 
                             $scope.notloaded = false;
-                            
+
                             $scope.$apply();
-                          //  alert("test2");
-                          console.log($scope.isadmin);
+                            //  alert("test2");
+                            console.log($scope.isadmin);
                         })
                     }
                     $scope.notloaded = false;
                     $scope.$apply();
 
-                })
-            }, 1000);
+                }
+                else {
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Team not Found',
+                        template: 'Looks like your admin decided to delete this game'
+                    }).then(function () {
+                        $state.go('app.homepage');
+                    })
+                }
+
+            })
+
         } catch (error) {
             alert(error.message);
         }
 
-        $scope.CancelChallenge = function(challenge)
-        {
-               try {
+        $scope.CancelChallenge = function (challenge) {
+            try {
                 var confirmPopup = $ionicPopup.confirm({
                     title: 'Decline',
                     template: 'Are you sure you want to Cancel the game?'
@@ -126,8 +133,7 @@ angular.module('football.controllers')
                             var alertPopup = $ionicPopup.alert({
                                 title: 'Success',
                                 template: 'Challenge Cancelled'
-                            }).then(function()
-                            {
+                            }).then(function () {
                                 $state.go('app.homepage');
                             })
 
@@ -143,31 +149,27 @@ angular.module('football.controllers')
             }
         }
 
-        $scope.InvitePlayer = function(challenge,player)
-        {
+        $scope.InvitePlayer = function (challenge, player) {
 
             try {
 
-                var fieldname = $scope.first ? "team1players":"team2players"
+                var fieldname = $scope.first ? "team1players" : "team2players"
 
-                if(player.status == 0)
-                {
-               
-                ChallengeStore.InvitePlayerToGame(challenge,player,fieldname)
-                .then(function () 
-                 {
+                if (player.status == 0) {
 
-                     player.status = 1;
-                 }
-                  , 
-                 function (error) 
-                 {
-                     alert(error.message);
-                 })
-                  }
+                    ChallengeStore.InvitePlayerToGame(challenge, player, fieldname)
+                        .then(function () {
+
+                            player.status = 1;
+                        }
+                        ,
+                        function (error) {
+                            alert(error.message);
+                        })
+                }
 
             } catch (error) {
-                
+
             }
 
         }

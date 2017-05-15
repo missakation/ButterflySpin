@@ -165,11 +165,12 @@ angular.module('football.controllers')
                             "available": snapshot.child("available").val(),
                             "availablepng": snapshot.child("available").val() ? "available" : "busy",
                             "isplayer": snapshot.child("isplayer").val(),
-                            "teamdisplayed": snapshot.child("teamdisplayed").val(),
+                            
                             "teamdisplayedkey": snapshot.child("teamdisplayedkey").val(),
-
+                            //"teamdisplayed": snapshot.child("teamdisplayed").val(),
                             "skilllevel": snapshot.child("skilllevel").val(),
-                            "skilldescription": skilldescription
+                            "skilldescription": skilldescription,
+                            "favstadiumname":snapshot.child("favstadiumname").val(),
 
                             //"distancetoplay": snapshot.child("identity").val(),
                             //"teamtoshow":snapshot.child("identity").val()
@@ -177,8 +178,8 @@ angular.module('football.controllers')
 
 
                         };
-
                         TempItems = Items;
+                        
                         callback(TempItems);
                     });
 

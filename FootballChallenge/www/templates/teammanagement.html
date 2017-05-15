@@ -56,6 +56,13 @@
         border-bottom: 2px solid rgb(62, 83, 100);
         border-top: 1px;
     }
+    
+    .spinner svg {
+        width: 10% !important;
+        height: 100px !important;
+        stroke: #2ab041;
+        fill: #2ab041;
+    }
 </style>
 <ion-view view-title="My Teams">
 
@@ -85,11 +92,11 @@
     </ion-nav-bar>
 
     <ion-content style="background-color:rgb(45,62,75)">
-        <div align="center">
-            <ion-spinner ng-show="notloaded" icon="spiral"></ion-spinner>
+        	<div class="spinner" align="center" ng-show="notloaded">
+			<ion-spinner name="bubbles" style="color:white"  icon="lines"></ion-spinner>
         </div>
 
-        <div ng-repeat="team in test" style="padding:0 10px">
+        <div ng-repeat="team in myteams" style="padding:0 10px">
             <a class="item item-thumbnail-left" href="#/app/teamprofile/{{team.key}}" style="border-radius:5px;background-color:rgb(62,83,100);margin-top:10px;border:hidden">
                 <img src="img/Badges/{{team.badge}}.png" style="width:65px;height:65px; margin-top:10px;margin-left:15px ">
 
@@ -97,7 +104,7 @@
                     <h2 style="text-transform:capitalize;color:white;font-size:16px;font-weight:bold">
                         <b>{{team.teamname}}</b></h2>
                 </div>
-                <div align="center" style="padding-right:0px; color:darkturquoise; font-size:12px; font-weight:bold"> RANK 404th
+                <div align="center" style="padding-right:0px; color:darkturquoise; font-size:12px; font-weight:bold"> RANK {{team.rank}}
                 </div>
                 <hr style="height:1px; visibility:hidden;" />
                 <h4 style="color: #5f7485;float:left; width:50%; padding-left:25px;margin:0px"> MEMBERS
@@ -108,7 +115,7 @@
                 <h4 style="color:white;float:left; width:50%;padding-left:48px;top:0px;margin:0px"> <b>{{team.members}}</b>
                 </h4>
                 <h4 style="color:darkturquoise;float:left; width:50%;margin:0px;border-left:solid; border-width:thin; border-color: #5f7485;padding-left:29px">
-                    1500</b>
+                    {{team.rating}}</b>
                 </h4>
 
             </a>

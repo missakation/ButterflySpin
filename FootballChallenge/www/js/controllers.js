@@ -49,6 +49,8 @@ angular.module('football.controllers', [])
             // return deferred.promise;
         };
 
+
+
         var verifyUserMobile = function ($scope, callback, argumentsArray) {
             $scope.smsVerification = {
                 mobileNumber: "",
@@ -56,7 +58,8 @@ angular.module('football.controllers', [])
             };
             var confirmPopup = $ionicPopup.confirm({
                 cssClass: 'custom-class',
-                template: 'Please Verify Your Mobile Number<br/> <div class="row" style="padding-top:10px"><div style="width:15%;padding-top:15px">+961</div><div class="col"><input type="tel" required placeholder="Enter your mobile number" ng-model="smsVerification.mobileNumber" style="padding:20px 10px 20px 10px;background-color:rgba(0, 0, 0, 0.4);padding-left:10px;color:#2ab041;border-radius:5px"></div></div>',
+                title: 'Mobile verification',
+                template: 'You need to verify your mobile number to proceed. <br/> <div class="row"><div class="col col-20" style="padding-top: 13px;margin-top:10px">+961</div><div class="col"><input type="tel" placeholder="Enter Your Phone Number" ng-model="smsVerification.mobileNumber" style="color:#2ab041;padding: 0 5px;margin-top:10px"></div></div>',
                 scope: $scope,
                 buttons: [
                     { text: 'Cancel' },
@@ -77,68 +80,93 @@ angular.module('football.controllers', [])
             if (!$scope.nointernet) {
                 confirmPopup.then(function (res) {
                     if (res) {
-                        var code = generateCode(6);
-                        console.log(code);
-                        $ionicLoading.show({
-                            content: 'Loading',
-                            animation: 'fade-in',
-                            showBackdrop: true,
-                            maxWidth: 200,
-                            showDelay: 0
-                        });
-                        sendSMS(res, "Please enter the code: " + code + " to confirm your mobile number").then(function (res) {
-                            $ionicLoading.hide();
-                            console.log(res)
-                            var tries = 0;
-                            var verifyPopup = $ionicPopup.confirm({
-                                cssClass: 'custom-class',
-                                template: 'Enter the verification code we sent via SMS below to verify your mobile number <br/> <div class="row"><div class="col"><input type="number" required placeholder="Enter the verification code" ng-model="smsVerification.codeNumber" style="padding:20px 10px 20px 10px;background-color:rgba(0, 0, 0, 0.4);padding-left:10px;color:#2ab041;border-radius:5px""></div></div>',
-                                scope: $scope,
-                                buttons: [
-                                    { text: 'Cancel' },
-                                    {
-                                        text: '<b>Verify</b>',
-                                        type: 'button-positive',
-                                        onTap: function (e) {
-                                            if (!$scope.smsVerification.codeNumber) {
-                                                e.preventDefault();
-                                            } else if (code !== $scope.smsVerification.codeNumber && tries < 3) {
-                                                $ionicPopup.alert({
-                                                    cssClass: 'custom-class',
-                                                    template: "Invalid Code"
-                                                });
-                                                tries++;
-                                                e.preventDefault();
-                                            } else if (tries >= 3) {
-                                                $ionicPopup.alert({
-                                                    cssClass: 'custom-class',
-                                                    template: "Too many bad attempts. Try again"
-                                                });
-                                                return false;
-                                            } else {
-                                                return $scope.smsVerification.codeNumber;
+                        console.log($scope.smsVerification.mobileNumber);
+                        firebase.database().ref('/playersinfo').orderByChild("telephone").equalTo($scope.smsVerification.mobileNumber).once('value').then(function (snapshot) {
+                            console.log(snapshot.val());
+
+                            if (!snapshot.val()) {
+
+                                var code = generateCode(6);
+                                console.log(code);
+                                $ionicLoading.show({
+                                    content: 'Loading',
+                                    animation: 'fade-in',
+                                    showBackdrop: true,
+                                    maxWidth: 200,
+                                    showDelay: 0
+                                });
+                                sendSMS(res, "Please enter the code: " + code + " to confirm your mobile number").then(function (res) {
+                                    $ionicLoading.hide();
+                                    console.log(res)
+                                    var tries = 0;
+                                    var verifyPopup = $ionicPopup.confirm({
+                                        cssClass: 'custom-class',
+                                        title: 'Mobile verification',
+                                        template: 'Enter the verification code we sent via SMS below to verify your mobile number <br/> <div class="row"><div class="col"><input type="text" placeholder="Enter the verification code" ng-model="smsVerification.codeNumber" style="padding: 0 5px"></div></div>',
+                                        scope: $scope,
+                                        buttons: [
+                                            { text: 'Cancel' },
+                                            {
+                                                text: '<b>Verify</b>',
+                                                type: 'button-positive',
+                                                onTap: function (e) {
+                                                    if (!$scope.smsVerification.codeNumber) {
+                                                        e.preventDefault();
+                                                    } else if (code !== $scope.smsVerification.codeNumber && tries < 3) {
+                                                        $ionicPopup.alert({
+                                                            cssClass: 'custom-class',
+                                                            template: "Invalid Code"
+                                                        });
+                                                        tries++;
+                                                        e.preventDefault();
+                                                    } else if (tries >= 3) {
+                                                        $ionicPopup.alert({
+                                                            cssClass: 'custom-class',
+                                                            template: "Too many bad attempts. Try again"
+                                                        });
+                                                        return false;
+                                                    } else {
+                                                        return $scope.smsVerification.codeNumber;
+                                                    }
+                                                }
                                             }
-                                        }
-                                    }
-                                ]
-                            });
-
-                            verifyPopup.then(function (res) {
-                                if (res) {
-                                    var user = firebase.auth().currentUser;
-                                    var id = user.uid;
-                                    var updates = {};
-                                    updates['players/' + id + '/isMobileVerified'] = true;
-                                    firebase.database().ref().update(updates).then(function () {
-                                        callback.apply($scope, argumentsArray)
+                                        ]
                                     });
-                                }
-                            });
 
-                        }, function (err) {
-                            $ionicLoading.hide();
-                            console.log(err)
+                                    verifyPopup.then(function (res) {
+                                        if (res) {
+                                            var user = firebase.auth().currentUser;
+                                            var id = user.uid;
+                                            var updates = {};
+                                            console.log($scope.smsVerification.mobileNumber);
+                                            updates['players/' + id + '/isMobileVerified'] = true;
+                                            updates['playersinfo/' + id + '/isMobileVerified'] = true;
+
+                                            updates['players/' + id + '/telephone'] = $scope.smsVerification.mobileNumber;
+                                            updates['playersinfo/' + id + '/telephone'] = $scope.smsVerification.mobileNumber;
+
+                                            firebase.database().ref().update(updates).then(function () {
+                                                callback.apply($scope, argumentsArray)
+                                            });
+                                        }
+                                    });
+
+                                }, function (err) {
+                                    $ionicLoading.hide();
+                                    console.log(err)
+                                })
+                            }
+                            else {
+                                var alertPopup = $ionicPopup.alert({
+                                    title: 'Phone Exists',
+                                    template: 'This number already exists - Please call us at (+961) 71-258379'
+                                }).then(function () {
+
+                                });
+                            }
                         })
+
+
                     }
                 });
             }
@@ -148,7 +176,7 @@ angular.module('football.controllers', [])
             verifyUserMobile: verifyUserMobile
         }
     })
-        .factory('FirebaseStorageService', function ($q) {
+    .factory('FirebaseStorageService', function ($q) {
         return {
             saveUserProfilePicture: function (data, userId) {
                 var deferred = $q.defer();
@@ -160,13 +188,13 @@ angular.module('football.controllers', [])
                 var f = storage.child("playerimages/" + name);
                 var task = f.putString(data, 'base64');
 
-                task.on('state_changed', function(snapshot) {
+                task.on('state_changed', function (snapshot) {
 
-                }, function(error) {
+                }, function (error) {
                     console.error("Unable to save image.");
                     console.error(error);
                     deferred.reject(error);
-                }, function() {
+                }, function () {
                     var url = task.snapshot.downloadURL;
                     console.log("Saved to " + url);
 
@@ -216,13 +244,13 @@ angular.module('football.controllers', [])
                     updates['players/' + id + '/startsundayend'] = profile.startsundayend;
                     updates['players/' + id + '/available'] = profile.available;
                     updates['players/' + id + '/skilllevel'] = profile.skilllevel;
-                    //updates['players/' + id + '/favstadium'] = profile.favstadium;
+                    updates['players/' + id + '/favstadiumname'] = profile.favstadiumname;
                     //updates['players/' + id + '/favstadiumphoto'] = profile.favstadiumphoto;
 
 
                     //Age
                     if (withdetails) {
-                        updates['players/' + id + '/teamdisplayed'] = profile.teamdisplayed;
+                        //updates['players/' + id + '/teamdisplayed'] = profile.teamdisplayed;
                         updates['players/' + id + '/teamdisplayedkey'] = profile.teamdisplayedkey;
                         updates['players/' + id + '/comments'] = profile.comments;
                         updates['players/' + id + '/isplayer'] = profile.isplayer;
@@ -251,7 +279,7 @@ angular.module('football.controllers', [])
                     updates['playersinfo/' + id + '/startsundayend'] = profile.startsundayend;
                     updates['playersinfo/' + id + '/available'] = profile.available;
                     updates['playersinfo/' + id + '/skilllevel'] = profile.skilllevel;
-                    //updates['playersinfo/' + id + '/favstadium'] = profile.favstadium;
+                    updates['playersinfo/' + id + '/favstadiumname'] = profile.favstadiumname;
                     //updates['playersinfo/' + id + '/favstadiumphoto'] = profile.favstadiumphoto;
 
                     if (withdetails) {
@@ -260,7 +288,7 @@ angular.module('football.controllers', [])
                         updates['playersinfo/' + id + '/agemonth'] = month;
                         updates['playersinfo/' + id + '/ageday'] = day;
                         updates['playersinfo/' + id + '/ageset'] = ageset;
-                        updates['playersinfo/' + id + '/teamdisplayed'] = profile.teamdisplayed;
+                        //updates['playersinfo/' + id + '/teamdisplayed'] = profile.teamdisplayed;
                         updates['playersinfo/' + id + '/teamdisplayedkey'] = profile.teamdisplayedkey;
                         updates['playersinfo/' + id + '/firstname'] = profile.firstname;
                         updates['playersinfo/' + id + '/lastname'] = profile.lastname;
@@ -286,56 +314,74 @@ angular.module('football.controllers', [])
 
                         snapshot.forEach(function (childSnapshot) {
 
-                            var toadd = true;
+                            if (childSnapshot.key != id) {
 
 
 
-                            //       if (childSnapshot.key != id) {
+                                var toadd = true;
 
-                            var status = "Invite to Team";
 
-                            if (childSnapshot.child("teaminvitations/" + team.key).exists()) {
 
-                                switch (childSnapshot.child("teaminvitations/" + team.key + "/status")) {
-                                    case 0:
-                                        status = "Pending Request";
-                                        break;
-                                    case 1:
-                                        toadd = false;
-                                        break;
-                                    case 2:
-                                        status = "Invite to Team";
-                                        break;
+                                //       if (childSnapshot.key != id) {
 
-                                    default:
-                                        break;
+                                var status = "Invite to Team";
+
+                                if (childSnapshot.child("teaminvitations/" + team.key).exists()) {
+
+                                    switch (childSnapshot.child("teaminvitations/" + team.key + "/status")) {
+                                        case 0:
+                                            status = "Pending Request";
+                                            break;
+                                        case 1:
+                                            toadd = false;
+                                            break;
+                                        case 2:
+                                            status = "Invite to Team";
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+
                                 }
+                                if (toadd) {
 
+
+                                    var age = new Date();
+
+                                    age.setDate(childSnapshot.child("ageday").val());
+                                    age.setFullYear(childSnapshot.child("ageyear").val());
+                                    age.setMonth(childSnapshot.child("agemonth").val());
+
+
+                                    var ageDifMs = Date.now() - age.getTime();
+                                    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+                                    var num = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+                                    var Items = {
+                                        "key": childSnapshot.key,
+                                        "displayname": childSnapshot.child("displayname").val(),
+                                        "enableinvitations": childSnapshot.child("enableinvitations").val(),
+                                        "favouritesport": childSnapshot.child("favouritesport").val(),
+                                        "firstname": childSnapshot.child("firstname").val(),
+                                        "highestrating": childSnapshot.child("highestrating").val(),
+                                        "lastname": childSnapshot.child("lastname").val(),
+                                        "middlename": childSnapshot.child("middlename").val(),
+                                        "playposition": childSnapshot.child("playposition").val(),
+                                        "ranking": childSnapshot.child("ranking").val(),
+                                        "status": status,
+                                        "teams": childSnapshot.child("teams").val(),
+                                        "telephone": childSnapshot.child("telephone").val(),
+                                        "winstreak": childSnapshot.child("winstreak").val(),
+                                        "photo": childSnapshot.child("photoURL").val() == "" ? "img/PlayerProfile.png" : childSnapshot.child("photoURL").val(),
+
+                                        "age": num
+
+                                    };
+
+                                    AllPlayers.push(Items);
+                                }
                             }
-                            if (toadd) {
-
-                                var Items = {
-                                    "key": childSnapshot.key,
-                                    "displayname": childSnapshot.child("displayname").val(),
-                                    "enableinvitations": childSnapshot.child("enableinvitations").val(),
-                                    "favouritesport": childSnapshot.child("favouritesport").val(),
-                                    "firstname": childSnapshot.child("firstname").val(),
-                                    "highestrating": childSnapshot.child("highestrating").val(),
-                                    "lastname": childSnapshot.child("lastname").val(),
-                                    "middlename": childSnapshot.child("middlename").val(),
-                                    "playposition": childSnapshot.child("playposition").val(),
-                                    "ranking": childSnapshot.child("ranking").val(),
-                                    "status": status,
-                                    "teams": childSnapshot.child("teams").val(),
-                                    "telephone": childSnapshot.child("telephone").val(),
-                                    "winstreak": childSnapshot.child("winstreak").val(),
-                                    "photo": childSnapshot.child("photoURL").val()
-
-                                };
-
-                                AllPlayers.push(Items);
-                            }
-
                         })
 
                         callback(AllPlayers);
@@ -371,7 +417,7 @@ angular.module('football.controllers', [])
         myprofile["myteams"] = [];
         myprofile["requestednumbers"] = [];
         myprofile["upcomingmatches"] = [];
-        myprofile["teamdisplayed"] = "none";
+        myprofile["teamdisplayed"] = "";
         myprofile["teamdisplayedkey"] = "";
 
         var profile = {};
@@ -390,7 +436,7 @@ angular.module('football.controllers', [])
         profile["winstreak"] = "";
         profile["teamdisplayed"] = "";
         profile["teamdisplayedkey"] = "";
-        
+
         var TempItems = [];
         var RankedTeams = [];
         return {
@@ -411,6 +457,7 @@ angular.module('football.controllers', [])
                         var gameinvitation = [];
                         var myteams = [];
                         var requestednumbers = [];
+                        var previousnumbers = [];
                         var upcomingsinglematches = [];
 
                         if (snapshot.child("challenges").exists()) {
@@ -456,7 +503,8 @@ angular.module('football.controllers', [])
 
                                     adminphoto: challenges.child("adminphoto").val() == "" ? "img/PlayerProfile.png" : challenges.child("adminphoto").val(),
                                     admintelephon: challenges.child("admintelephon").val(),
-                                    adminname: challenges.child("adminname").val()
+                                    adminname: challenges.child("adminname").val(),
+                                    title: challenges.child("admin").val() == id ? "you challenged " + challenges.child("team2name").val() : challenges.child("team2name").val() + " challenged you"
 
                                 }
                                 totchallenges.push(challengedata);
@@ -505,7 +553,8 @@ angular.module('football.controllers', [])
                                         photo: challenges.child("photo").val(),
                                         price: challenges.child("price").val(),
                                         stadiumdescription: challenges.child("stadiumdescription").val(),
-                                        gamestyle: "teammatch"
+                                        gamestyle: "teammatch",
+                                        isadmin: challenges.child("team1adminid").val() == id || challenges.child("team2adminid").val() == id
                                     }
                                     upcomingmatches.push(matchdata);
                                 }
@@ -587,7 +636,8 @@ angular.module('football.controllers', [])
                                     date: matchdate,
 
                                     adminkey: challenges.child("adminkey").val(),
-                                    admindisplayname: challenges.child("admindisplayname").val(),
+                                    adminfirstname: challenges.child("adminfirstname").val(),
+                                    adminlastname: challenges.child("adminlastname").val(),
                                     adminphoto: challenges.child("adminphoto").val() == "" ? "img/PlayerProfile.png" : challenges.child("adminphoto").val(),
                                     admintelephone: challenges.child("admintelephone").val(),
 
@@ -618,17 +668,51 @@ angular.module('football.controllers', [])
                         }
 
                         if (snapshot.child("myrequests").exists()) {
-                            snapshot.child("myrequests").forEach(function (teams) {
+                            snapshot.child("myrequests").forEach(function (mrequest) {
+                                if (mrequest.child("requeststatus").val() == 0) {
+
+
+                                    var matchdata = {
+                                        key: mrequest.key,
+                                        firstname: mrequest.child("firstname").val(),
+                                        lastname: mrequest.child("lastname").val(),
+                                        photo: mrequest.child("requestorphoto").val() == "" ? "img/PlayerProfile.png" : mrequest.child("requestorphoto").val(),
+                                        telephone: mrequest.child("requestortelephone").val()
+
+                                    }
+                                    requestednumbers.push(matchdata);
+                                }
+                            })
+
+
+
+
+
+                        }
+
+                        if (snapshot.child("previousrequests").exists()) {
+                            snapshot.child("previousrequests").forEach(function (req) {
+
+                                var color = "orange";
+                                var text = "pending";
+
+                                if (req.child("requeststatus").val() == 1) {
+                                    color = "green";
+                                    text = req.child("telephone").val();
+                                }
 
                                 var matchdata = {
-                                    key: teams.key,
-                                    firstname: teams.child("firstname").val(),
-                                    lastname: teams.child("lastname").val(),
-                                    photo: teams.child("requestorphoto").val() == "" ? "img/PlayerProfile.png" : teams.child("requestorphoto").val(),
-                                    telephone: teams.child("requestortelephone").val()
+                                    key: req.key,
+                                    firstname: req.child("firstname").val(),
+                                    lastname: req.child("lastname").val(),
+                                    photo: req.child("requestorphoto").val() == "" ? "img/PlayerProfile.png" : req.child("requestorphoto").val(),
+                                    telephone: req.child("telephone").val(),
+                                    status: req.child("requeststatus").val(),
+                                    color: color,
+                                    text: text
 
                                 }
-                                requestednumbers.push(matchdata);
+                                previousnumbers.push(matchdata);
 
                             })
 
@@ -685,6 +769,7 @@ angular.module('football.controllers', [])
 
                         }
 
+
                         myprofile["key"] = snapshot.key;
                         myprofile["photo"] = snapshot.child("photoURL").val();
                         myprofile["displayname"] = snapshot.child("displayname").val();
@@ -695,7 +780,8 @@ angular.module('football.controllers', [])
                         myprofile["playposition"] = snapshot.child("playposition").val();
                         myprofile["ranking"] = snapshot.child("ranking").val();
                         myprofile["status"] = snapshot.child("status").val();
-                        myprofile["telephone"] = snapshot.child("telephone").val();
+                        myprofile["photo"] = snapshot.child("photoURL").val(),
+                            myprofile["telephone"] = snapshot.child("telephone").val();
                         myprofile["winstreak"] = snapshot.child("winstreak").val();
                         myprofile["challenges"] = totchallenges;
                         myprofile["upcominteamgmatches"] = upcomingmatches;
@@ -703,6 +789,7 @@ angular.module('football.controllers', [])
                         myprofile["gameinvitation"] = gameinvitation;
                         myprofile["myteams"] = myteams;
                         myprofile["requestednumbers"] = requestednumbers;
+                        myprofile["previousnumbers"] = previousnumbers;
                         myprofile["upcomingmatches"] = upcomingsinglematches;
                         myprofile["teamdisplayed"] = "none";
                         myprofile["teamdisplayedkey"] = snapshot.child("teamdisplayedkey").val();
@@ -794,8 +881,10 @@ angular.module('football.controllers', [])
             },
             DeleteChallenge: function (challenge) {
 
+                console.log(challenge);
+
                 try {
-                    alert(challenge.team1adminid);
+
                     // Write the new post's data simultaneously in the posts list and the user's post list.
                     var updates = {};
                     updates['/players/' + challenge.team1adminid + '/upcomingteammatches/' + challenge.key] = null;
@@ -813,15 +902,15 @@ angular.module('football.controllers', [])
                     updates['/players/' + challenge.team2adminid + '/challenges/' + challenge.key] = null;
 
                     //
-                    updates['/teams/' + challenge.team1key + '/upcomingteammatches/' + challenge.key] = null;
-                    updates['/teams/' + challenge.team2key + '/upcomingteammatches/' + challenge.key] = null;
+                    updates['/teams/' + challenge.team1key + '/upcominteamgmatches/' + challenge.key] = null;
+                    updates['/teams/' + challenge.team2key + '/upcominteamgmatches/' + challenge.key] = null;
 
                     updates['/stadiums/' + challenge.stadiums.stadiumkey + '/ministadiums/' + challenge.stadiums.ministadiumkey + '/schedules/' + challenge.stadiums.year + '/' + challenge.stadiums.month + '/' + challenge.stadiums.day + '/' + challenge.key] = null;
 
 
                     updates['/challenges/' + challenge.key] = null;
                     //updates['/user-posts/' + uid + '/' + newPostKey] = postData;
-
+                    console.log(updates);
                     return firebase.database().ref().update(updates);
                 }
                 catch (error) {
@@ -829,7 +918,7 @@ angular.module('football.controllers', [])
                 }
             },
 
-            RegisterTeamMatch: function (search, user, stadiums, challenge) {
+                        RegisterTeamMatch: function (search, user, stadiums, challenge) {
                 //alert("here");
 
                 try {
@@ -897,20 +986,35 @@ angular.module('football.controllers', [])
                     };
                     var updates = {};
 
-                    var numslots = 90 / 15;
+                    var numslots = 90 / 30;
 
                     var mainkey = newkey;
                     var references = [];
 
                     for (i = 1; i < numslots; i++) {
-                        search.date.setMinutes(search.date.getMinutes() + 15);
+                        search.date.setMinutes(search.date.getMinutes() + 30);
 
                         newkey = subkey + search.date.getFullYear().toString() + search.date.getMonth().toString() + search.date.getDate().toString() + search.date.getHours().toString() + search.date.getMinutes().toString();
                         var refdata = {
                             key: newkey
                         }
                         references.push(refdata);
-                        updates['/stadiums/' + key + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = extraslots;
+
+                        var extrakeys = [];
+                        if (stadiums.iscombined) {
+                            for (var key in stadiums.combined) {
+                                extrakeys.push(key);
+                            }
+                            console.log(extrakeys);
+                            extrakeys.forEach(function (element) {
+                                updates['/stadiums/' + stadiums.stadiumkey + '/ministadiums/' + element + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = extraslots;
+                                updates['/stadiumshistory/' + stadiums.stadiumkey + '/ministadiums/' + element + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = extraslots;
+                            }, this);
+                        }
+
+                        updates['/stadiums/' + stadiums.stadiumkey + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = extraslots;
+                        updates['/stadiumshistory/' + stadiums.stadiumkey + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = extraslots;
+
 
                     }
                     postData.references = references;
@@ -954,12 +1058,22 @@ angular.module('football.controllers', [])
 
                     if (id !== null || id == '' || id === undefined) {
 
+                        var keys = [];
+                        if (stadiums.iscombined) {
+                            for (var itemkey in stadiums.combined) {
+                                keys.push(itemkey);
+                            }
 
-                        // Write the new post's data simultaneously in the posts list and the user's post list.
-                        var newPostKey = firebase.database().ref().child('posts').push().key;
+                            keys.forEach(function (element) {
+                                updates['/stadiums/' + stadiums.stadiumkey + '/ministadiums/' + element + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = postData;
+                                updates['/stadiumshistory/' + stadiums.stadiumkey + '/ministadiums/' + element + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = postData;
+                            }, this);
+                        }
+
+
 
                         updates['/stadiums/' + key + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = postData;
-
+                        updates['/stadiumshistory/' + stadiums.stadiumkey + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = postData;
 
                         //add to players upcoming matches
 
@@ -1025,6 +1139,13 @@ angular.module('football.controllers', [])
                                 lastname: myprofile.lastname
                             };
 
+                        updates['/teaminfo/' + invitation.key + '/players/' + id] =
+                            {
+                                isadmin: false,
+                                firstname: myprofile.firstname,
+                                lastname: myprofile.lastname
+                            };
+
                         updates['/players/' + id + '/teams/' + invitation.key] =
                             {
                                 key: invitation.key,
@@ -1054,11 +1175,18 @@ angular.module('football.controllers', [])
                     // Write the new post's data simultaneously in the posts list and the user's post list.
                     var updates = {};
 
-                    if (id !== null || id == '' || id === undefined) {
+                    if (!(id == null || id == '' || id === undefined)) {
 
-                        updates['/players/' + id + '/myrequests/' + request.key] = null;
+                        updates['/players/' + id + '/myrequests/' + request.key + '/requeststatus'] = 1;
 
+                        updates['/players/' + id + '/friends/' + request.key] = {
+                            firstname: request.firstname,
+                            lastname: request.lastname,
+                            key: request.key,
+                            telephone: request.telephone,
+                            photo: request.photo
 
+                        };
 
                         updates['/players/' + request.key + '/friends/' + id] =
                             {
@@ -1069,11 +1197,15 @@ angular.module('football.controllers', [])
                                 photo: request.photo
                             };
 
-                        updates['/players/' + id + '/myrequests/' + request.key] = request;
+                        updates['/players/' + request.key + '/previousrequests/' + id + '/requeststatus'] = 1;
+                        updates['/players/' + request.key + '/previousrequests/' + id + '/telephone'] = myprofile.telephone;
 
+
+
+
+                        console.log(request);
+                        return firebase.database().ref().update(updates);
                     }
-
-                    return firebase.database().ref().update(updates);
                 }
                 catch (error) {
                     alert(error.message);
@@ -1246,9 +1378,11 @@ angular.module('football.controllers', [])
 
     })
 
-    .factory('LoginStore', function () {
+    .factory('LoginStore', function ($http, $q) {
         var TempItems = [];
-
+        var notificationtoken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwMjMzM2FhYy1jNjBjLTQyNTItYjI1ZS05MmY0ZGQ5OGRhNmYifQ.QCuKlXbH3CczgW-bScCoPVVhPcdf_peZadTRIZFL4j0';
+        var notificationurl = 'https://api.ionic.io/push/notifications';
+        var notificationprofile = 'arinaprofile';
         return {
 
             AddUser: function (newuser, registerdata) {
@@ -1297,6 +1431,7 @@ angular.module('football.controllers', [])
                                 startsunday: 7,
                                 startsundayend: 23,
                                 favstadium: "",
+                                favstadiumname: "",
                                 favstadiumphoto: "",
                                 photoURL: "",
                                 comments: "",
@@ -1308,11 +1443,12 @@ angular.module('football.controllers', [])
                                 playerstatus: true,
                                 available: false,
                                 isplayer: true,
-                                teamdisplayed: "none",
+                                teamdisplayed: "",
                                 teamdisplayedkey: "none",
 
                                 skillevel: "newbie",
-                                isbanned: false
+                                isbanned: false,
+                                isMobileVerified: false
 
                             }
                         //alert(newPostKey);
@@ -1401,6 +1537,7 @@ angular.module('football.controllers', [])
                                 startsunday: 7,
                                 startsundayend: 23,
                                 favstadium: "",
+                                favstadiumname: "",
                                 favstadiumphoto: "",
                                 photoURL: newuser.photoURL == null ? "" : newuser.photoURL,
                                 comments: "",
@@ -1413,10 +1550,11 @@ angular.module('football.controllers', [])
 
                                 available: false,
                                 isplayer: true,
-                                teamdisplayed: "none",
+                                teamdisplayed: "",
                                 teamdisplayedkey: "none",
                                 skillevel: "newbie",
-                                isbanned: false
+                                isbanned: false,
+                                isMobileVerified: false
 
 
                             }
@@ -1435,7 +1573,7 @@ angular.module('football.controllers', [])
                 }
 
             },
-            PostError: function(error) {
+            PostError: function (error) {
                 var user = firebase.auth().currentUser;
                 if (!(user == undefined || user != null)) {
                     var id = user.uid;
@@ -1470,13 +1608,59 @@ angular.module('football.controllers', [])
 
             getNewRating: function (myRating, opponentRating, myGameResult) {
                 return myRating + this.getRatingDelta(myRating, opponentRating, myGameResult);
+            },
+            SendNotification: function (message, devicetokens) {
+
+
+                var req = {
+                    method: 'POST',
+                    url: notificationurl,
+                    headers: {
+                        'Authorization': 'Bearer ' + notificationtoken,
+                        'Content-Type': 'application/json'
+                    },
+                    data: {
+                        "tokens": devicetokens,
+                        "profile": notificationprofile,
+                        "notification": {
+                            "message": message,
+                            "title": "AMENA GHOYEM"
+                        },
+                        "pluginConfig": {
+                            "ios": {
+                                "badge": true,
+                                "sound": true,
+                                "icon": "logo.png",
+                                "iconColor": "#ee9425",
+                                "style": "inbox",
+                                "summaryText": 'you have!!',
+                            },
+                            "android": {
+                                "badge": true,
+                                "sound": true,
+                                "icon": "logo.png",
+                                "iconColor": "#ee9425",
+                                "style": "inbox",
+                                "summaryText": 'you have!!',
+
+                            }
+                        }
+                    }
+                }
+                  $http(req).then(function () {
+                       //alert("notification sent");
+                   }, function (error) {
+                       //alert(JSON.stringify(error));
+                   });
+
+
             }
 
         }
 
     })
 
-    .controller('LoginController', function ($scope, $ionicModal, $ionicPopup, $timeout, $state, LoginStore, FirebaseStorageService) {
+    .controller('LoginController', function ($scope, $ionicModal, $ionicHistory, $ionicPopup, $timeout, $state, LoginStore, FirebaseStorageService) {
 
         $scope.loginData = {};
         $scope.myprofile = {};
@@ -1514,7 +1698,7 @@ angular.module('football.controllers', [])
 
 
 
-
+        /*
 
         // since I can connect from multiple devices or browser tabs, we store each connection instance separately
         // any time that connectionsRef's value is null (i.e. has no children) I am offline
@@ -1540,6 +1724,7 @@ angular.module('football.controllers', [])
             }
         });
 
+*/
 
 
 
@@ -1618,7 +1803,7 @@ angular.module('football.controllers', [])
 
             }, options);
         };
-        
+
         $scope.Register = function () {
 
 
@@ -1634,8 +1819,12 @@ angular.module('football.controllers', [])
 
                     if (user != null && newuser != null && newuser != undefined) {
 
+
                         LoginStore.GetUser(function (data) {
                             if (data) {
+                                $ionicHistory.nextViewOptions({
+                                    disableBack: true
+                                });
                                 $state.go("app.homepage");
 
                             }
@@ -1694,13 +1883,18 @@ angular.module('football.controllers', [])
                     LoginStore.GetUser(function (data) {
                         var user = firebase.auth().currentUser;
                         if (data) {
-
+                            $ionicHistory.nextViewOptions({
+                                disableBack: true
+                            });
                             $state.go("app.homepage");
                         }
                         else {
 
 
                             LoginStore.AddUser(user).then(function (result) {
+                                $ionicHistory.nextViewOptions({
+                                    disableBack: true
+                                });
 
                                 user.sendEmailVerification().then(function () {
 
@@ -1731,6 +1925,9 @@ angular.module('football.controllers', [])
             }
             else {
                 LoginStore.GetUser(function (data) {
+                    $ionicHistory.nextViewOptions({
+                        disableBack: true
+                    });
                     if (data) {
 
                         $state.go('app.homepage');
@@ -1856,27 +2053,49 @@ angular.module('football.controllers', [])
 
     })
 
-    .controller('FirstPageController', function ($scope, $ionicPopover, $ionicLoading, $state, $timeout) {
+    .controller('FirstPageController', function ($scope, $ionicPopover, $ionicHistory, $ionicPopup, $ionicLoading, $state, $timeout, $ionicPush) {
 
 
         try {
-            $timeout(function () {
-                var user = firebase.auth().currentUser;
+            firebase.database().ref('/version').once('value').then(function (snapshot) {
+                if (snapshot.child("number").val() == 3) {
 
-                if (user) {
-                    $state.go('app.homepage');
-                } else {
-                    $state.go('signin');
+
+
+                    $timeout(function () {
+                        $ionicHistory.nextViewOptions({
+                            disableBack: true
+                        });
+                        var user = firebase.auth().currentUser;
+
+                        if (user) {
+
+                            $state.go('app.homepage');
+
+                        } else {
+                            $state.go('signin');
+                        }
+
+                    }, 2000);
+
+
                 }
+                else {
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Update',
+                        template: 'You have to update to app continue using the app'
+                    });
 
-            }, 3000);
-
-
+                    alertPopup.then(function () {
+                        //window.open('www.google.com', '_system');
+                    });
+                }
+            })
         }
         catch (error) {
             alert(error.message);
-        }
 
+        }
 
     })
 
@@ -1970,18 +2189,19 @@ angular.module('football.controllers', [])
                 startsunday: 7,
                 startsundayend: 23,
                 favstadium: "",
+                favstadiumname: "",
                 favstadiumphoto: "",
                 available: false,
                 skilllevel: "Newbie"
             }
-            
-        $scope.checkMobileNumber = function(e, verified) {
+
+        $scope.checkMobileNumber = function (e, verified) {
             console.log(111, verified);
-            if(verified) {
+            if (verified) {
                 $scope.currentprofile.available = verified;
                 $scope.$apply();
             }
-            if($scope.currentprofile.available && !verified) {
+            if ($scope.currentprofile.available && !verified) {
                 e.preventDefault();
                 $scope.currentprofile.available = !$scope.currentprofile.available;
                 var userId = firebase.auth().currentUser.uid;
@@ -1992,9 +2212,9 @@ angular.module('football.controllers', [])
                     maxWidth: 200,
                     showDelay: 0
                 });
-                firebase.database().ref('/players/' + userId).once('value').then(function(snapshot) {
+                firebase.database().ref('/players/' + userId).once('value').then(function (snapshot) {
                     $ionicLoading.hide();
-                    if(!snapshot.val().isMobileVerified) {
+                    if (!snapshot.val().isMobileVerified) {
                         SMSService.verifyUserMobile($scope, $scope.checkMobileNumber, [e, true])
                     } else {
                         $scope.currentprofile.available = !$scope.currentprofile.available;

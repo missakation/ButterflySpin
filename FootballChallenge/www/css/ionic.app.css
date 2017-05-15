@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 /*
 To customize the look and feel of Ionic, you can override the variables
 in ionic's _variables.scss file.
@@ -2574,7 +2574,7 @@ $dark:                            #444 !default;
   content: ""; }
 
 .ion-record:before {
-    content: "";
+  content: "";
   color:white;
   font-size:16px; }
 
@@ -9000,6 +9000,8 @@ a.button {
   margin-top: -5px;
   padding-top: 0; }
 
+
+
 .col {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
@@ -9732,3 +9734,4 @@ a.button {
   opacity: 0;
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
+
