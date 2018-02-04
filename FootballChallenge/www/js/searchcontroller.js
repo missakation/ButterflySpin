@@ -1,12 +1,16 @@
 ﻿
 angular.module('football.controllers')
 
-    .controller('SearchController', function ($scope, SearchStore, ReservationFact, $ionicPopup, $ionicPopover, $timeout, $ionicLoading, pickerView, SMSService) {
+    .controller('SearchController', function ($scope, SearchStore,$state, ReservationFact, LoginStore, $ionicPopup, $ionicPopover, $timeout, $ionicLoading, pickerView, SMSService, $ionicFilterBar) {
         /** picker view stuff **/
         function getDateFromDayName(selectedDay) {
             var selectedDate = new Date();
             if (selectedDay == "Tomorrow") {
                 selectedDate.setDate(selectedDate.getDate() + 1);
+                return weekday[selectedDate.getDay()] + monthChar[selectedDate.getMonth()] + " " + selectedDate.getDate();
+            }
+            if (selectedDay == "Today") {
+                selectedDate.setDate(selectedDate.getDate());
                 return weekday[selectedDate.getDay()] + monthChar[selectedDate.getMonth()] + " " + selectedDate.getDate();
             }
             for (var i = 0; i < 6; i++) {
@@ -30,28 +34,7 @@ angular.module('football.controllers')
             maxWidth: 200,
             showDelay: 0
         });
-        //getting current location
-        navigator.geolocation.getCurrentPosition(function (position) {
-            //here
 
-            //here
-            /*  alert('Latitude: ' + position.coords.latitude + '\n' +
-            'Longitude: ' + position.coords.longitude + '\n' +
-            'Altitude: ' + position.coords.altitude + '\n' +
-            'Accuracy: ' + position.coords.accuracy + '\n' +
-            'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' +
-            'Heading: ' + position.coords.heading + '\n' +
-            'Speed: ' + position.coords.speed + '\n' +
-            'Timestamp: ' + position.timestamp + '\n');*/
-
-            $scope.latitude = position.coords.latitude;
-            $scope.longitude = position.coords.longitude;
-
-            $scope.gotlocation = true;
-        }, function (error) {
-            alert("Hello");
-            //$scope.checkfree();
-        });
 
         SearchStore.GetMyProfileInfo(function (profile) {
 
@@ -64,8 +47,6 @@ angular.module('football.controllers')
             tomorrow.setMinutes(0);
             tomorrow.setMilliseconds(0);
             tomorrow.setSeconds(0);
-
-
 
             $scope.search = {
                 date: tomorrow,
@@ -80,54 +61,19 @@ angular.module('football.controllers')
             }
         }
 
-        //get all stadiums
-        ReservationFact.GetAllStadiums(function (leagues) {
-
-            $scope.allfreestadiums = leagues;
-            if ($scope.gotlocation) {
-                /** Converts numeric degrees to radians */
-                
-                for (var i = 0; i < leagues.length; i++) {
-                    var lat1 = $scope.latitude;
-                    var lon1 = $scope.longitude;
-
-                    var lat2 = $scope.allfreestadiums[i].latitude;
-                    var lon2 = $scope.allfreestadiums[i].longitude;
 
 
-                    var R = 6371; // km 
-                    //has a problem with the .toRad() method below.
-                    var x1 = lat2 - lat1;
-                    var dLat = x1.toRad();
-                    var x2 = lon2 - lon1;
-                    var dLon = x2.toRad();
-                    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                        Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
-                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
-                    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                    var d = R * c;
-
-                    $scope.allfreestadiums[i].distance = d;
-                }
-                $scope.allfreestadiums = $scope.allfreestadiums.sort(function (a, b) {
-                    return a.distance - b.distance;
-                });
-            }
+        /*//preparing stadiums list
+        stadiums.push("Near me");
+        if ($scope.myprofile.favstadium)
+            stadiums.push($scope.myprofile.favstadium);
+        for (var i = 0; i < leagues.length; i++) {
+            //console.log(leagues[i].name);
+            if (leagues[i].name != $scope.myprofile.favstadium)
+                stadiums.push(leagues[i].name);
+        }*/
 
 
-
-            //preparing stadiums list
-            stadiums.push("Near me");
-            if ($scope.myprofile.favstadium)
-                stadiums.push($scope.myprofile.favstadium);
-            for (var i = 0; i < leagues.length; i++) {
-                //console.log(leagues[i].name);
-                if (leagues[i].name != $scope.myprofile.favstadium)
-                    stadiums.push(leagues[i].name);
-            }
-
-
-        });
         $ionicLoading.hide();
 
 
@@ -217,57 +163,186 @@ angular.module('football.controllers')
 
         /*   if (user != null) {
                user.providerData.forEach(function (profile) {
-   
+         
                    alert("  Provider-specific UID: " + profile.uid);
                    alert("  Name: " + profile.displayName);
                    alert("  Email: " + profile.email);
                });
            }*/
 
+        var filter =
+            {
+                sortby: "skill",
+                skill: "Not Bad",
+                distancefrom: 0,
+                distanceto: 250000,
+            }
+
+        $scope.sliderskill = {
+            value: 3,
+            options: {
+                showSelectionBar: true,
+                floor: 0,
+                ceil: 3,
+                showSelectionBar: true,
+                hideLimitLabels: true,
+                stepsArray: ['Newbie', 'Not Bad', 'Solid', 'Pro']
+
+            }
+        };
+
         $scope.allfreeplayers = [];
+
+        $scope.gototeam = function (id) {
+            if (!(id == null || id == '' || id === undefined || id == 'none')) {
+                $state.go("app.teamview",
+                    {
+                        teamid: id
+                    })
+            }
+        }
 
         $scope.checkfree = function (search) {
 
-            $ionicLoading.show({
-                content: 'Loading',
-                animation: 'fade-in',
-                showBackdrop: true,
-                maxWidth: 200,
-                showDelay: 0
+            //getting current location
+            navigator.geolocation.getCurrentPosition(function (position) {
+
+                $scope.mylatitude = position.coords.latitude;
+                $scope.mylongitude = position.coords.longitude;
+                $scope.gotlocation = true;
+
+                if ($scope.gotlocation) {
+
+                    $ionicLoading.show({
+                        content: 'Loading',
+                        animation: 'fade-in',
+                        showBackdrop: true,
+                        maxWidth: 200,
+                        showDelay: 0
+                    });
+
+                    SearchStore.SearchAvailablePlayers($scope.search, function (players) {
+
+                        var counter = 0;
+                        var count = players.length;
+                        $scope.allfreeplayers = players;
+
+                        if ($scope.allfreeplayers.length > 0) {
+
+                            $scope.allfreeplayers.forEach(function (element) {
+                                /** Converts numeric degrees to radians */
+                                var lat1 = $scope.mylatitude;
+                                var lon1 = $scope.mylongitude;
+
+
+
+                                var lat2 = element.favlatitude;
+                                var lon2 = element.favlongitude;
+
+                                var R = 6371; // km 
+                                //has a problem with the .toRad() method below.
+                                var x1 = lat2 - lat1;
+                                
+                                var dLat = x1.toRad();
+
+
+                                var x2 = lon2 - lon1;
+                                var dLon = x2.toRad();
+                                var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                                    Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+                                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                                var d = R * c;
+
+                                element.distance = d.toFixed(2);
+                                element.points = d + (element.seendifference/60/5);
+                                /*$scope.allfreestadiums = $scope.allfreestadiums.sort(function (a, b) {
+                                    return a.distance - b.distance;
+                                });*/
+
+
+                                if (element.teamdisplayedkey != 'none' || element.teamdisplayedkey != '') {
+                                    firebase.database().ref('/teampoints/' + element.teamdisplayedkey).on('value', function (snapshot) {
+                                        if (snapshot.exists()) {
+                                            element.teamkey = snapshot.key;
+                                            element.teambadge = snapshot.child("badge").val();
+                                            element.teamname = snapshot.child("name").val();
+                                            element.rank = snapshot.child("rank").val();
+                                            element.rating = snapshot.child("rating").val();
+                                            element.teamexists = true;
+                                            switch (element.rating) {
+                                                case 1:
+                                                    element.rankdescription = element.rating + 'st';
+                                                    break;
+                                                case 2:
+                                                    element.rankdescription = element.rating + 'nd';
+                                                    break;
+                                                case 3:
+                                                    element.rankdescription = element.rating + 'rd';
+                                                    break;
+
+                                                default:
+                                                    element.rankdescription = element.rating + 'th';
+                                                    break;
+                                            }
+
+                                        }
+
+                                        else {
+                                            element.members = "";
+                                            element.rank = "";
+                                            element.rating = "";
+                                            element.teambadge = "defaultteam";
+                                            element.teamexists = false;
+                                        }
+
+
+                                    })
+                                    counter++;
+                                }
+                                else {
+                                    element.members = "";
+                                    element.rank = "";
+                                    element.rating = "";
+                                    element.teambadge = "defaultteam";
+                                    element.teamexists = false;
+                                }
+
+                            }, this);
+
+                        }
+
+                        console.log($scope.allfreeplayers);
+                        $scope.filteredPlayers = $scope.allfreeplayers;
+                        $ionicLoading.hide();
+
+
+                    })
+                }
+                else {
+
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'New Team',
+                        template: 'Please Turn On Your Wifi To See Players Around You'
+                    }).then(function () {
+                        $state.go("app.homepage");
+                    }, function (error) {
+
+                    })
+
+                }
+
+            }, function (error) {
+                alert(error.message);
             });
 
-            //})
-            SearchStore.SearchAvailablePlayers($scope.search, function (leagues) {
-                $scope.allfreeplayers = leagues;
-                $ionicLoading.hide();
 
-
-            })
 
         }
 
-
-        $ionicLoading.show({
-            content: 'Loading',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-        });
-
-        //})
-        try {
-            $timeout(function () {
-                $scope.checkfree();
-            }, 2000)
-
-        }
-        catch (error) {
-            alert(error.message);
-        }
+        $scope.checkfree();
 
         $scope.requestnumber = function (player) {
-
 
             if (!(player == null || player == undefined || player == []) && !($scope.myprofile == null || $scope.myprofile == undefined || $scope.myprofile == [])) {
 
@@ -288,11 +363,15 @@ angular.module('football.controllers')
                             SMSService.verifyUserMobile($scope, $scope.requestnumber, [player])
                         } else {
                             SearchStore.RequestNumber($scope.myprofile, player).then(function (value) {
-                                console.log(4)
                                 player.status = 1;
                                 player.statusdesc = "Number Requested";
                                 player.color = "white";
                                 player.backcolor = "#2ab042";
+
+                                console.log($scope.myprofile);
+                                console.log(player);
+                                LoginStore.SendNotification("Hello, I am " + $scope.myprofile.firstname + " " + $scope.myprofile.lastname + " . Can I invite you to a match?", player.devicetoken);
+
                                 $scope.$apply();
 
                             }, function (error) {
@@ -306,7 +385,51 @@ angular.module('football.controllers')
 
         }
 
+        //Filter bar stuff
+        var filterBarInstance;
 
+        //function getItems () {
+        //    var items = [];
+        //    for (var x = 1; x < 2000; x++) {
+        //        items.push({text: 'This is item number ' + x + ' which is an ' + (x % 2 === 0 ? 'EVEN' : 'ODD') + ' number.'});
+        //    }
+        //    $scope.items = items;
+        //}
+
+        //getItems();
+
+        //$scope.$digest();
+        $scope.showFilterBar = function () {
+            filterBarInstance = $ionicFilterBar.show({
+                items: $scope.allfreeplayers,
+                update: function (filteredItems, filterText) {
+                    if (filterText != "" && filterText != null) {
+                        console.log("filterText is: " + filterText)
+                        $scope.filteredPlayers = filteredItems;
+                    }
+                    else {
+                        console.log("filterText non empty is: " + filterText)
+                        $scope.filteredPlayers = $scope.allfreeplayers;
+                    }
+                }//,
+                //filterProperties: ['displayname', 'firstname', 'lastname']
+            });
+        };
+
+
+        $scope.refreshItems = function () {
+            if (filterBarInstance) {
+                filterBarInstance();
+                filterBarInstance = null;
+            }
+
+            $timeout(function () {
+                getItems();
+                $scope.$broadcast('scroll.refreshComplete');
+            }, 1000);
+        };
+
+        //------------filter bar stuff ----/
     })
 var weekday = new Array(7);
 weekday[0] = "Su,";

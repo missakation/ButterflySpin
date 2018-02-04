@@ -1,5 +1,11 @@
-<ion-view view-title="My Profile">
+<ion-view view-title="Edit Profile">
 	<style>
+
+	
+  .card {
+        background-color: rgb(46,62,75) !important;
+    }
+		
 		.item-select:after {
 			margin-top: 0px;
 			color: #2ab041;
@@ -369,13 +375,9 @@
 
 	<ion-nav-bar class="headercolor">
 		<ion-nav-buttons side="right">
-			<h5 style="padding-right:10px;color:white;font-weight:bold" ng-click="UpdateUser(currentprofile)">
-
-				Save
-
-			</h5>
-		</ion-nav-buttons>
-		<ion-nav-back-button>
+ <button class="button icon ion-checkmark" style="color:#2ab041;background-color:rgb(62,83,100)" ng-click="UpdateUser(currentprofile)"></button>
+</ion-nav-buttons>
+			<ion-nav-back-button>
 
 		</ion-nav-back-button>
 	</ion-nav-bar>
@@ -426,13 +428,13 @@
 			</h5>
 
 			<div align="center" class="list" style="width:95%">
-				<label class="item item-input" style="border:1px solid #96a6b3;padding:2px 20px 20px 10px; border-radius:5px;">
-                <textarea maxlength="200" type="text" placeholder="Write something cool about yourself!" ng-model="currentprofile.comments" style="color:#2ab041;background-color:transparent;padding-left:2px">
+				<label class="item item-input" style="border:1px solid #96a6b3;padding:2px 20px 20px 20px; border-radius:5px;">
+                <textarea rows="4" cols="100" maxlength="111" type="text" placeholder="Write something cool about yourself!" ng-model="currentprofile.comments" style="font-style:italic;color:#2ab041;background-color:transparent;padding-left:2px">
                 	 </textarea>
+				</label>
 					 	</div>
 						 </div>
 
-</label>
 				<label class="item item-input item-select" style="border-bottom:1px solid #5f7485;padding-bottom:15px;margin-top:15px;padding-top:16px;border-top:1px solid #5f7485;color:rgb(153,167,180);font-size:14px;background-color:transparent;padding-left:10px">
 					TEAM DISPLAYED
 	<select class"madzone" ng-model="currentprofile.teamdisplayed" style="background-color:transparent;border-color:transparent;color:#2ab041" >
@@ -446,11 +448,14 @@
 				<div align="left" style="padding-bottom:10px;margin-top:15px;padding-left: 10px;padding-right:10px">
 					<h5 style="color:rgb(153,167,180);margin-bottom:0px">POSITION
 					</h5>
-					<div class="button-bar" align="center" style="width:99%;margin:0 0 0 0px">
-						<button class="button button-small" style="background-color: {{isplayercolors.goalkeeper.backcolor}}; color: {{isplayercolors.goalkeeper.color}};font-size:14px; margin-top:15px;margin-right:5px;font-weight:bold;border-radius:50px"
+
+					<div class="button-bar" align="center" style="width:100%;margin:0 0 0 0px">
+						<button class="button" style="width:45%;padding: 2px 4px 1px; min-width: 28px;  min-height: 30px; font-size: 12px;
+  line-height: 26px;background-color: {{isplayercolors.goalkeeper.backcolor}}; color: {{isplayercolors.goalkeeper.color}};font-size:14px; margin-top:15px;margin-right:5px;font-weight:bold;border-radius:50px"
 						 ng-click="switchcolors(1)">
 					Goalkeeper</button>
-						<button class="button button-small" style="background-color: {{isplayercolors.player.backcolor}}; color: {{isplayercolors.player.color}}; margin-top:15px; margin-left:5px;font-size:14px;font-weight:bold;border-radius:50px"
+						<button class="button" style="width:45%; padding: 2px 4px 1px;  min-width: 28px;  min-height: 30px;  font-size: 12px;
+  line-height: 26px;background-color: {{isplayercolors.player.backcolor}}; color: {{isplayercolors.player.color}}; margin-top:15px; margin-left:5px;font-size:14px;font-weight:bold;border-radius:50px"
 						 ng-click="switchcolors(0)">
 					Player </button>
 					</div>
@@ -477,8 +482,8 @@
 
 
 				<div ng-show="currentprofile.available">
-					<div class="row" style="padding-bottom:5px" ng-click="gochoosestadium(currentprofile)">
-						<div class="col col-66" ng-click="gochoosestadium(currentprofile)" align="left" style="padding-bottom:0px;color: white">
+					<div class="row" style="padding-bottom:5px">
+						<div ng-click="gochoosestadium(currentprofile)" align="left" style="width:64%;padding-bottom:0px;color: white">
 							<h5 align=left style="padding-bottom:0px;color:rgb(153,167,180)">
 								FAVORITE STADIUM
 							</h5>
@@ -487,7 +492,7 @@
 
 						</div>
 
-						<h5 class="col col-33" ng-click="gochoosestadium(currentprofile)" align="center" style="border-radius:15px;border:1px solid #97a7b4;padding-top:5px;color:#2ab041">
+						<h5 ng-click="gochoosestadium(currentprofile)" align="center" style="width:35%;border-radius:15px;border:1px solid #97a7b4;padding-top:5px;color:#2ab041">
 							{{currentprofile.favstadiumname| uppercase }}
 						</h5>
 					</diV>

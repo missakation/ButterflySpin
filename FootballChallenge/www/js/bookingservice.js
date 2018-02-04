@@ -7,55 +7,51 @@
             GetMyUpcomingBookings: function (callback) {
 
                 try {
-
-                    
                     var user = firebase.auth().currentUser;
                     var id = user.uid;
 
-                    
-                     if(id !== null || id == '' || id === undefined)
-                     {
-                         
-                         Temp = [];
-                    firebase.database().ref('/players/' + id + '/upcomingmatches').once('value', function (snapshot) {
+                    if (id !== null || id == '' || id === undefined) {
 
-                        snapshot.forEach(function (childSnapshot) {
+                        firebase.database().ref('/players/' + id + '/upcomingmatches').on('value', function (snapshot) {
+                            Temp = [];
+                            snapshot.forEach(function (childSnapshot) {
 
-                           var gameedate = new Date();
+                                var gameedate = new Date();
 
-                            gameedate.setMinutes(childSnapshot.child("minute").val());
-                            gameedate.setFullYear(childSnapshot.child("year").val());
-                            gameedate.setMonth(childSnapshot.child("month").val());
-                            gameedate.setHours(childSnapshot.child("hour").val());
-                            gameedate.setDate(childSnapshot.child("day").val());
+                                gameedate.setMinutes(childSnapshot.child("minute").val());
+                                gameedate.setFullYear(childSnapshot.child("year").val());
+                                gameedate.setMonth(childSnapshot.child("month").val());
+                                gameedate.setHours(childSnapshot.child("hour").val());
+                                gameedate.setDate(childSnapshot.child("day").val());
 
-                            var mybookings = {
-                                "key": childSnapshot.val(),
-                                "stadiumkey": childSnapshot.child("stadiumkey").val(),
-                                "ministadiumkey": childSnapshot.child("ministadiumkey").val(),
-                                "day": childSnapshot.child("day").val(),
-                                "month": childSnapshot.child("month").val(),
-                                "year": childSnapshot.child("year").val(),
-                                "minute": childSnapshot.child("minute").val(),
-                                "hour": childSnapshot.child("hour").val(),
-                                "price": childSnapshot.child("price").val(),
-                                "photo": childSnapshot.child("photo").val(),
-                                "stadiumdescription": childSnapshot.child("stadiumdescription").val(),
-                                "date":gameedate,
-                                "duration":childSnapshot.child("stadiumdescription").val(),
-                                "phone":childSnapshot.child("duration").val(),
+                                var mybookings = {
+                                    "key": childSnapshot.key,
+                                    "stadiumkey": childSnapshot.child("stadiumkey").val(),
+                                    "ministadiumkey": childSnapshot.child("ministadiumkey").val(),
+                                    "day": childSnapshot.child("day").val(),
+                                    "month": childSnapshot.child("month").val(),
+                                    "year": childSnapshot.child("year").val(),
+                                    "minute": childSnapshot.child("minute").val(),
+                                    "hour": childSnapshot.child("hour").val(),
+                                    "price": childSnapshot.child("price").val(),
+                                    "photo": childSnapshot.child("photo").val(),
+                                    "stadiumdescription": childSnapshot.child("stadiumdescription").val(),
+                                    "date": gameedate,
+                                    "duration": childSnapshot.child("stadiumdescription").val(),
+                                    "phone": childSnapshot.child("duration").val(),
+                                    "telephone": childSnapshot.child("telephone").val(),
+                                    "reservationnumber": childSnapshot.child("reservationnumber").val()
 
-                            };
+                                };
 
-                            Temp.push(mybookings)
+                                Temp.push(mybookings)
+                            });
+                            callback(Temp);
                         });
+                    }
+                    else {
                         callback(Temp);
-                    });
-                 }
-                 else
-                 {
-                     callback(Temp);
-                 }
+                    }
 
                 }
                 catch (error) {
@@ -70,7 +66,7 @@
 
                     snapshot.forEach(function (childSnapshot) {
                         var mybookings = {
-                            "key": childSnapshot.val(),
+                            "key": childSnapshot.key,
                             "stadiumkey": childSnapshot.child("stadium").val(),
                             "ministadiumkey": childSnapshot.child("ministadium").val(),
                             "teamname": childSnapshot.child("teamname").val(),
@@ -100,7 +96,7 @@
 
                     snapshot.forEach(function (childSnapshot) {
                         var mybookings = {
-                            "key": childSnapshot.val(),
+                            "key": childSnapshot.key,
                             "stadiumkey": childSnapshot.child("stadium").val(),
                             "ministadiumkey": childSnapshot.child("ministadium").val(),
                             "teamname": childSnapshot.child("teamname").val(),
@@ -138,8 +134,60 @@
                 });
 
                 return TempItems;
-            }
+            },
 
+            GetBookingbyID: function (filter, callback) {
+
+                firebase.database().ref(
+                    '/stadiums/' + filter.stadiumkey
+                    + '/ministadiums/' + filter.ministadiumkey
+                    + '/schedules/' + filter.year + '/' + filter.month + '/' + filter.day + '/' + filter.key)
+                    .once('value')
+                    .then(function (snapshot) {
+                        var booking = snapshot.val();
+                        booking.stadiumkey = filter.stadiumkey;
+                        booking.ministadiumkey = filter.ministadiumkey;
+                        booking.key = filter.key;
+                        callback(booking);
+                    })
+            },
+
+            DeleteBookingByID: function (booking) {
+                console.log(booking);
+                var updates = {};
+
+                var user = firebase.auth().currentUser;
+
+                var id = user.uid;
+
+                updates['/stadiums/' + booking.stadiumkey
+                    + '/ministadiums/' + booking.ministadiumkey
+                    + '/schedules/' + booking.year + '/' + booking.month + '/' + booking.day + '/' + booking.key] = null;
+
+                updates['/stadiumshistory/' + booking.stadiumkey
+                    + '/ministadiums/' + booking.ministadiumkey
+                    + '/schedules/' + booking.year + '/' + booking.month + '/' + booking.day + '/' + booking.key] = null;
+
+                booking.references.forEach(function (element) {
+
+                    updates['/stadiums/' + booking.stadiumkey
+                        + '/ministadiums/' + booking.ministadiumkey
+                        + '/schedules/' + booking.year + '/' + booking.month + '/' + booking.day + '/' + element.key] = null;
+
+                    updates['/stadiumshistory/' + booking.stadiumkey
+                        + '/ministadiums/' + booking.ministadiumkey
+                        + '/schedules/' + booking.year + '/' + booking.month + '/' + booking.day + '/' + element.key] = null;
+
+                }, this);
+
+                updates['/players/' + booking.stadiumkey
+                    + '/ministadiums/' + booking.ministadiumkey
+                    + '/schedules/' + booking.year + '/' + booking.month + '/' + booking.day + '/' + booking.key] = null;
+
+                updates['/players/' + id + '/upcomingmatches/' + booking.key] = null;
+
+                return firebase.database().ref().update(updates);
+            }
 
         }
 

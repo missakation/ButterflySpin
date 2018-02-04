@@ -12,36 +12,62 @@ angular.module('football.controllers')
 
 
             FindFreeStadiums: function (search, callback) {
-                //console.log("hasa hos");
-                //var q = $q.defer();
+
                 try {
 
+                    var search2 = new Date();
+                    var search3 = new Date();
 
-                    //alert("here");
-                    Availables = [];
+                    search2.setMinutes(search.date.getMinutes());
+                    search2.setFullYear(search.date.getFullYear());
+                    search2.setMonth(search.date.getMonth());
+                    search2.setHours(search.date.getHours());
+                    search2.setDate(search.date.getDate());
+                    search2.setSeconds(0);
+
+                    search3.setMinutes(search.date.getMinutes());
+                    search3.setFullYear(search.date.getFullYear());
+                    search3.setMonth(search.date.getMonth());
+                    search3.setHours(search.date.getHours());
+                    search3.setDate(search.date.getDate());
+                    search3.setSeconds(0);
+
+                    search2.setMinutes(search2.getMinutes() + 30);
+                    search3.setMinutes(search3.getMinutes() - 30);
+
                     var year = search.date.getFullYear();
                     var month = search.date.getMonth();
                     var day = search.date.getDate();
 
-                    var hour = search.date.getHours();
-                    var minute = search.date.getMinutes();
+                    var hour1 = search.date.getHours();
+                    var minute1 = search.date.getMinutes();
 
-                    //firebase.database().ref('/stadiums/ministadiums').on('value',function (snapshot) {  
+                    var hour2 = search2.getHours();
+                    var minute2 = search2.getMinutes();
 
-                    firebase.database().ref('/stadiums').once('value', function (snapshot) {
+                    var hour3 = search3.getHours();
+                    var minute3 = search3.getMinutes();
 
+
+                    firebase.database().ref('/stadiums').once('value').then(function (snapshot) {
+                        Availables = [];
                         snapshot.forEach(function (mainstadiumSnapshot) {
 
-
                             mainstadiumSnapshot.child("ministadiums").forEach(function (stadiumsnapshot) {
+                                console.log(stadiumsnapshot.key);
 
-                                var available = true;
+                                var available1 = true;
+                                var available2 = true;
+                                var available3 = true;
+
                                 var starthour = stadiumsnapshot.child("starthour").val();
                                 var startminute = stadiumsnapshot.child("startminute").val();
 
                                 var endhour = stadiumsnapshot.child("endhour").val();
                                 var endminute = stadiumsnapshot.child("endminute").val();
                                 var players = stadiumsnapshot.child("numplayers").val();
+                                var players1 = stadiumsnapshot.child("numplayers1").val();
+
 
 
                                 //console.log(players);
@@ -51,30 +77,44 @@ angular.module('football.controllers')
 
                                     stadiumsnapshot.child('schedules/' + year + '/' + month + '/' + day).forEach(function (minisnapshot) {
 
+                                        if (minisnapshot.child("maindata").val()) {
 
-                                        var temphour = minisnapshot.child("hour").val();
-                                        var tempminute = minisnapshot.child("minute").val();
 
-                                        if (temphour < starthour || temphour > (endhour - 2) || (Math.abs(temphour - hour) < 1.5)) {
-                                            available = false;
+
+                                            var temphour = minisnapshot.child("hour").val();
+                                            var tempminute = minisnapshot.child("minute").val();
+
+                                            //  if (temphour < starthour || temphour > (endhour - 2) || (Math.abs(temphour - hour) < 1.5)) {
+
+                                            if ((Math.abs((temphour * 60 + tempminute) - (hour1 * 60 + minute1)) < 90)) {
+                                                available1 = false;
+                                            }
+
+                                            if ((Math.abs((temphour * 60 + tempminute) - (hour2 * 60 + minute2)) < 90)) {
+                                                available2 = false;
+                                            }
+
+                                            if ((Math.abs((temphour * 60 + tempminute) - (hour3 * 60 + minute3)) < 90)) {
+                                                available3 = false;
+                                            }
+
                                         }
 
 
 
                                     });
-                                    //alert(search.date);
 
                                     var startdate = new Date();
 
-
-                                    startdate.setMinutes(minute);
+                                    startdate.setMinutes(minute1);
                                     startdate.setFullYear(year);
                                     startdate.setMonth(month);
-                                    startdate.setHours(hour);
+                                    startdate.setHours(hour1);
                                     startdate.setDate(day);
 
                                 }
-                                if (available == true /*&& players == search.players*/) {
+
+                                if ((available1 || available2 || available3) && (players == search.players || players1 == search.players)) {
                                     var Data = {
                                         "admin": mainstadiumSnapshot.child("admin").val(),
                                         "stadiumkey": mainstadiumSnapshot.key,
@@ -82,9 +122,23 @@ angular.module('football.controllers')
                                         "stadiumname": mainstadiumSnapshot.child("name").val(),
                                         "description": stadiumsnapshot.child("description").val(),
                                         //"datetime": hour + " : " + minute,
-                                        "datetime": search.date,
+                                        "datetime": [
+
+                                            {
+                                                datetime: search3,
+                                                available: available3
+                                            },
+                                            {
+                                                datetime: search.date,
+                                                available: available1
+                                            },
+                                            {
+                                                datetime: search2,
+                                                available: available2
+                                            }],
+
                                         "price": stadiumsnapshot.child("price").val(),
-                                        "photo": mainstadiumSnapshot.child("photo").val(),
+                                        "photo": stadiumsnapshot.child("photo").val(),
                                         "type": stadiumsnapshot.child("type").val(),
                                         "typefloor": stadiumsnapshot.child("typefloor").val(),
                                         "distance": "5",
@@ -92,8 +146,8 @@ angular.module('football.controllers')
                                         "month": month,
                                         "day": day,
                                         "players": stadiumsnapshot.child("numplayers").val(),
-                                        "hour": hour,
-                                        "minute": minute,
+                                        "hour": hour1,
+                                        "minute": minute1,
                                         "selected": "select",
                                         "color": "green",
                                         "backcolor": "white",
@@ -104,27 +158,16 @@ angular.module('football.controllers')
                                         "longitude": mainstadiumSnapshot.child("cordovalongitude").val(),
                                         "iscombined": stadiumsnapshot.child("iscombined").val(),
                                         "combined": stadiumsnapshot.child("combined").val(),
-                                        //"freedates":
-                                        //{
-                                        //    date : startdate
-                                        //}
-                                        //"indoor": indoor,
-                                        //"outdoor": outdoor,
-                                        //"clay": clay,
-                                        //"grass":grass
-
-
+                                        "city": mainstadiumSnapshot.child("city").val(),
+                                        "telephone": mainstadiumSnapshot.child("telephone").val()
 
                                     };
 
                                     Availables.push(Data);
                                 }
-
-
                             });
 
                         });
-                        console.log(Availables);
                         callback(Availables);
                     }, function (error) {
                         alert(error.message);
@@ -149,9 +192,6 @@ angular.module('football.controllers')
 
                 //add duration
 
-
-                var enddate = search.date;
-                enddate.setMinutes(enddate.getMinutes() + 90);
                 var endyear = search.date.getFullYear();
                 var endmonth = search.date.getMonth();
                 var endday = search.date.getDate();
@@ -201,7 +241,10 @@ angular.module('football.controllers')
                     startminute: minute,
                     endhour: endhour,
                     endminute: endminute,
-                    references: ""//the main info of the exact beginning time
+                    references: "",//the main info of the exact beginning time
+                    telephone: stadiums.telephone,
+                    combined: stadiums.combined,
+                    reservationnumber: stadiums.stadiumname.charAt(0) + stadiums.ministadiumkey.charAt(0) + year.toString() + month.toString() + day.toString() + hour.toString() + minute.toString()
 
 
                 };
@@ -218,10 +261,18 @@ angular.module('football.controllers')
                 var mainkey = newkey;
                 var references = [];
 
-                for (i = 1; i < numslots; i++) {
-                    search.date.setMinutes(search.date.getMinutes() + 30);
+                var _date = new Date();
+                _date.setFullYear(search.date.getFullYear());
+                _date.setMonth(search.date.getMonth());
+                _date.setDate(search.date.getDate());
 
-                    newkey = subkey + search.date.getFullYear().toString() + search.date.getMonth().toString() + search.date.getDate().toString() + search.date.getHours().toString() + search.date.getMinutes().toString();
+                _date.setHours(search.date.getHours());
+                _date.setMinutes(search.date.getMinutes());
+
+                for (i = 1; i < numslots; i++) {
+                    _date.setMinutes(_date.getMinutes() + 30);
+
+                    newkey = subkey + _date.getFullYear().toString() + _date.getMonth().toString() + _date.getDate().toString() + _date.getHours().toString() + _date.getMinutes().toString();
                     var refdata = {
                         key: newkey
                     }
@@ -262,7 +313,7 @@ angular.module('football.controllers')
                     type: "B",
                     total: 0,
                     bookedadmin: true,
-                    fullstartdate: search.date,
+                    fullstartdate: _date,
                 };
 
                 var postDataPlayer = {
@@ -282,9 +333,13 @@ angular.module('football.controllers')
                     teamtwo: "",
                     teamtwoscore: 0,
                     year: year,
-                    bookedadmin: false
+                    bookedadmin: false,
+                    telephone: stadiums.telephone,
+                    combined: stadiums.combined,
+                    reservationnumber: stadiums.stadiumname.charAt(0) + stadiums.ministadiumkey.charAt(0) + year.toString() + month.toString() + day.toString() + hour.toString() + minute.toString()
 
                 };
+                postDataPlayer.references = postData.references;
 
                 var keys = [];
                 if (stadiums.iscombined) {
@@ -306,17 +361,23 @@ angular.module('football.controllers')
 
                 updates['/accounting/' + id + '/' + mainkey] = accountinfo;
 
-                console.log(updates);
+
+                var reservedate = new Date();
+
+                var reserveyear = reservedate.getFullYear();
+                var reservemonth = reservedate.getMonth();
+                var reserveday = reservedate.getDate();
+
+                updates['/players/' + id + '/reserveyears/' + reserveyear + '/' + reservemonth + '/' + reserveday + '/' + mainkey] = true;
+
 
                 return firebase.database().ref().update(updates);
 
             },
             GetStadiumsByID: function (id, callback) {
-                //var q = $q.defer();
                 try {
-                    //firebase.database().ref('/stadiums/ministadiums').on('value',function (snapshot) {  
 
-                    firebase.database().ref('/stadiumsinfo/' + id).once('value', function (snapshot) {
+                    firebase.database().ref('/stadiumsinfo/' + id).on('value', function (snapshot) {
                         StadiumInfo = {};
 
                         var Data = {
@@ -346,8 +407,6 @@ angular.module('football.controllers')
 
                         };
                         StadiumInfo = Data;
-
-                        console.log(StadiumInfo);
                         callback(StadiumInfo);
 
                     });
@@ -409,17 +468,17 @@ angular.module('football.controllers')
                 try {
                     //firebase.database().ref('/stadiums/ministadiums').on('value',function (snapshot) {  
 
-                    firebase.database().ref('/stadiumsinfo').once('value', function (snapshot) {
+                    firebase.database().ref('/stadiumsinfo').on('value', function (snapshot) {
                         AllStadiums = [];
-                        snapshot.forEach(function (minisnapshot) {
+                        snapshot.forEach(function (mainsnapshot) {
 
                             var Data = {
-                                "key": minisnapshot.key,
-                                "name": minisnapshot.child("name").val(),
-                                "photo": minisnapshot.child("photo").val(),
-                                "area": minisnapshot.child("locationarea").val(),
-                                "latitude": minisnapshot.child("cordovalatitude").val(),
-                                "longitude": minisnapshot.child("cordovalongitude").val()
+                                "key": mainsnapshot.key,
+                                "name": mainsnapshot.child("name").val(),
+                                "photo": mainsnapshot.child("photo").val(),
+                                "area": mainsnapshot.child("locationarea").val(),
+                                "latitude": mainsnapshot.child("cordovalatitude").val(),
+                                "longitude": mainsnapshot.child("cordovalongitude").val()
 
 
                             };
@@ -472,6 +531,8 @@ angular.module('football.controllers')
                                 ministadiums.forEach(function (minisnapshot) {
                                     minStd = minisnapshot.val();
                                     minStd.name = stadiumSnapshot.child("name").val();
+                                    minStd.key = minisnapshot.getKey();
+                                    minStd.stadiumKey = stadiumSnapshot.getKey();
                                     AllStadiums.push(minStd);
                                 })
 
@@ -512,6 +573,110 @@ angular.module('football.controllers')
                     alert(error.message);
                 }
 
+            },
+            GetNumReservationsByDate: function (date, callback) {
+
+
+                var year = date.getFullYear();
+                var month = date.getMonth();
+                var day = date.getDate();
+
+                var hour = date.getHours();
+                var minute = date.getMinutes();
+
+                var user = firebase.auth().currentUser;
+
+                var id = user.uid;
+
+                firebase.database().ref('/players/' + id + '/reserveyears/' + year + '/' + month + '/' + day).once('value').then(function (snapshot) {
+
+                    if (snapshot.exists) {
+                        number = snapshot.numChildren();
+                    }
+                    else {
+                        number = 0;
+                    }
+
+                    callback(number);
+                });
+            },
+
+            DeleteBooking: function (reservation) {
+
+                //alert("here");
+                /*   var year = reservation.date.getFullYear();
+                   var month = reservation.date.getMonth();
+                   var day = reservation.date.getDate();
+    
+                   var hour = reservation.date.getHours();
+                   var minute = reservation.date.getMinutes();
+    
+    
+                   var key = reservation.stadiumkey;
+                   var subkey = reservation.ministadiumkey;
+    
+    
+                   var updates = {};
+    
+                   var numslots = 90 / 30;
+    
+                   var mainkey = newkey;
+                   var references = [];
+    
+                   for (i = 1; i < numslots; i++) {
+                       search.date.setMinutes(search.date.getMinutes() + 30);
+    
+                       newkey = subkey + search.date.getFullYear().toString() + search.date.getMonth().toString() + search.date.getDate().toString() + search.date.getHours().toString() + search.date.getMinutes().toString();
+                       var refdata = {
+                           key: newkey
+                       }
+                       references.push(refdata);
+    
+                       var extrakeys = [];
+                       if (stadiums.iscombined) {
+                           for (var key in stadiums.combined) {
+                               extrakeys.push(key);
+                           }
+                           
+                           extrakeys.forEach(function (element) {
+                               updates['/stadiums/' + stadiums.stadiumkey + '/ministadiums/' + element + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = null;
+                               updates['/stadiumshistory/' + stadiums.stadiumkey + '/ministadiums/' + element + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = null;
+                           }, this);
+                       }
+    
+                       updates['/stadiums/' + stadiums.stadiumkey + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = null;
+                       updates['/stadiumshistory/' + stadiums.stadiumkey + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + newkey] = null;
+    
+    
+                   }
+                   postData.references = references;
+                   postDataPlayer.references = postData.references;
+    
+                   var keys = [];
+                   if (stadiums.iscombined) {
+                       for (var itemkey in stadiums.combined) {
+                           keys.push(itemkey);
+                       }
+    
+                       keys.forEach(function (element) {
+                           updates['/stadiums/' + stadiums.stadiumkey + '/ministadiums/' + element + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = null;
+                           updates['/stadiumshistory/' + stadiums.stadiumkey + '/ministadiums/' + element + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = null;
+                       }, this);
+                   }
+    
+                   updates['/stadiums/' + stadiums.stadiumkey + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = null;
+                   updates['/stadiumshistory/' + stadiums.stadiumkey + '/ministadiums/' + subkey + '/schedules/' + year + '/' + month + '/' + day + '/' + mainkey] = null;
+    
+    
+                   updates['/players/' + id + '/upcomingmatches/' + mainkey] = null;
+    
+                   updates['/accounting/' + id + '/' + mainkey] = null;
+    
+    
+                   
+    
+    
+                   return firebase.database().ref().update(updates);*/
             }
         }
     })

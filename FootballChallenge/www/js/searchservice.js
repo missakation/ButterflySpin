@@ -64,7 +64,7 @@ angular.module('football.controllers')
 
 
 
-                firebase.database().ref('/playersinfo').orderByChild(startend).startAt(hour).once('value').then(function (snapshot) {
+                firebase.database().ref('/players').orderByChild(startend).startAt(hour).on('value', function (snapshot) {
                     AvailablePlayers = [];
 
                     snapshot.forEach(function (childSnapshot) {
@@ -122,6 +122,7 @@ angular.module('football.controllers')
                                         var Items = {
                                             "key": childSnapshot.key,
                                             "displayname": childSnapshot.child("displayname").val(),
+                                            "devicetoken": childSnapshot.child("devicetoken").val(),
                                             "enableinvitations": childSnapshot.child("enableinvitations").val(),
                                             "favouritesport": childSnapshot.child("favouritesport").val(),
                                             "firstname": childSnapshot.child("firstname").val(),
@@ -144,11 +145,63 @@ angular.module('football.controllers')
 
                                             "skilllevel": childSnapshot.child("skilllevel").val(),
                                             "comments": childSnapshot.child("comments").val(),
-                                            "photo": childSnapshot.child("photoURL").val() == "" ? "img/PlayerProfile.png" : childSnapshot.child("photoURL").val()
+                                            "photo": childSnapshot.child("photoURL").val() == "" ? "img/PlayerProfile.png" : childSnapshot.child("photoURL").val(),
 
+                                            "teamdisplayedkey": childSnapshot.child("teamdisplayedkey").val(),
+                                            "teambadge": "",
+                                            "favlatitude": childSnapshot.child("favlatitude").val(),
+                                            "favlongitude": childSnapshot.child("favlongitude").val()
 
 
                                         };
+
+                                        Items.lastseen =
+                                            {
+                                                year: 0,
+                                                month: 0,
+                                                day: 0,
+                                                hour: 0,
+                                                minute: 0
+                                            };
+
+                                        if (childSnapshot.child("lastseen").exists()) {
+                                            Items.lastseen.year = childSnapshot.val().lastseen.loginyear;
+                                            Items.lastseen.month = childSnapshot.val().lastseen.loginmonth;
+                                            Items.lastseen.day = childSnapshot.val().lastseen.loginday;
+                                            Items.lastseen.hour = childSnapshot.val().lastseen.loginhour;
+                                            Items.lastseen.minute = childSnapshot.val().lastseen.loginminute;
+
+                                            Items.lastseen.date = new Date();
+                                            Items.lastseen.date.setMinutes(childSnapshot.val().lastseen.loginminute);
+                                            Items.lastseen.date.setFullYear(childSnapshot.val().lastseen.loginyear);
+                                            Items.lastseen.date.setMonth(childSnapshot.val().lastseen.loginmonth);
+                                            Items.lastseen.date.setHours(childSnapshot.val().lastseen.loginhour);
+                                            Items.lastseen.date.setDate(childSnapshot.val().lastseen.loginday);
+
+                                            var difference = (new Date() - Items.lastseen.date) / 1000 / 60;
+                                            Items.seendifference = difference;
+
+                                            if (difference < 20) {
+                                                Items.lastseen.text = "Online";
+                                            }
+                                            else
+                                                if (difference <= 60) {
+                                                    Items.lastseen.text = Math.floor(difference) + " mins. ago";
+                                                }
+                                                else
+                                                    if (difference <= 24 * 60) {
+                                                        Items.lastseen.text = Math.floor(difference / 60) + " hrs. ago";
+                                                    }
+                                                    else
+                                                        if (difference >= 24 * 60 && difference <= 48 * 60) {
+                                                            Items.lastseen.text = "Yesterday";
+                                                        }
+                                                        else {
+                                                            Items.lastseen.text = (Math.floor((difference / 60 / 24))) + " days ago";
+                                                        }
+                                        }
+
+
 
                                         AvailablePlayers.push(Items)
                                     }
@@ -306,6 +359,7 @@ angular.module('football.controllers')
                                 requestorkey: player.key,
                                 firstname: player.firstname,
                                 lastname: player.lastname,
+                                photo:player.photo
                             };
 
                             var updates = {};
@@ -367,6 +421,52 @@ angular.module('football.controllers')
                     alert(error.message);
                 }
             },
+            
+
+            //elasticSearch
+            SearchElastic: function(category, term, callback)
+            {
+                var searchResult = [];
+                var database = firebase.database();
+                
+                // skeleton of the JSON object we will write to DB
+                var query = {
+                    index: "firebase",
+                    type: category
+                };
+                var f = {
+                    filter_path: "hits.hits._source"
+                }
+                query.q = "*"+term+"*";
+                query.filter_path = "hits.total,hits.hits._source, hits.hits._id";
+
+                
+
+                var ref = database.ref().child("search");
+                var key = ref.child('request').push(query).key;
+
+                //console.log('search', key, query);
+                //$('#query').text(JSON.stringify(query, null, 2));
+                ref.child('response/' + key).on('value',function (snap)
+                {
+                    if (!snap.exists()) { return; }
+
+                    if (snap.val() != null) {
+                        var dat = snap.val().hits.hits;
+                        if(dat!=null)
+                            dat.forEach(function (item, index) {
+                                item._source.itemKey = item._id;
+                            searchResult.push(item._source);
+                        });
+                        // when a value arrives from the database, stop listening
+                        // and remove the temporary data from the database
+                        //snap.ref.off('value', showResults);
+                         snap.ref.remove();
+
+                         callback(searchResult);
+                    }
+                })
+            },
             SearchAllByField: function (table, fieldName, fieldValue, callback) {
                 var searchResult = [];
                 //var yarraw = firebase.database().ref('/players');//.orderByChild(fieldName).startAt(fieldValue);
@@ -375,7 +475,9 @@ angular.module('football.controllers')
 
                     snapshot.forEach(function (childSnapshot) {
                         if (childSnapshot.val() != null) {
-                            searchResult.push(childSnapshot.val());
+                            var sr = childSnapshot.val();
+                            sr.key = childSnapshot.getKey();
+                            searchResult.push(sr);
                         }
                         //console.log(JSON.stringify(childSnapshot.val(),null,2));
                     });

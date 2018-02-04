@@ -8,7 +8,6 @@
         return {
 
             GetMyTeams: function (callback) {
-                //console.log("TEST");
                 var user = firebase.auth().currentUser;
                 var id = user.uid;
 
@@ -48,21 +47,6 @@
                                     "rating": childSnapshot.child("rating").val(),
 
                                 };
-                                switch (Items.rank) {
-                                    case 1:
-                                        Items.rankdescription = Items.rank + ' st';
-                                        break;
-                                    case 2:
-                                        Items.rankdescription = Items.rank + ' nd';
-                                        break;
-                                    case 3:
-                                        Items.rankdescription = Items.rank + ' rd';
-                                        break;
-
-                                    default:
-                                        Items.rankdescription = Items.rank + ' th';
-                                        break;
-                                }
                                 MyTeams.push(Items);
                                 //   })
 
@@ -146,6 +130,7 @@
                 var hour = today.getHours();
                 var minute = today.getMinutes();
 
+
                 try {
                     var contact = {
                         //badge:team.badge,
@@ -179,6 +164,7 @@
                         rank: 0,
                         numberofgames: 0,
                         wins: 0,
+                        winstreak: 0,
 
                         teamoffive: newteam.five,
                         teamofsix: newteam.six,
@@ -202,7 +188,12 @@
                         },
                         timestamp: firebase.database.ServerValue.TIMESTAMP,
 
-                        comments: ""
+                        comments: "",
+
+                        favlatitude: newteam.favlatitude,
+                        favlongitude: newteam.favlongitude,
+                        reviewrating: 5,
+                        
 
                     };
 
@@ -308,7 +299,7 @@
                 try {
 
 
-                    firebase.database().ref('/teams/' + key).once('value').then(function (snapshot) {
+                    firebase.database().ref('/teams/' + key).on('value', function (snapshot) {
                         TeamProfile = {};
                         var upcomingmatches = [];
                         if (snapshot.exists()) {
@@ -420,15 +411,15 @@
                                         ministadiumkey: challenges.child("ministadiumkey").val(),
                                         photo: challenges.child("photo").val(),
                                         price: challenges.child("price").val(),
-                                        stadiumdescription: challenges.child("stadiumdescription").val()
-
+                                        stadiumdescription: challenges.child("stadiumdescription").val(),
+                                        status: challenges.child("status").val() //0 didnt begin 1 win 2 loss 3 draw
+                                        
 
                                     }
                                     upcomingmatches.push(matchdata);
 
                                 })
                             }
-
                             var Items = {
                                 "key": snapshot.key,
                                 "teamname": snapshot.child("teamname").val(),
@@ -453,8 +444,6 @@
                                 "startsundayend": snapshot.child("startsundayend").val(),
                                 "rating": snapshot.child("rating").val(),
                                 "rank": snapshot.child("rank").val(),
-                                "numberofgames": 0,
-                                "wins": 0,
                                 "amiadmin": amiadmin,
                                 "players": players,
                                 "captain": admins,
@@ -469,7 +458,12 @@
                                 "favstadium": snapshot.child("favstadium").val(),
                                 "favstadiumphoto": "",
                                 "favstadiumname": "",
-                                "numChildren": numberofmatches,
+
+                                //STATS
+                                "numberofmatches": numberofmatches,
+                                "wins": 1,
+                                "winstreak": 1,
+
 
                                 "teamoffive": snapshot.child("teamoffive").val(),
                                 "teamofsix": snapshot.child("teamofsix").val(),
@@ -486,23 +480,19 @@
                             };
                             switch (Items.rank) {
                                 case 1:
-                                    Items.rankdescription = Items.rank + ' st';
+                                    Items.rankdescription = Items.rank + 'st';
                                     break;
                                 case 2:
-                                    Items.rankdescription = Items.rank + ' nd';
+                                    Items.rankdescription = Items.rank + 'nd';
                                     break;
                                 case 3:
-                                    Items.rankdescription = Items.rank + ' rd';
+                                    Items.rankdescription = Items.rank + 'rd';
                                     break;
 
                                 default:
-                                    Items.rankdescription = Items.rank + ' th';
+                                    Items.rankdescription = Items.rank + 'th';
                                     break;
                             }
-
-                            //  var sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                            //  sfd.format(new Date(snapshot.child("timestamp").val()))
-                            //  alert(sfd);
 
                             TeamProfile = Items;
 
@@ -520,7 +510,7 @@
                 try {
 
 
-                    firebase.database().ref('/teaminfo/' + key).once('value').then(function (snapshot) {
+                    firebase.database().ref('/teaminfo/' + key).on('value', function (snapshot) {
                         TeamProfileInfo = {};
 
                         if (snapshot.exists()) {
@@ -549,17 +539,17 @@
                             };
                             switch (Items.rank) {
                                 case 1:
-                                    Items.rankdescription = Items.rank + ' st';
+                                    Items.rankdescription = Items.rank + 'st';
                                     break;
                                 case 2:
-                                    Items.rankdescription = Items.rank + ' nd';
+                                    Items.rankdescription = Items.rank + 'nd';
                                     break;
                                 case 3:
-                                    Items.rankdescription = Items.rank + ' rd';
+                                    Items.rankdescription = Items.rank + 'rd';
                                     break;
 
                                 default:
-                                    Items.rankdescription = Items.rank + ' th';
+                                    Items.rankdescription = Items.rank + 'th';
                                     break;
                             }
                             TeamProfileInfo = Items;
@@ -633,6 +623,8 @@
                     for (var i = 0; i < members.length; i++) {
                         updates['/players/' + members[i].key + '/teams/' + team.key] = null;
                     }
+                    updates['/teamnames/' + team.teamname] = null;
+
 
 
                     // updates['/players/' + id + '/teams/' + newPostKey] = contact;
@@ -674,6 +666,9 @@
                     updates['teams/' + id + '/favstadiumphoto'] = profile.favstadiumphoto;
                     updates['teams/' + id + '/available'] = profile.available;
 
+                    updates['teams/' + id + '/favlatitude'] = profile.favlatitude;
+                    updates['teams/' + id + '/favlongitude'] = profile.favlongitude;
+
 
 
 
@@ -695,6 +690,9 @@
                     updates['teaminfo/' + id + '/favstadium'] = profile.favstadium;
                     updates['teaminfo/' + id + '/favstadiumphoto'] = profile.favstadiumphoto;
                     updates['teaminfo/' + id + '/available'] = profile.available;
+
+                    updates['teaminfo/' + id + '/favlatitude'] = profile.favlatitude;
+                    updates['teaminfo/' + id + '/favlongitude'] = profile.favlongitude;
 
 
                     return firebase.database().ref().update(updates);

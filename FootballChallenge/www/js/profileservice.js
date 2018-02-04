@@ -17,7 +17,7 @@ angular.module('football.controllers')
                 try {
 
 
-                    firebase.database().ref('/players/' + id).once('value').then(function (snapshot) {
+                    firebase.database().ref('/players/' + id).on('value',function (snapshot) {
 
                         TempItems = {};
                         if (snapshot.child("upcominteamgmatches").exists()) {
@@ -171,6 +171,9 @@ angular.module('football.controllers')
                             "skilllevel": snapshot.child("skilllevel").val(),
                             "skilldescription": skilldescription,
                             "favstadiumname":snapshot.child("favstadiumname").val(),
+
+                            "favlatitude":snapshot.child("favlatitude").val(),
+                            "favlongitude":snapshot.child("favlongitude").val(),
 
                             //"distancetoplay": snapshot.child("identity").val(),
                             //"teamtoshow":snapshot.child("identity").val()

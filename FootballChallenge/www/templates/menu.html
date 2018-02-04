@@ -83,19 +83,60 @@
 
                 </ion-item>
 
-                <ion-item class="transp menuit item-icon-left" style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
-                    menu-close href="#/app/homepage">
-                    <i class="icon ion-ios-home"></i> Home
-                </ion-item>
-
                 <a href="#/app/reservestadium" style="text-decoration:none">
                     <div class="row" menu-toggle="left" style="padding:3.5px;background-color: rgba(62, 75, 100, 0.90);border:transparent important!">
-                        <div> <img src="img/Reserveicon.png" align="center" style="margin-left:8px;margin-top:10px;margin-right:7px;color:white;width:32px;height:32px">
+                        <div>
+                            <img src="img/Reserveicon.png" align="center" style="margin-left:8px;margin-top:10px;margin-right:7px;color:white;width:32px;height:32px">
                         </div>
                         <h5 align="left" style="color:white;font-size:16px;line-height:37px">Reserve Stadiums</h5>
 
                     </div>
                 </a>
+
+                <ion-item class="transp menuit item-icon-left" menu-toggle="left" style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
+                    href="#/app/bookings">
+                    <i class="icon ion-android-calendar"></i> My Bookings
+                </ion-item>
+
+                <ion-item class="transp menuit item-icon-left" menu-toggle="left" style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
+                    href="#/app/settings">
+                    <i class="icon ion-ios-gear"></i> Settings
+                </ion-item>
+
+                <ion-item class="transp menuit item-icon-left" menu-close style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
+                    href="#/app/homepage">
+                    <i class="icon ion-android-share-alt"></i> Invite Your Friends
+                </ion-item>
+
+
+                <ion-item class="transp menuit item-icon-left" menu-close style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
+                    href="#/app/feedbacks">
+                    <i class="icon ion-ios-telephone"></i> Feedback
+                </ion-item>
+
+                <!--<ion-item class="headerr menuit item-icon-left" style="padding-top:5px;height:44px;background-color: rgba(62, 75, 100, 1);border:transparent important!"
+                    menu-close href="#/app/homepage">
+
+                </ion-item>-->
+
+                <!--<ion-item class="transp menuit item-icon-left" style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
+                    menu-close href="#/app/homepage">
+                    <i class="icon ion-ios-home"></i> Home
+                </ion-item>-->
+
+                <ion-item class="transp menuit item-icon-left" menu-toggle="left" style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
+                    href="#/app/selfprofile">
+                    <i class="icon ion-ios-person" style="font-size:35px"></i> My Profile
+                </ion-item>
+
+                <ion-item class="transp menuit item-icon-left" menu-toggle="left" style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
+                    href="#/app/teammanagement">
+
+                    <i class="icon ion-tshirt" style="font-size:28px"> </i> My Teams
+
+                </ion-item>
+
+
 
                 <a href="#/app/chooseyourteam" style="text-decoration:none">
                     <div class="row" menu-toggle="left" style="margin-top:0px;padding:3.5px;background-color: rgba(62, 75, 100, 0.90);border:transparent important!">
@@ -113,29 +154,7 @@
 
                     </div>
                 </a>
-                <ion-item class="transp menuit item-icon-left" menu-toggle="left" style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
-                    href="#/app/selfprofile">
-                    <i class="icon ion-ios-person" style="font-size:35px"></i> My Profile
-                </ion-item>
 
-
-                <ion-item class="transp menuit item-icon-left" menu-toggle="left" style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
-                    href="#/app/teammanagement">
-
-                    <i class="icon ion-tshirt" style="font-size:28px"> </i> My Teams
-
-                </ion-item>
-
-                <ion-item class="transp menuit item-icon-left" menu-toggle="left" style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
-                    href="#/app/bookings">
-                    <i class="icon ion-android-calendar"></i> My Bookings
-                </ion-item>
-
-
-                <ion-item class="transp menuit item-icon-left" menu-toggle="left" style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
-                    href="#/app/settings">
-                    <i class="icon ion-ios-gear"></i> Settings
-                </ion-item>
 
                 <ion-item class="transp menuit item-icon-left" menu-toggle="left" style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
                     href="#/app/leaderboard">
@@ -145,23 +164,10 @@
 
                 <ion-item class="transp menuit item-icon-left" menu-close style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
                     href="#/app/homepage">
-                    <i class="icon ion-android-share-alt"></i> Invite Your Friends
-                </ion-item>
-
-
-                <!---    <ion-item class="transp menuit item-icon-left" menu-close style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
-                    href="#/app/homepage">
                     <i class="icon  ion-trophy"></i> Tournament
                 </ion-item>
-         -->
 
-                <ion-item class="transp menuit item-icon-left" menu-close style="background-color: rgba(62, 75, 100, 0.90);border:transparent important!"
-                    href="#/app/feedbacks">
-                    <i class="icon ion-ios-telephone"></i> Feedback
-                </ion-item>
-
-                <ion-item class="transp menuit item-icon-left" menu-close style="background-color: rgba(42, 62, 82, 1)" href="#/app/feedbacks"
-                    ng-click="logout()">
+                <ion-item class="transp menuit item-icon-left" menu-close style="color:white;background-color: rgba(42, 62, 82, 1)" ng-click="logout()">
                     <i class="icon ion-power"></i> Log Out
                 </ion-item>
 

@@ -1,13 +1,11 @@
 ﻿
 angular.module('football.controllers')
 
-
-
     .controller('LeaderboardController', function ($scope, $timeout, LeaderBoardStore, $state, $ionicPopup, $ionicLoading, $ionicPopover) {
 
         $scope.notloaded = true;
         $scope.limit = 10;
-        $scope.limitfinished = true;
+        $scope.limitfinished = false;
         $scope.rankedteams = [];
 
         $scope.goteamprofile = function (id) {
@@ -24,20 +22,11 @@ angular.module('football.controllers')
 
             LeaderBoardStore.GetLeaderboard(limit, function (leagues) {
 
-
+                console.log(leagues);
                 $scope.notloaded = false;
-                $scope.rankedteams = leagues.reverse();
+                $scope.rankedteams = leagues;
 
-                
-               /* LeaderBoardStore.UpdateRatings($scope.rankedteams).then(function(result)
-                {
-
-                },function(error)
-                {
-                    alert(error.message);
-                })*/
-                
-
+            
                 $scope.$broadcast('scroll.infiniteScrollComplete');
 
                 if ($scope.rankedteams.length < limit) {
@@ -53,10 +42,9 @@ angular.module('football.controllers')
 
         $scope.loadMore = function () {
 
-            if (!$scope.limitfinished) {
                 $scope.limit += 10;
                 $scope.refreshpage($scope.limit);
-            }
+            
 
         }
 

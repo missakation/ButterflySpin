@@ -19,14 +19,15 @@ angular.module('football.controllers')
         $scope.previousbookings = [];
         $scope.selectedbookings = [];
 
-        $scope.notloaded = true;
 
+        $scope.RefreshPage = function () {
+            $scope.notloaded = true;
+            $scope.currentbookings = [];
+            $scope.previousbookings = [];
+            $scope.selectedbookings = [];
 
-
-        $timeout(function () {
             BookingStore.GetMyUpcomingBookings(function (leagues) {
 
-                // Simple GET request example:
                 $http({
                     method: 'GET',
                     url: 'https://us-central1-project-6346119287623064588.cloudfunctions.net/date'
@@ -35,6 +36,7 @@ angular.module('football.controllers')
                     $scope.bookings = leagues;
                     $scope.tabs.Current = true;
                     $scope.notloaded = false;
+
 
                     $scope.currentdate = new Date(response.data);
 
@@ -50,19 +52,63 @@ angular.module('football.controllers')
                     }
 
                     $scope.selectedbookings = $scope.currentbookings;
-                    console.log($scope.selectedbookings);
                 }, function errorCallback(response) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
                     alert(JSON.stringify(response));
                 });
 
 
             });
-        }, 2000);
+        }
 
-        $scope.deletebooking = function () {
+        $scope.RefreshPage();
 
+        $scope.CancelBooking = function (item) {
+
+            var difference = (item.date - $scope.currentdate) / 1000 / 60 / 60;
+
+            firebase.database().ref('/stadiumsinfo/' + item.stadiumkey + '/ministadiums/' + item.ministadiumkey + '/cancellation').on('value', function (snapshot) {
+
+                if (difference < snapshot.val()) {
+                    var confirmPopup = $ionicPopup.alert({
+
+                        template: 'You cannot cancel this reservation due to stadiums cancellation policy. Please call the stadium'
+                    });
+
+                }
+                else {
+                    $ionicLoading.show({
+                        content: 'Loading',
+                        animation: 'fade-in',
+                        showBackdrop: true,
+                        maxWidth: 200,
+                        showDelay: 0
+                    });
+                    BookingStore.GetBookingbyID(item, function (res) {
+                        if (res != null && res != []) {
+                            BookingStore.DeleteBookingByID(res).then(function () {
+                                $ionicLoading.hide();
+                                var alertPopup = $ionicPopup.alert({
+                                    template: 'Booking Cancelled Successfully'
+                                }).then(function () {
+                                    $scope.RefreshPage();
+                                }, function (error) {
+
+                                })
+
+                            }, function (error) {
+                                $ionicLoading.hide();
+                                alert("ERROR");
+                            })
+                        }
+
+                    }, function (error) {
+                       alert("ERROR");
+                    })
+
+                }
+
+
+            })
         }
 
         $scope.switchscreens = function (x) {

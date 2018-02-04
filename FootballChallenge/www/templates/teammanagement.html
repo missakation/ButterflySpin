@@ -1,54 +1,5 @@
 <style>
-    .popup {
-        border-radius: 50px;
-        font-size: 15px;
-    }
-    
-    .custom-class .popup-head {
-        display: none;
-    }
-    
-    .popup-buttons .button:first-child {
-        border-radius: 50px;
-        margin: 05px;
-        padding: 0px;
-        background-color: rgb(153, 167, 180);
-        color: white;
-    }
-    
-    .popup-buttons .button:last-child {
-        border-radius: 50px;
-        margin: 05px;
-        padding: 0px;
-        background-color: #2ab041;
-        color: white;
-    }
-    
-    .popup-body {
-        padding: 10px;
-        margin: -5px;
-        background-color: rgb(62, 83, 100);
-        color: white;
-        text-align: center;
-        border-radius: 15px 15px 0 0;
-    }
-    
-    .popup-buttons {
-        padding: 10px 5px 5px 5px;
-        margin: -5px;
-        background-color: rgb(62, 83, 100);
-        color: white;
-        text-align: center;
-        border-radius: 0 0 15px 15px;
-    }
-    
-    .popup-head {
-        display: none;
-    }
-    
-    .popup-title {
-        color: white;
-    }
+
     
     .headercolor {
         background-color: rgb(62, 83, 100);
@@ -104,7 +55,7 @@
                     <h2 style="text-transform:capitalize;color:white;font-size:16px;font-weight:bold">
                         <b>{{team.teamname}}</b></h2>
                 </div>
-                <div align="center" style="padding-right:0px; color:darkturquoise; font-size:12px; font-weight:bold"> RANK {{team.rank}}
+                <div align="center" style="padding-right:0px; color:darkturquoise; font-size:12px; font-weight:bold">{{team.rankdescription}}
                 </div>
                 <hr style="height:1px; visibility:hidden;" />
                 <h4 style="color: #5f7485;float:left; width:50%; padding-left:25px;margin:0px"> MEMBERS

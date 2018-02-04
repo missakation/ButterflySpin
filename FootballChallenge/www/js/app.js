@@ -4,10 +4,11 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('football', ['ionic', 'ionicImgCache', 'football.controllers', 'ionic.cloud', "ion-datetime-picker", "ionicLazyLoad", "ion-floating-menu", 'ngCordova', 'ionic.rating', 'rzModule'])
+angular.module('football', ['ionic', /*'ionicImgCache'*/ 'football.controllers', 'jett.ionic.filter.bar', "ion-datetime-picker", "ionicLazyLoad", "ion-floating-menu", 'ngCordova', 'ionic.rating', 'rzModule'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
+
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (cordova.platformId === 'ios' && window.cordova && window.cordova.plugins.Keyboard) {
@@ -19,8 +20,47 @@ angular.module('football', ['ionic', 'ionicImgCache', 'football.controllers', 'i
                 // org.apache.cordova.statusbar required
                 StatusBar.styleDefault();
             }
-        });
 
+
+
+            var notificationOpenedCallback = function (jsonData) {
+                console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+            };
+
+            window.plugins.OneSignal.setLogLevel(OneSignal.LOG_LEVEL.DEBUG, OneSignal.LOG_LEVEL.DEBUG);
+
+            window.plugins.OneSignal
+                .startInit("233d6f63-8ead-4ee7-8e69-03f4088a075a")
+                .handleNotificationOpened(notificationOpenedCallback)
+                .endInit();
+
+            // Call syncHashedEmail anywhere in your app if you have the user's email.
+            // This improves the effectiveness of OneSignal's "best-time" notification scheduling feature.
+            // window.plugins.OneSignal.syncHashedEmail(userEmail);
+
+
+        });
+        $ionicPlatform.onHardwareBackButton(function (event) {
+            if ($rootScope.$viewHistory.backView) {
+                $rootScope.$viewHistory.backView.go();
+            } else {
+                console.log("going back disabled yaba log");
+                alert("going back now y'all");
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        }, 101);
+
+        $ionicPlatform.registerBackButtonAction(function (event) {
+            if ($rootScope.$viewHistory.backView) {
+                $rootScope.$viewHistory.backView.go();
+            } else {
+                console.log("going back disabled yaba log");
+                alert("going back now y'all");
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        }, 200);
         //  // This hooks all auth events to check everything as soon as the app starts
         //auth.hookEvents();
 
@@ -28,32 +68,33 @@ angular.module('football', ['ionic', 'ionicImgCache', 'football.controllers', 'i
 
     })
 
-    .config(function ($stateProvider, $urlRouterProvider, $ionicCloudProvider, ionicImgCacheProvider) {
-        $ionicCloudProvider.init({
-            "core": {
-                "app_id": "de07ef7c"
-            },
-            "push": {
-                "sender_id": "597359579523",
-                "pluginConfig": {
-                    "ios": {
-                        "badge": true,
-                        "sound": true
-                    },
-                    "android": {
-                        "iconColor": "#343434"
+    .directive('inputRestrictor', [function () {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function (scope, element, attr, ngModelCtrl) {
+                var pattern = /[^A-Za-z ]*/g;
+                function fromUser(text) {
+                    if (!text)
+                        return text;
+
+                    var transformedInput = text.replace(pattern, '');
+                    if (transformedInput !== text) {
+                        ngModelCtrl.$setViewValue(transformedInput);
+                        ngModelCtrl.$render();
                     }
+                    return transformedInput;
                 }
+                ngModelCtrl.$parsers.push(fromUser);
             }
-        })
+        };
+    }])
 
-        ionicImgCacheProvider.debug(true);
+    .config(function ($ionicConfigProvider, $stateProvider, $urlRouterProvider /*ionicImgCacheProvider*/, $ionicFilterBarConfigProvider) {
+        $ionicConfigProvider.views.maxCache(0);
 
-        // Set storage size quota to 100 MB. 
-        ionicImgCacheProvider.quota(100);
+        $ionicFilterBarConfigProvider.theme('royal');
 
-        // Set foleder for cached files. 
-        ionicImgCacheProvider.folder('ARINACACHE');
         $stateProvider
 
             .state('firstpage', {
@@ -124,7 +165,7 @@ angular.module('football', ['ionic', 'ionicImgCache', 'football.controllers', 'i
                     }
                 }
             })
-            .state('app.homepage', {
+            /*.state('app.homepage', {
                 url: '/homepage',
                 views: {
                     'menuContent': {
@@ -132,13 +173,27 @@ angular.module('football', ['ionic', 'ionicImgCache', 'football.controllers', 'i
                         controller: 'HomeController'
                     }
                 }
+            })*/
+
+            .state('app.homepage', {
+                url: '/homepage',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/reservestadium.html',
+                        controller: 'stadiumcontroller'
+                    }
+                }
             })
+
+
+
 
             .state('app.feedbacks', {
                 url: '/feedbacks',
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/feedbacks.html'
+                        templateUrl: 'templates/feedbacks.html',
+                        controller: "FeedBackController"
                     }
                 }
             })
@@ -222,6 +277,9 @@ angular.module('football', ['ionic', 'ionicImgCache', 'football.controllers', 'i
 
             .state('app.teamadd', {
                 url: '/teamadd',
+                params: {
+                    newuser: null
+                },
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/teamadd.html',
@@ -402,6 +460,20 @@ angular.module('football', ['ionic', 'ionicImgCache', 'football.controllers', 'i
                 }
             })
 
+            .state('app.teamhistory', {
+                url: '/teamhistory',
+                params: {
+                    teammatches: null
+                },
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/teamhistory.html',
+                        controller: 'TeamHistoryController'
+
+                    }
+                }
+            })
+
 
             .state('app.challengeteam', {
                 url: '/challengeteam',
@@ -422,6 +494,8 @@ angular.module('football', ['ionic', 'ionicImgCache', 'football.controllers', 'i
                 url: '/challengeteamstadium',
                 params: {
                     date: null,
+                    numplayers: null,
+                    visualText: null,
                     teams: null,
                     myteam: null
                 },

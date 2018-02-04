@@ -30,7 +30,7 @@ angular.module('football.controllers', [])
                 url: twilioURL,
                 data: {
                     To: to,
-                    From: "+12012796865",
+                    From: "+16283000458",
                     Body: message
                 },
                 transformRequest: function (obj) {
@@ -45,8 +45,6 @@ angular.module('football.controllers', [])
                 }
             });
             // var deferred = $q.defer();
-            // deferred.resolve(true);
-            // return deferred.promise;
         };
 
 
@@ -102,7 +100,7 @@ angular.module('football.controllers', [])
                                     var verifyPopup = $ionicPopup.confirm({
                                         cssClass: 'custom-class',
                                         title: 'Mobile verification',
-                                        template: 'Enter the verification code we sent via SMS below to verify your mobile number <br/> <div class="row"><div class="col"><input type="text" placeholder="Enter the verification code" ng-model="smsVerification.codeNumber" style="padding: 0 5px"></div></div>',
+                                        template: 'Enter the verification code we sent via `SMS` below to verify your mobile number <br/> <div class="row"><div class="col"><input type="text" placeholder="Enter the verification code" ng-model="smsVerification.codeNumber" style="padding: 0 5px"></div></div>',
                                         scope: $scope,
                                         buttons: [
                                             { text: 'Cancel' },
@@ -214,14 +212,15 @@ angular.module('football.controllers', [])
 
             UpdateProfile: function (profile, withdetails) {
                 try {
+                    console.log("HERE");
+                    console.log(profile);
 
-                    if (withdetails) {
-                        var ageset = profile.age.getFullYear() == 1900 ? false : true;
+                    var ageset = profile.age.getFullYear() == 1900 ? false : true;
 
-                        var year = profile.age.getFullYear();
-                        var month = profile.age.getMonth();
-                        var day = profile.age.getDate();
-                    }
+                    var year = profile.age.getFullYear();
+                    var month = profile.age.getMonth();
+                    var day = profile.age.getDate();
+
 
 
                     var user = firebase.auth().currentUser;
@@ -246,6 +245,13 @@ angular.module('football.controllers', [])
                     updates['players/' + id + '/skilllevel'] = profile.skilllevel;
                     updates['players/' + id + '/favstadiumname'] = profile.favstadiumname;
                     //updates['players/' + id + '/favstadiumphoto'] = profile.favstadiumphoto;
+                    updates['players/' + id + '/isplayer'] = profile.isplayer;
+                    updates['players/' + id + '/ageyear'] = year;
+                    updates['players/' + id + '/agemonth'] = month;
+                    updates['players/' + id + '/ageday'] = day;
+
+                    updates['players/' + id + '/favlatitude'] = profile.favlatitude;
+                    updates['players/' + id + '/favlongitude'] = profile.favlongitude;
 
 
                     //Age
@@ -254,9 +260,7 @@ angular.module('football.controllers', [])
                         updates['players/' + id + '/teamdisplayedkey'] = profile.teamdisplayedkey;
                         updates['players/' + id + '/comments'] = profile.comments;
                         updates['players/' + id + '/isplayer'] = profile.isplayer;
-                        updates['players/' + id + '/ageyear'] = year;
-                        updates['players/' + id + '/agemonth'] = month;
-                        updates['players/' + id + '/ageday'] = day;
+
                         updates['players/' + id + '/ageset'] = ageset;
                         updates['players/' + id + '/firstname'] = profile.firstname;
                         updates['players/' + id + '/lastname'] = profile.lastname;
@@ -281,12 +285,20 @@ angular.module('football.controllers', [])
                     updates['playersinfo/' + id + '/skilllevel'] = profile.skilllevel;
                     updates['playersinfo/' + id + '/favstadiumname'] = profile.favstadiumname;
                     //updates['playersinfo/' + id + '/favstadiumphoto'] = profile.favstadiumphoto;
+                    updates['playersinfo/' + id + '/isplayer'] = profile.isplayer;
+                    updates['playersinfo/' + id + '/ageyear'] = year;
+                    updates['playersinfo/' + id + '/agemonth'] = month;
+                    updates['playersinfo/' + id + '/ageday'] = day;
+
+                    updates['playersinfo/' + id + '/ageday'] = profile.favlatitude;;
+                    updates['playersinfo/' + id + '/ageday'] = profile.favlongitude;
+
+                    updates['playersinfo/' + id + '/favlatitude'] = profile.favlatitude;
+                    updates['playersinfo/' + id + '/favlongitude'] = profile.favlongitude;
 
                     if (withdetails) {
                         //Age
-                        updates['playersinfo/' + id + '/ageyear'] = year;
-                        updates['playersinfo/' + id + '/agemonth'] = month;
-                        updates['playersinfo/' + id + '/ageday'] = day;
+
                         updates['playersinfo/' + id + '/ageset'] = ageset;
                         //updates['playersinfo/' + id + '/teamdisplayed'] = profile.teamdisplayed;
                         updates['playersinfo/' + id + '/teamdisplayedkey'] = profile.teamdisplayedkey;
@@ -315,35 +327,31 @@ angular.module('football.controllers', [])
                         snapshot.forEach(function (childSnapshot) {
 
                             if (childSnapshot.key != id) {
-
-
-
                                 var toadd = true;
-
-
-
-                                //       if (childSnapshot.key != id) {
-
                                 var status = "Invite to Team";
+                                var statuskey = 0;
+
+                                var color = "#28b041";
+                                var backcolor = "white";
 
                                 if (childSnapshot.child("teaminvitations/" + team.key).exists()) {
 
-                                    switch (childSnapshot.child("teaminvitations/" + team.key + "/status")) {
-                                        case 0:
-                                            status = "Pending Request";
-                                            break;
-                                        case 1:
-                                            toadd = false;
-                                            break;
-                                        case 2:
-                                            status = "Invite to Team";
-                                            break;
+                                    status = "Invitation Sent";
+                                    statuskey = 1;
 
-                                        default:
-                                            break;
-                                    }
-
+                                    var color = "white";
+                                    var backcolor = "#28b041";
                                 }
+                                else {
+                                    status = "Invite to Team";
+                                    statuskey = 0;
+
+
+
+                                    var color = "#28b041";
+                                    var backcolor = "white";
+                                }
+
                                 if (toadd) {
 
 
@@ -374,8 +382,15 @@ angular.module('football.controllers', [])
                                         "telephone": childSnapshot.child("telephone").val(),
                                         "winstreak": childSnapshot.child("winstreak").val(),
                                         "photo": childSnapshot.child("photoURL").val() == "" ? "img/PlayerProfile.png" : childSnapshot.child("photoURL").val(),
+                                        "devicetoken": childSnapshot.child("devicetoken").val(),
+                                        "age": num,
+                                        "color": color,
+                                        "backcolor": backcolor,
+                                        "identity": childSnapshot.child("identity").val(),
+                                        "settings": childSnapshot.child("settings").val(),
+                                        "favstadium": childSnapshot.child("favstadium").val(),
+                                        "favstadiumname": childSnapshot.child("favstadiumname").val()
 
-                                        "age": num
 
                                     };
 
@@ -449,7 +464,7 @@ angular.module('football.controllers', [])
                 try {
 
 
-                    firebase.database().ref('/players/' + id).once('value', function (snapshot) {
+                    firebase.database().ref('/players/' + id).on('value', function (snapshot) {
 
                         var totchallenges = [];
                         var upcomingmatches = [];
@@ -473,6 +488,15 @@ angular.module('football.controllers', [])
                                 challengedate.setMonth(challenges.child("month").val());
                                 challengedate.setHours(challenges.child("hour").val());
                                 challengedate.setDate(challenges.child("day").val());
+
+                                var dateofchallenge = new Date();
+                                dateofchallenge.setMinutes(challenges.child("dateofchallengeminute").val());
+                                dateofchallenge.setFullYear(challenges.child("dateofchallengeyear").val());
+                                dateofchallenge.setMonth(challenges.child("dateofchallengemonth").val());
+                                dateofchallenge.setHours(challenges.child("dateofchallengehour").val());
+                                dateofchallenge.setDate(challenges.child("dateofchallengeday").val());
+
+
 
                                 var challengedata = {
                                     key: challenges.key,
@@ -500,12 +524,45 @@ angular.module('football.controllers', [])
                                     date: challengedate,
                                     isadmin: isadmin,
 
-
+                                    dateofchallenge: dateofchallenge,
                                     adminphoto: challenges.child("adminphoto").val() == "" ? "img/PlayerProfile.png" : challenges.child("adminphoto").val(),
                                     admintelephon: challenges.child("admintelephon").val(),
                                     adminname: challenges.child("adminname").val(),
-                                    title: challenges.child("admin").val() == id ? "you challenged " + challenges.child("team2name").val() : challenges.child("team2name").val() + " challenged you"
+                                    title: challenges.child("admin").val() == id ? "you challenged " + challenges.child("team2name").val() : challenges.child("team2name").val() + " challenged you",
+                                    numplayers: challenges.child("numplayers").val()
 
+                                }
+
+                                switch (challengedata.team1rank) {
+                                    case 1:
+                                        challengedata.team1rankdescription = challengedata.team1rank + 'st';
+                                        break;
+                                    case 2:
+                                        challengedata.team1rankdescription = challengedata.team1rank + 'nd';
+                                        break;
+                                    case 3:
+                                        challengedata.team1rankdescription = challengedata.team1rank + 'rd';
+                                        break;
+
+                                    default:
+                                        challengedata.team1rankdescription = challengedata.team1rank + 'th';
+                                        break;
+                                }
+
+                                switch (challengedata.team2rank) {
+                                    case 1:
+                                        challengedata.team2rankdescription = challengedata.team2rank + 'st';
+                                        break;
+                                    case 2:
+                                        challengedata.team2rankdescription = challengedata.team2rank + 'nd';
+                                        break;
+                                    case 3:
+                                        challengedata.team2rankdescription = challengedata.team2rank + 'rd';
+                                        break;
+
+                                    default:
+                                        challengedata.team2rankdescription = challengedata.team2rank + 'th';
+                                        break;
                                 }
                                 totchallenges.push(challengedata);
 
@@ -693,11 +750,11 @@ angular.module('football.controllers', [])
                         if (snapshot.child("previousrequests").exists()) {
                             snapshot.child("previousrequests").forEach(function (req) {
 
-                                var color = "orange";
-                                var text = "pending";
+                                var color = "rgb(221,162,22)";
+                                var text = "Pending";
 
                                 if (req.child("requeststatus").val() == 1) {
-                                    color = "green";
+                                    color = "#2ab041";
                                     text = req.child("telephone").val();
                                 }
 
@@ -705,7 +762,7 @@ angular.module('football.controllers', [])
                                     key: req.key,
                                     firstname: req.child("firstname").val(),
                                     lastname: req.child("lastname").val(),
-                                    photo: req.child("requestorphoto").val() == "" ? "img/PlayerProfile.png" : req.child("requestorphoto").val(),
+                                    photo: (req.child("photo").val() == "" || !req.child("photo").exists()) ? "img/PlayerProfile.png" : req.child("photo").val(),
                                     telephone: req.child("telephone").val(),
                                     status: req.child("requeststatus").val(),
                                     color: color,
@@ -796,7 +853,8 @@ angular.module('football.controllers', [])
 
                         callback(myprofile);
                     }, function (error) {
-                        alert(error.message);
+                        //  alert("test");
+                        //  alert(error.message);
                     });
                 } catch (error) {
 
@@ -806,13 +864,41 @@ angular.module('football.controllers', [])
 
             GetProfileInfoByKey: function (key, callback) {
                 TempItems = [];
-                var user = firebase.auth().currentUser;
-                //alert("test");
-                var id = user.uid;
-
                 try {
 
-                    firebase.database().ref('/players/' + id).once('value', function (snapshot) {
+                    firebase.database().ref('/playersinfo/' + key).on('value', function (snapshot) {
+                        var age = new Date();
+
+                        age.setDate(snapshot.child("ageday").val());
+                        age.setFullYear(snapshot.child("ageyear").val());
+                        age.setMonth(snapshot.child("agemonth").val());
+
+
+                        var ageDifMs = Date.now() - age.getTime();
+                        var ageDate = new Date(ageDifMs); // miliseconds from epoch
+                        var num = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+
+                        var skilldescription = "newbie";
+                        switch (snapshot.child("skilllevel").val()) {
+                            case 0:
+                                skilldescription = "newbie";
+                                break;
+                            case 1:
+                                skilldescription = "not bad";
+                                break;
+
+                            case 2:
+                                skilldescription = "solid";
+                                break;
+                            case 3:
+                                skilldescription = "Pro";
+                                break;
+
+                            default:
+                                break;
+                        }
+
                         profile["key"] = snapshot.key;
                         profile["displayname"] = snapshot.child("displayname").val();
                         profile["firstname"] = snapshot.child("firstname").val();
@@ -828,6 +914,47 @@ angular.module('football.controllers', [])
                         profile["winstreak"] = snapshot.child("winstreak").val();
                         profile["teamdisplayed"] = "none";
                         profile["teamdisplayedkey"] = snapshot.child("teamdisplayedkey").val();
+
+
+                        profile["startmonday"] = snapshot.child("startmonday").val();
+                        profile["startmondayend"] = snapshot.child("startmondayend").val();
+                        profile["starttuesday"] = snapshot.child("starttuesday").val();
+                        profile["starttuesdayend"] = snapshot.child("starttuesdayend").val();
+                        profile["startwednesday"] = snapshot.child("startwednesday").val();
+                        profile["startwednesdayend"] = snapshot.child("startwednesdayend").val();
+                        profile["startthursday"] = snapshot.child("startthursday").val();
+                        profile["startthursdayend"] = snapshot.child("startthursdayend").val();
+                        profile["startfriday"] = snapshot.child("startfriday").val();
+                        profile["startfridayend"] = snapshot.child("startfridayend").val();
+                        profile["startsaturday"] = snapshot.child("startsaturday").val();
+                        profile["startsaturdayend"] = snapshot.child("startsaturdayend").val();
+                        profile["startsunday"] = snapshot.child("startsunday").val();
+                        profile["startsundayend"] = snapshot.child("startsundayend").val();
+
+
+                        //Age
+                        profile["ageyear"] = snapshot.child("ageyear").val();
+                        profile["agemonth"] = snapshot.child("agemonth").val();
+                        profile["ageday"] = snapshot.child("ageday").val();
+                        profile["ageset"] = snapshot.child("ageset").val();
+                        profile["age"] = age;
+                        profile["agenum"] = num;
+                        profile["identity"] = snapshot.child("identity").val();
+                        profile["available"] = snapshot.child("available").val();
+                        profile["availablepng"] = snapshot.child("available").val() ? "available" : "busy";
+                        profile["isplayer"] = snapshot.child("isplayer").val();
+
+                        profile["teamdisplayedkey"] = snapshot.child("teamdisplayedkey").val();
+                        //"teamdisplayed": snapshot.child("teamdisplayed").val(),
+                        profile["skilllevel"] = snapshot.child("skilllevel").val();
+                        profile["skilldescription"] = skilldescription;
+                        profile["favstadiumname"] = snapshot.child("favstadiumname").val();
+
+                        //"distancetoplay": snapshot.child("identity").val(),
+                        //"teamtoshow":snapshot.child("identity").val()
+
+
+
                         callback(profile);
                     }, function (error) {
                         alert(error.message);
@@ -887,14 +1014,14 @@ angular.module('football.controllers', [])
 
                     // Write the new post's data simultaneously in the posts list and the user's post list.
                     var updates = {};
-                    updates['/players/' + challenge.team1adminid + '/upcomingteammatches/' + challenge.key] = null;
-                    updates['/players/' + challenge.team2adminid + '/upcomingteammatches/' + challenge.key] = null;
+                    updates['/players/' + challenge.team1adminid + '/upcominteamgmatches/' + challenge.key] = null;
+                    updates['/players/' + challenge.team2adminid + '/upcominteamgmatches/' + challenge.key] = null;
 
                     for (var i = 0; i < challenge.team1players; i++) {
-                        updates['/players/' + challenge.team1players[i].key + '/upcomingteammatches/' + challenge.key] = null;
+                        updates['/players/' + challenge.team1players[i].key + '/upcominteamgmatches/' + challenge.key] = null;
                     }
                     for (var i = 0; i < challenge.team2players; i++) {
-                        updates['/players/' + challenge.team2players[i].key + '/upcomingteammatches/' + challenge.key] = null;
+                        updates['/players/' + challenge.team2players[i].key + '/upcominteamgmatches/' + challenge.key] = null;
                     }
 
                     //should be already nulls;
@@ -906,6 +1033,7 @@ angular.module('football.controllers', [])
                     updates['/teams/' + challenge.team2key + '/upcominteamgmatches/' + challenge.key] = null;
 
                     updates['/stadiums/' + challenge.stadiums.stadiumkey + '/ministadiums/' + challenge.stadiums.ministadiumkey + '/schedules/' + challenge.stadiums.year + '/' + challenge.stadiums.month + '/' + challenge.stadiums.day + '/' + challenge.key] = null;
+                    updates['/stadiums/' + challenge.stadiums.stadiumkey + '/ministadiumshistory/' + challenge.stadiums.ministadiumkey + '/schedules/' + challenge.stadiums.year + '/' + challenge.stadiums.month + '/' + challenge.stadiums.day + '/' + challenge.key] = null;
 
 
                     updates['/challenges/' + challenge.key] = null;
@@ -918,7 +1046,7 @@ angular.module('football.controllers', [])
                 }
             },
 
-                        RegisterTeamMatch: function (search, user, stadiums, challenge) {
+            RegisterTeamMatch: function (search, user, stadiums, challenge) {
                 //alert("here");
 
                 try {
@@ -943,6 +1071,8 @@ angular.module('football.controllers', [])
 
                     var id = user.uid;
 
+                    alert(challenge.key);
+
                     var postData = {
                         uid: id,
                         hour: hour,
@@ -954,7 +1084,7 @@ angular.module('football.controllers', [])
                         price: stadiums.price,
                         percentage: "",
                         duration: 90,
-                        type: "B",
+                        type: "T",
                         year: year,
                         total: stadiums.price,
                         bookedadmin: false,
@@ -975,13 +1105,15 @@ angular.module('football.controllers', [])
                         team2name: challenge.team2name,
                         team2rank: challenge.team2rank,
                         teamone: 0,
-                        teamonescore: 0
+                        teamonescore: 0,
+                        status: 0,
+                        numplayers: challenge.numplayers
 
                     };
 
                     var extraslots = {
                         usercode: id,
-                        type: "B",
+                        type: "T",
                         maindata: false
                     };
                     var updates = {};
@@ -1051,7 +1183,7 @@ angular.module('football.controllers', [])
                         team2logo: challenge.team2logo,
                         team2name: challenge.team2name,
                         team2rank: challenge.team2rank,
-
+                        status: 0
 
                     };
 
@@ -1093,6 +1225,9 @@ angular.module('football.controllers', [])
                         updates['/players/' + challenge.team1adminid + '/challenges/' + challenge.key] = null;
 
                         updates['/players/' + challenge.team2adminid + '/challenges/' + challenge.key] = null;
+
+
+                        updates['/challenges/' + challenge.key + '/gameaccepted'] = true;
 
                         updates['/challenges/' + challenge.key + '/stadiums'] = angular.copy(stadiums);
 
@@ -1179,28 +1314,27 @@ angular.module('football.controllers', [])
 
                         updates['/players/' + id + '/myrequests/' + request.key + '/requeststatus'] = 1;
 
-                        updates['/players/' + id + '/friends/' + request.key] = {
+                        updates['/players/' + id + '/previousrequests/' + request.key] = {
                             firstname: request.firstname,
                             lastname: request.lastname,
                             key: request.key,
                             telephone: request.telephone,
-                            photo: request.photo
+                            photo: request.photo,
+                            requeststatus: 1
 
                         };
 
-                        updates['/players/' + request.key + '/friends/' + id] =
+                        /*updates['/players/' + request.key + '/friends/' + id] =
                             {
                                 firstname: request.firstname,
                                 lastname: request.lastname,
                                 key: request.key,
                                 telephone: request.telephone,
                                 photo: request.photo
-                            };
+                            };*/
 
                         updates['/players/' + request.key + '/previousrequests/' + id + '/requeststatus'] = 1;
                         updates['/players/' + request.key + '/previousrequests/' + id + '/telephone'] = myprofile.telephone;
-
-
 
 
                         console.log(request);
@@ -1222,8 +1356,8 @@ angular.module('football.controllers', [])
 
                     if (id !== null || id == '' || id === undefined) {
 
-                        updates['/players/' + id + '/myrequests/' + request.key] = 2;
-
+                        //updates['/players/' + id + '/myrequests/' + request.key] = 2;
+                        updates['/players/' + id + '/myrequests/' + request.key] = null;
                     }
 
                     return firebase.database().ref().update(updates);
@@ -1259,7 +1393,8 @@ angular.module('football.controllers', [])
 
                     if (id !== null || id == '' || id === undefined) {
 
-                        updates['/players/' + id + '/teaminvitations/' + invitation.key + '/requeststatus'] = 2;
+                        //updates['/players/' + id + '/teaminvitations/' + invitation.key + '/requeststatus'] = null; //cz ari
+                        updates['/players/' + id + '/teaminvitations/' + invitation.key] = null; //cz ari
 
                     }
 
@@ -1274,10 +1409,9 @@ angular.module('football.controllers', [])
                 var user = firebase.auth().currentUser;
                 var id = user.uid;
 
-                firebase.database().ref('/teampoints').orderByChild("rank").limitToFirst(4).once('value').then(function (snapshot) {
+                firebase.database().ref('/teampoints').orderByChild("rating").limitToFirst(4).on('value', function (snapshot) {
                     RankedTeams = [];
                     snapshot.forEach(function (childSnapshot) {
-
 
                         var Items = {
                             "key": childSnapshot.key,
@@ -1391,8 +1525,8 @@ angular.module('football.controllers', [])
                     if (newuser != null) {
 
                         var date = new Date();
-                        var char = newuser.email.charAt(0).charCodeAt(0);
 
+                        var char = newuser.email.charAt(0).charCodeAt(0);
                         var identity = char;
                         var identity = identity.toString() + date.getDay().toString() + date.getSeconds().toString() + date.getMilliseconds().toString();
 
@@ -1448,7 +1582,14 @@ angular.module('football.controllers', [])
 
                                 skillevel: "newbie",
                                 isbanned: false,
-                                isMobileVerified: false
+                                isMobileVerified: false,
+                                settings:
+                                    {
+                                        notification: true,
+                                        reminder_3hours: true,
+                                    },
+                                favlatitude: 0,
+                                favlongitude: 0
 
                             }
                         //alert(newPostKey);
@@ -1554,8 +1695,14 @@ angular.module('football.controllers', [])
                                 teamdisplayedkey: "none",
                                 skillevel: "newbie",
                                 isbanned: false,
-                                isMobileVerified: false
-
+                                isMobileVerified: false,
+                                settings:
+                                    {
+                                        notification: true,
+                                        reminder_3hours: true,
+                                    },
+                                favlatitude: 0,
+                                favlongitude: 0
 
                             }
                         //alert(newPostKey);
@@ -1573,7 +1720,7 @@ angular.module('football.controllers', [])
                 }
 
             },
-            PostError: function (error) {
+            PostError: function (error, linenumber, filename) {
                 var user = firebase.auth().currentUser;
                 if (!(user == undefined || user != null)) {
                     var id = user.uid;
@@ -1583,7 +1730,9 @@ angular.module('football.controllers', [])
                             uid: newuser.uid,
                             errorcode: error.code,
                             errordescription: error.message,
-                            date: new Date()
+                            date: new Date(),
+                            linenumber: linenumber,
+                            filename: filename
                         };
                     var newPostKey = firebase.database().ref().child('errors').push().key;
                     var updates = {};
@@ -1624,7 +1773,7 @@ angular.module('football.controllers', [])
                         "profile": notificationprofile,
                         "notification": {
                             "message": message,
-                            "title": "AMENA GHOYEM"
+                            "title": "ARINA"
                         },
                         "pluginConfig": {
                             "ios": {
@@ -1647,20 +1796,53 @@ angular.module('football.controllers', [])
                         }
                     }
                 }
-                  $http(req).then(function () {
-                       //alert("notification sent");
-                   }, function (error) {
-                       //alert(JSON.stringify(error));
-                   });
+                $http(req).then(function () {
+                    //alert("notification sent");
+                }, function (error) {
+                    //alert(JSON.stringify(error));
+                });
 
 
+            },
+            UpdateLastSeen: function () {
+                var user = firebase.auth().currentUser;
+                if (!(user === null || user == '' || user === undefined)) {
+
+                    var updates = {};
+                    var CurrentDate = new Date();
+
+                    var year = CurrentDate.getFullYear();
+                    var month = CurrentDate.getMonth();
+                    var day = CurrentDate.getDate();
+
+                    var hour = CurrentDate.getHours();
+                    var minute = CurrentDate.getMinutes();
+
+                    updates['/players/' + user.uid + '/lastseen/loginyear'] = year;
+                    updates['/players/' + user.uid + '/lastseen/loginmonth'] = month;
+                    updates['/players/' + user.uid + '/lastseen/loginday'] = day;
+                    updates['/players/' + user.uid + '/lastseen/loginhour'] = hour;
+                    updates['/players/' + user.uid + '/lastseen/loginminute'] = minute;
+
+                    updates['/playersinfo/' + user.uid + '/lastseen/loginyear'] = year;
+                    updates['/playersinfo/' + user.uid + '/lastseen/loginmonth'] = month;
+                    updates['/playersinfo/' + user.uid + '/lastseen/loginday'] = day;
+                    updates['/playersinfo/' + user.uid + '/lastseen/loginhour'] = hour;
+                    updates['/playersinfo/' + user.uid + '/lastseen/loginminute'] = minute;
+
+                    firebase.database().ref().update(updates);
+                }
             }
 
         }
 
     })
 
-    .controller('LoginController', function ($scope, $ionicModal, $ionicHistory, $ionicPopup, $timeout, $state, LoginStore, FirebaseStorageService) {
+    .controller('LoginController', function ($scope, $ionicModal, $ionicLoading, $ionicHistory, $ionicPopup, $timeout, $state, LoginStore, FirebaseStorageService) {
+
+
+
+
 
         $scope.loginData = {};
         $scope.myprofile = {};
@@ -1685,72 +1867,6 @@ angular.module('football.controllers', [])
         };
 
 
-        $scope.myRating = 1600;
-        $scope.opponentRating = 1700;
-        $scope.gameResult = '1';
-
-        $scope.newRating = LoginStore.getNewRating(+$scope.myRating, +$scope.opponentRating, +$scope.gameResult);
-        $scope.ratingDelta = LoginStore.getRatingDelta(+$scope.myRating, +$scope.opponentRating, +$scope.gameResult);
-
-
-
-
-
-
-
-        /*
-
-        // since I can connect from multiple devices or browser tabs, we store each connection instance separately
-        // any time that connectionsRef's value is null (i.e. has no children) I am offline
-        var myConnectionsRef = firebase.database().ref('testusers/joe/connections');
-
-        // stores the timestamp of my last disconnect (the last time I was seen online)
-        var lastOnlineRef = firebase.database().ref('testusers/joe/lastOnline');
-
-        var connectedRef = firebase.database().ref('.info/connected');
-        connectedRef.on('value', function (snap) {
-            if (snap.val() === true) {
-                // We're connected (or reconnected)! Do anything here that should happen only if online (or on reconnect)
-
-                // add this device to my connections list
-                // this value could contain info about the device or a timestamp too
-                var con = myConnectionsRef.push(true);
-
-                // when I disconnect, remove this device
-                con.onDisconnect().remove();
-
-                // when I disconnect, update the last time I was seen online
-                lastOnlineRef.onDisconnect().set(firebase.database.ServerValue.TIMESTAMP);
-            }
-        });
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //alert($scope.newRating);
-        //alert($scope.ratingDelta);
-
-
         $scope.registerdata =
             {
 
@@ -1764,24 +1880,6 @@ angular.module('football.controllers', [])
 
         $scope.registerusername = 'missakboya1@live.com';
         $scope.registerpassword = 'supermanbaba';
-
-        /*var Elo = require('arpad');
-
-        var elo = new Elo();
-
-        var alice = 1600;
-        var bob = 1300;
-
-        var new_alice = elo.newRatingIfWon(alice, bob);
-        alert("Alice's new rating if she won:", new_alice); // 1605 
-
-        var new_bob = elo.newRatingIfWon(bob, alice);
-        alert("Bob's new rating if he won:", new_bob); // 1327*/
-
-
-        //var EWP_X = 1/(1+10^((PlayerY-PlayerX)/400)); 
-
-        //alert(1 / (1 + 10 ^ ((1500 - 2000) / 400)));
 
         $scope.userImage = "img/PlayerProfile.png";
         $scope.chooseImage = function () {
@@ -1815,10 +1913,7 @@ angular.module('football.controllers', [])
                     var newuser = firebase.auth().currentUser;
                     var name, email, photoUrl, uid;
 
-
-
                     if (user != null && newuser != null && newuser != undefined) {
-
 
                         LoginStore.GetUser(function (data) {
                             if (data) {
@@ -1832,7 +1927,10 @@ angular.module('football.controllers', [])
 
                                 LoginStore.AddUser(newuser, $scope.registerdata).then(function (success) {
                                     var user = firebase.auth().currentUser;
-                                    FirebaseStorageService.saveUserProfilePicture($scope.userImage, user.uid);
+
+                                    if ($scope.userImage != "img/PlayerProfile.png")
+                                        FirebaseStorageService.saveUserProfilePicture($scope.userImage, user.uid);
+
                                     user.sendEmailVerification().then(function () {
 
                                         var alertPopup = $ionicPopup.alert({
@@ -1878,6 +1976,14 @@ angular.module('football.controllers', [])
 
             if (!usere) {
 
+                /*     $ionicLoading.show({
+                         content: 'Loading',
+                         animation: 'fade-in',
+                         showBackdrop: true,
+                         maxWidth: 200,
+                         showDelay: 0
+                     });*/
+
                 firebase.auth().signInWithEmailAndPassword($scope.registerusername, $scope.registerpassword).then(function (user) {
 
                     LoginStore.GetUser(function (data) {
@@ -1886,6 +1992,7 @@ angular.module('football.controllers', [])
                             $ionicHistory.nextViewOptions({
                                 disableBack: true
                             });
+                            $ionicLoading.hide();
                             $state.go("app.homepage");
                         }
                         else {
@@ -1897,7 +2004,7 @@ angular.module('football.controllers', [])
                                 });
 
                                 user.sendEmailVerification().then(function () {
-
+                                    $ionicLoading.hide();
                                     $state.go('app.homepage');
 
                                 }, function (error) {
@@ -1919,6 +2026,8 @@ angular.module('football.controllers', [])
                         // Handle Errors here.
                         var errorCode = error.code;
                         var errorMessage = error.message;
+                        alert("Sign in Error");
+                        alert(errorCode);
                         alert(errorMessage);
                         // ...
                     });
@@ -1948,8 +2057,6 @@ angular.module('football.controllers', [])
                             // An error happened.
                         });
 
-
-
                     }
 
                 });
@@ -1963,13 +2070,18 @@ angular.module('football.controllers', [])
 
         }
 
-
-
         $scope.FacebookLogin = function () {
             try {
-                // alert("test1");
+
                 var auth = firebase.auth();
-                // alert("test2");
+
+                $ionicLoading.show({
+                    content: 'Loading',
+                    animation: 'fade-in',
+                    showBackdrop: true,
+                    maxWidth: 200,
+                    showDelay: 0
+                });
                 facebookConnectPlugin.login(['email', 'public_profile', 'user_friends'], //first argument is an array of scope permissions
                     function (userData) {
 
@@ -1982,66 +2094,54 @@ angular.module('football.controllers', [])
                                         var credential = firebase.auth.FacebookAuthProvider.credential(token);
                                         firebase.auth().signInWithCredential(credential).then(function (result) {
                                             $scope.myprofile = result;
-                                            $timeout(function () {
-                                                var user = firebase.auth().currentUser;
-                                                if (user) {
+                                            var user = firebase.auth().currentUser;
+                                            if (user) {
 
-                                                    LoginStore.GetUser(function (data) {
-                                                        if (data) {
-                                                            $state.go('app.homepage');
-                                                        }
-                                                        else {
-                                                            LoginStore.AddFbUser($scope.myprofile).then(function (result) {
-                                                                $state.go('app.firsttimelogin');
-                                                            }, function (error) {
-                                                                alert(error.message);
-                                                            });
-                                                        }
+                                                LoginStore.GetUser(function (data) {
+                                                    $ionicHistory.nextViewOptions({
+                                                        disableBack: true
                                                     });
+                                                    if (data) {
 
-                                                }
-                                            }, 1000);
+                                                        $ionicLoading.hide();
+                                                        $state.go('app.homepage');
+                                                    }
+                                                    else {
+                                                        LoginStore.AddFbUser($scope.myprofile).then(function (result) {
 
-
-
+                                                            $ionicLoading.hide();
+                                                            $state.go('app.firsttimelogin');
+                                                        }, function (error) {
+                                                            $ionicLoading.hide();
+                                                            alert(error.message);
+                                                        });
+                                                    }
+                                                });
+                                            }
                                         }).catch(function (error) {
                                             // Handle Errors here.
-                                            alert(error.code);
                                             alert(error.message);
+                                            $ionicLoading.hide();
                                             // ...
                                         });
                                     });
-                                    //         alert(JSON.stringify(infoesult));
-                                    //         alert('Good to see you, ' +
-                                    //             infoesult.email + infoesult.name + '.');
 
                                 });
-
                         }
 
                     },
                     function (error) {
-                        alert(error);
-
-                        alert(JSON.stringify(error));
+                        alert(error.message);
+                        $ionicLoading.hide();
                     }
                 )
             }
             catch (error) {
+                $ionicLoading.hide();
                 alert(error.message);
             }
 
         };
-
-
-        //firebase.auth().onAuthStateChanged(function (user) {
-
-        //    alert("test");
-
-        //});
-
-
-
 
         $scope.GoToRegister = function () {
             $state.go('registerpage');
@@ -2053,7 +2153,7 @@ angular.module('football.controllers', [])
 
     })
 
-    .controller('FirstPageController', function ($scope, $ionicPopover, $ionicHistory, $ionicPopup, $ionicLoading, $state, $timeout, $ionicPush) {
+    .controller('FirstPageController', function ($scope, $ionicPopover, $ionicHistory, $ionicPopup, $ionicLoading, $state, $timeout) {
 
 
         try {
@@ -2119,17 +2219,6 @@ angular.module('football.controllers', [])
 
     })
 
-    .controller('FeedBackController', ['$scope', function ($scope) {
-
-        $scope.submit = function () {
-            //$scope.list.push(this.text);
-            //$scope.text = '';
-            alert("Yo")
-            $scope.text = 'tee';
-
-        };
-    }])
-
     .controller('LoginPassController', function ($scope, $state, $ionicPopup) {
 
 
@@ -2139,7 +2228,6 @@ angular.module('football.controllers', [])
             }
 
         $scope.submit = function () {
-            alert("test");
             try {
                 var auth = firebase.auth();
                 var emailAddress = $scope.email.address;
@@ -2169,9 +2257,6 @@ angular.module('football.controllers', [])
     })
 
     .controller('FirstTimeLoginController', function ($scope, $state, $ionicPopup, TeamStores, ProfileStore1, $ionicHistory, SMSService, $ionicLoading) {
-
-
-
         $scope.currentprofile =
             {
                 startmonday: 7,
@@ -2192,8 +2277,79 @@ angular.module('football.controllers', [])
                 favstadiumname: "",
                 favstadiumphoto: "",
                 available: false,
-                skilllevel: "Newbie"
+                skilllevel: "Newbie",
+                isplayer: true,
+                age: new Date(),
+                favlatitude: 0,
+                favlongitude: 0
+
             }
+
+
+        $scope.currentprofile.age.setDate(1);
+        $scope.currentprofile.age.setFullYear(1990);
+        $scope.currentprofile.age.setMonth(1);
+
+        $scope.isplayercolors = {
+            player:
+                {
+                    color: '#2ab041',
+                    backcolor: 'white'
+                },
+            goalkeeper:
+                {
+                    color: '#2ab041',
+                    backcolor: 'white'
+                }
+        }
+
+        if ($scope.currentprofile.isplayer) {
+            $scope.isplayercolors.player.color = 'white';
+            $scope.isplayercolors.player.backcolor = '#2ab041';
+
+            $scope.isplayercolors.goalkeeper.color = '#2ab041';
+            $scope.isplayercolors.goalkeeper.backcolor = 'white';
+        }
+        else {
+            $scope.isplayercolors.player.color = '#2ab041';
+            $scope.isplayercolors.player.backcolor = 'white';
+
+            $scope.isplayercolors.goalkeeper.color = 'white';
+            $scope.isplayercolors.goalkeeper.backcolor = '#2ab041';
+        }
+
+
+        $scope.gochoosestadium = function (team) {
+            $state.go("app.choosestadium", {
+                myteam: $scope.currentprofile
+            })
+        }
+
+        $scope.switchcolors = function (x) {
+            switch (x) {
+                case 0:
+                    $scope.currentprofile.isplayer = true;
+                    $scope.isplayercolors.player.color = 'white';
+                    $scope.isplayercolors.player.backcolor = '#2ab041';
+
+                    $scope.isplayercolors.goalkeeper.color = '#2ab041';
+                    $scope.isplayercolors.goalkeeper.backcolor = 'white';
+                    break;
+                case 1:
+                    $scope.currentprofile.isplayer = false;
+                    $scope.isplayercolors.player.color = '#2ab041';
+                    $scope.isplayercolors.player.backcolor = 'white';
+
+                    $scope.isplayercolors.goalkeeper.color = 'white';
+                    $scope.isplayercolors.goalkeeper.backcolor = '#2ab041';
+                    break;
+
+
+            }
+            $scope.$apply();
+        }
+
+
 
         $scope.checkMobileNumber = function (e, verified) {
             console.log(111, verified);
@@ -2212,7 +2368,7 @@ angular.module('football.controllers', [])
                     maxWidth: 200,
                     showDelay: 0
                 });
-                firebase.database().ref('/players/' + userId).once('value').then(function (snapshot) {
+                firebase.database().ref('/playersinfo/' + userId).once('value').then(function (snapshot) {
                     $ionicLoading.hide();
                     if (!snapshot.val().isMobileVerified) {
                         SMSService.verifyUserMobile($scope, $scope.checkMobileNumber, [e, true])
@@ -2388,21 +2544,26 @@ angular.module('football.controllers', [])
             }
         };
 
-        $scope.gochoosestadium = function (stadium) {
-
-        }
-
         $scope.UpdateUser = function (profile) {
 
-            alert("test");
+            $ionicLoading.show({
+                content: 'Loading',
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 200,
+                showDelay: 0
+            });
             ProfileStore1.UpdateProfile(profile, false).then(function (result) {
 
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
+
+                $ionicLoading.hide();
                 $state.go("app.homepage");
 
             }, function (error) {
+                $ionicLoading.hide();
                 alert(error.message);
             });
 
@@ -2410,17 +2571,6 @@ angular.module('football.controllers', [])
 
 
     })
-
-
-    .controller('SubmitSearch', function ($scope, $ionicModal, $timeout, $state) {
-        alert("Yo"); $scope.submit = function () {
-
-
-            $state.go('availablestadiums');
-        };
-    })
-
-
 
 
     ;

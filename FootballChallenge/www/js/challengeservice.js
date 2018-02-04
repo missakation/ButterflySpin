@@ -80,6 +80,22 @@ angular.module('football.controllers')
                                     "rating": childSnapshot.child("rating").val(),
                                 };
 
+                                switch (Items.rank) {
+                                    case 1:
+                                        Items.rankdescription = Items.rank + 'st';
+                                        break;
+                                    case 2:
+                                        Items.rankdescription = Items.rank + 'nd';
+                                        break;
+                                    case 3:
+                                        Items.rankdescription = Items.rank + 'rd';
+                                        break;
+
+                                    default:
+                                        Items.rankdescription = Items.rank + 'th';
+                                        break;
+                                }
+
                                 AllMyAdminTeams.push(Items)
                             }
 
@@ -169,6 +185,7 @@ angular.module('football.controllers')
 
 
                 var numOfPlayers = search.players;
+
                 var year = search.date.getFullYear();
                 var month = search.date.getMonth();
                 var day = search.date.getDate();
@@ -183,33 +200,31 @@ angular.module('football.controllers')
 
                 var teamOf = "";
 
-                var teamOf = "";
-
                 switch (numOfPlayers) {
-                    case 5:
+                    case "5":
                         teamOf = "teamoffive";
                         break;
-                    case 6:
+                    case "6":
                         teamOf = "teamofsix";
                         break;
-                    case 7:
+                    case "7":
                         teamOf = "teamofseven";
                         break;
-                    case 8:
+                    case "8":
                         teamOf = "teamofeight";
                         break;
-                    case 9:
+                    case "9":
                         teamOf = "teamofnine";
                         break;
-                    case 10:
+                    case "10":
                         teamOf = "teamoften";
                         break;
-                    case 11:
+                    case "11":
                         teamOf = "teamofeleven";
                         break;
 
                     default:
-                        teamOf = "teamoffive";
+                        teamOf = "teamofeleven";
                 }
 
 
@@ -250,7 +265,7 @@ angular.module('football.controllers')
 
                 }
                 //    firebase.database().ref('/teams').limitToFirst(4).once('value').then(function (snapshot) {
-                firebase.database().ref('/teaminfo').orderByChild(startend).startAt(hour).once('value').then(function (snapshot) {
+                firebase.database().ref('/teaminfo').orderByChild(startend).startAt(hour).on('value', function (snapshot) {
                     //alert(firstName);
                     AllITems = [];
 
@@ -265,80 +280,93 @@ angular.module('football.controllers')
 
                                 if (!childSnapshot.child('players/' + id).exists()) {
 
-                                    // if (childSnapshot.child(startat).val() <= hour) {
-                                    if (childSnapshot.child("available").val()) {
+                                    if (childSnapshot.child("available").val() && childSnapshot.child(teamOf).val()) {
 
-                                        if (childSnapshot.child(teamOf).val()) {
+                                        var range = 1500 - childSnapshot.child("rating").val();
 
-                                            var range = 1110 - childSnapshot.child("rating").val();
-
-                                            var difficulty = "";
-                                            var difficultytext = "";
-                                            switch (true) {
-                                                case range <= 100 && range >= -100:
-                                                    difficulty = "Medium.png";
-                                                    difficultytext = "Medium";
-                                                    break;
-                                                case range < -100 && range > -200:
-                                                    difficulty = "Hard.png";
-                                                    difficultytext = "Hard";
-                                                    break;
-                                                case range <= -200:
-                                                    difficulty = "Extreme.png";
-                                                    difficultytext = "Extreme";
-                                                    break;
-                                                case range > 100 && range <= 200:
-                                                    difficulty = "Easy.png";
-                                                    difficultytext = "Easy";
-                                                    break;
-                                                case range > 200:
-                                                    difficulty = "VeryEasy.png";
-                                                    difficultytext = "Very Easy";
-                                                    break;
-                                                default:
-                                                    break;
-                                            }
-
-                                            //alert(childSnapshot.key);
-                                            var Items = {
-
-                                                "key": childSnapshot.key,
-                                                "teamname": childSnapshot.child("teamname").val(),
-                                                'teamphoto': childSnapshot.child("teamphoto").val(),
-                                                //'datecreated': childSnapshot.child("datecreated").val(),
-                                                "favstadium": "",
-                                                "favstadiumphoto": childSnapshot.child("favstadiumphoto").val(),
-                                                "favstadium": childSnapshot.child("favstadium").val(),
-                                                "homejersey": childSnapshot.child("homejersey").val(),
-                                                "awayjersey": childSnapshot.child("awayjersey").val(),
-                                                "badge": childSnapshot.child("badge").val(),
-                                                "rank": childSnapshot.child("rank").val(),
-                                                "rating": childSnapshot.child("rating").val(),
-                                                "numberofgames": childSnapshot.child("numberofgames").val(),
-                                                "wins": childSnapshot.child("wins").val(),
-                                                "selected": "select",
-                                                "color": "#28b041",
-                                                "backcolor": "white",
-                                                "teamadmin": childSnapshot.child("teamadmin").val(),
-                                                "difficulty": difficulty,
-                                                "difficultytext": difficultytext,
-                                                "comments": childSnapshot.child("comments").val(),
-                                                "members": 0,
-                                                "captainname": childSnapshot.child('captain/' + childSnapshot.child('teamadmin').val() + '/name').val()
-                                            };
-                                            AllITems.push(Items);
+                                        var difficulty = "";
+                                        var difficultytext = "";
+                                        switch (true) {
+                                            case range <= 100 && range >= -100:
+                                                difficulty = "Medium.png";
+                                                difficultytext = "Medium";
+                                                break;
+                                            case range < -100 && range > -200:
+                                                difficulty = "Hard.png";
+                                                difficultytext = "Hard";
+                                                break;
+                                            case range <= -200:
+                                                difficulty = "Extreme.png";
+                                                difficultytext = "Extreme";
+                                                break;
+                                            case range > 100 && range <= 200:
+                                                difficulty = "Easy.png";
+                                                difficultytext = "Easy";
+                                                break;
+                                            case range > 200:
+                                                difficulty = "VeryEasy.png";
+                                                difficultytext = "Very Easy";
+                                                break;
+                                            default:
+                                                break;
                                         }
+
+                                        var Items = {
+
+                                            "key": childSnapshot.key,
+                                            "teamname": childSnapshot.child("teamname").val(),
+                                            'teamphoto': childSnapshot.child("teamphoto").val(),
+                                            //'datecreated': childSnapshot.child("datecreated").val(),
+                                            //"favstadium": "",
+                                            //"favstadiumphoto": childSnapshot.child("favstadiumphoto").val(),
+                                            //"favstadium": childSnapshot.child("favstadium").val(),
+                                            "homejersey": childSnapshot.child("homejersey").val(),
+                                            "awayjersey": childSnapshot.child("awayjersey").val(),
+                                            "badge": childSnapshot.child("badge").val(),
+                                            "rank": childSnapshot.child("rank").val(),
+                                            "rating": childSnapshot.child("rating").val(),
+                                            "numberofgames": childSnapshot.child("numberofgames").val(),
+                                            "wins": childSnapshot.child("wins").val(),
+                                            "selected": "select",
+                                            "color": "#28b041",
+                                            "backcolor": "white",
+                                            "teamadmin": childSnapshot.child("teamadmin").val(),
+                                            "difficulty": difficulty,
+                                            "difficultytext": difficultytext,
+                                            "comments": childSnapshot.child("comments").val(),
+                                            "members": snapshot.child("players").numChildren() - 1,
+                                            "favlatitude": childSnapshot.child("favlatitude").val(),
+                                            "favlongitude": childSnapshot.child("favlongitude").val(),
+                                            "reviewrating": childSnapshot.child("reviewrating").val()
+
+                                        };
+                                        switch (Items.rank) {
+                                            case 1:
+                                                Items.rankdescription = Items.rank + 'st';
+                                                break;
+                                            case 2:
+                                                Items.rankdescription = Items.rank + 'nd';
+                                                break;
+                                            case 3:
+                                                Items.rankdescription = Items.rank + 'rd';
+                                                break;
+
+                                            default:
+                                                Items.rankdescription = Items.rank + 'th';
+                                                break;
+                                        }
+                                        AllITems.push(Items);
                                     }
+                                    //   }
                                     //   }
                                 }
                             });
                         }
                     }
-                    console.log(AllITems);
                     callback(AllITems);
                 });
             },
-            ChallengeTeams: function (date, teams, stadiums, myteam, myprofile) {
+            ChallengeTeams: function (date, players, teams, stadiums, myteam, myprofile) {
 
 
                 //alert(myprofile.photo);
@@ -352,7 +380,19 @@ angular.module('football.controllers')
                 var hour = date.getHours();
                 var minute = date.getMinutes();
 
+                var dateofchallenge = new Date();
+
+                var dateofchallengeyear = dateofchallenge.getFullYear();
+                var dateofchallengemonth = dateofchallenge.getMonth();
+                var dateofchallengeday = dateofchallenge.getDate();
+
+                var dateofchallengehour = dateofchallenge.getHours();
+                var dateofchallengeminute = dateofchallenge.getMinutes();
+
                 try {
+                    // Get a key for a new Post.
+                    var newPostKey = firebase.database().ref().child('challenges').push().key;
+
                     for (var i = 0; i < teams.length; i++) {
 
                         if (teams[i] !== null && teams[i].key !== null && myteam !== null && myteam.key !== null && myprofile !== null && myprofile.key !== null) {
@@ -369,6 +409,7 @@ angular.module('football.controllers')
                                     admin: myteam.teamadmin,
 
                                     stadiums: stadiums,
+                                    status:0,
 
                                     challengeradmin: teams[i].teamadmin,
 
@@ -380,7 +421,7 @@ angular.module('football.controllers')
                                     team1name: teams[i].teamname, //
                                     team1logo: teams[i].badge, //
                                     team1rank: teams[i].rank, //
-                                    team1jersey: teams[i].awayjersey, //
+                                    team1jersey: teams[i].awayjersey == myteam.homejersey ? teams[i].homejersey : teams[i].awayjersey, //
 
                                     team2key: myteam.key,
                                     team2name: myteam.teamname,
@@ -394,7 +435,16 @@ angular.module('football.controllers')
                                     accepted: false,
                                     adminphoto: myprofile.photo,
                                     admintelephon: myprofile.telephone,
-                                    adminname: myprofile.firstname + " " + myprofile.lastname
+                                    adminname: myprofile.firstname + " " + myprofile.lastname,
+
+                                    dateofchallengeyear: dateofchallengeyear,
+                                    dateofchallengemonth: dateofchallengemonth,
+                                    dateofchallengeday: dateofchallengeday,
+                                    dateofchallengehour: dateofchallengehour,
+                                    dateofchallengeminute: dateofchallengeminute,
+
+                                    numplayers: players,
+                                    gameaccepted: false
 
 
                                 }
@@ -420,7 +470,7 @@ angular.module('football.controllers')
                                     team2logo: teams[i].badge,
                                     team2rank: teams[i].rank,
                                     team2adminid: teams[i].teamadmin,
-                                    team2jersey: teams[i].awayjersey,
+                                    team2jersey: teams[i].awayjersey == myteam.homejersey ? teams[i].homejersey : teams[i].awayjersey,
 
                                     team1key: myteam.key,
                                     team1name: myteam.teamname, //
@@ -435,12 +485,22 @@ angular.module('football.controllers')
 
                                     adminphoto: myprofile.photo,
                                     admintelephon: myprofile.telephone,
-                                    adminname: myprofile.firstname + " " + myprofile.lastname
+                                    adminname: myprofile.firstname + " " + myprofile.lastname,
+
+                                    winner: "",
+
+                                    dateofchallengeyear: dateofchallengeyear,
+                                    dateofchallengemonth: dateofchallengemonth,
+                                    dateofchallengeday: dateofchallengeday,
+                                    dateofchallengehour: dateofchallengehour,
+                                    dateofchallengeminute: dateofchallengeminute,
+
+                                    numplayers: players,
+                                    gameaccepted: false
 
                                 }
 
-                                // Get a key for a new Post.
-                                var newPostKey = firebase.database().ref().child('challenges').push().key;
+
 
                                 updates['/challenges/' + newPostKey] = challengedata;
 
@@ -555,8 +615,8 @@ angular.module('football.controllers')
 
                                 adminphoto: challenges.child("adminphoto").val(),
                                 admintelephon: challenges.child("admintelephon").val(),
-                                adminname: challenges.child("adminname").val()
-
+                                adminname: challenges.child("adminname").val(),
+                                numplayers: challenges.child("numplayers").val()
 
 
                             }

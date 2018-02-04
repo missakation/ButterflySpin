@@ -14,10 +14,11 @@ angular.module('football.controllers')
 
 
                 $scope.myteams = leagues;
+                console.log($scope.myteams);
 
                 if (leagues.length == 0) {
                 }
-                else if (leagues.length > 10) {
+                else if (leagues.length > 5) {
                     $scope.showadd = false;
 
                 }
@@ -27,8 +28,26 @@ angular.module('football.controllers')
                         firebase.database().ref('/teaminfo/' + element.key).once('value').then(function (snapshot) {
                             if (snapshot.exists()) {
                                 element.members = snapshot.child("players").numChildren() - 1;
+
                                 element.rank = snapshot.child("rank").val();
                                 element.rating = snapshot.child("rating").val()
+
+                                switch (element.rank) {
+                                    case 1:
+                                        element.rankdescription = element.rank + 'st';
+                                        break;
+                                    case 2:
+                                        element.rankdescription = element.rank + 'nd';
+                                        break;
+                                    case 3:
+                                        element.rankdescription = element.rank + 'rd';
+                                        break;
+
+                                    default:
+                                        element.rankdescription = element.rank + 'th';
+                                        break;
+                                }
+
                             }
                             else {
                                 element.members = "Not Found";
@@ -64,7 +83,26 @@ angular.module('football.controllers')
                 if (!snapshot.val().isMobileVerified) {
                     SMSService.verifyUserMobile($scope, $scope.gotoadd, [])
                 } else {
-                    $state.go("app.teamadd");
+                    $state.go("app.teamadd", {
+                        newuser: {
+                            teamname: "",
+                            pteamsize: "5",
+                            favstadium: "",
+                            favstadiumphoto: "",
+                            favstadiumphoto: "",
+                            favstadiumname: "",
+                            homejersey: "Blue",
+                            awayjersey: "White",
+                            badge: "01",
+                            five: false,
+                            six: false,
+                            seven: false,
+                            eight: false,
+                            nine: false,
+                            ten: false,
+                            eleven: false
+                        }
+                    });
                 }
             });
         };
@@ -85,14 +123,6 @@ angular.module('football.controllers')
 
     .controller('TeamAddController', function ($scope, SearchStore, $cordovaToast, $ionicHistory, $ionicPopover, ReservationFact, $state, $ionicLoading, $ionicPopup, TeamStores) {
 
-        $ionicLoading.show({
-            template: 'Loading...',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-        });
-
         $scope.teamsizecounter = 0;
 
         $scope.validate =
@@ -100,7 +130,7 @@ angular.module('football.controllers')
                 team: false,
                 teamsize: false,
                 teamsizemax: false,
-                favsize:false
+                favsize: false
             }
 
         $scope.managecolors =
@@ -142,53 +172,25 @@ angular.module('football.controllers')
                 }
             }
 
-        //works
-        try {
-
-            ReservationFact.GetAllStadiums(function (leagues) {
-
-                $scope.allstadiums = leagues;
-                SearchStore.GetMyProfileInfo(function (profile) {
-                    $ionicLoading.hide();
-                    $scope.myprofile = profile;
-                })
-
-
-            })
-
-        }
-        catch (error) {
-            alert(error.message);
-        }
-
-
-
         $scope.$on("$ionicView.afterEnter", function (event, data) {
             // handle event
             $scope.disabledbutton = false;
         });
 
-        $scope.adduser =
-            {
-                teamname: "",
-                pteamsize: "5",
-                favstadium: "",
-                favstadiumphoto: "",
-                homejersey: "Blue",
-                awayjersey: "White",
-                badge: "01",
-                five: false,
-                six: false,
-                seven: false,
-                eight: false,
-                nine: false,
-                ten: false,
-                eleven: false
-            }
+        $scope.adduser = $state.params.newuser;
+
+        $scope.gochoosestadium = function (adduser) {
+            $scope.adduser = adduser;
+            $state.go("app.choosestadium", {
+                myteam: adduser
+            })
+        }
 
 
-        $scope.next = function () {
+        $scope.next = function (adduser) {
             try {
+
+                //IF THE SAME TEAM NAME EXIST ERROR
                 TeamStores.GetTeamByName($scope.adduser.teamname, function (exist) {
 
                     if (!exist) {
@@ -215,15 +217,11 @@ angular.module('football.controllers')
                             nine: $scope.adduser.nine,
                             ten: $scope.adduser.ten,
                             eleven: $scope.adduser.eleven,
-                            photo: ""
+                            photo: "",
+                            favlatitude: $scope.adduser.favlatitude,
+                            favlongitude: $scope.adduser.favlongitude
 
                         };
-
-                        for (var i = 0; i < $scope.allstadiums.length; i++) {
-                            if ($scope.adduser.favstadium == $scope.allstadiums[i].name) {
-                                team.photo = $scope.allstadiums[i].photo
-                            }
-                        }
 
                         if (!(team.five || team.six || team.seven || team.eight || team.nine || team.ten || team.eleven)) {
                             $scope.validate.teamsize = true;
@@ -235,8 +233,7 @@ angular.module('football.controllers')
                             $scope.disabledbutton = false;
                             error = true;
                         }
-                        if(team.favstadium == "")
-                        {
+                        if (team.favstadium == "") {
                             $scope.validate.favsize = true;
                             $scope.disabledbutton = false;
                             error = true;
@@ -261,6 +258,8 @@ angular.module('football.controllers')
                             $scope.validate.team = false;
                             $scope.validate.teamsizemax = false;
                             $scope.$apply;
+                            console.log(team);
+
                             $state.go("app.teamadd1", {
                                 team1: team,
                                 myprofile: $scope.myprofile
@@ -281,7 +280,7 @@ angular.module('football.controllers')
 
                         });
                     }
-                    
+
 
                 });
             }
@@ -509,44 +508,58 @@ angular.module('football.controllers')
                 if (!error) {
 
                     $scope.validate.samecolor = false;
-                    TeamStores.AddNewTeam(team, $scope.myprofile)
-                        .then(function (value) {
-                            LeaderBoardStore.GetAllLeaderboard(function (leagues) {
 
-                                $scope.notloaded = false;
-                                $scope.rankedteams = leagues.reverse();
+                    SearchStore.GetMyProfileInfo(function (profile) {
 
-                                LeaderBoardStore.UpdateRatings($scope.rankedteams).then(function (result) {
-                                    var alertPopup = $ionicPopup.alert({
-                                        title: 'Success',
-                                        template: 'Team Added'
-                                    }).then(function () {
-                                        $scope.adduser =
-                                            {
-                                                homejersey: "Blue",
-                                                awayjersey: "White"
-                                            }
-                                        $ionicHistory.nextViewOptions({
-                                            disableBack: true
-                                        });
-                                        $state.go("app.teammanagement");
+                        $ionicLoading.show({
+                            content: 'Loading',
+                            animation: 'fade-in',
+                            showBackdrop: true,
+                            maxWidth: 200,
+                            showDelay: 0
+                        });
 
-                                    }, function (error) {
-                                        alert(error.message);
+                        TeamStores.AddNewTeam(team, profile)
+                            .then(function (value) {
+                                LeaderBoardStore.GetAllLeaderboard(function (leagues) {
+
+                                    $scope.notloaded = false;
+                                    $scope.rankedteams = leagues.reverse();
+
+                                    LeaderBoardStore.UpdateRatings($scope.rankedteams).then(function (result) {
+                                        $ionicLoading.hide();
+                                        var alertPopup = $ionicPopup.alert({
+                                            title: 'Success',
+                                            template: 'Team Added'
+                                        }).then(function () {
+                                            $scope.adduser =
+                                                {
+                                                    homejersey: "Blue",
+                                                    awayjersey: "White"
+                                                }
+                                            $ionicHistory.nextViewOptions({
+                                                disableBack: true
+                                            });
+                                            $state.go("app.teammanagement");
+
+                                        }, function (error) {
+                                            alert(error.message);
+                                        })
+
+
+
                                     })
 
+                                });
+
+                            }, function (error) {
+                                if (error.code == 'PERMISSION_DENIED') {
+                                    alert("Team Name Already Taken")
+                                }
+                            })
+                    })
 
 
-                                })
-
-
-                            });
-
-                        }, function (error) {
-                            if (error.code == 'PERMISSION_DENIED') {
-                                alert("Team Name Already Taken")
-                            }
-                        })
                 }
 
 
@@ -716,7 +729,11 @@ angular.module('football.controllers')
 
         }
 
-
+        $scope.stats =
+            {
+                win: 0,
+                winstreak: 0
+            }
 
         //here
         $ionicLoading.show({
@@ -730,12 +747,42 @@ angular.module('football.controllers')
 
         try {
             TeamStores.GetTeamByKey($stateParams.teamid, function (myprofile) {
-                console.log(myprofile);
+                
+
                 $ionicLoading.hide();
                 $scope.notloaded = true;
                 if (myprofile !== null && myprofile !== undefined) {
 
                     $scope.currentprofile = myprofile;
+
+                    $scope.currentprofile.upcomingmatches.forEach(function (element) {
+
+                        if (element.status != undefined && element.status != null)
+                            switch (element.status) {
+                                case 1:
+                                    $scope.stats.win++;
+                                    break;
+
+                                default:
+                                    break;
+                            }
+
+                    }, this);
+
+                    $scope.currentprofile.players.forEach(function (element) {
+                        console.log(element);
+                        firebase.database().ref('/playersinfo/' + element.key).on('value', function (snapshot) {
+                            if (snapshot.exists()) {
+                                console.log(snapshot.val());
+
+                                element.photo = snapshot.child("photoURL").val() == "" ? 'img/PlayerProfile.png' : snapshot.child("photoURL").val();
+                            }
+                        })
+
+
+
+                    }, this);
+
 
                     var teamsizestring = "";
 
@@ -770,6 +817,7 @@ angular.module('football.controllers')
                     //////
                     if (myprofile.favstadium !== "") {
                         ReservationFact.GetStadiumsByID(myprofile.favstadium, function (favstadium) {
+                            console.log(favstadium);
                             if (favstadium !== null || favstadium !== undefined) {
 
 
@@ -836,12 +884,15 @@ angular.module('football.controllers')
                 });
         }
 
+
+
         $scope.doRefresh = function () {
 
             try {
 
                 TeamStores.GetTeamByKey($stateParams.teamid, function (myprofile) {
                     $scope.currentprofile = myprofile;
+
                     $scope.$apply();
                     $scope.$broadcast('scroll.refreshComplete');
 
@@ -852,12 +903,21 @@ angular.module('football.controllers')
             }
         }
 
+        $scope.GoMatchHistory = function () {
+
+            $state.go('app.teamhistory',
+
+                {
+                    teammatches: $scope.currentprofile.upcomingmatches
+                });
+        }
+
         $scope.playeroperations = function (opercode, player) {
             var message = "";
             var noerror = true;
 
             firebase.database().ref('/playersinfo/' + player.key).once('value').then(function (snapshot) {
-                
+
                 if (snapshot.exists()) {
                     switch (opercode) {
                         case 1:
@@ -1022,6 +1082,44 @@ angular.module('football.controllers')
 
                             })
                         }
+                        else if (amiadmin && counter > 1) {
+                            template = 'Are you sure you want to leave the team?';
+
+                            var confirmPopup = $ionicPopup.confirm({
+                                title: 'Leave Team',
+                                template: template
+                            });
+
+                            confirmPopup.then(function (res) {
+                                var updates = {};
+                                for (var i = 0; i < result.players.length; i++) {
+                                    if (result.players[i].isadmin && result.players[i].key != id) {
+
+                                        updates['team/' + result.key + '/teamadmin'] = result.players[i].key;
+                                        updates['teamsinfo/' + result.key + '/teamadmin'] = result.players[i].key;
+                                    }
+
+                                };
+
+                                firebase.database().ref().update(updates).then(function () {
+                                    TeamStores.LeaveTeam(result)
+                                        .then(function (value) {
+                                            var alertPopup = $ionicPopup.alert({
+                                                title: 'Success',
+                                                template: 'You Left the Team'
+                                            }).then(function () {
+                                                $ionicHistory.nextViewOptions({
+                                                    disableBack: true
+                                                });
+                                                $state.go("app.teammanagement");
+                                            });
+
+                                        }, function (error) {
+                                            alert(error.message);
+                                        })
+                                });
+                            })
+                        }
                         else {
 
                             template = 'Are you sure you want to leave the team?';
@@ -1073,6 +1171,16 @@ angular.module('football.controllers')
                     gameid: gameid
                 })
         }
+
+    })
+
+    .controller('TeamHistoryController', function ($scope, $ionicHistory, $ionicLoading, $ionicPopup, $stateParams, $state) {
+
+
+        $scope.teammatches = $state.params.teammatches;
+        console.log($scope.teammatches);
+
+
 
     })
 
@@ -1363,98 +1471,182 @@ angular.module('football.controllers')
 
     })
 
-    .controller('InvitePlayersController', function ($scope, $http, ProfileStore1, $ionicPopup, $ionicHistory, HomeStore, $ionicLoading, $state, $stateParams, SearchStore, TeamStores, $timeout) {
+    .controller('InvitePlayersController', function ($scope, $http, LoginStore, ProfileStore1, $ionicPopup, $ionicHistory, HomeStore, $ionicLoading, $state, $stateParams, SearchStore, TeamStores, $timeout, $ionicFilterBar) {
 
         $scope.notloaded = true;
 
         $scope.myteam = $state.params.myteam;
 
 
-        $timeout(function () {
-            ProfileStore1.SearchPlayers($scope.myteam, function (leagues) {
-                $scope.allplayers = leagues;
+        ProfileStore1.SearchPlayers($scope.myteam, function (leagues) {
 
-                var date = new Date();
-                HomeStore.GetProfileInfo(date, function (players) {
-                    $scope.profile = players;
-                    $scope.notloaded = false;
-                    $scope.$apply();
+            $scope.allplayers = leagues;
 
-                }, function (error) {
-                    $scope.notloaded = false;
-                    $scope.$apply();
-                })
+
+            $scope.filteredPlayers = $scope.allplayers;
+
+
+            var date = new Date();
+            HomeStore.GetProfileInfo(date, function (players) {
+                $scope.profile = players;
+                $scope.notloaded = false;
+                $scope.$apply();
 
             }, function (error) {
                 $scope.notloaded = false;
                 $scope.$apply();
             })
-        }, 1000)
 
-
-
+        }, function (error) {
+            $scope.notloaded = false;
+            $scope.$apply();
+        }
+        )
 
         $scope.InvitePlayerToTeam = function (player) {
-            TeamStores.InvitePlayerToTeam($scope.myteam, player, $scope.profile).then(function () {
 
-                player.status = "Invitation Sent";
-
-
-                if ($scope.profile.devicetoken != undefined && $scope.profile.devicetoken != "") {
-                    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwMjMzM2FhYy1jNjBjLTQyNTItYjI1ZS05MmY0ZGQ5OGRhNmYifQ.QCuKlXbH3CczgW-bScCoPVVhPcdf_peZadTRIZFL4j0'
-
-                    var req = {
-                        method: 'POST',
-                        url: 'https://api.ionic.io',
-                        headers: {
-                            'Authorization': 'Bearer ' + token,
-                            'Content-Type': 'application/json'
-                        },
-                        data: {
-                            "tokens": $scope.profile.devicetoken,
-                            "profile": "ARINAPROFILE",
-                            "notification": {
-                                "message": $scope.myteam + " invites you to join his team!"
-                            }
+            if (player.color != "white") {
+                TeamStores.InvitePlayerToTeam($scope.myteam, player, $scope.profile).then(function () {
+                    player.status = "Invitation Sent";
+                    if (player.devicetoken != undefined && player.devicetoken != "") {
+                        if (player.settings.notification) {
+                            LoginStore.SendNotification("Would you like to join " + $scope.myteam.teamname + '?', player.devicetoken);
                         }
+
                     }
+                    player.color = "white";
+                    player.backcolor = "#28b041";
+                    $scope.$apply();
 
-                    $http(req).then(function () {
-                        alert("notification sent");
-                    }, function (error) {
-                        alert(error.message);
-                    });
-                }
-
-
-
-                $scope.$digest();
-
-            }, function (error) {
-                alert(error.message)
-            })
+                }, function (error) {
+                    alert(error.message)
+                })
+            }
         }
+        //Filter bar stuff
+        var filterBarInstance;
 
+        //function getItems () {
+        //    var items = [];
+        //    for (var x = 1; x < 2000; x++) {
+        //        items.push({text: 'This is item number ' + x + ' which is an ' + (x % 2 === 0 ? 'EVEN' : 'ODD') + ' number.'});
+        //    }
+        //    $scope.items = items;
+        //}
+
+        //getItems();
+
+
+        $scope.filteredPlayers = $scope.allplayers;
+        //$scope.$digest();
+        $scope.showFilterBar = function () {
+            filterBarInstance = $ionicFilterBar.show({
+                items: $scope.allplayers,
+                update: function (filteredItems, filterText) {
+                    if (filterText != "" && filterText != null) {
+                        console.log("filterText is: " + filterText)
+                        $scope.filteredPlayers = filteredItems;
+                    }
+                    else {
+                        console.log("filterText empty is: " + filterText)
+                        $scope.filteredPlayers = $scope.allplayers;
+                    }
+                }//,
+                //filterProperties: ['displayname', 'firstname', 'lastname']
+            });
+        };
+
+
+
+
+        $scope.refreshItems = function () {
+            if (filterBarInstance) {
+                filterBarInstance();
+                filterBarInstance = null;
+            }
+
+            $timeout(function () {
+                getItems();
+                $scope.$broadcast('scroll.refreshComplete');
+            }, 1000);
+        };
+
+        //------------filter bar stuff ----/
     })
 
-    .controller('ChooseStadiumController', function ($scope, $ionicHistory, $ionicPopover, $ionicLoading, $timeout, $stateParams, $state, TeamStores, ReservationFact) {
+    .controller('ChooseStadiumController', function ($scope, $ionicHistory, $ionicPopover, $ionicLoading, $timeout, $stateParams, $state, TeamStores, ReservationFact, $ionicFilterBar) {
 
         $scope.notloaded = true;
         ReservationFact.GetAllStadiums(function (result) {
             $scope.stadiums = result;
             $scope.notloaded = false;
-
+            $scope.filteredStadiums = $scope.stadiums
         }, function (error) {
 
         })
 
 
         $scope.goback = function (stadium) {
+
             $state.params.myteam.favstadium = stadium.key;
             $state.params.myteam.favstadiumphoto = stadium.photo;
             $state.params.myteam.favstadiumname = stadium.name;
+
+            $state.params.myteam.favlatitude = stadium.latitude;
+            $state.params.myteam.favlongitude = stadium.longitude;
+
             $ionicHistory.goBack();
         }
+
+        //Filter bar stuff
+        var filterBarInstance;
+
+        //function getItems () {
+        //    var items = [];
+        //    for (var x = 1; x < 2000; x++) {
+        //        items.push({text: 'This is item number ' + x + ' which is an ' + (x % 2 === 0 ? 'EVEN' : 'ODD') + ' number.'});
+        //    }
+        //    $scope.items = items;
+        //}
+
+        //getItems();
+
+
+        $scope.filteredStadiums = $scope.stadiums;
+        //$scope.$digest();
+        $scope.showFilterBar = function () {
+            filterBarInstance = $ionicFilterBar.show({
+                items: $scope.stadiums,
+                update: function (filteredItems, filterText) {
+                    if (filterText != "" && filterText != null) {
+                        console.log("filterText is: " + filterText)
+                        $scope.filteredStadiums = filteredItems;
+                    }
+                    else {
+                        console.log("filterText empty is: " + filterText)
+                        $scope.filteredStadiums = $scope.stadiums;
+                    }
+                }//,
+                //filterProperties: ['displayname', 'firstname', 'lastname']
+            });
+        };
+
+
+
+
+        $scope.refreshItems = function () {
+            if (filterBarInstance) {
+                filterBarInstance();
+                filterBarInstance = null;
+            }
+
+            $timeout(function () {
+                getItems();
+                $scope.$broadcast('scroll.refreshComplete');
+            }, 1000);
+        };
+
+        //------------filter bar stuff ----/
     })
 
     .controller('TeamViewController', function ($scope, ReservationFact, $ionicHistory, $ionicLoading, $timeout, $ionicPopup, $stateParams, $state, TeamStores) {
@@ -1464,6 +1656,11 @@ angular.module('football.controllers')
         $scope.currentprofile = {};
 
         $scope.notloaded = false;
+
+        // set the rate and max variables
+        $scope.rating = {};
+        $scope.rating.rate = 3;
+        $scope.rating.max = 5;
 
         $scope.tabs =
             {
@@ -1560,6 +1757,14 @@ angular.module('football.controllers')
 
                     $scope.currentprofile = myprofile;
 
+                    $scope.currentprofile.players.forEach(function (element) {
+                        firebase.database().ref('/playersinfo/' + element.key).on('value', function (snapshot) {
+                            if (snapshot.exists()) {
+                                element.photo = snapshot.child("photoURL").val() == "" ? 'img/PlayerProfile.png' : snapshot.child("photoURL").val();
+                            }
+                        })
+                    }, this);
+
                     var teamsizestring = "";
 
                     teamsizestring = $scope.currentprofile.teamoffive ? teamsizestring + "5v5 ." : teamsizestring;
@@ -1590,9 +1795,9 @@ angular.module('football.controllers')
                         }
                     }
 
-                    //////
                     if (myprofile.favstadium !== "") {
                         ReservationFact.GetStadiumsByID(myprofile.favstadium, function (favstadium) {
+                            console.log(favstadium);
                             if (favstadium !== null || favstadium !== undefined) {
 
                                 $scope.stadiumdisplayed.name = favstadium.stadiumname;
@@ -1607,10 +1812,6 @@ angular.module('football.controllers')
                                 $scope.stadiumdisplayed.picture = "defaultteam";
                                 $scope.stadiumdisplayed.key = "";
                             }
-
-                            //$scope.currentprofile["teamdisplayed"] = $scope.stadiumdisplayed.name == "" ? "Select a Team" : $scope.teamdisplayed.name;
-
-
 
                         })
                     }
@@ -1633,21 +1834,12 @@ angular.module('football.controllers')
                         $state.go("app.homepage");
                     });
                 }
-                //////
-
-
-
             })
 
         }
         catch (error) {
             alert(error.message);
         }
-
-
-        //$scope.value = 150;
-
-
 
         $scope.goupdate = function () {
             $state.go('app.teamprofileedit',
@@ -1662,7 +1854,6 @@ angular.module('football.controllers')
             try {
 
                 TeamStores.GetTeamByKey($stateParams.teamid, function (myprofile) {
-                    console.log(myprofile);
                     $scope.currentprofile = myprofile;
                     $scope.$apply();
                     $scope.$broadcast('scroll.refreshComplete');

@@ -11,9 +11,6 @@ angular.module('football.controllers')
 
         });
 
-
-
-
         $scope.currentprofile = {};
 
         $scope.teamdisplayed = {
@@ -36,54 +33,67 @@ angular.module('football.controllers')
 
         $scope.refreshpage = function () {
             //works
-            $timeout(function () {
-                ProfileStore.GetProfileInfo(function (myprofile) {
-                    console.log(myprofile);
-                    $scope.currentprofile = myprofile;
-                    if ($scope.currentprofile.photo.trim() == "") {
-                        $scope.currentprofile.photo = "img/PlayerProfile.png"
+            ProfileStore.GetProfileInfo(function (myprofile) {
+
+                $scope.currentprofile = myprofile;
+                if ($scope.currentprofile.photo.trim() == "") {
+                    $scope.currentprofile.photo = "img/PlayerProfile.png"
+                }
+
+                if (myprofile.teamdisplayedkey !== "none") {
+                    TeamStores.GetTeamInfoByKey(myprofile.teamdisplayedkey, function (favteam) {
+                        if (favteam !== null || favteam !== undefined) {
+
+                            $scope.teamdisplayed.name = favteam.teamname;
+                            $scope.teamdisplayed.picture = favteam.badge;
+                            $scope.teamdisplayed.rank = favteam.rank;
+                            $scope.teamdisplayed.key = favteam.key;
+
+                            $scope.currentprofile.teamdisplayed = favteam.teamname;
+
+                        }
+                        else {
+                            $scope.teamdisplayed.name = "";
+                            $scope.teamdisplayed.picture = "defaultteam";
+                            $scope.teamdisplayed.rank = "";
+                            $scope.teamdisplayed.key = "";
+                        }
+
+                        //$scope.currentprofile["teamdisplayed"] = $scope.teamdisplayed.name == "" ? "Select a Team" : $scope.teamdisplayed.name;
+
+                    })
+                }
+                else {
+                    $scope.teamdisplayed.name = "";
+                    $scope.teamdisplayed.picture = "defaultteam";
+                    $scope.teamdisplayed.rank = "";
+                    $scope.teamdisplayed.key = "";
+                }
+
+                var newchallenges = [];
+                var today = new Date();
+                if ($scope.currentprofile.upcomingmatches.length > 0) {
+                    for (var i = 0; i < $scope.currentprofile.upcomingmatches.length; i++) {
+                        if (($scope.currentprofile.upcomingmatches[i].date > today)) {
+                            newchallenges.push($scope.currentprofile.upcomingmatches[i]);
+                        }
+
                     }
+                }
 
-                    if (myprofile.teamdisplayedkey !== "none") {
-                        TeamStores.GetTeamInfoByKey(myprofile.teamdisplayedkey, function (favteam) {
-                            if (favteam !== null || favteam !== undefined) {
-
-                                $scope.teamdisplayed.name = favteam.teamname;
-                                $scope.teamdisplayed.picture = favteam.badge;
-                                $scope.teamdisplayed.rank = favteam.rank;
-                                $scope.teamdisplayed.key = favteam.key;
-
-                            }
-                            else {
-                                $scope.teamdisplayed.name = "";
-                                $scope.teamdisplayed.picture = "defaultteam";
-                                $scope.teamdisplayed.rank = "";
-                                $scope.teamdisplayed.key = "";
-                            }
-
-                            //$scope.currentprofile["teamdisplayed"] = $scope.teamdisplayed.name == "" ? "Select a Team" : $scope.teamdisplayed.name;
+                $scope.currentprofile.upcomingmatches = [];
+                $scope.currentprofile.upcomingmatches = newchallenges;
 
 
-
-                        })
-                    }
-                    else {
-                        $scope.teamdisplayed.name = "";
-                        $scope.teamdisplayed.picture = "defaultteam";
-                        $scope.teamdisplayed.rank = "";
-                        $scope.teamdisplayed.key = "";
-                    }
-
-                    $scope.notloaded = true;
-                    $ionicLoading.hide();
-                    $scope.$apply();
-                    $scope.$broadcast('scroll.refreshComplete');
+                $scope.notloaded = true;
+                $ionicLoading.hide();
+                $scope.$apply();
+                $scope.$broadcast('scroll.refreshComplete');
 
 
-                }, function (error) {
+            }, function (error) {
 
-                })
-            }, 3000);
+            })
         }
 
         $scope.gototeam = function (key) {
@@ -180,7 +190,7 @@ angular.module('football.controllers')
 
 
     })
-    .controller('ProfileEditController', function ($cordovaImagePicker, $scope,SMSService, $ionicHistory, ProfileStore1, $ionicLoading, $timeout, $ionicPopup, $stateParams, $state, TeamStores, FirebaseStorageService) {
+    .controller('ProfileEditController', function ($cordovaImagePicker, $scope, SMSService, $ionicHistory, ProfileStore1, $ionicLoading, $timeout, $ionicPopup, $stateParams, $state, TeamStores, FirebaseStorageService) {
 
         $scope.currentprofile = $state.params.myprofile;
 
@@ -214,6 +224,7 @@ angular.module('football.controllers')
         }
 
         $scope.gochoosestadium = function (team) {
+            console.log($scope.currentprofile);
             $state.go("app.choosestadium", {
                 myteam: $scope.currentprofile
             })
@@ -483,7 +494,6 @@ angular.module('football.controllers')
 
         $scope.UpdateUser = function (profile) {
 
-            console.log(profile);
 
             if ($scope.currentprofile.teamdisplayed == "Select a Team" || $scope.currentprofile.teamdisplayed == "" || $scope.currentprofile.teamdisplayed == null) {
                 $scope.currentprofile.teamdisplayedkey = "none";
@@ -498,13 +508,26 @@ angular.module('football.controllers')
                 }
             }
 
-            ProfileStore1.UpdateProfile($scope.currentprofile, true).then(function (result) {
+            if ($scope.currentprofile.favstadium != undefined && $scope.currentprofile.favstadium != null && $scope.currentprofile.hasOwnProperty("favstadium")) {
+                ProfileStore1.UpdateProfile($scope.currentprofile, true).then(function (result) {
 
-                $ionicHistory.goBack();
+                    $ionicHistory.goBack();
 
-            }, function (error) {
-                alert(error.message);
-            });
+                }, function (error) {
+                    alert(error.message);
+                });
+            }
+            else {
+
+                var alertPopup = $ionicPopup.alert({
+                    template: 'Please select your favorite stadium'
+                }).then(function () {
+
+                }, function (error) {
+
+                })
+
+            }
 
         }
 
@@ -512,17 +535,9 @@ angular.module('football.controllers')
         $scope.uploading = false;
 
         $scope.ChangePicture = function () {
-            // var options = {
-            //     maximumImagesCount: 1,
-            //     width: 800,
-            //     height: 800,
-            //     quality: 75
-            // };
-
-            console.log(JSON.stringify(window.Camera))
 
             var options = {
-                quality: 70,
+                quality: 30,
                 destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
                 encodingType: Camera.EncodingType.PNG,
@@ -532,36 +547,9 @@ angular.module('football.controllers')
                 saveToPhotoAlbum: false
             };
 
-
-            /*var getFileBlob = function (url, cb) {
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", url);
-                xhr.responseType = "blob";
-                xhr.addEventListener('load', function() {
-                    cb(xhr.response);
-                });
-                xhr.send();
-            };
- 
-            var blobToFile = function (blob, name) {
-                    blob.lastModifiedDate = new Date();
-                    blob.name = name;
-                    return blob;
-            };
- 
-            var getFileObject = function(filePathOrUrl, cb) {
-                getFileBlob(filePathOrUrl, function (blob) {
-                    cb(blobToFile(blob, 'test.jpg'));
-                });
-            };
- 
-            getFileObject('img/test.jpg', function (fileObject) {
-                console.log(fileObject);
-            })*/
-
             navigator.camera.getPicture(function (imageURI) {
                 $scope.currentprofile.photo = "data:image/png;base64," + imageURI;
-
+                $scope.currentprofile.photo
                 FirebaseStorageService.saveUserProfilePicture($scope.currentprofile.photo, firebase.auth().currentUser.uid).then(function (imageUrl) {
                     $scope.currentprofile.photo = imageUrl;
                     $scope.$apply();
@@ -569,62 +557,9 @@ angular.module('football.controllers')
                     $scope.currentprofile.photo = "img/PlayerProfile.png";
                     $scope.$apply();
                     alert("Unable to save image to storage.")
-                })
+                }, options)
 
                 $scope.$apply();
-
-                // $scope.$apply();
-                // //console.log('Image URI: ' + results[0]);
-                //
-                // // File or Blob named mountains.jpg
-                // var file = results[0];
-                //
-                // // Create the file metadata
-                // var metadata = {
-                //     contentType: 'image/jpeg'
-                // };
-                //
-                // var user = firebase.auth().currentUser;
-                // var id = user.uid;
-                //
-                // $scope.uploading = true;
-                //
-                // // Upload file and metadata to the object 'images/mountains.jpg'
-                // var uploadTask = storageRef.child('playerimages/' + '/' + id + '/' + file.name).put(file, metadata);
-                //
-                // // Listen for state changes, errors, and completion of the upload.
-                // uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-                //     function (snapshot) {
-                //         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                //         $scope.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                //         //console.log('Upload is ' + progress + '% done');
-                //         switch (snapshot.state) {
-                //             case firebase.storage.TaskState.PAUSED: // or 'paused'
-                //                 console.log('Upload is paused');
-                //                 break;
-                //             case firebase.storage.TaskState.RUNNING: // or 'running'
-                //                 console.log('Upload is running');
-                //                 break;
-                //         }
-                //     }, function (error) {
-                //         switch (error.code) {
-                //             case 'storage/unauthorized':
-                //                 // User doesn't have permission to access the object
-                //                 break;
-                //
-                //             case 'storage/canceled':
-                //                 // User canceled the upload
-                //                 break;
-                //
-                //             case 'storage/unknown':
-                //                 // Unknown error occurred, inspect error.serverResponse
-                //                 break;
-                //         }
-                //         $scope.$apply();
-                //     }, function () {
-                //         // Upload completed successfully, now we can get the download URL
-                //         var downloadURL = uploadTask.snapshot.downloadURL;
-                //     });
 
             }, function (error) {
                 console.log(error);
@@ -634,14 +569,15 @@ angular.module('football.controllers')
 
     })
 
-    .controller('ProfileViewController', function ($scope, HomeStore, ProfileStore, $ionicPopup, TeamStores, $state, $stateParams, $ionicLoading, $timeout) {
+    .controller('ProfileViewController', function ($scope, HomeStore, ProfileStore, $ionicHistory, $ionicPopup, TeamStores, $state, $stateParams, $ionicLoading, $timeout) {
 
-
-        $stateParams.key
 
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
 
             if ($stateParams.key == firebase.auth().currentUser.uid) {
+                $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
                 $state.go("app.selfprofile");
             }
 
@@ -654,8 +590,6 @@ angular.module('football.controllers')
         });
 
 
-
-
         $scope.currentprofile = {};
         $scope.teamdisplayed = {
             key: "",
@@ -664,6 +598,9 @@ angular.module('football.controllers')
             rank: ""
         }
 
+        $scope.notloaded = false;
+
+        //works
         //here
         $ionicLoading.show({
             content: 'Loading',
@@ -673,55 +610,53 @@ angular.module('football.controllers')
             showDelay: 0
         });
 
-        $scope.notloaded = false;
-
         $scope.refreshpage = function () {
-            //works
-            $timeout(function () {
-                HomeStore.GetProfileInfoByKey($stateParams.key, function (myprofile) {
-                    if (myprofile.teamdisplayedkey !== "none") {
-                        TeamStores.GetTeamInfoByKey(myprofile.teamdisplayedkey, function (favteam) {
-                            if (favteam !== null || favteam !== undefined) {
+            HomeStore.GetProfileInfoByKey($stateParams.key, function (myprofile) {
+                $scope.currentprofile = myprofile;
+                console.log($scope.currentprofile);
+                if ($scope.currentprofile.photo.trim() == "") {
+                    $scope.currentprofile.photo = "img/PlayerProfile.png"
+                }
+                if ($scope.currentprofile.teamdisplayedkey !== "none") {
+                    firebase.database().ref('/teampoints/' + $scope.currentprofile.teamdisplayedkey).on('value', function (favteam) {
+                        if (favteam.exists()) {
+                            $scope.teamdisplayed.name = favteam.teamname;
+                            $scope.teamdisplayed.picture = favteam.badge;
+                            $scope.teamdisplayed.rank = favteam.rank;
+                            $scope.teamdisplayed.key = favteam.key;
+                            $scope.teamexists = true;
+                            $scope.$apply;
 
-                                $scope.teamdisplayed.name = favteam.teamname;
-                                $scope.teamdisplayed.picture = favteam.badge;
-                                $scope.teamdisplayed.rank = favteam.rank;
-                                $scope.teamdisplayed.key = favteam.key;
+                        }
+                        else {
+                            $scope.teamdisplayed.name = "";
+                            $scope.teamdisplayed.picture = "defaultteam";
+                            $scope.teamdisplayed.rank = "";
+                            $scope.teamdisplayed.key = "";
+                            $scope.teamexists = false;
+                            $scope.$apply;
 
-                            }
-                            else {
-                                $scope.teamdisplayed.name = "";
-                                $scope.teamdisplayed.picture = "defaultteam";
-                                $scope.teamdisplayed.rank = "";
-                                $scope.teamdisplayed.key = "";
-                            }
+                        }
 
+                    })
+                }
+                else {
+                    $scope.teamdisplayed.name = "";
+                    $scope.teamdisplayed.picture = "defaultteam";
+                    $scope.teamdisplayed.rank = "";
+                    $scope.teamdisplayed.key = "";
+                }
 
+                $scope.notloaded = true;
+                $ionicLoading.hide();
 
-
-                        })
-                    }
-                    else {
-                        $scope.teamdisplayed.name = "";
-                        $scope.teamdisplayed.picture = "defaultteam";
-                        $scope.teamdisplayed.rank = "";
-                        $scope.teamdisplayed.key = "";
-                    }
-
-                    $scope.notloaded = true;
-                    $ionicLoading.hide();
-                    $scope.currentprofile = myprofile;
-                    if ($scope.currentprofile.photo.trim() == "") {
-                        $scope.currentprofile.photo = "img/PlayerProfile.png"
-                    }
-                    $scope.$apply();
-                    $scope.$broadcast('scroll.refreshComplete');
+                $scope.$apply();
+                $scope.$broadcast('scroll.refreshComplete');
 
 
-                }, function (error) {
+            }, function (error) {
 
-                })
-            }, 1000);
+            })
         }
 
         $scope.gototeam = function (key) {

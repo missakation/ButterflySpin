@@ -47,59 +47,7 @@
 			padding: 0;
 		}
 
-		.popup {
-			border-radius: 50px;
-			font-size: 15px;
-		}
-
-		.custom-class .popup-head {
-			display: none;
-		}
-
-		.popup-head {
-			display: none;
-		}
-
-		.popup-buttons .button:first-child {
-			border-radius: 50px;
-			margin: 5px;
-			padding: 0px;
-			flex: 1;
-			background-color: rgb(153, 167, 180);
-			color: white;
-		}
-
-		.popup-buttons .button:last-child {
-			border-radius: 50px;
-			margin: 5px;
-			padding: 0px;
-			flex: 1;
-			background-color: #2ab041;
-			color: white;
-		}
-
-		.popup-body {
-			padding: 10px 5px 5px 5px;
-			margin: -5px;
-			background-color: rgb(62, 83, 100);
-			color: white;
-			text-align: center;
-			border-radius: 15px 15px 0 0;
-		}
-
-		.popup-buttons {
-			padding: 10px 5px 5px 5px;
-			margin: -5px;
-			background-color: rgb(62, 83, 100);
-			color: white;
-			text-align: center;
-			border-radius: 0 0 15px 15px;
-		}
-
-		.popup-title {
-			color: white;
-		}
-
+	
 		.headercolor {
 			background-color: rgb(62, 83, 100);
 			color: white;
@@ -110,15 +58,13 @@
 		.card {
 			background-color: transparent
 		}
-	}
+
 	</style>
+
+
 	<ion-nav-buttons side="right">
-		<h5 style="padding-right:10px;font-weight:bold" ng-show="currentprofile.amiadmin" ng-click="goupdate(currentprofile)" class="whitetext">
-
-			EDIT
-
-		</h5>
-	</ion-nav-buttons>
+ <button class="button icon ion-compose" style="color:#2ab041;background-color:rgb(62,83,100)" ng-show="currentprofile.amiadmin" ng-click="goupdate(currentprofile)"></button>
+</ion-nav-buttons>
 
 	<ion-nav-buttons side="left">
 		<button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
@@ -179,7 +125,7 @@
 					<div class="col" style="padding-top:10px" align="center">
 						<h4 style="color:#5f7485;border-right:1px solid #5f7485;margin:0px"> MATCHES
 						</h4>
-						<h3 style="padding-top:5px;color:white;border-right:1px solid #5f7485"> {{currentprofile.numChildren}}
+						<h3 style="padding-top:5px;color:white;border-right:1px solid #5f7485"> {{currentprofile.numberofmatches}}
 						</h3>
 					</div>
 
@@ -221,7 +167,7 @@
 
 				</div>
 
-				<h3 class="whitetext" style="padding:0 0 10px 10px" align="left">
+				<h3 class="whitetext" style="white-space:normal;font-style:italic;padding:0 5px 5px" align="left">
 					{{currentprofile.comments}}
 				</h3>
 
@@ -243,7 +189,7 @@
 		<div class="row row-top" style="background-color:rgb(46,62,75);padding-top: 0px;margin-bottom:-25px;margin-top:-20px">
 
 			<div class="col" align="center">
-				<button class="button  button-balanced button-full" style="min-height:35px;border-radius:45px" ng-click="Challengeteam()">
+				<button class="button  button-balanced button-full" style="min-height:35px;border-radius:45px" ng-click="GoMatchHistory()">
 					<h5 class="whitetext">
 						Match History
 					</h5>
@@ -281,12 +227,14 @@
 
 				<div class="col col-25" style="padding-bottom:0px;padding-top:10px;border-bottom:1px solid #5f7485">
 					<button ng-show="!(upmatches.isadmin)" class="button button-balanced button-small" style="border-bottom:1px solid #5f7485;margin-bottom:5px;width:60px;font-size:12px;border-radius:50px"
-					 ng-click="gogamedetails(upmatches.key)"> View
+					 ng-click="gogamedetails(upmatches.key)"> Manage
 					</button>
 				</div>
 
 			</div>
 		</div>
+
+		<!--
 		<div class="card" style="background-color:rgb(62,83,100); padding-bottom:0px">
 			<div style="margin-bottom:-4px">
 				<h4 class="whitetext" align="middle" style="background-color:rgb(62,83,100)"><b>TEAM MATCH HISTORY</b></h4>
@@ -453,6 +401,7 @@
 			</div>
 		</div>
 		</div>
+		-->
 
 		<div class="card" style="background-color: rgb(62, 83, 100);margin-top:15px">
 			<ion-item style="border: none;padding:0px">
@@ -487,12 +436,12 @@
 			<ion-item ng-show="tabs.Members" style="border: none;padding:0px">
 
 
-				<div class="row" style="border-bottom:1px solid #5f7485;padding:5px" ng-repeat="item in currentprofile.players">
-					<div ui-sref="app.profileview({key: player.uid})">
-						<img src="img/PlayerProfile.png" style="margin-top:5px;border-radius:50px;border:1px solid #5f7485;width:42px;height:42px">
+				<div class="row row-center" ui-sref="app.profileview({key: item.key})" style="border-bottom:1px solid #5f7485;padding:5px" ng-repeat="item in currentprofile.players">
+					<div >
+						<img src="{{item.photo}}" style="margin-top:5px;border-radius:50px;border:1px solid #5f7485;width:42px;height:42px">
 					</div>
 					<div style="width:45%">
-						<h3 class="whitetext" align="left" style="margin-top:18px;padding-left:5px">{{item.firstname}} {{item.lastname}}</h3>
+						<h3 class="whitetext" align="left" style="padding-left:5px">{{item.firstname}} {{item.lastname}}</h3>
 					</div>
 
 					<div style="width:40%;padding:0px;margin-top:12px" align="right" ng-show="currentprofile.amiadmin">
@@ -509,7 +458,7 @@
 						 ng-click="playeroperations(3,item)">
 						Remove
 					</button>
-						<button ng-show="item.itsme" align="right" class="button button-small" style="padding:0 10px 0 10px;font-size:13px;border-radius:50px; background-color:#ef473a; color:white"
+						<button ng-show="item.itsme"  class="button button-small" align="right" style="font-size:13px; background-color:#ef473a;border-radius:50px; color:white"
 						 ng-click="LeaveTeam()">
 						Leave
 					</button>
@@ -532,7 +481,7 @@
 
 					<div class="col">
 
-						<h3 class="whitetext" align="right">1</h3>
+						<h3 class="whitetext" align="right">{{currentprofile.numberofmatches}}</h3>
 					</div>
 
 				</div>
@@ -545,7 +494,7 @@
 
 					<div class="col">
 
-						<h3 class="whitetext" align="right">1</h3>
+						<h3 class="whitetext" align="right">{{stats.win}}</h3>
 					</div>
 
 				</div>
@@ -558,7 +507,7 @@
 
 					<div class="col">
 
-						<h3 class="whitetext" align="right">1</h3>
+						<h3 class="whitetext" align="right"></h3>
 					</div>
 
 				</div>
